@@ -3,8 +3,6 @@
  */
 package br.com.cams7.marph.entity;
 
-import java.io.Serializable;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -20,13 +18,15 @@ import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
+import br.com.cams7.app.AbstractEntity;
+
 /**
  * @author cesar
  *
  */
 @Entity
 @Table(name = "endereco")
-public class EnderecoEntity implements Serializable {
+public class EnderecoEntity extends AbstractEntity {
 
 	private static final long serialVersionUID = 1L;
 
@@ -60,19 +60,15 @@ public class EnderecoEntity implements Serializable {
 	}
 
 	public EnderecoEntity(Long id) {
-		this();
-		setId(id);
+		super(id);
 	}
 
 	@Override
-	public String toString() {
-		return String.format("Entity of type %s with id: %s", this.getClass().getName(), getId());
-	}
-
 	public Long getId() {
 		return id;
 	}
 
+	@Override
 	public void setId(Long id) {
 		this.id = id;
 	}

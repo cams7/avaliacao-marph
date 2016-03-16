@@ -3,7 +3,6 @@
  */
 package br.com.cams7.marph.entity;
 
-import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
@@ -23,13 +22,15 @@ import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
+import br.com.cams7.app.AbstractEntity;
+
 /**
  * @author cesar
  *
  */
 @Entity
 @Table(name = "pessoa", uniqueConstraints = @UniqueConstraint(columnNames = "cpf") )
-public class PessoaEntity implements Serializable {
+public class PessoaEntity extends AbstractEntity {
 
 	private static final long serialVersionUID = 1L;
 
@@ -61,19 +62,15 @@ public class PessoaEntity implements Serializable {
 	}
 
 	public PessoaEntity(Long id) {
-		this();
-		setId(id);
+		super(id);
 	}
 
 	@Override
-	public String toString() {
-		return String.format("Entity of type %s with id: %s", this.getClass().getName(), getId());
-	}
-
 	public Long getId() {
 		return id;
 	}
 
+	@Override
 	public void setId(Long id) {
 		this.id = id;
 	}
