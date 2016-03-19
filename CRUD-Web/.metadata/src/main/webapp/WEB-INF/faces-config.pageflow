@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pageflow:Pageflow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf14581557953020" configfile="/crud-web/src/main/webapp/WEB-INF/faces-config.xml">
+  <nodes xsi:type="pageflow:PFPage" name="*" id="pf14582296723910" outlinks="pf14582296723911" path="*"/>
+  <nodes xsi:type="pageflow:PFPage" name="pessoa/lista.xhtml" id="pf14582296723912" referenceLink="//@navigationRule.0/@navigationCase.0/@toViewId|" inlinks="pf14582296723911" path="/pessoa/lista.xhtml"/>
+  <links id="pf14582296723911" target="pf14582296723912" source="pf14582296723910" outcome="listaPessoas" redirect="true"/>
+</pageflow:Pageflow>

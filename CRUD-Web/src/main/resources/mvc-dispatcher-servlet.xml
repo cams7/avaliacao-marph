@@ -1,0 +1,40 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans		http://www.springframework.org/schema/beans/spring-beans.xsd
+						http://www.springframework.org/schema/context	http://www.springframework.org/schema/context/spring-context.xsd
+						http://www.springframework.org/schema/mvc		http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+
+	<context:component-scan base-package="br.com.cams7.marph.controller.rest" />
+	<context:component-scan base-package="br.com.cams7.marph.controller.report" />
+
+	<context:annotation-config />
+	<!-- mvc:annotation-driven / -->
+
+	<mvc:annotation-driven>
+		<mvc:message-converters>
+			<bean
+				class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+				<property name="objectMapper">
+					<bean class="br.com.cams7.utils.HibernateAwareObjectMapper" />
+				</property>
+			</bean>
+		</mvc:message-converters>
+	</mvc:annotation-driven>
+
+	<!-- Configure to plugin JSON as request and response in method handler -->
+	<!-- bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter"> 
+		<property name="messageConverters"> <list> <ref bean="jsonMessageConverter" 
+		/> </list> </property> </bean -->
+
+	<!-- Configure bean to convert JSON to POJO and vice versa -->
+	<!-- bean id="jsonMessageConverter" class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"> 
+		</bean -->
+
+	<import resource="jasper-views.xml" />
+
+	<bean class="org.springframework.web.servlet.view.XmlViewResolver"
+		p:location="classpath:jasper-views.xml" p:order="0" />
+</beans>

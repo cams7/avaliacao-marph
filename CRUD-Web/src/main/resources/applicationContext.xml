@@ -1,0 +1,14 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans		http://www.springframework.org/schema/beans/spring-beans.xsd
+						http://www.springframework.org/schema/context	http://www.springframework.org/schema/context/spring-context.xsd">
+
+	<!-- Database Configuration -->
+	<import resource="database/DataSource.xml" />
+	<import resource="database/Hibernate.xml" />
+
+	<context:component-scan base-package="br.com.cams7.marph.repository" />
+	<context:component-scan base-package="br.com.cams7.marph.service" />
+	<context:component-scan base-package="br.com.cams7.marph.controller.bean" />
+</beans>

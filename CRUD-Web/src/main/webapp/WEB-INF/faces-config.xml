@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faces-config xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_1.xsd"
+	version="2.1">
+
+	<application>
+		<el-resolver>org.springframework.web.jsf.el.SpringBeanFacesELResolver</el-resolver>
+
+		<!-- Configura o locale (i18n) pt-BR para toda aplicacao. -->
+		<!-- locale-config> <default-locale>pt_BR</default-locale> </locale-config -->
+
+		<!-- Define o nome do arquivo com as labels e mensagens. Note que 'msg' 
+			eh a variavel usada nas telas pra recuperar as labels/mensagens. -->
+		<!-- resource-bundle> <base-name>i18n.messages</base-name> <var>msg</var> 
+			</resource-bundle -->
+	</application>
+
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>listaPessoas</from-outcome>
+			<to-view-id>/pessoa/lista.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<!-- Define uma lista para servir como Managed Bean para a pagina sobre. -->
+	<managed-bean>
+		<description>Sobre a aplicacao</description>
+		<managed-bean-name>sobreMB</managed-bean-name>
+		<managed-bean-class>java.util.ArrayList</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+		<list-entries>
+			<value>Implementation-Title: Avaliacao para desenvolvedor Java</value>
+			<value>Built-by: Cesar Magalhaes</value>
+			<value>Implementation-Site: https://github.com/cams7/avaliacao-marph</value>
+			<value>Implementation-Build:</value>
+		</list-entries>
+	</managed-bean>
+</faces-config>

@@ -12,7 +12,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -22,7 +21,7 @@ import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
-import br.com.cams7.app.AbstractEntity;
+import br.com.cams7.app.entity.AbstractEntity;
 
 /**
  * @author cesar
@@ -35,8 +34,11 @@ public class PessoaEntity extends AbstractEntity {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@SequenceGenerator(name = "pessoa_seq", sequenceName = "pessoa_seq", initialValue = 1, allocationSize = 1)
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pessoa_seq")
+	// @SequenceGenerator(name = "pessoa_seq", sequenceName = "pessoa_seq",
+	// initialValue = 1, allocationSize = 1)
+	// @GeneratedValue(strategy = GenerationType.SEQUENCE, generator =
+	// "pessoa_seq")
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "id_pessoa")
 	private Long id;
 

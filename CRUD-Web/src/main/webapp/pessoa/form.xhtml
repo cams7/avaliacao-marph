@@ -1,0 +1,86 @@
+<ui:fragment xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:sec="http://www.springframework.org/security/tags">
+
+
+	<p:outputPanel id="pessoaDetail" style="text-align:center;">
+		<h:panelGroup id="pessoaPanel" rendered="#{not empty pessoa}">
+			<c:if test="#{not createEntity}">
+				<div class="control-group">
+					<h:outputLabel for="pessoaId" value="Id" styleClass="control-label" />
+					<h:outputText id="pessoaId" value="#{pessoa.id}" label="Id"
+						styleClass="controls" style="float: left;margin-left: 20px;" />
+				</div>
+			</c:if>
+
+			<div class="control-group">
+				<h:outputLabel for="pessoaNome" value="Nome"
+					styleClass="control-label" />
+				<div class="controls" style="float: left; margin-left: 20px;">
+					<p:inputText id="pessoaNome" value="#{pessoa.nome}" label="Nome"
+						styleClass="input-large" />
+					<p:message for="pessoaNome" styleClass="alert alert-error" />
+				</div>
+			</div>
+
+			<div class="control-group">
+				<h:outputLabel for="pessoaCpf" value="CPF"
+					styleClass="control-label" />
+				<div class="controls" style="float: left; margin-left: 20px;">
+					<p:inputText id="pessoaCpf" value="#{pessoa.cpf}" label="CPF"
+						styleClass="input-large" />
+					<p:message for="pessoaCpf" styleClass="alert alert-error" />
+				</div>
+			</div>
+
+			<div class="control-group">
+				<div class="controls">
+					<c:choose>
+						<c:when test="#{not createEntity}">
+							<h:outputLink
+								value="#{facesContext.externalContext.requestContextPath}/req/pessoa/#{pessoa.id}"
+								title="Visualizar pelo formato JSON" target="_blank">
+								<h:graphicImage name="img/json.png" />
+							</h:outputLink>
+							<p:commandButton value="Atualiza"
+								actionListener="#{pessoaMB.updateEntity}"
+								styleClass="btn btn-success"
+								oncomplete="handleUpdateRequest(xhr, status, args);"
+								process="@form" />
+							<sec:authorize access="hasRole('ROLE_ADMIN')">
+								<p:commandButton value="Exclui"
+									actionListener="#{pessoaMB.removeEntity}"
+									styleClass="btn btn-danger"
+									oncomplete="handleUpdateRequest(xhr, status, args);"
+									update="pessoaTable:totalRows" immediate="true"
+									rendered="#{not createEntity}" />
+							</sec:authorize>
+							<p:button value="Cancela" onclick="PF('pessoaDialog').hide();"
+								styleClass="btn" />
+						</c:when>
+						<c:otherwise>
+							<p:commandButton value="Salva" action="#{pessoaMB.createEntity}"
+								styleClass="btn btn-success" update="pessoaPanel"
+								process="@form" />
+						</c:otherwise>
+					</c:choose>
+				</div>
+			</div>
+		</h:panelGroup>
+	</p:outputPanel>
+	<c:if test="#{not createEntity}">
+		<p:remoteCommand name="atualizaFomulario" update="pessoaPanel" />
+
+		<h:outputScript library="js" name="list.page.js" />
+
+		<script type="text/javascript">
+			function handleUpdateRequest(xhr, status, args) {
+				updateListPage("mensagens", "pessoaTable", "pessoaDialog", args);
+			}
+		</script>
+	</c:if>
+</ui:fragment>

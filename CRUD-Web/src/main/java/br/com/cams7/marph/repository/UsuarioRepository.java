@@ -3,7 +3,9 @@
  */
 package br.com.cams7.marph.repository;
 
-import br.com.cams7.app.BaseRepository;
+import java.util.List;
+
+import br.com.cams7.app.repository.BaseRepository;
 import br.com.cams7.marph.entity.UsuarioEntity;
 
 /**
@@ -11,4 +13,5 @@ import br.com.cams7.marph.entity.UsuarioEntity;
  *
  */
 public interface UsuarioRepository extends BaseRepository<UsuarioEntity> {
+	List<UsuarioEntity> buscaTodosDadosPessoais();
 }

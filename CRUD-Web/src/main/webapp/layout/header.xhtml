@@ -1,0 +1,82 @@
+<ui:fragment xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:sec="http://www.springframework.org/security/tags">
+
+	<div class="logo">
+		<h:graphicImage library="img" name="logo_arduino.png"
+			title="Avaliacao para desenvolvedor Java"
+			alt="Avaliacao para desenvolvedor Java" />
+	</div>
+	<div class="menu_app">
+		<p:menubar>
+			<p:submenu label="Inicio" icon="ui-icon-document">
+				<p:menuitem value="Home" outcome="/home" icon="ui-icon-home" />
+				<sec:authorize access="hasRole('ROLE_ADMIN')">
+					<p:submenu label="Inclui" icon="ui-icon-disk">
+						<!-- p:menuitem value="Dados de usuario"
+						outcome="/usuario/inclui" icon="ui-icon-person">
+						<f:param name="active" value="inclui_usuario" />
+					</p:menuitem-->
+						<p:menuitem value="Dados pessoais" outcome="/pessoa/inclui"
+							icon="ui-icon-contact">
+							<f:param name="active" value="inclui_pessoa" />
+						</p:menuitem>
+						<!--p:menuitem value="Endereco"
+						outcome="/endereco/inclui" icon="ui-icon-contact">
+						<f:param name="active" value="inclui_endereco" />
+					</p:menuitem-->
+					</p:submenu>
+				</sec:authorize>
+
+				<sec:authorize access="isAnonymous()">
+					<p:separator />
+					<p:menuitem value="Login" outcome="/login" icon="ui-icon-person" />
+				</sec:authorize>
+
+				<sec:authorize access="isAuthenticated()">
+					<p:separator />
+					<p:menuitem value="Sair"
+						url="#{facesContext.externalContext.requestContextPath}/j_spring_security_logout"
+						icon="ui-icon-extlink" />
+				</sec:authorize>
+			</p:submenu>
+
+			<sec:authorize access="isAuthenticated()">
+				<p:submenu label="Lista" icon="ui-icon-search">
+					<!--p:menuitem value="Usuarios cadastrados" outcome="/usuario/lista"
+					icon="ui-icon-person">
+					<f:param name="active" value="lista_usuarios" />
+				</p:menuitem-->
+
+					<p:menuitem value="Pessoas cadastradas" outcome="/pessoa/lista"
+						icon="ui-icon-contact">
+						<f:param name="active" value="lista_pessoas" />
+					</p:menuitem>
+
+					<!--p:menuitem value="Enderecos cadastrados"
+					outcome="/endereco/lista" icon="ui-icon-contact">
+					<f:param name="active" value="lista_enderecos" />
+				</p:menuitem-->
+				</p:submenu>
+			</sec:authorize>
+
+			<p:submenu label="Ajuda" icon="ui-icon-help">
+				<p:menuitem value="Sobre" outcome="/sobre" icon="ui-icon-gear">
+					<f:param name="active" value="sobre" />
+				</p:menuitem>
+			</p:submenu>
+
+			<sec:authorize access="isAuthenticated()">
+				<f:facet name="options">
+					<h:outputFormat value="Seja bem vindo {0}">
+						<f:param
+							value="#{facesContext.externalContext.request.userPrincipal.name}" />
+					</h:outputFormat>
+				</f:facet>
+			</sec:authorize>
+		</p:menubar>
+	</div>
+</ui:fragment>

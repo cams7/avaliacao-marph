@@ -1,0 +1,116 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:sec="http://www.springframework.org/security/tags"
+	template="/layout/template.xhtml">
+
+	<ui:define name="pageTitle">
+		<h:outputText value="Lista de pessoas" />
+	</ui:define>
+
+	<f:metadata>
+		<f:event type="preRenderView" listener="#{pessoaMB.reset}" />
+	</f:metadata>
+
+	<ui:define name="sidebar">
+		<ui:include src="menu.xhtml" />
+	</ui:define>
+
+	<ui:define name="content">
+		<div style="border-bottom: 1px solid #E5E5E5;">
+			<h4>
+				<h:outputText value="Pessoas" />
+				<small> <h:outputText value="Listagem" /></small>
+			</h4>
+		</div>
+
+		<h:form id="pessoaForm" styleClass="form-horizontal">
+			<p:growl id="mensagens" widgetVar="mensagens" showDetail="true"
+				showSummary="true" life="5000" />
+
+			<p:dataTable id="pessoaTable" var="pessoa"
+				value="#{pessoaMB.lazyModel}" paginator="true"
+				rows="#{pessoaMB.rows}" first="#{pessoaMB.first}"
+				paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+				rowsPerPageTemplate="3,5,10,15" selectionMode="single"
+				selection="#{pessoaMB.selectedEntity}" lazy="true"
+				emptyMessage="Nenhuma pessoa foi cadastrada" widgetVar="pessoaTable"
+				resizableColumns="true">
+
+				<sec:authorize ifAnyGranted="ROLE_USER,ROLE_ADMIN">
+					<p:ajax event="rowSelect" listener="#{pessoaMB.onRowSelect}"
+						update=":pessoaForm:pessoaDetail"
+						onsuccess="PF('pessoaDialog').show();" />
+				</sec:authorize>
+
+				<p:column headerText="Nome" sortBy="#{pessoa.nome}">
+					<h:outputText value="#{pessoa.nome}" />
+				</p:column>
+
+				<p:column headerText="CPF" sortBy="#{pessoa.cpf}">
+					<h:outputText value="#{pessoa.cpf}" />
+				</p:column>
+
+				<f:facet name="footer">
+					<sec:authorize ifAnyGranted="ROLE_USER,ROLE_ADMIN">
+						<p:panelGrid id="totalRows" columns="6">
+							<h:outputFormat value="Total: {0}">
+								<f:param value="#{pessoaMB.totalRows}" />
+							</h:outputFormat>
+
+							<h:outputLink
+								value="#{facesContext.externalContext.requestContextPath}/req/relatorio/pdf"
+								title="Download relatorio em PDF" target="_blank">
+								<h:graphicImage name="img/download-pdf.png" />
+							</h:outputLink>
+
+							<h:outputLink
+								value="#{facesContext.externalContext.requestContextPath}/req/relatorio/csv"
+								title="Download relatorio em CSV" target="_blank">
+								<h:graphicImage name="img/download-csv.png" />
+							</h:outputLink>
+
+							<h:outputLink
+								value="#{facesContext.externalContext.requestContextPath}/req/relatorio/xls"
+								title="Download relatorio em XLS" target="_blank">
+								<h:graphicImage name="img/download-xls.png" />
+							</h:outputLink>
+
+							<h:outputLink
+								value="#{facesContext.externalContext.requestContextPath}/req/relatorio/html"
+								title="Download relatorio em HTML" target="_blank">
+								<h:graphicImage name="img/download-html.png" />
+							</h:outputLink>
+
+							<h:outputLink
+								value="#{facesContext.externalContext.requestContextPath}/req/pessoa"
+								title="Visualizar pelo formato JSON" target="_blank">
+								<h:graphicImage name="img/json.png" />
+							</h:outputLink>
+						</p:panelGrid>
+					</sec:authorize>
+					<sec:authorize ifNotGranted="ROLE_USER,ROLE_ADMIN">
+						<h:outputFormat id="totalRows" value="Total cadastrado: {0}">
+							<f:param value="#{pessoaMB.totalRows}" />
+						</h:outputFormat>
+					</sec:authorize>
+				</f:facet>
+			</p:dataTable>
+
+			<sec:authorize ifAnyGranted="ROLE_USER,ROLE_ADMIN">
+				<p:dialog header="Altera dados pessoais" widgetVar="pessoaDialog"
+					modal="true" resizable="false">
+
+					<p:ajax event="close" listener="#{pessoaMB.handleClose}" />
+
+					<ui:include src="form.xhtml">
+						<ui:param name="pessoa" value="#{pessoaMB.selectedEntity}" />
+						<ui:param name="createEntity" value="#{false}" />
+					</ui:include>
+				</p:dialog>
+			</sec:authorize>
+		</h:form>
+	</ui:define>
+</ui:composition>

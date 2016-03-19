@@ -5,6 +5,7 @@ package br.com.cams7.app;
 
 import java.util.logging.Logger;
 
+import br.com.cams7.app.entity.AbstractEntity;
 import br.com.cams7.utils.AppHelper;
 
 /**
