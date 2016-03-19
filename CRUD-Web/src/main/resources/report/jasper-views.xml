@@ -10,19 +10,19 @@
 
 	<bean id="pdfReport"
 		class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView"
-		p:url="classpath:reports/report1.jrxml" p:reportDataKey="datasource" />
+		p:url="classpath:report/report1.jrxml" p:reportDataKey="datasource" />
 
 	<bean id="xlsReport"
 		class="org.springframework.web.servlet.view.jasperreports.JasperReportsXlsView"
-		p:url="classpath:reports/report1.jrxml" p:reportDataKey="datasource" />
+		p:url="classpath:report/report1.jrxml" p:reportDataKey="datasource" />
 
 
 	<bean id="htmlReport"
 		class="org.springframework.web.servlet.view.jasperreports.JasperReportsHtmlView"
-		p:url="classpath:reports/report1.jrxml" p:reportDataKey="datasource" />
+		p:url="classpath:report/report1.jrxml" p:reportDataKey="datasource" />
 
 
 	<bean id="csvReport"
 		class="org.springframework.web.servlet.view.jasperreports.JasperReportsCsvView"
-		p:url="classpath:reports/report1.jrxml" p:reportDataKey="datasource" />
+		p:url="classpath:report/report1.jrxml" p:reportDataKey="datasource" />
 </beans>
