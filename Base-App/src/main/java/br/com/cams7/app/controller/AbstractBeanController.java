@@ -100,15 +100,6 @@ public abstract class AbstractBeanController<S extends BaseService<E>, E extends
 			public List<E> load(int first, int pageSize, String sortField, SortOrder sortOrder,
 					Map<String, Object> filters) {
 
-				// System.out.println(String.format(
-				// "lastPageFirst=%s, lastPageSize=%s, lastSortField=%s,
-				// lastSortOrder=%s, lastFilters=%s",
-				// lastPageFirst, lastPageSize, lastSortField, lastSortOrder,
-				// lastFilters));
-				// System.out.println(String.format("first=%s, pageSize=%s,
-				// sortField=%s, sortOrder=%s, filters=%s", first,
-				// pageSize, sortField, sortOrder, filters));
-
 				filters = AppHelper.removeEmptyArray(filters);
 
 				if (pageSize != lastPageSize) {
@@ -141,24 +132,18 @@ public abstract class AbstractBeanController<S extends BaseService<E>, E extends
 					break;
 				}
 
-				// System.out.println(String.format(
-				// "lastPageFirst=%s, lastPageSize=%s, lastSortField=%s,
-				// direction=%s, lastFilters=%s",
-				// lastPageFirst, lastPageSize, lastSortField, direction,
-				// lastFilters));
-
-				entities = getService().search(lastPageFirst, lastPageSize, lastSortField, direction, lastFilters);
-
-				// int rowCount = getService().getTotalElements(lastPageFirst,
-				// lastPageSize, lastSortField, direction,
-				// lastFilters);
-				// setRowCount(rowCount);
+				entities = search(lastPageFirst, lastPageSize, lastSortField, direction, lastFilters);
 
 				return entities;
 			}
 		};
 
 		reset();
+	}
+
+	private List<E> search(int pageFirst, short pageSize, String sortField, br.com.cams7.app.entity.SortOrder sortOrder,
+			Map<String, Object> filters) {
+		return getService().search(pageFirst, pageSize, sortField, sortOrder, filters);
 	}
 
 	private void setSort(String sortField, SortOrder sortOrder) {
@@ -176,7 +161,6 @@ public abstract class AbstractBeanController<S extends BaseService<E>, E extends
 	public void reset() {
 		totalRows = getService().count();
 		lazyModel.setRowCount(totalRows);
-		// System.out.println("totalRows=" + totalRows);
 	}
 
 	/**

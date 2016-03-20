@@ -4,6 +4,7 @@
 package br.com.cams7.marph.service;
 
 import java.util.List;
+//import java.util.Set;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -11,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import br.com.cams7.app.service.AbstractService;
 import br.com.cams7.marph.entity.UsuarioEntity;
+//import br.com.cams7.marph.entity.UsuarioEntity.Autorizacao;
 import br.com.cams7.marph.repository.UsuarioRepository;
 
 /**
@@ -33,6 +35,7 @@ public class UsuarioServiceImpl extends AbstractService<UsuarioRepository, Usuar
 		return hashedPassword;
 	}
 
+	@Transactional
 	@Override
 	public void salva(UsuarioEntity usuario) {
 		String hashedPassword = getHashedPassword(usuario.getSenha());
@@ -41,6 +44,7 @@ public class UsuarioServiceImpl extends AbstractService<UsuarioRepository, Usuar
 		super.salva(usuario);
 	}
 
+	@Transactional
 	@Override
 	public void atualiza(UsuarioEntity usuario) {
 		String hashedPassword = getHashedPassword(usuario.getSenha());
@@ -54,4 +58,10 @@ public class UsuarioServiceImpl extends AbstractService<UsuarioRepository, Usuar
 	public List<UsuarioEntity> buscaTodosDadosPessoais() {
 		return getRepository().buscaTodosDadosPessoais();
 	}
+
+	// @Transactional(readOnly = true)
+	// @Override
+	// public Set<Autorizacao> buscaAutorizacoesPorId(Long id) {
+	// return getRepository().buscaAutorizacoesPorId(id);
+	// }
 }

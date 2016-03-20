@@ -73,15 +73,6 @@ public abstract class AbstractService<R extends BaseRepository<E>, E extends Abs
 		return getRepository().search(pageFirst, pageSize, sortField, sortOrder, filters);
 	}
 
-	// @Transactional(readOnly = true)
-	// @Override
-	// public int getTotalElements(int pageFirst, short pageSize, String
-	// sortField, SortOrder sortOrder,
-	// Map<String, Object> filters) {
-	// return getRepository().getTotalElements(pageFirst, pageSize, sortField,
-	// sortOrder, filters);
-	// }
-
 	@Transactional(readOnly = true)
 	@Override
 	public int count() {

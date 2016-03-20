@@ -38,6 +38,16 @@
 			</div>
 
 			<div class="control-group">
+				<h:outputLabel for="pessoaNascimento" value="Nascimento"
+					styleClass="control-label" />
+				<div class="controls" style="float: left; margin-left: 20px;">
+					<p:calendar id="pessoaNascimento" value="#{pessoa.nascimento}"
+						pattern="dd/MM/yyyy" locale="pt_BR" styleClass="input-large" />
+					<p:message for="pessoaNascimento" styleClass="alert alert-error" />
+				</div>
+			</div>
+
+			<div class="control-group">
 				<div class="controls">
 					<c:choose>
 						<c:when test="#{not createEntity}">

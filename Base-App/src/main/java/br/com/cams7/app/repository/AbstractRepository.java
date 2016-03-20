@@ -72,10 +72,7 @@ public abstract class AbstractRepository<E extends AbstractEntity> extends Abstr
 		return entity;
 	}
 
-	@Override
-	public List<E> search(int pageFirst, short pageSize, String sortField, SortOrder sortOrder,
-			Map<String, Object> filters) {
-
+	protected Criteria getPaginacaoOrdenacao(int pageFirst, short pageSize, String sortField, SortOrder sortOrder) {
 		Criteria select = getCurrentSession().createCriteria(getEntityType());
 
 		select.setFirstResult(pageFirst);
@@ -97,32 +94,20 @@ public abstract class AbstractRepository<E extends AbstractEntity> extends Abstr
 		}
 
 		select.addOrder(order);
+		return select;
+	}
+
+	@Override
+	public List<E> search(int pageFirst, short pageSize, String sortField, SortOrder sortOrder,
+			Map<String, Object> filters) {
+
+		Criteria select = getPaginacaoOrdenacao(pageFirst, pageSize, sortField, sortOrder);
 
 		@SuppressWarnings("unchecked")
 		List<E> entities = select.list();
 
 		return entities;
 	}
-
-	// @Override
-	// public int getTotalElements(int pageFirst, short pageSize, String
-	// sortField, SortOrder sortOrder,
-	// Map<String, Object> filters) {
-	// Criteria select = getPagination(pageFirst, pageSize, sortField,
-	// sortOrder);
-	//
-	// select.setProjection(Projections.distinct(Projections.property("id")));
-
-	// select.add(Restrictions.in("id", select.list()));
-	// select.setFirstResult(0);
-	// select.setMaxResults(0);
-	// select.setProjection(Projections.rowCount());
-	//
-	// Long count = (Long) select.uniqueResult();
-	// return count.intValue();
-
-	// return select.list().size();
-	// }
 
 	@Override
 	public int count() {

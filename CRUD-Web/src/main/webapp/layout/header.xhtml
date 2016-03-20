@@ -16,10 +16,10 @@
 				<p:menuitem value="Home" outcome="/home" icon="ui-icon-home" />
 				<sec:authorize access="hasRole('ROLE_ADMIN')">
 					<p:submenu label="Inclui" icon="ui-icon-disk">
-						<!-- p:menuitem value="Dados de usuario"
-						outcome="/usuario/inclui" icon="ui-icon-person">
-						<f:param name="active" value="inclui_usuario" />
-					</p:menuitem-->
+						<p:menuitem value="Usuario" outcome="/usuario/inclui"
+							icon="ui-icon-person">
+							<f:param name="active" value="inclui_usuario" />
+						</p:menuitem>
 						<p:menuitem value="Dados pessoais" outcome="/pessoa/inclui"
 							icon="ui-icon-contact">
 							<f:param name="active" value="inclui_pessoa" />
@@ -46,10 +46,10 @@
 
 			<sec:authorize access="isAuthenticated()">
 				<p:submenu label="Lista" icon="ui-icon-search">
-					<!--p:menuitem value="Usuarios cadastrados" outcome="/usuario/lista"
-					icon="ui-icon-person">
-					<f:param name="active" value="lista_usuarios" />
-				</p:menuitem-->
+					<p:menuitem value="Usuarios cadastrados" outcome="/usuario/lista"
+						icon="ui-icon-person">
+						<f:param name="active" value="lista_usuarios" />
+					</p:menuitem>
 
 					<p:menuitem value="Pessoas cadastradas" outcome="/pessoa/lista"
 						icon="ui-icon-contact">

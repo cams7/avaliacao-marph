@@ -3,14 +3,9 @@
  */
 package br.com.cams7.marph.service;
 
-//import static br.com.cams7.marph.entity.UsuarioEntity.Role.ROLE_ADMIN;
-//import static br.com.cams7.marph.entity.UsuarioEntity.Role.ROLE_NEWUSER;
-//import static br.com.cams7.marph.entity.UsuarioEntity.Role.ROLE_USER;
-
-//import java.util.Arrays;
-//import java.util.HashSet;
 import java.util.Set;
 
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +18,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import br.com.cams7.marph.entity.UsuarioEntity;
-//import br.com.cams7.marph.entity.UsuarioEntity.Role;
 
 /**
  * @author cesar
@@ -42,10 +36,12 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 			throw new UsernameNotFoundException("username is empty or null");
 
 		Session session = sessionFactory.getCurrentSession();
-		UsuarioEntity usuario = (UsuarioEntity) session.getNamedQuery("Usuario.buscaPorLogin")
-				.setParameter("login", username).uniqueResult();
 
-		return buildUserForAuthentication(usuario, usuario.getAuthorities());
+		Query query = session.getNamedQuery("Usuario.buscaPorLogin");
+		query.setParameter("login", username);
+		UsuarioEntity usuario = (UsuarioEntity) query.uniqueResult();
+
+		return buildUserForAuthentication(usuario, usuario.getAutorizacoes());
 	}
 
 	// Converts br.com.cams7.marph.entity.UsuarioEntity user to

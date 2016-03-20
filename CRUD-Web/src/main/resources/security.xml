@@ -26,7 +26,6 @@
 	<!-- isFullyAuthenticated() = Returns true if the user is not an anonymous 
 		or a remember-me user -->
 
-	<http pattern="/favicon.ico" security="none" />
 	<http pattern="/resources" security="none" />
 
 	<http auto-config="true" use-expressions="true">
@@ -42,9 +41,9 @@
 		<intercept-url pattern="/home**" access="permitAll" />
 		<intercept-url pattern="/sobre**" access="permitAll" />
 
-		<!--intercept-url pattern="/usuario/lista**" access="hasAnyRole('ROLE_USER,ROLE_ADMIN')" 
-			/> <intercept-url pattern="/usuario/inclui**" access="hasRole('ROLE_ADMIN')" 
-			/ -->
+		<intercept-url pattern="/usuario/lista**"
+			access="hasAnyRole('ROLE_USER,ROLE_ADMIN')" />
+		<intercept-url pattern="/usuario/inclui**" access="hasRole('ROLE_ADMIN')" />
 
 		<intercept-url pattern="/pessoa/lista**" access="isAuthenticated()" />
 		<intercept-url pattern="/pessoa/inclui**" access="hasRole('ROLE_ADMIN')" />
@@ -53,7 +52,7 @@
 			/> <intercept-url pattern="/endereco/inclui**" access="hasRole('ROLE_ADMIN')" 
 			/ -->
 
-		<intercept-url pattern="/rest/**" access="permitAll" />
+		<intercept-url pattern="/req/**" access="permitAll" />
 
 		<form-login login-page="/login.jsf" login-processing-url="/j_spring_security_check"
 			default-target-url="/home.jsf" authentication-failure-url="/login.jsf?error=true"

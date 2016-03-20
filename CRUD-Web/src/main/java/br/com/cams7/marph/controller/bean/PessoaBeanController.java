@@ -3,6 +3,8 @@
  */
 package br.com.cams7.marph.controller.bean;
 
+import static br.com.cams7.marph.controller.bean.PessoaBeanController.CONTROLLER_NAME;
+
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
@@ -16,8 +18,8 @@ import br.com.cams7.marph.service.PessoaService;
  * @author cesar
  *
  */
-@Controller(PessoaBeanController.CONTROLLER_NAME)
-@ManagedBean(name = PessoaBeanController.CONTROLLER_NAME)
+@Controller(CONTROLLER_NAME)
+@ManagedBean(name = CONTROLLER_NAME)
 @ViewScoped
 public class PessoaBeanController extends AbstractBeanController<PessoaService, PessoaEntity> {
 

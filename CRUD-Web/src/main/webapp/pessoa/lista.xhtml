@@ -53,6 +53,12 @@
 					<h:outputText value="#{pessoa.cpf}" />
 				</p:column>
 
+				<p:column headerText="Nascimento" sortBy="#{pessoa.nascimento}">
+					<h:outputText value="#{pessoa.nascimento}">
+						<f:convertDateTime pattern="dd/MM/yyyy" />
+					</h:outputText>
+				</p:column>
+
 				<f:facet name="footer">
 					<sec:authorize ifAnyGranted="ROLE_USER,ROLE_ADMIN">
 						<p:panelGrid id="totalRows" columns="6">
@@ -92,7 +98,7 @@
 						</p:panelGrid>
 					</sec:authorize>
 					<sec:authorize ifNotGranted="ROLE_USER,ROLE_ADMIN">
-						<h:outputFormat id="totalRows" value="Total cadastrado: {0}">
+						<h:outputFormat id="totalRows" value="Total de cadastrados: {0}">
 							<f:param value="#{pessoaMB.totalRows}" />
 						</h:outputFormat>
 					</sec:authorize>

@@ -3,11 +3,12 @@
  */
 package br.com.cams7.marph.entity;
 
+import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.CollectionTable;
+//import javax.persistence.CollectionTable;
 import javax.persistence.Column;
-import javax.persistence.ElementCollection;
+//import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -33,18 +34,14 @@ import br.com.cams7.app.entity.AbstractEntity;
  */
 @Entity
 @Table(name = "usuario", uniqueConstraints = @UniqueConstraint(columnNames = "login") )
-@NamedQueries({
-		@NamedQuery(name = "Usuario.buscaPorLogin", query = "SELECT u FROM UsuarioEntity u JOIN FETCH u.authorities WHERE u.login=:login"),
-		@NamedQuery(name = "Usuario.buscaTodosDadosPessoais", query = "SELECT u FROM UsuarioEntity u JOIN FETCH u.pessoa p")})
+@NamedQueries({ @NamedQuery(name = "Usuario.buscaPorId", query = "SELECT u FROM UsuarioEntity u WHERE u.id=:id"),
+		@NamedQuery(name = "Usuario.buscaPorLogin", query = "SELECT u FROM UsuarioEntity u WHERE u.login=:login"),
+		@NamedQuery(name = "Usuario.buscaTodosDadosPessoais", query = "SELECT u FROM UsuarioEntity u JOIN FETCH u.pessoa") })
 public class UsuarioEntity extends AbstractEntity {
 
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	// @SequenceGenerator(name = "usuario_seq", sequenceName = "usuario_seq",
-	// initialValue = 1, allocationSize = 1)
-	// @GeneratedValue(strategy = GenerationType.SEQUENCE, generator =
-	// "usuario_seq")
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "id_usuario")
 	private Long id;
@@ -54,23 +51,20 @@ public class UsuarioEntity extends AbstractEntity {
 	@Size(min = 3, max = 30)
 	private String login;
 
-	@Column
-	@NotEmpty
-	@Size(min = 10, max = 80)
+	@Column(length = 80, nullable = false)
 	private String senha;
 
 	@Column(name = "status")
 	@NotNull
 	private Boolean habilitado;
 
+	@NotNull
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name = "id_pessoa", referencedColumnName = "id_pessoa")
 	private PessoaEntity pessoa;
 
-	@Column(name = "autorizacao")
-	@ElementCollection(targetClass = Role.class, fetch = FetchType.LAZY)
-	@CollectionTable(name = "usuario_autorizacao", joinColumns = @JoinColumn(name = "id_usuario") )
-	private Set<Role> authorities;
+	@Column(name = "autorizacoes", length = 50, nullable = true)
+	private String stringAutorizacoes;
 
 	public UsuarioEntity() {
 		super();
@@ -123,15 +117,47 @@ public class UsuarioEntity extends AbstractEntity {
 		this.pessoa = pessoa;
 	}
 
-	public Set<Role> getAuthorities() {
-		return authorities;
+	public String getStringAutorizacoes() {
+		return stringAutorizacoes;
 	}
 
-	public void setAuthorities(Set<Role> authorities) {
-		this.authorities = authorities;
+	public void setStringAutorizacoes(String stringAutorizacoes) {
+		this.stringAutorizacoes = stringAutorizacoes;
 	}
 
-	public enum Role implements GrantedAuthority {
+	public Set<Autorizacao> getAutorizacoes() {
+		if (getStringAutorizacoes() == null)
+			return new HashSet<>();
+
+		Set<Autorizacao> autorizacoes = new HashSet<Autorizacao>();
+
+		for (String value : getStringAutorizacoes().split("-")) {
+			Autorizacao autorizacao = Autorizacao.valueOf(value);
+			autorizacoes.add(autorizacao);
+		}
+
+		return autorizacoes;
+	}
+
+	public void setAutorizacoes(Set<Autorizacao> autorizacoes) {
+		if (autorizacoes != null && !autorizacoes.isEmpty()) {
+			int totalAutorizacoes = autorizacoes.size();
+			StringBuffer stringAutorizacoes = new StringBuffer();
+			int count = 0;
+
+			for (Autorizacao autorizacao : autorizacoes) {
+				stringAutorizacoes.append(autorizacao.name());
+				if (count != totalAutorizacoes - 1)
+					stringAutorizacoes.append("-");
+				count++;
+			}
+
+			setStringAutorizacoes(stringAutorizacoes.toString());
+		} else
+			setStringAutorizacoes(null);
+	}
+
+	public enum Autorizacao implements GrantedAuthority {
 		ROLE_USER, ROLE_NEWUSER, ROLE_ADMIN;
 
 		@Override

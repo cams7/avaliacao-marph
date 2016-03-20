@@ -11,6 +11,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -29,15 +31,14 @@ import br.com.cams7.app.entity.AbstractEntity;
  */
 @Entity
 @Table(name = "pessoa", uniqueConstraints = @UniqueConstraint(columnNames = "cpf") )
+@NamedQueries({
+		@NamedQuery(name = "Pessoa.buscaPorNome", query = "SELECT p FROM PessoaEntity p WHERE p.id NOT IN(SELECT p.id FROM UsuarioEntity u INNER JOIN u.pessoa p) AND LOWER(p.nome) LIKE LOWER(:nome)") })
+
 public class PessoaEntity extends AbstractEntity {
 
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	// @SequenceGenerator(name = "pessoa_seq", sequenceName = "pessoa_seq",
-	// initialValue = 1, allocationSize = 1)
-	// @GeneratedValue(strategy = GenerationType.SEQUENCE, generator =
-	// "pessoa_seq")
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "id_pessoa")
 	private Long id;
