@@ -23,8 +23,18 @@ public class PessoaRepositoryImpl extends AbstractRepository<PessoaEntity> imple
 	}
 
 	@Override
-	public List<PessoaEntity> buscaPorNome(String nome) {
-		Query query = getCurrentSession().getNamedQuery("Pessoa.buscaPorNome");
+	public List<PessoaEntity> buscaPessoasSemUsuarioPeloNome(String nome) {
+		Query query = getCurrentSession().getNamedQuery("Pessoa.buscaPessoasSemUsuarioPeloNome");
+		query.setParameter("nome", "%" + nome + "%");
+		query.setMaxResults(5);
+		@SuppressWarnings("unchecked")
+		List<PessoaEntity> pessoas = query.list();
+		return pessoas;
+	}
+
+	@Override
+	public List<PessoaEntity> buscaPeloNome(String nome) {
+		Query query = getCurrentSession().getNamedQuery("Pessoa.buscaPeloNome");
 		query.setParameter("nome", "%" + nome + "%");
 		query.setMaxResults(5);
 		@SuppressWarnings("unchecked")

@@ -48,9 +48,8 @@
 		<intercept-url pattern="/pessoa/lista**" access="isAuthenticated()" />
 		<intercept-url pattern="/pessoa/inclui**" access="hasRole('ROLE_ADMIN')" />
 
-		<!--intercept-url pattern="/endereco/lista**" access="isAuthenticated()" 
-			/> <intercept-url pattern="/endereco/inclui**" access="hasRole('ROLE_ADMIN')" 
-			/ -->
+		<intercept-url pattern="/endereco/lista**" access="isAuthenticated()" />
+		<intercept-url pattern="/endereco/inclui**" access="hasRole('ROLE_ADMIN')" />
 
 		<intercept-url pattern="/req/**" access="permitAll" />
 

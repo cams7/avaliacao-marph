@@ -25,8 +25,14 @@ public class PessoaServiceImpl extends AbstractService<PessoaRepository, PessoaE
 
 	@Transactional(readOnly = true)
 	@Override
-	public List<PessoaEntity> buscaPorNome(String nome) {
-		return getRepository().buscaPorNome(nome);
+	public List<PessoaEntity> buscaPessoasSemUsuarioPeloNome(String nome) {
+		return getRepository().buscaPessoasSemUsuarioPeloNome(nome);
+	}
+
+	@Transactional(readOnly = true)
+	@Override
+	public List<PessoaEntity> buscaPeloNome(String nome) {
+		return getRepository().buscaPeloNome(nome);
 	}
 
 }

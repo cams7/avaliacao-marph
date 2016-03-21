@@ -1,0 +1,34 @@
+<ui:fragment xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:sec="http://www.springframework.org/security/tags">
+
+	<ul class="nav nav-list" style="padding-top: 15px;">
+		<li><em><h:outputText value="Enderecos" /></em></li>
+
+
+		<li
+			class="#{empty param.active || param.active == 'lista_enderecos' ? 'active' : ''}">
+			<h:link outcome="/endereco/lista">
+				<h:outputText value="Lista" escape="false" />
+				<f:param name="active" value="lista_enderecos" />
+			</h:link>
+		</li>
+
+		<sec:authorize access="hasRole('ROLE_ADMIN')">
+			<li class="#{param.active == 'inclui_endereco' ? 'active' : ''}"><h:link
+					outcome="/endereco/inclui">
+					<h:outputText value="Inclui" escape="false" />
+					<f:param name="active" value="inclui_endereco" />
+				</h:link></li>
+		</sec:authorize>
+		<li class="divider"></li>
+		<li><h:outputLink
+				value="#{facesContext.externalContext.requestContextPath}/j_spring_security_logout">
+				<h:outputText value="Sair" escape="false" />
+			</h:outputLink></li>
+	</ul>
+
+</ui:fragment>

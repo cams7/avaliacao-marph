@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <pageflow:Pageflow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf14581557953020" configfile="/crud-web/src/main/webapp/WEB-INF/faces-config.xml">
-  <nodes xsi:type="pageflow:PFPage" name="*" id="pf14582296723910" outlinks="pf14582296723911 pf14584201727640" path="*"/>
-  <nodes xsi:type="pageflow:PFPage" name="pessoa/lista.xhtml" id="pf14582296723912" referenceLink="//@navigationRule.0/@navigationCase.1/@toViewId|" inlinks="pf14582296723911" path="/pessoa/lista.xhtml"/>
-  <nodes xsi:type="pageflow:PFPage" name="usuario/lista.xhtml" id="pf14584201727641" referenceLink="//@navigationRule.0/@navigationCase.1/@toViewId|" inlinks="pf14584201727640" path="/usuario/lista.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="*" id="pf14582296723910" outlinks="pf14582296723911 pf14584201727640 pf14585146024870" path="*"/>
+  <nodes xsi:type="pageflow:PFPage" name="pessoa/lista.xhtml" id="pf14582296723912" referenceLink="//@navigationRule.0/@navigationCase.0/@toViewId|" inlinks="pf14582296723911" path="/pessoa/lista.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="usuario/lista.xhtml" id="pf14584201727641" referenceLink="//@navigationRule.0/@navigationCase.2/@toViewId|" inlinks="pf14584201727640" path="/usuario/lista.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="endereco/lista.xhtml" id="pf14585146024881" referenceLink="//@navigationRule.0/@navigationCase.2/@toViewId|" inlinks="pf14585146024870" path="/endereco/lista.xhtml"/>
   <links id="pf14582296723911" target="pf14582296723912" source="pf14582296723910" outcome="listaPessoas" redirect="true"/>
   <links id="pf14584201727640" target="pf14584201727641" source="pf14582296723910" outcome="listaUsuarios" redirect="true"/>
+  <links id="pf14585146024870" target="pf14585146024881" source="pf14582296723910" outcome="listaEnderecos" redirect="true"/>
 </pageflow:Pageflow>

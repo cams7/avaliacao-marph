@@ -32,7 +32,8 @@ import br.com.cams7.app.entity.AbstractEntity;
 @Entity
 @Table(name = "pessoa", uniqueConstraints = @UniqueConstraint(columnNames = "cpf") )
 @NamedQueries({
-		@NamedQuery(name = "Pessoa.buscaPorNome", query = "SELECT p FROM PessoaEntity p WHERE p.id NOT IN(SELECT p.id FROM UsuarioEntity u INNER JOIN u.pessoa p) AND LOWER(p.nome) LIKE LOWER(:nome)") })
+		@NamedQuery(name = "Pessoa.buscaPessoasSemUsuarioPeloNome", query = "SELECT p FROM PessoaEntity p WHERE p.id NOT IN(SELECT p.id FROM UsuarioEntity u INNER JOIN u.pessoa p) AND LOWER(p.nome) LIKE LOWER(:nome)"),
+		@NamedQuery(name = "Pessoa.buscaPeloNome", query = "SELECT p FROM PessoaEntity p WHERE LOWER(p.nome) LIKE LOWER(:nome)") })
 
 public class PessoaEntity extends AbstractEntity {
 

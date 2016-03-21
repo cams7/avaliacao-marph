@@ -14,6 +14,8 @@ import br.com.cams7.marph.entity.PessoaEntity;
  */
 public interface PessoaRepository extends BaseRepository<PessoaEntity> {
 
-	List<PessoaEntity> buscaPorNome(String nome);
+	List<PessoaEntity> buscaPessoasSemUsuarioPeloNome(String nome);
+	
+	List<PessoaEntity> buscaPeloNome(String nome);
 
 }

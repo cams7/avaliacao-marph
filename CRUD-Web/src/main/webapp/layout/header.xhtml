@@ -24,10 +24,10 @@
 							icon="ui-icon-contact">
 							<f:param name="active" value="inclui_pessoa" />
 						</p:menuitem>
-						<!--p:menuitem value="Endereco"
-						outcome="/endereco/inclui" icon="ui-icon-contact">
-						<f:param name="active" value="inclui_endereco" />
-					</p:menuitem-->
+						<p:menuitem value="Endereco" outcome="/endereco/inclui"
+							icon="ui-icon-contact">
+							<f:param name="active" value="inclui_endereco" />
+						</p:menuitem>
 					</p:submenu>
 				</sec:authorize>
 
@@ -46,20 +46,20 @@
 
 			<sec:authorize access="isAuthenticated()">
 				<p:submenu label="Lista" icon="ui-icon-search">
-					<p:menuitem value="Usuarios cadastrados" outcome="/usuario/lista"
+					<p:menuitem value="Usuarios" outcome="/usuario/lista"
 						icon="ui-icon-person">
 						<f:param name="active" value="lista_usuarios" />
 					</p:menuitem>
 
-					<p:menuitem value="Pessoas cadastradas" outcome="/pessoa/lista"
+					<p:menuitem value="Pessoas" outcome="/pessoa/lista"
 						icon="ui-icon-contact">
 						<f:param name="active" value="lista_pessoas" />
 					</p:menuitem>
 
-					<!--p:menuitem value="Enderecos cadastrados"
-					outcome="/endereco/lista" icon="ui-icon-contact">
-					<f:param name="active" value="lista_enderecos" />
-				</p:menuitem-->
+					<p:menuitem value="Enderecos" outcome="/endereco/lista"
+						icon="ui-icon-contact">
+						<f:param name="active" value="lista_enderecos" />
+					</p:menuitem>
 				</p:submenu>
 			</sec:authorize>
 

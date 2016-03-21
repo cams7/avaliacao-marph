@@ -6,9 +6,7 @@ package br.com.cams7.marph.entity;
 import java.util.HashSet;
 import java.util.Set;
 
-//import javax.persistence.CollectionTable;
 import javax.persistence.Column;
-//import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -34,8 +32,8 @@ import br.com.cams7.app.entity.AbstractEntity;
  */
 @Entity
 @Table(name = "usuario", uniqueConstraints = @UniqueConstraint(columnNames = "login") )
-@NamedQueries({ @NamedQuery(name = "Usuario.buscaPorId", query = "SELECT u FROM UsuarioEntity u WHERE u.id=:id"),
-		@NamedQuery(name = "Usuario.buscaPorLogin", query = "SELECT u FROM UsuarioEntity u WHERE u.login=:login"),
+@NamedQueries({
+		@NamedQuery(name = "Usuario.buscaPeloLogin", query = "SELECT u FROM UsuarioEntity u WHERE u.login=:login"),
 		@NamedQuery(name = "Usuario.buscaTodosDadosPessoais", query = "SELECT u FROM UsuarioEntity u JOIN FETCH u.pessoa") })
 public class UsuarioEntity extends AbstractEntity {
 

@@ -1,0 +1,83 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:sec="http://www.springframework.org/security/tags"
+	template="/layout/template.xhtml">
+
+	<ui:define name="pageTitle">
+		<h:outputText value="Lista de usuarios" />
+	</ui:define>
+
+	<f:metadata>
+		<f:event type="preRenderView" listener="#{usuarioMB.reset}" />
+	</f:metadata>
+
+	<ui:define name="sidebar">
+		<ui:include src="menu.xhtml" />
+	</ui:define>
+
+	<ui:define name="content">
+		<div style="border-bottom: 1px solid #E5E5E5;">
+			<h4>
+				<h:outputText value="Usuarios" />
+				<small> <h:outputText value="Listagem" /></small>
+			</h4>
+		</div>
+
+		<h:form id="usuarioForm" styleClass="form-horizontal">
+			<p:growl showDetail="true" life="5000" widgetVar="mensagens" />
+
+			<p:dataTable id="usuarioTable" var="usuario"
+				value="#{usuarioMB.lazyModel}" paginator="true"
+				rows="#{usuarioMB.rows}" first="#{usuarioMB.first}"
+				paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+				rowsPerPageTemplate="3,5,10,15" selectionMode="single"
+				selection="#{usuarioMB.selectedEntity}" lazy="true"
+				emptyMessage="Nenhum Usuario foi cadastrado"
+				widgetVar="usuarioTable" resizableColumns="true">
+
+				<sec:authorize access="hasRole('ROLE_ADMIN')">
+					<p:ajax event="rowSelect" listener="#{usuarioMB.onRowSelect}"
+						update=":usuarioForm:usuarioDetail"
+						onsuccess="PF('usuarioDialog').show();" />
+				</sec:authorize>
+
+				<p:column headerText="Nome">
+					<h:outputText value="#{usuario.pessoa.nome}" />
+				</p:column>
+
+				<p:column headerText="Login" sortBy="#{usuario.login}">
+					<h:outputText value="#{usuario.login}" />
+				</p:column>
+
+				<p:column headerText="Esta ativo" sortBy="#{usuario.habilitado}">
+					<h:outputText value="#{usuario.habilitado ? 'Sim': 'Nao'}" />
+				</p:column>
+
+				<f:facet name="footer">
+					<p:panelGrid id="totalRows" columns="1" columnClasses="value"
+						style="width:100%">
+						<h:outputFormat value="Total de cadastrados: {0}">
+							<f:param value="#{usuarioMB.totalRows}" />
+						</h:outputFormat>
+					</p:panelGrid>
+				</f:facet>
+			</p:dataTable>
+
+			<sec:authorize access="hasRole('ROLE_ADMIN')">
+				<p:dialog header="Altera dados de usuario" widgetVar="usuarioDialog"
+					modal="true" resizable="false">
+
+					<p:ajax event="close" listener="#{usuarioMB.handleClose}" />
+
+					<ui:include src="form.xhtml">
+						<ui:param name="usuario" value="#{usuarioMB.selectedEntity}" />
+						<ui:param name="createEntity" value="#{false}" />
+					</ui:include>
+				</p:dialog>
+			</sec:authorize>
+		</h:form>
+	</ui:define>
+</ui:composition>

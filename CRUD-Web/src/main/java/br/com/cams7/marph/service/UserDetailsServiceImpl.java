@@ -37,7 +37,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
 		Session session = sessionFactory.getCurrentSession();
 
-		Query query = session.getNamedQuery("Usuario.buscaPorLogin");
+		Query query = session.getNamedQuery("Usuario.buscaPeloLogin");
 		query.setParameter("login", username);
 		UsuarioEntity usuario = (UsuarioEntity) query.uniqueResult();
 

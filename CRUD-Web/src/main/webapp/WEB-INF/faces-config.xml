@@ -27,6 +27,11 @@
 			<to-view-id>/usuario/lista.xhtml</to-view-id>
 			<redirect />
 		</navigation-case>
+		<navigation-case>
+			<from-outcome>listaEnderecos</from-outcome>
+			<to-view-id>/endereco/lista.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
 	</navigation-rule>
 
 	<!-- Define uma lista para servir como Managed Bean para a pagina sobre. -->

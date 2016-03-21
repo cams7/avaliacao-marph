@@ -1,0 +1,149 @@
+<ui:fragment xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+	<p:outputPanel id="usuarioDetail" style="text-align:center;">
+		<h:panelGroup id="usuarioPanel" rendered="#{not empty usuario}">
+
+			<!-- register a PostValidateEvent -->
+			<f:event listener="#{usuarioMB.validaSenha}" type="postValidate" />
+
+			<c:choose>
+				<c:when test="#{not createEntity}">
+					<div class="control-group">
+						<h:outputLabel for="usuarioId" value="Id"
+							styleClass="control-label" />
+						<h:outputText id="usuarioId" value="#{usuario.id}" label="Id"
+							styleClass="controls" style="float: left;margin-left: 20px;" />
+					</div>
+					<div class="control-group">
+						<h:outputLabel for="pessoaNome" value="Nome"
+							styleClass="control-label" />
+						<h:outputText id="pessoaNome" value="#{usuario.pessoa.nome}"
+							label="Nome" styleClass="controls"
+							style="float: left;margin-left: 20px;" />
+					</div>
+				</c:when>
+				<c:otherwise>
+					<div class="control-group">
+						<h:outputLabel for="pessoaNome" value="Nome"
+							styleClass="control-label" />
+						<div class="controls" style="float: left; margin-left: 20px;">
+							<p:autoComplete id="pessoaNome"
+								value="#{usuario.pessoa}" var="p"
+								itemLabel="#{p.nome}" itemValue="#{p}" converter="pessoaConvert"
+								forceSelection="true" minQueryLength="1" effect="fade"
+								queryDelay="300" completeMethod="#{usuarioMB.buscaPessoas}"
+								styleClass="input-large">
+								<p:ajax event="itemSelect" listener="#{usuarioMB.onItemSelect}"
+									update="mensagens" />
+							</p:autoComplete>
+							<p:message for="pessoaNome" styleClass="alert alert-error" />
+						</div>
+					</div>
+				</c:otherwise>
+			</c:choose>
+
+			<div class="control-group">
+				<h:outputLabel for="usuarioLogin" value="Login"
+					styleClass="control-label" />
+				<div class="controls" style="float: left; margin-left: 20px;">
+					<p:inputText id="usuarioLogin" value="#{usuario.login}"
+						label="Login" styleClass="input-large" />
+					<p:message for="usuarioLogin" styleClass="alert alert-error" />
+				</div>
+			</div>
+
+			<div class="control-group">
+				<h:outputLabel for="usuarioSenha" value="Senha"
+					styleClass="control-label" />
+				<div class="controls" style="float: left; margin-left: 20px;">
+					<p:password id="usuarioSenha" value="#{usuario.senha}"
+						required="true" requiredMessage="O campo 'Senha' e obrigatorio"
+						label="Senha" styleClass="input-large" />
+					<p:message for="usuarioSenha" styleClass="alert alert-error" />
+				</div>
+			</div>
+
+			<div class="control-group">
+				<h:outputLabel for="confirmaoSenha" value="Confirmacao"
+					styleClass="control-label" />
+				<div class="controls" style="float: left; margin-left: 20px;">
+					<p:password id="confirmaoSenha" required="true"
+						requiredMessage="O campo 'Confirmacao' e obrigatorio"
+						label="Confirmacao" styleClass="input-large" />
+					<p:message for="confirmaoSenha" styleClass="alert alert-error" />
+				</div>
+			</div>
+
+			<div class="control-group">
+				<h:outputLabel for="usuarioAutorizacoes" value="Autorizacoes"
+					styleClass="control-label" />
+				<div class="controls" style="float: left; margin-left: 20px;">
+					<p:selectManyCheckbox id="usuarioAutorizacoes"
+						value="#{usuario.autorizacoes}" label="Autorizacoes"
+						styleClass="input-large" converter="autorizacaoConvert">
+						<f:selectItems value="#{usuarioMB.autorizacoes}" />
+					</p:selectManyCheckbox>
+					<p:message for="usuarioAutorizacoes" styleClass="alert alert-error" />
+				</div>
+			</div>
+
+			<div class="control-group">
+				<h:outputLabel for="usuarioHabilitado" value="Esta ativo"
+					styleClass="control-label" />
+				<div class="controls" style="float: left; margin-left: 20px;">
+					<p:selectOneRadio id="usuarioHabilitado"
+						value="#{usuario.habilitado}" label="Esta ativo"
+						styleClass="input-small">
+						<f:selectItem itemValue="#{true}" itemLabel="Sim" />
+						<f:selectItem itemValue="#{false}" itemLabel="Nao" />
+					</p:selectOneRadio>
+					<p:message for="usuarioHabilitado" styleClass="alert alert-error" />
+				</div>
+			</div>
+
+			<div class="control-group">
+				<div class="controls">
+					<c:choose>
+						<c:when test="#{not createEntity}">
+							<p:commandButton value="Atualiza"
+								actionListener="#{usuarioMB.updateEntity}"
+								styleClass="btn btn-success"
+								oncomplete="handleUpdateRequest(xhr, status, args);"
+								process="@form" />
+							<p:commandButton value="Exclui"
+								actionListener="#{usuarioMB.removeEntity}"
+								styleClass="btn btn-danger"
+								oncomplete="handleUpdateRequest(xhr, status, args);"
+								update="usuarioTable:totalRows" immediate="true"
+								rendered="#{not createEntity}" />
+							<p:button value="Cancela" onclick="PF('usuarioDialog').hide();"
+								styleClass="btn" />
+						</c:when>
+						<c:otherwise>
+							<p:commandButton value="Salva" action="#{usuarioMB.createEntity}"
+								styleClass="btn btn-success" update="usuarioPanel"
+								process="@form" />
+						</c:otherwise>
+					</c:choose>
+				</div>
+			</div>
+		</h:panelGroup>
+	</p:outputPanel>
+	<c:if test="#{not createEntity}">
+		<p:remoteCommand name="atualizaFomulario" update="usuarioPanel" />
+
+		<h:outputScript library="js" name="list.page.js" />
+
+		<script type="text/javascript">
+			function handleUpdateRequest(xhr, status, args) {
+				updateListPage("mensagens", "usuarioTable", "usuarioDialog",
+						args);
+			}
+		</script>
+	</c:if>
+</ui:fragment>

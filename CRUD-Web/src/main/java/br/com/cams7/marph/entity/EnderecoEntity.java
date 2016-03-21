@@ -30,10 +30,6 @@ public class EnderecoEntity extends AbstractEntity {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	// @SequenceGenerator(name = "endereco_seq", sequenceName = "endereco_seq",
-	// initialValue = 1, allocationSize = 1)
-	// @GeneratedValue(strategy = GenerationType.SEQUENCE, generator =
-	// "endereco_seq")
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "id_endereco")
 	private Long id;
