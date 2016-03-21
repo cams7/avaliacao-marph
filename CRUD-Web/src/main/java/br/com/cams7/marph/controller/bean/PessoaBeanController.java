@@ -33,6 +33,11 @@ public class PessoaBeanController extends AbstractBeanController<PessoaService, 
 		super();
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see br.com.cams7.app.controller.AbstractBeanController#createEntity()
+	 */
 	@Override
 	public String createEntity() {
 		String listPage = super.createEntity();
@@ -43,6 +48,11 @@ public class PessoaBeanController extends AbstractBeanController<PessoaService, 
 		return listPage;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see br.com.cams7.app.controller.AbstractBeanController#updateEntity()
+	 */
 	@Override
 	public void updateEntity() {
 		super.updateEntity();
@@ -51,6 +61,11 @@ public class PessoaBeanController extends AbstractBeanController<PessoaService, 
 				String.format("Os dados pessoais de \"%s\" foram atualizados.", getSelectedEntity().getNome()));
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see br.com.cams7.app.controller.AbstractBeanController#removeEntity()
+	 */
 	@Override
 	public void removeEntity() {
 		super.removeEntity();
@@ -59,6 +74,11 @@ public class PessoaBeanController extends AbstractBeanController<PessoaService, 
 				String.format("Os dados pessoais de \"%s\" foram removidos.", getSelectedEntity().getNome()));
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see br.com.cams7.app.controller.AbstractBeanController#getListPage()
+	 */
 	@Override
 	protected String getListPage() {
 		return LIST_PAGE;

@@ -12,19 +12,36 @@ import java.util.Map;
 import br.com.cams7.app.entity.AbstractEntity;
 
 /**
+ * Classe utilitaria
+ * 
  * @author cesar
- *
  */
 public final class AppHelper {
 
+	/**
+	 * Retorna o tipo da classe usada como Template
+	 * 
+	 * @param type
+	 *            Tipo de classe que pode ser Repository, Service e Controller
+	 * @param argumentNumber
+	 *            Indice do Template
+	 * @return Tipo de classe que normalmente e uma Entity
+	 */
 	public static Class<?> getType(Class<?> type, byte argumentNumber) {
 		Class<?> returnType = (Class<?>) ((ParameterizedType) type.getGenericSuperclass())
 				.getActualTypeArguments()[argumentNumber];
 		return returnType;
 	}
-	
-	public static <E extends AbstractEntity> E getNewEntity(Class<E> entityType)
-			throws AppException {
+
+	/**
+	 * Cria uma nova entidade
+	 * 
+	 * @param entityType
+	 *            Tipo de classe Entity
+	 * @return Entity
+	 * @throws AppException
+	 */
+	public static <E extends AbstractEntity> E getNewEntity(Class<E> entityType) throws AppException {
 		try {
 			E entity = entityType.newInstance();
 			return entity;
@@ -33,6 +50,13 @@ public final class AppHelper {
 		}
 	}
 
+	/**
+	 * Retorna um map que nao esteja vazio
+	 * 
+	 * @param map
+	 *            Map
+	 * @return Map
+	 */
 	public static <K, V> Map<K, V> removeEmptyArray(Map<K, V> map) {
 		if (map != null && !map.isEmpty()) {
 			Iterator<Map.Entry<K, V>> i = map.entrySet().iterator();
@@ -50,6 +74,15 @@ public final class AppHelper {
 		return map;
 	}
 
+	/**
+	 * Verifica entre dois map se eles tem os mesmos valores
+	 * 
+	 * @param map1
+	 *            Map
+	 * @param map2
+	 *            Map
+	 * @return boolean
+	 */
 	public static <K, V> boolean equalMaps(Map<K, V> map1, Map<K, V> map2) {
 
 		if (map1 == null && map2 == null)

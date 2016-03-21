@@ -27,6 +27,8 @@ import org.springframework.security.core.GrantedAuthority;
 import br.com.cams7.app.entity.AbstractEntity;
 
 /**
+ * Entidade usuario
+ * 
  * @author cesar
  *
  */

@@ -13,6 +13,8 @@ import org.springframework.stereotype.Component;
 import br.com.cams7.marph.entity.UsuarioEntity.Autorizacao;
 
 /**
+ * Converte Autorizacao
+ * 
  * @author cesar
  *
  */

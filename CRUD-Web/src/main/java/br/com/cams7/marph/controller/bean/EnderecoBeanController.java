@@ -36,6 +36,10 @@ public class EnderecoBeanController extends AbstractBeanController<EnderecoServi
 
 	private final String LIST_PAGE = "listaEnderecos";
 
+	/**
+	 * Utiliza a injecao de dependencia do <code>Spring Framework</code> para
+	 * resolver a instancia do <code>PessoaService</code>.
+	 */
 	@Autowired
 	private PessoaService pessoaService;
 
@@ -43,6 +47,11 @@ public class EnderecoBeanController extends AbstractBeanController<EnderecoServi
 		super();
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see br.com.cams7.app.controller.AbstractBeanController#createEntity()
+	 */
 	@Override
 	public String createEntity() {
 		String listPage = super.createEntity();
@@ -54,6 +63,11 @@ public class EnderecoBeanController extends AbstractBeanController<EnderecoServi
 		return listPage;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see br.com.cams7.app.controller.AbstractBeanController#updateEntity()
+	 */
 	@Override
 	public void updateEntity() {
 		super.updateEntity();
@@ -63,6 +77,11 @@ public class EnderecoBeanController extends AbstractBeanController<EnderecoServi
 						getSelectedEntity().getBairro(), getSelectedEntity().getRua()));
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see br.com.cams7.app.controller.AbstractBeanController#removeEntity()
+	 */
 	@Override
 	public void removeEntity() {
 		super.removeEntity();
@@ -72,16 +91,32 @@ public class EnderecoBeanController extends AbstractBeanController<EnderecoServi
 						getSelectedEntity().getBairro(), getSelectedEntity().getRua()));
 	}
 
-	public List<PessoaEntity> buscaPessoas(String query) {
-		List<PessoaEntity> pessoas = pessoaService.buscaPeloNome(query);
+	/**
+	 * Busca pessoas pelo nome
+	 * 
+	 * @param nome
+	 * @return Pessoas
+	 */
+	public List<PessoaEntity> buscaPessoas(String nome) {
+		List<PessoaEntity> pessoas = pessoaService.buscaPeloNome(nome);
 		return pessoas;
 	}
 
+	/**
+	 * Exibe uma mensagem
+	 * 
+	 * @param event
+	 */
 	public void onItemSelect(SelectEvent event) {
 		addINFOMessage("Pessoa selecionada!!!", String.format("A pessoa cujo id e \"%s\" foi selecionada.",
 				((PessoaEntity) event.getObject()).getId()));
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see br.com.cams7.app.controller.AbstractBeanController#getListPage()
+	 */
 	@Override
 	protected String getListPage() {
 		return LIST_PAGE;

@@ -10,9 +10,9 @@ import org.hibernate.Criteria;
 import org.hibernate.FetchMode;
 import org.springframework.stereotype.Repository;
 
-import br.com.cams7.app.entity.SortOrder;
 import br.com.cams7.app.repository.AbstractRepository;
 import br.com.cams7.marph.entity.UsuarioEntity;
+import br.com.cams7.utils.SortOrder;
 
 /**
  * @author cesar
@@ -25,6 +25,12 @@ public class UsuarioRepositoryImpl extends AbstractRepository<UsuarioEntity> imp
 		super();
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see br.com.cams7.app.repository.AbstractRepository#search(int, short,
+	 * java.lang.String, br.com.cams7.utils.SortOrder, java.util.Map)
+	 */
 	@Override
 	public List<UsuarioEntity> search(int pageFirst, short pageSize, String sortField, SortOrder sortOrder,
 			Map<String, Object> filters) {
@@ -37,6 +43,12 @@ public class UsuarioRepositoryImpl extends AbstractRepository<UsuarioEntity> imp
 		return usuarios;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * br.com.cams7.marph.repository.UsuarioRepository#buscaTodosDadosPessoais()
+	 */
 	@Override
 	public List<UsuarioEntity> buscaTodosDadosPessoais() {
 		@SuppressWarnings("unchecked")

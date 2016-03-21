@@ -22,6 +22,8 @@ import br.com.cams7.app.service.BaseService;
 import br.com.cams7.utils.AppException;
 
 /**
+ * Classe comum as classes RestControllers
+ * 
  * @author cesar
  *
  */
@@ -113,6 +115,13 @@ public abstract class AbstractRestController<S extends BaseService<E>, E extends
 		return new ResponseEntity<E>(HttpStatus.NO_CONTENT);
 	}
 
+	/**
+	 * Manipula a Excecao
+	 * 
+	 * @param exception
+	 *            AppException
+	 * @return
+	 */
 	@ExceptionHandler({ AppException.class })
 	public @ResponseBody ResponseEntity<?> handleException(AppException exception) {
 		String errorMessage = exception.getMessage();
@@ -123,6 +132,13 @@ public abstract class AbstractRestController<S extends BaseService<E>, E extends
 		return response;
 	}
 
+	/**
+	 * Inclui o parametro "errorMessage" no cabecario
+	 * 
+	 * @param message
+	 *            Messagem de erro
+	 * @return
+	 */
 	private HttpHeaders getHeaders(String message) {
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("errorMessage", message);
