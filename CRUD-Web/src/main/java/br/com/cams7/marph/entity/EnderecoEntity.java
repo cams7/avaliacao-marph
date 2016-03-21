@@ -20,6 +20,8 @@ import org.hibernate.validator.constraints.NotEmpty;
 import br.com.cams7.app.entity.AbstractEntity;
 
 /**
+ * Entidade endereco
+ * 
  * @author cesar
  *
  */
@@ -44,9 +46,9 @@ public class EnderecoEntity extends AbstractEntity {
 	@Size(min = 3, max = 50)
 	private String bairro;
 
-	@Column
+	@Column(length = 11)
 	@NotEmpty
-	@Digits(fraction = 0, integer = 12)
+	@Digits(fraction = 0, integer = 11)
 	private String telefone;
 
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)

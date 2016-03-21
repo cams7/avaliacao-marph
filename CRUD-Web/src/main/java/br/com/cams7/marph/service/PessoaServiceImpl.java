@@ -23,12 +23,25 @@ public class PessoaServiceImpl extends AbstractService<PessoaRepository, PessoaE
 		super();
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see br.com.cams7.marph.repository.PessoaRepository#
+	 * buscaPessoasSemUsuarioPeloNome(java.lang.String)
+	 */
 	@Transactional(readOnly = true)
 	@Override
 	public List<PessoaEntity> buscaPessoasSemUsuarioPeloNome(String nome) {
 		return getRepository().buscaPessoasSemUsuarioPeloNome(nome);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * br.com.cams7.marph.repository.PessoaRepository#buscaPeloNome(java.lang.
+	 * String)
+	 */
 	@Transactional(readOnly = true)
 	@Override
 	public List<PessoaEntity> buscaPeloNome(String nome) {

@@ -4,8 +4,9 @@
 package br.com.cams7.utils;
 
 /**
+ * Classe Exception da aplicacao
+ * 
  * @author cesar
- *
  */
 public class AppException extends Exception {
 

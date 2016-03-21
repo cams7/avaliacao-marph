@@ -26,6 +26,8 @@ import org.hibernate.validator.constraints.NotEmpty;
 import br.com.cams7.app.entity.AbstractEntity;
 
 /**
+ * Entidade pessoa
+ * 
  * @author cesar
  *
  */
@@ -49,9 +51,9 @@ public class PessoaEntity extends AbstractEntity {
 	@Size(min = 3, max = 45)
 	private String nome;
 
-	@Column
+	@Column(length = 11)
 	@NotEmpty
-	@Digits(fraction = 0, integer = 12)
+	@Digits(fraction = 0, integer = 11)
 	private String cpf;
 
 	@Temporal(TemporalType.TIMESTAMP)

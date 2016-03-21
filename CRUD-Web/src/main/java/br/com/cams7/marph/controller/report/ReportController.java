@@ -32,10 +32,18 @@ public class ReportController {
 
 	private static final Logger LOG = Logger.getLogger(ReportController.class.getName());
 
+	@Autowired
+	private UsuarioService service;
+
 	public ReportController() {
 		super();
 	}
 
+	/**
+	 * Busca todos os usuario que estao relacionados a uma pessoa
+	 * 
+	 * @return Map
+	 */
 	private Map<String, Object> getParameterMap() {
 		Map<String, Object> parameterMap = new HashMap<String, Object>();
 
@@ -48,9 +56,12 @@ public class ReportController {
 		return parameterMap;
 	}
 
-	@Autowired
-	private UsuarioService service;
-
+	/**
+	 * Gera relatorio PDF
+	 * 
+	 * @param modelAndView
+	 * @return
+	 */
 	@RequestMapping(method = RequestMethod.GET, value = "pdf")
 	public ModelAndView generatePdfReport(ModelAndView modelAndView) {
 
@@ -58,13 +69,19 @@ public class ReportController {
 
 		Map<String, Object> parameterMap = getParameterMap();
 
-		// pdfReport bean has ben declared in the jasper-views.xml file
+		// pdfReport foi declarado no arquivo jasper-views.xml
 		modelAndView = new ModelAndView("pdfReport", parameterMap);
 
 		return modelAndView;
 
-	}// generatePdfReport
+	}
 
+	/**
+	 * Gera arquivo XLS
+	 * 
+	 * @param modelAndView
+	 * @return
+	 */
 	@RequestMapping(method = RequestMethod.GET, value = "xls")
 	public ModelAndView generateXlsReport(ModelAndView modelAndView) {
 
@@ -72,13 +89,19 @@ public class ReportController {
 
 		Map<String, Object> parameterMap = getParameterMap();
 
-		// xlsReport bean has ben declared in the jasper-views.xml file
+		// xlsReport foi declarado no arquivo jasper-views.xml
 		modelAndView = new ModelAndView("xlsReport", parameterMap);
 
 		return modelAndView;
 
-	}// generatePdfReport
+	}
 
+	/**
+	 * Gera arquivo CSV
+	 * 
+	 * @param modelAndView
+	 * @return
+	 */
 	@RequestMapping(method = RequestMethod.GET, value = "csv")
 	public ModelAndView generateCsvReport(ModelAndView modelAndView) {
 
@@ -86,13 +109,19 @@ public class ReportController {
 
 		Map<String, Object> parameterMap = getParameterMap();
 
-		// xlsReport bean has ben declared in the jasper-views.xml file
+		// csvReport foi declarado no arquivo jasper-views.xml
 		modelAndView = new ModelAndView("csvReport", parameterMap);
 
 		return modelAndView;
 
-	}// generatePdfReport
+	}
 
+	/**
+	 * Gera arquivo HTML
+	 * 
+	 * @param modelAndView
+	 * @return
+	 */
 	@RequestMapping(method = RequestMethod.GET, value = "html")
 	public ModelAndView generateHtmlReport(ModelAndView modelAndView) {
 
@@ -100,11 +129,11 @@ public class ReportController {
 
 		Map<String, Object> parameterMap = getParameterMap();
 
-		// xlsReport bean has ben declared in the jasper-views.xml file
+		// htmlReport foi declarado no arquivo jasper-views.xml
 		modelAndView = new ModelAndView("htmlReport", parameterMap);
 
 		return modelAndView;
 
-	}// generatePdfReport
+	}
 
-}// ReportController
+}

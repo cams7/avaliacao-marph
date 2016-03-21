@@ -24,15 +24,24 @@ public class UsuarioServiceImpl extends AbstractService<UsuarioRepository, Usuar
 		super();
 	}
 
-	private String getHashedPassword(String password) {
+	/**
+	 * Criptografa a senha do usuario
+	 * 
+	 * @param senha
+	 * @return
+	 */
+	private String getHashedPassword(String senha) {
 		// password: 12345
 		// encoder: $2a$10$bu2RRFWNW1K/erN7YPDc6uKO4nqEaclp5QOnFiDgNipyOmBYIQ0KS
 
 		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-		String hashedPassword = passwordEncoder.encode(password);
+		String hashedPassword = passwordEncoder.encode(senha);
 		return hashedPassword;
 	}
 
+	/* (non-Javadoc)
+	 * @see br.com.cams7.app.service.AbstractService#salva(br.com.cams7.app.entity.AbstractEntity)
+	 */
 	@Transactional
 	@Override
 	public void salva(UsuarioEntity usuario) {
@@ -42,6 +51,9 @@ public class UsuarioServiceImpl extends AbstractService<UsuarioRepository, Usuar
 		super.salva(usuario);
 	}
 
+	/* (non-Javadoc)
+	 * @see br.com.cams7.app.service.AbstractService#atualiza(br.com.cams7.app.entity.AbstractEntity)
+	 */
 	@Transactional
 	@Override
 	public void atualiza(UsuarioEntity usuario) {
@@ -51,6 +63,9 @@ public class UsuarioServiceImpl extends AbstractService<UsuarioRepository, Usuar
 		super.atualiza(usuario);
 	}
 
+	/* (non-Javadoc)
+	 * @see br.com.cams7.marph.repository.UsuarioRepository#buscaTodosDadosPessoais()
+	 */
 	@Transactional(readOnly = true)
 	@Override
 	public List<UsuarioEntity> buscaTodosDadosPessoais() {

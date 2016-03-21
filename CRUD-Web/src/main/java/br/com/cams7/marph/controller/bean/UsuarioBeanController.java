@@ -44,6 +44,10 @@ public class UsuarioBeanController extends AbstractBeanController<UsuarioService
 
 	private final String LIST_PAGE = "listaUsuarios";
 
+	/**
+	 * Utiliza a injecao de dependencia do <code>Spring Framework</code> para
+	 * resolver a instancia do <code>PessoaService</code>.
+	 */
 	@Autowired
 	private PessoaService pessoaService;
 
@@ -51,6 +55,11 @@ public class UsuarioBeanController extends AbstractBeanController<UsuarioService
 		super();
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see br.com.cams7.app.controller.AbstractBeanController#createEntity()
+	 */
 	@Override
 	public String createEntity() {
 		String listPage = super.createEntity();
@@ -61,6 +70,11 @@ public class UsuarioBeanController extends AbstractBeanController<UsuarioService
 		return listPage;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see br.com.cams7.app.controller.AbstractBeanController#updateEntity()
+	 */
 	@Override
 	public void updateEntity() {
 		super.updateEntity();
@@ -69,6 +83,11 @@ public class UsuarioBeanController extends AbstractBeanController<UsuarioService
 				String.format("Os dados do usuario \"%s\" foram atualizados.", getSelectedEntity().getLogin()));
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see br.com.cams7.app.controller.AbstractBeanController#removeEntity()
+	 */
 	@Override
 	public void removeEntity() {
 		super.removeEntity();
@@ -77,16 +96,32 @@ public class UsuarioBeanController extends AbstractBeanController<UsuarioService
 				String.format("O usuario \"%s\" foi removido.", getSelectedEntity().getLogin()));
 	}
 
-	public List<PessoaEntity> buscaPessoas(String query) {
-		List<PessoaEntity> pessoas = pessoaService.buscaPessoasSemUsuarioPeloNome(query);
+	/**
+	 * Busca pessoas pelo nome
+	 * 
+	 * @param nome
+	 * @return Pessoas
+	 */
+	public List<PessoaEntity> buscaPessoas(String nome) {
+		List<PessoaEntity> pessoas = pessoaService.buscaPessoasSemUsuarioPeloNome(nome);
 		return pessoas;
 	}
 
+	/**
+	 * Exibe uma mensagem
+	 * 
+	 * @param event
+	 */
 	public void onItemSelect(SelectEvent event) {
 		addINFOMessage("Pessoa selecionada!!!", String.format("A pessoa cujo id e \"%s\" foi selecionada.",
 				((PessoaEntity) event.getObject()).getId()));
 	}
 
+	/**
+	 * Valida senha
+	 * 
+	 * @param event
+	 */
 	public void validaSenha(ComponentSystemEvent event) {
 		FacesContext context = FacesContext.getCurrentInstance();
 
@@ -129,6 +164,9 @@ public class UsuarioBeanController extends AbstractBeanController<UsuarioService
 		}
 	}
 
+	/**
+	 * @return Autorizacoes
+	 */
 	public Set<Autorizacao> getAutorizacoes() {
 		Set<Autorizacao> autorizacoes = new HashSet<Autorizacao>();
 
@@ -138,6 +176,9 @@ public class UsuarioBeanController extends AbstractBeanController<UsuarioService
 		return autorizacoes;
 	}
 
+	/* (non-Javadoc)
+	 * @see br.com.cams7.app.controller.AbstractBeanController#getListPage()
+	 */
 	@Override
 	protected String getListPage() {
 		return LIST_PAGE;

@@ -10,6 +10,8 @@ import br.com.cams7.app.entity.AbstractEntity;
 import br.com.cams7.app.service.BaseService;
 
 /**
+ * Classe comum as classes Controllers
+ * 
  * @author cesar
  *
  */
@@ -18,8 +20,8 @@ public abstract class AbstractController<S extends BaseService<E>, E extends Abs
 	private final byte ENTITY_ARGUMENT_NUMBER = 1;
 
 	/**
-	 * Utiliza a injeção de dependência do <code>Spring Framework</code> para
-	 * resolver a instancia do <code>Service/code>.
+	 * Utiliza a injecao de dependencia do <code>Spring Framework</code> para
+	 * resolver a instancia do <code>Service</code>.
 	 */
 	@Autowired
 	private S service;
@@ -28,10 +30,18 @@ public abstract class AbstractController<S extends BaseService<E>, E extends Abs
 		super();
 	}
 
+	/**
+	 * @return Service
+	 */
 	protected S getService() {
 		return service;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see br.com.cams7.app.AbstractBase#getEntityArgumentNumber()
+	 */
 	@Override
 	protected byte getEntityArgumentNumber() {
 		return ENTITY_ARGUMENT_NUMBER;

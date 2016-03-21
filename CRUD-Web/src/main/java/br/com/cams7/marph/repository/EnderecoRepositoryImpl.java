@@ -10,9 +10,9 @@ import org.hibernate.Criteria;
 import org.hibernate.FetchMode;
 import org.springframework.stereotype.Repository;
 
-import br.com.cams7.app.entity.SortOrder;
 import br.com.cams7.app.repository.AbstractRepository;
 import br.com.cams7.marph.entity.EnderecoEntity;
+import br.com.cams7.utils.SortOrder;
 
 /**
  * @author cesar
@@ -25,6 +25,9 @@ public class EnderecoRepositoryImpl extends AbstractRepository<EnderecoEntity> i
 		super();
 	}
 	
+	/* (non-Javadoc)
+	 * @see br.com.cams7.app.repository.AbstractRepository#search(int, short, java.lang.String, br.com.cams7.utils.SortOrder, java.util.Map)
+	 */
 	@Override
 	public List<EnderecoEntity> search(int pageFirst, short pageSize, String sortField, SortOrder sortOrder,
 			Map<String, Object> filters) {

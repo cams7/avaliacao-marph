@@ -11,10 +11,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 import br.com.cams7.app.AbstractBase;
 import br.com.cams7.app.entity.AbstractEntity;
-import br.com.cams7.app.entity.SortOrder;
 import br.com.cams7.app.repository.BaseRepository;
+import br.com.cams7.utils.SortOrder;
 
 /**
+ * Classe comum as classes Services
+ * 
  * @author cesar
  *
  */
@@ -23,6 +25,10 @@ public abstract class AbstractService<R extends BaseRepository<E>, E extends Abs
 
 	private final byte ENTITY_ARGUMENT_NUMBER = 1;
 
+	/**
+	 * Utiliza a injecao de dependencia do <code>Spring Framework</code> para
+	 * resolver a instancia do <code>Repository</code>.
+	 */
 	@Autowired
 	private R repository;
 
@@ -30,42 +36,83 @@ public abstract class AbstractService<R extends BaseRepository<E>, E extends Abs
 		super();
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * br.com.cams7.app.repository.BaseRepository#salva(br.com.cams7.app.entity.
+	 * AbstractEntity)
+	 */
 	@Transactional
 	@Override
 	public void salva(E entity) {
 		getRepository().salva(entity);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * br.com.cams7.app.repository.BaseRepository#atualiza(br.com.cams7.app.
+	 * entity.AbstractEntity)
+	 */
 	@Transactional
 	@Override
 	public void atualiza(E entity) {
 		getRepository().atualiza(entity);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see br.com.cams7.app.repository.BaseRepository#remove(java.lang.Long)
+	 */
 	@Transactional
 	@Override
 	public void remove(Long id) {
 		getRepository().remove(id);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see br.com.cams7.app.repository.BaseRepository#remove(java.util.List)
+	 */
 	@Transactional
 	@Override
 	public void remove(List<Long> ids) {
 		getRepository().remove(ids);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see br.com.cams7.app.repository.BaseRepository#buscaTodos()
+	 */
 	@Transactional(readOnly = true)
 	@Override
 	public List<E> buscaTodos() {
 		return getRepository().buscaTodos();
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * br.com.cams7.app.repository.BaseRepository#buscaPorId(java.lang.Long)
+	 */
 	@Transactional(readOnly = true)
 	@Override
 	public E buscaPorId(Long id) {
 		return getRepository().buscaPorId(id);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see br.com.cams7.app.repository.BaseRepository#search(int, short,
+	 * java.lang.String, br.com.cams7.utils.SortOrder, java.util.Map)
+	 */
 	@Transactional(readOnly = true)
 	@Override
 	public List<E> search(int pageFirst, short pageSize, String sortField, SortOrder sortOrder,
@@ -73,16 +120,29 @@ public abstract class AbstractService<R extends BaseRepository<E>, E extends Abs
 		return getRepository().search(pageFirst, pageSize, sortField, sortOrder, filters);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see br.com.cams7.app.repository.BaseRepository#count()
+	 */
 	@Transactional(readOnly = true)
 	@Override
 	public int count() {
 		return getRepository().count();
 	}
 
+	/**
+	 * @return Repository
+	 */
 	protected R getRepository() {
 		return repository;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see br.com.cams7.app.AbstractBase#getEntityArgumentNumber()
+	 */
 	@Override
 	protected byte getEntityArgumentNumber() {
 		return ENTITY_ARGUMENT_NUMBER;

@@ -68,6 +68,9 @@ public abstract class AbstractBeanController<S extends BaseService<E>, E extends
 		super();
 	}
 
+	/**
+	 * Metodo chamado na criacao do componente
+	 */
 	@PostConstruct
 	private void init() {
 		lastPageFirst = PAGE_FIRST;
@@ -119,14 +122,14 @@ public abstract class AbstractBeanController<S extends BaseService<E>, E extends
 
 				lastPageFirst = (short) first;
 
-				br.com.cams7.app.entity.SortOrder direction = br.com.cams7.app.entity.SortOrder.UNSORTED;
+				br.com.cams7.utils.SortOrder direction = br.com.cams7.utils.SortOrder.UNSORTED;
 
 				switch (lastSortOrder) {
 				case ASCENDING:
-					direction = br.com.cams7.app.entity.SortOrder.ASCENDING;
+					direction = br.com.cams7.utils.SortOrder.ASCENDING;
 					break;
 				case DESCENDING:
-					direction = br.com.cams7.app.entity.SortOrder.DESCENDING;
+					direction = br.com.cams7.utils.SortOrder.DESCENDING;
 					break;
 				default:
 					break;
@@ -141,22 +144,47 @@ public abstract class AbstractBeanController<S extends BaseService<E>, E extends
 		reset();
 	}
 
-	private List<E> search(int pageFirst, short pageSize, String sortField, br.com.cams7.app.entity.SortOrder sortOrder,
+	/**
+	 * Busca, pagina e ordena os dados das entidades
+	 * 
+	 * @param pageFirst
+	 *            Indice
+	 * @param pageSize
+	 *            Total de linhas
+	 * @param sortField
+	 *            Nome do campo
+	 * @param sortOrder
+	 *            Tipo de ordenacao
+	 * @param filters
+	 *            filtros
+	 * @return Entidades
+	 */
+	private List<E> search(int pageFirst, short pageSize, String sortField, br.com.cams7.utils.SortOrder sortOrder,
 			Map<String, Object> filters) {
 		return getService().search(pageFirst, pageSize, sortField, sortOrder, filters);
 	}
 
+	/**
+	 * 
+	 * @param sortField
+	 *            Nome do campo
+	 * @param sortOrder
+	 *            Tipo de ordenacao
+	 */
 	private void setSort(String sortField, SortOrder sortOrder) {
 		lastSortField = sortField;
 		lastSortOrder = sortOrder;
 	}
 
+	/**
+	 * 
+	 */
 	private void setSort() {
 		setSort(null, SortOrder.UNSORTED);
 	}
 
 	/**
-	 * Operação acionada toda a vez que a tela de listagem for carregada.
+	 * Operacao acionada toda a vez que a tela de listagem for carregada.
 	 */
 	public void reset() {
 		totalRows = getService().count();
@@ -164,7 +192,7 @@ public abstract class AbstractBeanController<S extends BaseService<E>, E extends
 	}
 
 	/**
-	 * Ação executada quando a página de inclusão da entidade for carregada.
+	 * Acao executada quando a pagina de inclusao da entidade for carregada.
 	 */
 	public void includeNewEntity() {
 		try {
@@ -176,10 +204,10 @@ public abstract class AbstractBeanController<S extends BaseService<E>, E extends
 	}
 
 	/**
-	 * Operação acionada pela tela de inclusão, através do
-	 * <code>commandButton</code> <strong>Salvar</strong>.
+	 * Operacao acionada pela tela de inclusao, atraves do
+	 * <code>commandButton</code> <strong>Salva</strong>.
 	 * 
-	 * @return Se a inclusão foi realizada vai para listagem, senão permanece na
+	 * @return Se a inclusao foi realizada vai para listagem, senao permanece na
 	 *         mesma tela.
 	 */
 	public String createEntity() {
@@ -190,6 +218,13 @@ public abstract class AbstractBeanController<S extends BaseService<E>, E extends
 		return getListPage();
 	}
 
+	/**
+	 * Operacao acionada pela tela de edicao, atraves do
+	 * <code>commandButton</code> <strong>Atualiza</strong>.
+	 * 
+	 * obs.: Se a alteracao for realizada vai para a listagem, senao permanece
+	 * na mesma tela.
+	 */
 	public void updateEntity() {
 		getService().atualiza(getSelectedEntity());
 
@@ -200,11 +235,11 @@ public abstract class AbstractBeanController<S extends BaseService<E>, E extends
 	}
 
 	/**
-	 * Operação acionada pela tela de edição, através do
-	 * <code>commandButton</code> <strong>Excluir</strong>.
+	 * Operacao acionada pela tela de edicao, atraves do
+	 * <code>commandButton</code> <strong>Exclui</strong>.
 	 * 
-	 * @return Se a exclusão for realizada vai para a listagem, senão permanece
-	 *         na mesma tela.
+	 * obs.: Se a exclusao for realizada vai para a listagem, senao permanece na
+	 * mesma tela.
 	 */
 	public void removeEntity() {
 		getService().remove(getSelectedEntity().getId());
@@ -216,6 +251,11 @@ public abstract class AbstractBeanController<S extends BaseService<E>, E extends
 		getLog().info(String.format("A entidade \"%s\" foi excluida", getSelectedEntity()));
 	}
 
+	/**
+	 * Seleciona a entidade
+	 * 
+	 * @param event
+	 */
 	public void onRowSelect(SelectEvent event) {
 		@SuppressWarnings("unchecked")
 		E selectedEntity = (E) event.getObject();
@@ -224,10 +264,20 @@ public abstract class AbstractBeanController<S extends BaseService<E>, E extends
 		getLog().info(String.format("A entidade \"%s\" foi selecionada", getSelectedEntity()));
 	}
 
+	/**
+	 * Metodo chamado para limpa a entidade selecionada
+	 * 
+	 * @param event
+	 */
 	public void handleClose(CloseEvent event) {
 		setSelectedEntity(null);
 	}
 
+	/**
+	 * @param severity
+	 * @param summary
+	 * @param detail
+	 */
 	private void addMessage(Severity severity, String summary, String detail) {
 		FacesMessage message = new FacesMessage(severity, summary, detail);
 		FacesContext.getCurrentInstance().addMessage(null, message);
@@ -236,21 +286,37 @@ public abstract class AbstractBeanController<S extends BaseService<E>, E extends
 		context.addCallbackParam(PARAM_MESSAGE, message);
 	}
 
+	/**
+	 * @param summary
+	 * @param detail
+	 */
 	protected void addINFOMessage(String summary, String detail) {
 		addMessage(FacesMessage.SEVERITY_INFO, summary, detail);
 		getLog().info(detail);
 	}
 
+	/**
+	 * @param summary
+	 * @param detail
+	 */
 	protected void addWARNMessage(String summary, String detail) {
 		addMessage(FacesMessage.SEVERITY_WARN, summary, detail);
 		getLog().log(Level.WARNING, detail);
 	}
 
+	/**
+	 * @param summary
+	 * @param detail
+	 */
 	protected void addERRORMessage(String summary, String detail) {
 		addMessage(FacesMessage.SEVERITY_ERROR, summary, detail);
 		getLog().log(Level.SEVERE, detail);
 	}
 
+	/**
+	 * @param summary
+	 * @param detail
+	 */
 	protected void addFATALMessage(String summary, String detail) {
 		addMessage(FacesMessage.SEVERITY_FATAL, summary, detail);
 		getLog().log(Level.SEVERE, detail);

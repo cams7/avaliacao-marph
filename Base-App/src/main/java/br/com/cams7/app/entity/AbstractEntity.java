@@ -6,6 +6,8 @@ package br.com.cams7.app.entity;
 import java.io.Serializable;
 
 /**
+ * Classe comum a todas entidades
+ * 
  * @author cesar
  *
  */
@@ -76,8 +78,17 @@ public abstract class AbstractEntity implements Serializable {
 		return hashCode;
 	}
 
+	/**
+	 * Id da entidade
+	 * 
+	 * @return Long
+	 */
 	public abstract Long getId();
 
+	/**
+	 * @param id
+	 *            da entitade
+	 */
 	public abstract void setId(Long id);
 
 }

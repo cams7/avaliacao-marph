@@ -11,7 +11,7 @@ insert into pessoa(nome, cpf, nascimento) values ('Ana Aparecida Alves', '012012
 insert into pessoa(nome, cpf, nascimento) values ('Eugênio Alves Silva', '01201201209', DATE '1960-12-2');
 insert into pessoa(nome, cpf, nascimento) values ('Fernando Antônio de Oliveira', '01201201210', DATE '2006-12-13');
 insert into pessoa(nome, cpf, nascimento) values ('Carlos Alberto Silva', '01201201211', '1980-11-25');
-insert into pessoa(nome, cpf, nascimento) values ('Ana Maria Alves', '01201201216', DATE '1980-07-75');
+insert into pessoa(nome, cpf, nascimento) values ('Ana Maria Alves', '01201201216', DATE '1980-07-15');
 insert into pessoa(nome, cpf, nascimento) values ('Bruno Pereira Goncalves', '01201201212', DATE '1980-11-25');
 insert into pessoa(nome, cpf, nascimento) values ('Wilson Gomes Farias', '01201201213', DATE '1990-03-23');
 insert into pessoa(nome, cpf, nascimento) values ('Jose Alberto Alves', '01201201214', DATE '1985-10-22');

@@ -22,6 +22,9 @@ public class PessoaRepositoryImpl extends AbstractRepository<PessoaEntity> imple
 		super();
 	}
 
+	/* (non-Javadoc)
+	 * @see br.com.cams7.marph.repository.PessoaRepository#buscaPessoasSemUsuarioPeloNome(java.lang.String)
+	 */
 	@Override
 	public List<PessoaEntity> buscaPessoasSemUsuarioPeloNome(String nome) {
 		Query query = getCurrentSession().getNamedQuery("Pessoa.buscaPessoasSemUsuarioPeloNome");
@@ -32,6 +35,9 @@ public class PessoaRepositoryImpl extends AbstractRepository<PessoaEntity> imple
 		return pessoas;
 	}
 
+	/* (non-Javadoc)
+	 * @see br.com.cams7.marph.repository.PessoaRepository#buscaPeloNome(java.lang.String)
+	 */
 	@Override
 	public List<PessoaEntity> buscaPeloNome(String nome) {
 		Query query = getCurrentSession().getNamedQuery("Pessoa.buscaPeloNome");
