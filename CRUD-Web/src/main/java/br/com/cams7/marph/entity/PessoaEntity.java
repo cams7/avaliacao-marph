@@ -18,12 +18,12 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
-import javax.validation.constraints.Digits;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
 import br.com.cams7.app.entity.AbstractEntity;
+import br.com.cams7.validator.CPF;
 
 /**
  * Entidade pessoa
@@ -53,7 +53,7 @@ public class PessoaEntity extends AbstractEntity {
 
 	@Column(length = 11)
 	@NotEmpty
-	@Digits(fraction = 0, integer = 11)
+	@CPF
 	private String cpf;
 
 	@Temporal(TemporalType.TIMESTAMP)

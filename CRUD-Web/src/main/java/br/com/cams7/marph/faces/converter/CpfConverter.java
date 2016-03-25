@@ -1,34 +1,33 @@
 /**
  * 
  */
-package br.com.cams7.marph.faces.convert;
+package br.com.cams7.marph.faces.converter;
 
-import static br.com.cams7.marph.faces.convert.PessoaConvert.CONVERT_NAME;
+import static br.com.cams7.marph.faces.converter.CpfConverter.CONVERT_NAME;
 
-import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
-import javax.faces.convert.ConverterException;
 import javax.faces.convert.FacesConverter;
 
 import org.springframework.stereotype.Component;
 
-import br.com.cams7.marph.entity.PessoaEntity;
-
 /**
- * Converte Pessoa
+ * Converte CPF
  * 
  * @author cesar
  *
  */
 @Component(CONVERT_NAME)
 @FacesConverter(CONVERT_NAME)
-public class PessoaConvert implements Converter {
+public class CpfConverter implements Converter {
 
-	public final static String CONVERT_NAME = "pessoaConvert";
+	public final static String CONVERT_NAME = "cpfConverter";
 
-	public PessoaConvert() {
+	/**
+	 * 
+	 */
+	public CpfConverter() {
 		super();
 	}
 
@@ -41,15 +40,10 @@ public class PessoaConvert implements Converter {
 	@Override
 	public Object getAsObject(FacesContext context, UIComponent component, String value) {
 		if (value != null && !value.isEmpty())
-			try {
-				Long id = Long.parseLong(value);
-				return new PessoaEntity(id);
-			} catch (NumberFormatException e) {
-				throw new ConverterException(
-						new FacesMessage(FacesMessage.SEVERITY_ERROR, "Conversion Error", "Not a valid theme."));
-			}
+			// 999.999.999-99
+			value = value.replaceAll("[.-]", "");
 
-		return null;
+		return value;
 	}
 
 	/*
@@ -60,12 +54,20 @@ public class PessoaConvert implements Converter {
 	 */
 	@Override
 	public String getAsString(FacesContext context, UIComponent component, Object value) {
-		if (value != null) {
-			Long id = ((PessoaEntity) value).getId();
-			return String.valueOf(id);
-		}
+		if (value == null)
+			return null;
 
-		return null;
+		String valueAsString = (String) value;
+
+		if (valueAsString.isEmpty())
+			return "";
+
+		// 012 345 678 90
+		// 999.999.999-99
+		valueAsString = valueAsString.substring(0, 3) + "." + valueAsString.substring(3, 6) + "."
+				+ valueAsString.substring(6, 9) + "-" + valueAsString.substring(9);
+
+		return valueAsString;
 	}
 
 }

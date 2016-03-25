@@ -57,6 +57,12 @@
 					<h:outputText value="#{endereco.bairro}" />
 				</p:column>
 
+				<p:column headerText="Telefone" sortBy="#{endereco.telefone}">
+					<h:outputText value="#{endereco.telefone}">
+						<f:converter converterId="telefoneConverter" />
+					</h:outputText>
+				</p:column>
+
 				<f:facet name="footer">
 					<h:outputFormat id="totalRows" value="Total de cadastrados: {0}">
 						<f:param value="#{enderecoMB.totalRows}" />

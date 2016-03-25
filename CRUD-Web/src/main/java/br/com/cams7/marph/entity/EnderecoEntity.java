@@ -12,12 +12,12 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.Digits;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
 import br.com.cams7.app.entity.AbstractEntity;
+import br.com.cams7.validator.Telefone;
 
 /**
  * Entidade endereco
@@ -46,9 +46,9 @@ public class EnderecoEntity extends AbstractEntity {
 	@Size(min = 3, max = 50)
 	private String bairro;
 
-	@Column(length = 11)
+	@Column(length = 10)
 	@NotEmpty
-	@Digits(fraction = 0, integer = 11)
+	@Telefone
 	private String telefone;
 
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)

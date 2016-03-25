@@ -31,8 +31,9 @@
 				<h:outputLabel for="pessoaCpf" value="CPF"
 					styleClass="control-label" />
 				<div class="controls" style="float: left; margin-left: 20px;">
-					<p:inputText id="pessoaCpf" value="#{pessoa.cpf}" label="CPF"
-						styleClass="input-large" />
+					<p:inputMask mask="999.999.999-99" id="pessoaCpf"
+						value="#{pessoa.cpf}" label="CPF" styleClass="input-large"
+						converter="cpfConverter" />
 					<p:message for="pessoaCpf" styleClass="alert alert-error" />
 				</div>
 			</div>
@@ -42,7 +43,8 @@
 					styleClass="control-label" />
 				<div class="controls" style="float: left; margin-left: 20px;">
 					<p:calendar id="pessoaNascimento" value="#{pessoa.nascimento}"
-						pattern="dd/MM/yyyy" locale="pt_BR" styleClass="input-large" />
+						pattern="dd/MM/yyyy" locale="pt_BR" mask="true" navigator="true"
+						styleClass="input-large" />
 					<p:message for="pessoaNascimento" styleClass="alert alert-error" />
 				</div>
 			</div>

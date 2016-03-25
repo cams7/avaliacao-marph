@@ -50,7 +50,9 @@
 				</p:column>
 
 				<p:column headerText="CPF" sortBy="#{pessoa.cpf}">
-					<h:outputText value="#{pessoa.cpf}" />
+					<h:outputText value="#{pessoa.cpf}">
+						<f:converter converterId="cpfConverter" />
+					</h:outputText>
 				</p:column>
 
 				<p:column headerText="Nascimento" sortBy="#{pessoa.nascimento}">

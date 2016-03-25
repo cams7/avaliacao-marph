@@ -32,11 +32,10 @@
 						<h:outputLabel for="pessoaNome" value="Nome"
 							styleClass="control-label" />
 						<div class="controls" style="float: left; margin-left: 20px;">
-							<p:autoComplete id="pessoaNome"
-								value="#{usuario.pessoa}" var="p"
-								itemLabel="#{p.nome}" itemValue="#{p}" converter="pessoaConvert"
-								forceSelection="true" minQueryLength="1" effect="fade"
-								queryDelay="300" completeMethod="#{usuarioMB.buscaPessoas}"
+							<p:autoComplete id="pessoaNome" value="#{usuario.pessoa}" var="p"
+								itemLabel="#{p.nome}" itemValue="#{p}"
+								converter="pessoaConverter" effect="fade" queryDelay="300"
+								completeMethod="#{usuarioMB.buscaPessoas}"
 								styleClass="input-large">
 								<p:ajax event="itemSelect" listener="#{usuarioMB.onItemSelect}"
 									update="mensagens" />
@@ -85,7 +84,7 @@
 				<div class="controls" style="float: left; margin-left: 20px;">
 					<p:selectManyCheckbox id="usuarioAutorizacoes"
 						value="#{usuario.autorizacoes}" label="Autorizacoes"
-						styleClass="input-large" converter="autorizacaoConvert">
+						styleClass="input-large" converter="autorizacaoConverter">
 						<f:selectItems value="#{usuarioMB.autorizacoes}" />
 					</p:selectManyCheckbox>
 					<p:message for="usuarioAutorizacoes" styleClass="alert alert-error" />

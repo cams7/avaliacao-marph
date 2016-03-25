@@ -32,8 +32,7 @@
 						<div class="controls" style="float: left; margin-left: 20px;">
 							<p:autoComplete id="pessoaNome" value="#{endereco.pessoa}"
 								var="p" itemLabel="#{p.nome}" itemValue="#{p}"
-								converter="pessoaConvert" forceSelection="true"
-								minQueryLength="1" effect="fade" queryDelay="300"
+								converter="pessoaConverter" effect="fade" queryDelay="300"
 								completeMethod="#{enderecoMB.buscaPessoas}"
 								styleClass="input-large">
 								<p:ajax event="itemSelect" listener="#{enderecoMB.onItemSelect}"
@@ -69,8 +68,9 @@
 				<h:outputLabel for="enderecoTelefone" value="Telefone"
 					styleClass="control-label" />
 				<div class="controls" style="float: left; margin-left: 20px;">
-					<p:inputText id="enderecoTelefone" value="#{endereco.telefone}"
-						label="Telefone" styleClass="input-large" />
+					<p:inputMask mask="(99) 9999-9999" id="enderecoTelefone"
+						value="#{endereco.telefone}" label="Telefone"
+						styleClass="input-large" converter="telefoneConverter" />
 					<p:message for="enderecoTelefone" styleClass="alert alert-error" />
 				</div>
 			</div>
