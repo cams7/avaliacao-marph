@@ -18,16 +18,16 @@ insert into pessoa(nome, cpf, nascimento) values ('Jose Alberto Alves', '1659864
 insert into pessoa(nome, cpf, nascimento) values ('Maria Evangelina Silva', '37720353293', DATE '1975-09-20');
 
 --Insere dados de usuario
-insert into usuario(id_pessoa,login,senha,status,autorizacoes) values(1,'admin1','$2a$10$bu2RRFWNW1K/erN7YPDc6uKO4nqEaclp5QOnFiDgNipyOmBYIQ0KS', 1, 'ROLE_USER-ROLE_NEWUSER-ROLE_ADMIN');
-insert into usuario(id_pessoa,login,senha,status,autorizacoes) values(2,'user1','$2a$10$bu2RRFWNW1K/erN7YPDc6uKO4nqEaclp5QOnFiDgNipyOmBYIQ0KS', 1, 'ROLE_USER-ROLE_NEWUSER');
-insert into usuario(id_pessoa,login,senha,status,autorizacoes) values(3,'admin2','$2a$10$bu2RRFWNW1K/erN7YPDc6uKO4nqEaclp5QOnFiDgNipyOmBYIQ0KS', 1, 'ROLE_USER-ROLE_ADMIN');
-insert into usuario(id_pessoa,login,senha,status,autorizacoes) values(4,'admin3','$2a$10$bu2RRFWNW1K/erN7YPDc6uKO4nqEaclp5QOnFiDgNipyOmBYIQ0KS', 0, 'ROLE_USER-ROLE_NEWUSER');
-insert into usuario(id_pessoa,login,senha,status,autorizacoes) values(5,'user2','$2a$10$bu2RRFWNW1K/erN7YPDc6uKO4nqEaclp5QOnFiDgNipyOmBYIQ0KS', 0, 'ROLE_USER');
-insert into usuario(id_pessoa,login,senha,status,autorizacoes) values(6,'user3','$2a$10$bu2RRFWNW1K/erN7YPDc6uKO4nqEaclp5QOnFiDgNipyOmBYIQ0KS', 1, 'ROLE_NEWUSER');
-insert into usuario(id_pessoa,login,senha,status,autorizacoes) values(7,'admin4','$2a$10$bu2RRFWNW1K/erN7YPDc6uKO4nqEaclp5QOnFiDgNipyOmBYIQ0KS', 1, 'ROLE_ADMIN');
-insert into usuario(id_pessoa,login,senha,status,autorizacoes) values(8,'admin5','$2a$10$bu2RRFWNW1K/erN7YPDc6uKO4nqEaclp5QOnFiDgNipyOmBYIQ0KS', 0, 'ROLE_USER-ROLE_NEWUSER-ROLE_ADMIN');
-insert into usuario(id_pessoa,login,senha,status,autorizacoes) values(9,'admin6','$2a$10$bu2RRFWNW1K/erN7YPDc6uKO4nqEaclp5QOnFiDgNipyOmBYIQ0KS', 0, 'ROLE_ADMIN');
-insert into usuario(id_pessoa,login,senha,status,autorizacoes) values(10,'user4','$2a$10$bu2RRFWNW1K/erN7YPDc6uKO4nqEaclp5QOnFiDgNipyOmBYIQ0KS', 1, 'ROLE_USER');
+insert into usuario(id_pessoa,login,senha,status,autorizacoes) values(1,'admin1','$2a$10$bu2RRFWNW1K/erN7YPDc6uKO4nqEaclp5QOnFiDgNipyOmBYIQ0KS', 1, 'CLIENTE-SECRETARIO-ADMINISTRADOR');
+insert into usuario(id_pessoa,login,senha,status,autorizacoes) values(2,'sec1','$2a$10$bu2RRFWNW1K/erN7YPDc6uKO4nqEaclp5QOnFiDgNipyOmBYIQ0KS', 1, 'CLIENTE-SECRETARIO');
+insert into usuario(id_pessoa,login,senha,status,autorizacoes) values(3,'admin2','$2a$10$bu2RRFWNW1K/erN7YPDc6uKO4nqEaclp5QOnFiDgNipyOmBYIQ0KS', 1, 'CLIENTE-ADMINISTRADOR');
+insert into usuario(id_pessoa,login,senha,status,autorizacoes) values(4,'sec2','$2a$10$bu2RRFWNW1K/erN7YPDc6uKO4nqEaclp5QOnFiDgNipyOmBYIQ0KS', 0, 'CLIENTE-SECRETARIO');
+insert into usuario(id_pessoa,login,senha,status,autorizacoes) values(5,'user1','$2a$10$bu2RRFWNW1K/erN7YPDc6uKO4nqEaclp5QOnFiDgNipyOmBYIQ0KS', 0, 'CLIENTE');
+insert into usuario(id_pessoa,login,senha,status,autorizacoes) values(6,'sec3','$2a$10$bu2RRFWNW1K/erN7YPDc6uKO4nqEaclp5QOnFiDgNipyOmBYIQ0KS', 1, 'SECRETARIO');
+insert into usuario(id_pessoa,login,senha,status,autorizacoes) values(7,'admin3','$2a$10$bu2RRFWNW1K/erN7YPDc6uKO4nqEaclp5QOnFiDgNipyOmBYIQ0KS', 1, 'ADMINISTRADOR');
+insert into usuario(id_pessoa,login,senha,status,autorizacoes) values(8,'admin4','$2a$10$bu2RRFWNW1K/erN7YPDc6uKO4nqEaclp5QOnFiDgNipyOmBYIQ0KS', 0, 'CLIENTE-SECRETARIO-ADMINISTRADOR');
+insert into usuario(id_pessoa,login,senha,status,autorizacoes) values(9,'admin5','$2a$10$bu2RRFWNW1K/erN7YPDc6uKO4nqEaclp5QOnFiDgNipyOmBYIQ0KS', 0, 'ADMINISTRADOR');
+insert into usuario(id_pessoa,login,senha,status,autorizacoes) values(10,'user2','$2a$10$bu2RRFWNW1K/erN7YPDc6uKO4nqEaclp5QOnFiDgNipyOmBYIQ0KS', 1, 'CLIENTE');
 
 --Insere dados de endereco
 insert into endereco(id_pessoa,rua,bairro,telefone) values(1,'Rua Numero Um', 'Bairro Numero Um','3136010101');

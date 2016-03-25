@@ -158,7 +158,7 @@ public class UsuarioEntity extends AbstractEntity {
 	}
 
 	public enum Autorizacao implements GrantedAuthority {
-		ROLE_USER, ROLE_NEWUSER, ROLE_ADMIN;
+		CLIENTE, SECRETARIO, ADMINISTRADOR;
 
 		@Override
 		public String getAuthority() {

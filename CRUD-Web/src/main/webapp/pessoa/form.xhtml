@@ -63,7 +63,7 @@
 								styleClass="btn btn-success"
 								oncomplete="handleUpdateRequest(xhr, status, args);"
 								process="@form" />
-							<sec:authorize access="hasRole('ROLE_ADMIN')">
+							<sec:authorize access="hasRole('ADMINISTRADOR')">
 								<p:commandButton value="Exclui"
 									actionListener="#{pessoaMB.removeEntity}"
 									styleClass="btn btn-danger"

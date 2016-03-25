@@ -17,7 +17,7 @@
 			</h:link>
 		</li>
 
-		<sec:authorize access="hasRole('ROLE_ADMIN')">
+		<sec:authorize access="hasRole('ADMINISTRADOR')">
 			<li class="#{param.active == 'inclui_endereco' ? 'active' : ''}"><h:link
 					outcome="/endereco/inclui">
 					<h:outputText value="Inclui" escape="false" />

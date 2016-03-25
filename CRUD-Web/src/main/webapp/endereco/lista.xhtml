@@ -39,7 +39,7 @@
 				emptyMessage="Nenhum endereco foi cadastrado"
 				widgetVar="enderecoTable" resizableColumns="true">
 
-				<sec:authorize ifAnyGranted="ROLE_USER,ROLE_ADMIN">
+				<sec:authorize ifAnyGranted="SECRETARIO,ADMINISTRADOR">
 					<p:ajax event="rowSelect" listener="#{enderecoMB.onRowSelect}"
 						update=":enderecoForm:enderecoDetail"
 						onsuccess="PF('enderecoDialog').show();" />
@@ -70,7 +70,7 @@
 				</f:facet>
 			</p:dataTable>
 
-			<sec:authorize ifAnyGranted="ROLE_USER,ROLE_ADMIN">
+			<sec:authorize ifAnyGranted="SECRETARIO,ADMINISTRADOR">
 				<p:dialog header="Altera endereco" widgetVar="enderecoDialog"
 					modal="true" resizable="false">
 

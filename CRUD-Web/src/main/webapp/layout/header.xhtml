@@ -14,7 +14,7 @@
 		<p:menubar>
 			<p:submenu label="Inicio" icon="ui-icon-document">
 				<p:menuitem value="Home" outcome="/home" icon="ui-icon-home" />
-				<sec:authorize access="hasRole('ROLE_ADMIN')">
+				<sec:authorize access="hasRole('ADMINISTRADOR')">
 					<p:submenu label="Inclui" icon="ui-icon-disk">
 						<p:menuitem value="Usuario" outcome="/usuario/inclui"
 							icon="ui-icon-person">
@@ -46,10 +46,12 @@
 
 			<sec:authorize access="isAuthenticated()">
 				<p:submenu label="Lista" icon="ui-icon-search">
-					<p:menuitem value="Usuarios" outcome="/usuario/lista"
-						icon="ui-icon-person">
-						<f:param name="active" value="lista_usuarios" />
-					</p:menuitem>
+					<sec:authorize ifAnyGranted="SECRETARIO,ADMINISTRADOR">
+						<p:menuitem value="Usuarios" outcome="/usuario/lista"
+							icon="ui-icon-person">
+							<f:param name="active" value="lista_usuarios" />
+						</p:menuitem>
+					</sec:authorize>
 
 					<p:menuitem value="Pessoas" outcome="/pessoa/lista"
 						icon="ui-icon-contact">

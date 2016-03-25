@@ -38,7 +38,7 @@
 				emptyMessage="Nenhum Usuario foi cadastrado"
 				widgetVar="usuarioTable" resizableColumns="true">
 
-				<sec:authorize access="hasRole('ROLE_ADMIN')">
+				<sec:authorize access="hasRole('ADMINISTRADOR')">
 					<p:ajax event="rowSelect" listener="#{usuarioMB.onRowSelect}"
 						update=":usuarioForm:usuarioDetail"
 						onsuccess="PF('usuarioDialog').show();" />
@@ -66,7 +66,7 @@
 				</f:facet>
 			</p:dataTable>
 
-			<sec:authorize access="hasRole('ROLE_ADMIN')">
+			<sec:authorize access="hasRole('ADMINISTRADOR')">
 				<p:dialog header="Altera dados de usuario" widgetVar="usuarioDialog"
 					modal="true" resizable="false">
 

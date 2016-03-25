@@ -42,14 +42,14 @@
 		<intercept-url pattern="/sobre**" access="permitAll" />
 
 		<intercept-url pattern="/usuario/lista**"
-			access="hasAnyRole('ROLE_USER,ROLE_ADMIN')" />
-		<intercept-url pattern="/usuario/inclui**" access="hasRole('ROLE_ADMIN')" />
+			access="hasAnyRole('SECRETARIO,ADMINISTRADOR')" />
+		<intercept-url pattern="/usuario/inclui**" access="hasRole('ADMINISTRADOR')" />
 
 		<intercept-url pattern="/pessoa/lista**" access="isAuthenticated()" />
-		<intercept-url pattern="/pessoa/inclui**" access="hasRole('ROLE_ADMIN')" />
+		<intercept-url pattern="/pessoa/inclui**" access="hasRole('ADMINISTRADOR')" />
 
 		<intercept-url pattern="/endereco/lista**" access="isAuthenticated()" />
-		<intercept-url pattern="/endereco/inclui**" access="hasRole('ROLE_ADMIN')" />
+		<intercept-url pattern="/endereco/inclui**" access="hasRole('ADMINISTRADOR')" />
 
 		<intercept-url pattern="/req/**" access="permitAll" />
 
