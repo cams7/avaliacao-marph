@@ -63,7 +63,7 @@ public interface BaseRepository<E extends AbstractEntity> {
 	 *            Id da entidade
 	 * @return Entidade
 	 */
-	E buscaPorId(Long id);
+	E buscaPeloId(Long id);
 
 	/**
 	 * Busca, pagina e ordena os dados das entidades

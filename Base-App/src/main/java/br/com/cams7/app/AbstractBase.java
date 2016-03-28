@@ -17,16 +17,15 @@ public abstract class AbstractBase<E extends AbstractEntity> {
 
 	private final byte ENTITY_ARGUMENT_NUMBER = 0;
 
-	private Logger log;
-
-	private Class<E> entityType;
+	private final Logger LOG;
+	private final Class<E> ENTITY_TYPE;
 
 	@SuppressWarnings("unchecked")
 	public AbstractBase() {
 		super();
 
-		log = Logger.getLogger(this.getClass().getName());
-		entityType = (Class<E>) AppHelper.getType(this.getClass(), getEntityArgumentNumber());
+		LOG = Logger.getLogger(this.getClass().getName());
+		ENTITY_TYPE = (Class<E>) AppHelper.getType(this.getClass(), getEntityArgumentNumber());
 	}
 
 	/**
@@ -35,7 +34,7 @@ public abstract class AbstractBase<E extends AbstractEntity> {
 	 * @return Logger
 	 */
 	protected Logger getLog() {
-		return log;
+		return LOG;
 	}
 
 	/**
@@ -53,7 +52,7 @@ public abstract class AbstractBase<E extends AbstractEntity> {
 	 * @return Tipo Entity
 	 */
 	protected Class<E> getEntityType() {
-		return entityType;
+		return ENTITY_TYPE;
 	}
 
 }

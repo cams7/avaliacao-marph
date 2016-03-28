@@ -57,7 +57,7 @@ public abstract class AbstractRestController<S extends BaseService<E>, E extends
 	 */
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<E> getEntity(@PathVariable("id") Long id) {
-		E entity = getService().buscaPorId(id);
+		E entity = getService().buscaPeloId(id);
 		if (entity == null)
 			return new ResponseEntity<E>(HttpStatus.NOT_FOUND);
 
@@ -92,7 +92,7 @@ public abstract class AbstractRestController<S extends BaseService<E>, E extends
 	 */
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<E> removeEntity(@PathVariable("id") Long id) {
-		E entity = getService().buscaPorId(id);
+		E entity = getService().buscaPeloId(id);
 		if (entity == null)
 			return new ResponseEntity<E>(HttpStatus.NOT_FOUND);
 

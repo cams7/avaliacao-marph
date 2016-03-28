@@ -13,12 +13,12 @@
 
 		<property name="hibernateProperties">
 			<props>
-				<!-- prop key="hibernate.dialect">org.hibernate.dialect.HSQLDialect</prop -->
-				<prop key="hibernate.dialect">${jdbc.dialect}</prop>
+				<prop key="hibernate.dialect">org.hibernate.dialect.HSQLDialect</prop>
 				<!-- prop key="hibernate.current_session_context_class">thread</prop -->
 				<prop key="hibernate.show_sql">false</prop>
-				<prop key="hibernate.hbm2ddl.auto">update</prop>
-				<prop key="hibernate.hbm2ddl.import_files">${dml_file}</prop>
+				<prop key="hibernate.hbm2ddl.auto">create</prop>
+				<!--prop key="hibernate.hbm2ddl.auto">update</prop -->
+				<prop key="hibernate.hbm2ddl.import_files">database/test_DML.sql</prop>
 			</props>
 		</property>
 	</bean>

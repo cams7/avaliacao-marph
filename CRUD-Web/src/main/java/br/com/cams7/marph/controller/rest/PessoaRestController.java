@@ -39,7 +39,7 @@ public class PessoaRestController extends AbstractRestController<PessoaService, 
 	 */
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
 	public ResponseEntity<PessoaEntity> atualizaPessoa(@PathVariable("id") Long id, @RequestBody PessoaEntity pessoa) {
-		PessoaEntity pessoaCadastrada = getService().buscaPorId(id);
+		PessoaEntity pessoaCadastrada = getService().buscaPeloId(id);
 
 		if (pessoaCadastrada == null)
 			return new ResponseEntity<PessoaEntity>(HttpStatus.NOT_FOUND);

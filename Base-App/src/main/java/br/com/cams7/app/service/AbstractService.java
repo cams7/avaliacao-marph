@@ -103,8 +103,8 @@ public abstract class AbstractService<R extends BaseRepository<E>, E extends Abs
 	 */
 	@Transactional(readOnly = true)
 	@Override
-	public E buscaPorId(Long id) {
-		return getRepository().buscaPorId(id);
+	public E buscaPeloId(Long id) {
+		return getRepository().buscaPeloId(id);
 	}
 
 	/*

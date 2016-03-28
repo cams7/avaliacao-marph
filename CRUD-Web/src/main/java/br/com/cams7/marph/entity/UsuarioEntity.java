@@ -58,13 +58,13 @@ public class UsuarioEntity extends AbstractEntity {
 	@NotNull
 	private Boolean habilitado;
 
+	@Column(name = "autorizacoes", length = 50, nullable = true)
+	private String stringAutorizacoes;
+
 	@NotNull
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name = "id_pessoa", referencedColumnName = "id_pessoa")
 	private PessoaEntity pessoa;
-
-	@Column(name = "autorizacoes", length = 50, nullable = true)
-	private String stringAutorizacoes;
 
 	public UsuarioEntity() {
 		super();
@@ -109,20 +109,20 @@ public class UsuarioEntity extends AbstractEntity {
 		this.habilitado = habilitado;
 	}
 
-	public PessoaEntity getPessoa() {
-		return pessoa;
-	}
-
-	public void setPessoa(PessoaEntity pessoa) {
-		this.pessoa = pessoa;
-	}
-
 	public String getStringAutorizacoes() {
 		return stringAutorizacoes;
 	}
 
 	public void setStringAutorizacoes(String stringAutorizacoes) {
 		this.stringAutorizacoes = stringAutorizacoes;
+	}
+
+	public PessoaEntity getPessoa() {
+		return pessoa;
+	}
+
+	public void setPessoa(PessoaEntity pessoa) {
+		this.pessoa = pessoa;
 	}
 
 	public Set<Autorizacao> getAutorizacoes() {

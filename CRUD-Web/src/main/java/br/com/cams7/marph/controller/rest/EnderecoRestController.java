@@ -40,7 +40,7 @@ public class EnderecoRestController extends AbstractRestController<EnderecoServi
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
 	public ResponseEntity<EnderecoEntity> atualizaEndereco(@PathVariable("id") Long id,
 			@RequestBody EnderecoEntity endereco) {
-		EnderecoEntity enderecoCadastrado = getService().buscaPorId(id);
+		EnderecoEntity enderecoCadastrado = getService().buscaPeloId(id);
 
 		if (enderecoCadastrado == null)
 			return new ResponseEntity<EnderecoEntity>(HttpStatus.NOT_FOUND);

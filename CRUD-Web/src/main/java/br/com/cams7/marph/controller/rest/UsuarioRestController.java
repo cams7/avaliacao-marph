@@ -40,7 +40,7 @@ public class UsuarioRestController extends AbstractRestController<UsuarioService
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
 	public ResponseEntity<UsuarioEntity> atualizaUsuario(@PathVariable("id") Long id,
 			@RequestBody UsuarioEntity usuario) {
-		UsuarioEntity usuarioCadastrado = getService().buscaPorId(id);
+		UsuarioEntity usuarioCadastrado = getService().buscaPeloId(id);
 
 		if (usuarioCadastrado == null)
 			return new ResponseEntity<UsuarioEntity>(HttpStatus.NOT_FOUND);

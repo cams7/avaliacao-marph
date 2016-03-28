@@ -78,7 +78,7 @@ public abstract class AbstractRepository<E extends AbstractEntity> extends Abstr
 	 */
 	@Override
 	public void remove(Long id) {
-		E entity = buscaPorId(id);
+		E entity = buscaPeloId(id);
 		if (entity != null)
 			remove(entity);
 	}
@@ -113,7 +113,7 @@ public abstract class AbstractRepository<E extends AbstractEntity> extends Abstr
 	 * br.com.cams7.app.repository.BaseRepository#buscaPorId(java.lang.Long)
 	 */
 	@Override
-	public E buscaPorId(Long id) {
+	public E buscaPeloId(Long id) {
 		@SuppressWarnings("unchecked")
 		E entity = (E) getCurrentSession().get(getEntityType(), id);
 		return entity;
