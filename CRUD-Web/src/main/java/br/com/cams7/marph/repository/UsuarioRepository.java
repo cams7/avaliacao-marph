@@ -17,7 +17,8 @@ import br.com.cams7.marph.entity.UsuarioEntity;
 public interface UsuarioRepository extends BaseRepository<UsuarioEntity> {
 
 	/**
-	 * Busca todos os usuario que estao relacionados a uma pessoa
+	 * Retorna todos os objetos que são instâncias da classe "UsuarioEntity" e
+	 * que estão relacionados a uma pessoa
 	 * 
 	 * @return Usuarios
 	 */

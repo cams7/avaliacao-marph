@@ -142,6 +142,11 @@ public abstract class AbstractAppTest<S extends BaseService<E>, E extends Abstra
 	public abstract void testSearch();
 
 	/**
+	 * Testa o metodo "getTotalElements"
+	 */
+	public abstract void testGetTotalElements();
+
+	/**
 	 * Testa o metodo "count"
 	 */
 	public abstract void testCount();

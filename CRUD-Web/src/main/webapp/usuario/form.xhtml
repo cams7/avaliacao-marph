@@ -34,7 +34,7 @@
 						<div class="controls" style="float: left; margin-left: 20px;">
 							<p:autoComplete id="pessoaNome" value="#{usuario.pessoa}" var="p"
 								itemLabel="#{p.nome}" itemValue="#{p}"
-								converter="pessoaConverter" effect="fade" queryDelay="300"
+								converter="pessoaConverter" effect="fade" queryDelay="500"
 								completeMethod="#{usuarioMB.buscaPessoas}"
 								styleClass="input-large">
 								<p:ajax event="itemSelect" listener="#{usuarioMB.onItemSelect}"

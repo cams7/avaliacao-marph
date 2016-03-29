@@ -8,7 +8,7 @@ import static br.com.cams7.marph.controller.bean.EnderecoBeanController.CONTROLL
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.RequestScoped;
 
 import org.primefaces.event.SelectEvent;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +27,8 @@ import br.com.cams7.marph.service.PessoaService;
 
 @Controller(CONTROLLER_NAME)
 @ManagedBean(name = CONTROLLER_NAME)
-@ViewScoped
+// @ViewScoped
+@RequestScoped
 public class EnderecoBeanController extends AbstractBeanController<EnderecoService, EnderecoEntity> {
 
 	private static final long serialVersionUID = 1L;
@@ -44,7 +45,7 @@ public class EnderecoBeanController extends AbstractBeanController<EnderecoServi
 	private PessoaService pessoaService;
 
 	public EnderecoBeanController() {
-		super();
+		super("bairro", "rua", "telefone", "pessoa.nome");
 	}
 
 	/*

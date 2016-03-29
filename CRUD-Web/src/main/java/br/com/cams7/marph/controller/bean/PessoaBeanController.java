@@ -6,7 +6,7 @@ package br.com.cams7.marph.controller.bean;
 import static br.com.cams7.marph.controller.bean.PessoaBeanController.CONTROLLER_NAME;
 
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.RequestScoped;
 
 import org.springframework.stereotype.Controller;
 
@@ -20,7 +20,8 @@ import br.com.cams7.marph.service.PessoaService;
  */
 @Controller(CONTROLLER_NAME)
 @ManagedBean(name = CONTROLLER_NAME)
-@ViewScoped
+// @ViewScoped
+@RequestScoped
 public class PessoaBeanController extends AbstractBeanController<PessoaService, PessoaEntity> {
 
 	private static final long serialVersionUID = 1L;
@@ -30,7 +31,7 @@ public class PessoaBeanController extends AbstractBeanController<PessoaService, 
 	private final String LIST_PAGE = "listaPessoas";
 
 	public PessoaBeanController() {
-		super();
+		super("nome", "cpf");
 	}
 
 	/*

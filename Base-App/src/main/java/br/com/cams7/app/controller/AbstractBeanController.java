@@ -64,8 +64,11 @@ public abstract class AbstractBeanController<S extends BaseService<E>, E extends
 
 	private Map<String, Object> lastFilters;
 
-	public AbstractBeanController() {
+	private String[] globalFilters;
+
+	public AbstractBeanController(String... globalFilters) {
 		super();
+		this.globalFilters = globalFilters;
 	}
 
 	/**
@@ -103,22 +106,23 @@ public abstract class AbstractBeanController<S extends BaseService<E>, E extends
 			public List<E> load(int first, int pageSize, String sortField, SortOrder sortOrder,
 					Map<String, Object> filters) {
 
-				filters = AppHelper.removeEmptyArray(filters);
+				filters = AppHelper.removeEmptyValue(filters);
 
 				if (pageSize != lastPageSize) {
 					lastPageSize = (byte) pageSize;
-				} else if ((first == 0 || first == lastPageFirst)) {
-					if (sortField != null && (!sortField.equals(lastSortField) || !sortOrder.equals(lastSortOrder))) {
-						setSort(sortField, sortOrder);
-					} else if (((!filters.isEmpty() || lastFilters != null)
-							&& !AppHelper.equalMaps(filters, lastFilters))) {
-
-						if (!filters.isEmpty())
-							lastFilters = filters;
-						else
-							lastFilters = null;
-					}
+				} else // if ((first == 0 || first == lastPageFirst)) {
+				if (sortField != null && (!sortField.equals(lastSortField) || !sortOrder.equals(lastSortOrder))) {
+					setSort(sortField, sortOrder);
+					// } else if (((!filters.isEmpty() || lastFilters !=
+					// null)
+					// && !AppHelper.equalMaps(filters, lastFilters))) {
+				} else if (!AppHelper.equalMaps(filters, lastFilters)) {
+					if (!filters.isEmpty())
+						lastFilters = filters;
+					else
+						lastFilters = null;
 				}
+				// }
 
 				lastPageFirst = (short) first;
 
@@ -135,7 +139,12 @@ public abstract class AbstractBeanController<S extends BaseService<E>, E extends
 					break;
 				}
 
-				entities = search(lastPageFirst, lastPageSize, lastSortField, direction, lastFilters);
+				entities = search(lastPageFirst, lastPageSize, lastSortField, direction, lastFilters, globalFilters);
+
+				if (lastFilters != null) {
+					int totalRows = getTotalElements(lastFilters, globalFilters);
+					setRowCount(totalRows);
+				}
 
 				return entities;
 			}
@@ -160,8 +169,17 @@ public abstract class AbstractBeanController<S extends BaseService<E>, E extends
 	 * @return Entidades
 	 */
 	private List<E> search(int pageFirst, short pageSize, String sortField, br.com.cams7.utils.SortOrder sortOrder,
-			Map<String, Object> filters) {
-		return getService().search(pageFirst, pageSize, sortField, sortOrder, filters);
+			Map<String, Object> filters, String... globalFilters) {
+		return getService().search(pageFirst, pageSize, sortField, sortOrder, filters, globalFilters);
+	}
+
+	/**
+	 * @param filters
+	 * @param globalFilters
+	 * @return
+	 */
+	private int getTotalElements(Map<String, Object> filters, String... globalFilters) {
+		return getService().getTotalElements(filters, globalFilters);
 	}
 
 	/**

@@ -8,7 +8,9 @@ import static org.testng.Assert.assertNull;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.test.context.ContextConfiguration;
 import org.testng.annotations.Test;
@@ -210,9 +212,34 @@ public final class PessoaTest extends AbstractAppTest<PessoaService, PessoaEntit
 	@Test
 	@Override
 	public void testSearch() {
-		List<PessoaEntity> pessoas = getService().search(3, (short) 5, "cpf", SortOrder.DESCENDING, null);
+		final String[] GLOBAL_FILTERS = new String[] { "nome", "cpf" };
+		final Map<String, Object> FILTERS = new HashMap<>();
+		FILTERS.put("globalFilter", "a");
+		FILTERS.put("nome", "a");
+		FILTERS.put("cpf", "0");
 
-		checkList(pessoas, 5);
+		List<PessoaEntity> pessoas = getService().search(5, (short) 5, "cpf", SortOrder.DESCENDING, FILTERS,
+				GLOBAL_FILTERS);
+
+		checkList(pessoas, 3);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see br.com.cams7.app.AbstractAppTest#testGetTotalElements()
+	 */
+	@Test
+	@Override
+	public void testGetTotalElements() {
+		final String[] GLOBAL_FILTERS = new String[] { "nome", "cpf" };
+		final Map<String, Object> FILTERS = new HashMap<>();
+		FILTERS.put("globalFilter", "a");
+		FILTERS.put("nome", "a");
+		FILTERS.put("cpf", "0");
+
+		int total = getService().getTotalElements(FILTERS, GLOBAL_FILTERS);
+		assertEquals(7, total);
 	}
 
 	/*

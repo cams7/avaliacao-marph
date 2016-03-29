@@ -37,7 +37,18 @@
 				rowsPerPageTemplate="3,5,10,15" selectionMode="single"
 				selection="#{pessoaMB.selectedEntity}" lazy="true"
 				emptyMessage="Nenhuma pessoa foi cadastrada" widgetVar="pessoaTable"
-				resizableColumns="true">
+				resizableColumns="true" filterDelay="1000" filterEvent="keyup">
+
+				<f:facet name="header">
+					<p:outputPanel style="text-align: right;">
+						<h:outputText value="Busca:" />
+						<p:inputText id="globalFilter" style="width:300px"
+							placeholder="Nome ou cpf" immediate="true">
+							<p:ajax event="keyup" delay="1000"
+								oncomplete="PF('pessoaTable').filter()" />
+						</p:inputText>
+					</p:outputPanel>
+				</f:facet>
 
 				<sec:authorize ifAnyGranted="SECRETARIO,ADMINISTRADOR">
 					<p:ajax event="rowSelect" listener="#{pessoaMB.onRowSelect}"
@@ -45,11 +56,13 @@
 						onsuccess="PF('pessoaDialog').show();" />
 				</sec:authorize>
 
-				<p:column headerText="Nome" sortBy="#{pessoa.nome}">
+				<p:column headerText="Nome" sortBy="#{pessoa.nome}"
+					filterBy="#{pessoa.nome}" filterMatchMode="contains">
 					<h:outputText value="#{pessoa.nome}" />
 				</p:column>
 
-				<p:column headerText="CPF" sortBy="#{pessoa.cpf}">
+				<p:column headerText="CPF" sortBy="#{pessoa.cpf}"
+					filterBy="#{pessoa.cpf}" filterMatchMode="contains">
 					<h:outputText value="#{pessoa.cpf}">
 						<f:converter converterId="cpfConverter" />
 					</h:outputText>

@@ -116,8 +116,21 @@ public abstract class AbstractService<R extends BaseRepository<E>, E extends Abs
 	@Transactional(readOnly = true)
 	@Override
 	public List<E> search(int pageFirst, short pageSize, String sortField, SortOrder sortOrder,
-			Map<String, Object> filters) {
-		return getRepository().search(pageFirst, pageSize, sortField, sortOrder, filters);
+			Map<String, Object> filters, String... globalFilters) {
+		return getRepository().search(pageFirst, pageSize, sortField, sortOrder, filters, globalFilters);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * br.com.cams7.app.repository.BaseRepository#getTotalElements(java.util.
+	 * Map, java.lang.String[])
+	 */
+	@Transactional(readOnly = true)
+	@Override
+	public int getTotalElements(Map<String, Object> filters, String... globalFilters) {
+		return getRepository().getTotalElements(filters, globalFilters);
 	}
 
 	/*

@@ -7,7 +7,9 @@ import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNull;
 import static org.testng.Assert.assertTrue;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.context.ContextConfiguration;
@@ -205,9 +207,36 @@ public final class UsuarioTest extends AbstractAppTest<UsuarioService, UsuarioEn
 	@Test
 	@Override
 	public void testSearch() {
-		List<UsuarioEntity> usuarios = getService().search(4, (short) 3, "login", SortOrder.ASCENDING, null);
+		final String[] GLOBAL_FILTERS = new String[] { "login", "pessoa.nome" };
+		final Map<String, Object> FILTERS = new HashMap<>();
+		FILTERS.put("globalFilter", "e");
+		FILTERS.put("pessoa.nome", "a");
+		FILTERS.put("login", "s");
+		FILTERS.put("habilitado", true);
 
-		checkList(usuarios, 3);
+		List<UsuarioEntity> usuarios = getService().search(0, (short) 10, "login", SortOrder.ASCENDING, FILTERS,
+				GLOBAL_FILTERS);
+
+		checkList(usuarios, 2);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see br.com.cams7.app.AbstractAppTest#testGetTotalElements()
+	 */
+	@Test
+	@Override
+	public void testGetTotalElements() {
+		final String[] GLOBAL_FILTERS = new String[] { "login", "pessoa.nome" };
+		final Map<String, Object> FILTERS = new HashMap<>();
+		FILTERS.put("globalFilter", "e");
+		FILTERS.put("pessoa.nome", "a");
+		FILTERS.put("login", "s");
+		FILTERS.put("habilitado", true);
+
+		int total = getService().getTotalElements(FILTERS, GLOBAL_FILTERS);
+		assertEquals(3, total);
 	}
 
 	/*

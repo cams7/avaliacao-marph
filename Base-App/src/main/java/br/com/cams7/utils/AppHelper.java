@@ -3,8 +3,12 @@
  */
 package br.com.cams7.utils;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.ParameterizedType;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -17,6 +21,91 @@ import br.com.cams7.app.entity.AbstractEntity;
  * @author cesar
  */
 public final class AppHelper {
+
+	/**
+	 * Retorna o tipo de classe
+	 * 
+	 * @param entityType
+	 *            Tipo de classe Entity
+	 * @param fieldName
+	 *            Nome do atributo da entidade
+	 * @return Tipo de classe
+	 * @throws AppException
+	 */
+	private static Class<?> getType(Class<?> entityType, String fieldName) throws AppException {
+		int index = fieldName.indexOf(".");
+		String fieldName2 = null;
+
+		if (index > -1) {
+			fieldName2 = fieldName.substring(index + 1);
+			fieldName = fieldName.substring(0, index);
+		}
+
+		try {
+			Field field = entityType.getDeclaredField(fieldName);
+			Class<?> type = field.getType();
+
+			if (fieldName2 != null)
+				return getType(type, fieldName2);
+
+			return type;
+		} catch (NoSuchFieldException | SecurityException e) {
+			throw new AppException(e.getMessage(), e.getCause());
+		}
+	}
+
+	/**
+	 * Corrige o valor
+	 * 
+	 * @param value
+	 * @return
+	 */
+	private static Object getCorrectValue(Object value) {
+		if (value == null)
+			return null;
+
+		if (value instanceof String) {
+			String stringValue = (String) value;
+			if (stringValue.isEmpty())
+				return null;
+
+			return stringValue.trim();
+		}
+
+		return value;
+	}
+
+	/**
+	 * Converte o valor para o tipo correto
+	 * 
+	 * @param entityType
+	 *            Tipo da entidade
+	 * @param fieldName
+	 *            Nome do atributo
+	 * @param fieldValue
+	 *            Vator do atributo
+	 * @return
+	 */
+	public static Object getFieldValue(Class<?> entityType, String fieldName, Object fieldValue) throws AppException {
+		Class<?> type = getType(entityType, fieldName);
+
+		fieldValue = getCorrectValue(fieldValue);
+
+		if (fieldValue == null)
+			return null;
+
+		if (type.equals(String.class))
+			return fieldValue;
+
+		try {
+			Constructor<?> constructor = type.getDeclaredConstructor(String.class);
+			Object value = constructor.newInstance(String.valueOf(fieldValue));
+			return value;
+		} catch (SecurityException | IllegalArgumentException | NoSuchMethodException | InstantiationException
+				| IllegalAccessException | InvocationTargetException e) {
+			throw new AppException(e.getMessage(), e.getCause());
+		}
+	}
 
 	/**
 	 * Retorna o tipo da classe usada como Template
@@ -57,7 +146,7 @@ public final class AppHelper {
 	 *            Map
 	 * @return Map
 	 */
-	public static <K, V> Map<K, V> removeEmptyArray(Map<K, V> map) {
+	public static <K, V> Map<K, V> removeEmptyValue(Map<K, V> map) {
 		if (map != null && !map.isEmpty()) {
 			Iterator<Map.Entry<K, V>> i = map.entrySet().iterator();
 
@@ -65,7 +154,8 @@ public final class AppHelper {
 				Map.Entry<K, V> entry = i.next();
 				V value = entry.getValue();
 
-				if ((value instanceof Object[]) && ((Object[]) value).length == 0)
+				if (value == null || (value instanceof String && ((String) value).isEmpty())
+						|| ((value instanceof Object[]) && ((Object[]) value).length == 0))
 					i.remove();
 			}
 
@@ -137,6 +227,89 @@ public final class AppHelper {
 			isEquals = false;
 
 		return isEquals;
+	}
+
+	/**
+	 * Verifica se o tipo infomado é "Boolean"
+	 * 
+	 * @param type
+	 *            Tipo de classe
+	 * @return
+	 */
+	public static boolean isBoolean(Class<?> type) {
+		return type.equals(Boolean.class) || type.equals(Boolean.TYPE);
+	}
+
+	private static boolean isInteger(Class<?> type) {
+		if (type.equals(Byte.class) || type.equals(Byte.TYPE))
+			return true;
+
+		if (type.equals(Short.class) || type.equals(Short.TYPE))
+			return true;
+
+		if (type.equals(Integer.class) || type.equals(Integer.TYPE))
+			return true;
+
+		if (type.equals(Long.class) || type.equals(Long.TYPE))
+			return true;
+
+		return false;
+	}
+
+	/**
+	 * Verifica se o tipo infomado é "Float"
+	 * 
+	 * @param type
+	 *            Tipo de classe
+	 * @return
+	 */
+	private static boolean isFloat(Class<?> type) {
+		if (type.equals(Float.class) || type.equals(Float.TYPE))
+			return true;
+
+		if (type.equals(Double.class) || type.equals(Double.TYPE))
+			return true;
+
+		return false;
+	}
+
+	/**
+	 * Verifica se o tipo infomado é "Number"
+	 * 
+	 * @param type
+	 *            Tipo de classe
+	 * @return
+	 */
+	public static boolean isNumber(Class<?> type) {
+		if (isInteger(type))
+			return true;
+
+		if (isFloat(type))
+			return true;
+
+		return false;
+	}
+
+	/**
+	 * Verifica se o tipo infomado é "Date"
+	 * 
+	 * @param type
+	 *            Tipo de classe
+	 * @return
+	 */
+	public static boolean isDate(Class<?> type) {
+		return type.equals(Date.class);
+	}
+
+	/**
+	 * Verifica se o tipo infomado é "enum"
+	 * 
+	 * @param type
+	 *            Tipo de classe
+	 * @return
+	 */
+	public static boolean isEnum(Class<?> type) {
+		return type.isEnum();
 	}
 
 }

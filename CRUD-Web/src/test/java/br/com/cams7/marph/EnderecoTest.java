@@ -6,7 +6,9 @@ package br.com.cams7.marph;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNull;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.test.context.ContextConfiguration;
 import org.testng.annotations.Test;
@@ -191,9 +193,38 @@ public final class EnderecoTest extends AbstractAppTest<EnderecoService, Enderec
 	@Test
 	@Override
 	public void testSearch() {
-		List<EnderecoEntity> enderecos = getService().search(2, (short) 9, "bairro", SortOrder.UNSORTED, null);
+		final String[] GLOBAL_FILTERS = new String[] { "bairro", "rua", "telefone", "pessoa.nome" };
+		final Map<String, Object> FILTERS = new HashMap<>();
+		FILTERS.put("globalFilter", "a");
+		FILTERS.put("pessoa.nome", "m");
+		FILTERS.put("rua", "r");
+		FILTERS.put("bairro", "b");
+		FILTERS.put("telefone", "0");
 
-		checkList(enderecos, 7);
+		List<EnderecoEntity> enderecos = getService().search(0, (short) 10, "bairro", SortOrder.UNSORTED, FILTERS,
+				GLOBAL_FILTERS);
+
+		checkList(enderecos, 3);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see br.com.cams7.app.AbstractAppTest#testGetTotalElements()
+	 */
+	@Test
+	@Override
+	public void testGetTotalElements() {
+		final String[] GLOBAL_FILTERS = new String[] { "bairro", "rua", "telefone", "pessoa.nome" };
+		final Map<String, Object> FILTERS = new HashMap<>();
+		FILTERS.put("globalFilter", "a");
+		FILTERS.put("pessoa.nome", "m");
+		FILTERS.put("rua", "r");
+		FILTERS.put("bairro", "b");
+		FILTERS.put("telefone", "0");
+
+		int total = getService().getTotalElements(FILTERS, GLOBAL_FILTERS);
+		assertEquals(4, total);
 	}
 
 	/*

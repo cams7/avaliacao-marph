@@ -12,7 +12,7 @@ import java.util.Set;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.RequestScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIInput;
 import javax.faces.context.FacesContext;
@@ -35,7 +35,8 @@ import br.com.cams7.marph.service.UsuarioService;
  */
 @Controller(CONTROLLER_NAME)
 @ManagedBean(name = CONTROLLER_NAME)
-@ViewScoped
+// @ViewScoped
+@RequestScoped
 public class UsuarioBeanController extends AbstractBeanController<UsuarioService, UsuarioEntity> {
 
 	private static final long serialVersionUID = 1L;
@@ -52,7 +53,7 @@ public class UsuarioBeanController extends AbstractBeanController<UsuarioService
 	private PessoaService pessoaService;
 
 	public UsuarioBeanController() {
-		super();
+		super("login", "pessoa.nome");
 	}
 
 	/*
@@ -176,7 +177,9 @@ public class UsuarioBeanController extends AbstractBeanController<UsuarioService
 		return autorizacoes;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see br.com.cams7.app.controller.AbstractBeanController#getListPage()
 	 */
 	@Override

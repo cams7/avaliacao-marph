@@ -17,8 +17,9 @@ import br.com.cams7.marph.entity.PessoaEntity;
 public interface PessoaRepository extends BaseRepository<PessoaEntity> {
 
 	/**
-	 * Busca pelo nome todas as pessoas que nao estao realacionadas a nenhum
-	 * usuario
+	 * Retorna todos os objetos que são instâncias da classe "PessoaEntity" e
+	 * que não estão realacionados a nenhum usuário, filtrando-os pelo nome da
+	 * pessoa
 	 * 
 	 * @param nome
 	 * @return Pessoas
@@ -26,7 +27,8 @@ public interface PessoaRepository extends BaseRepository<PessoaEntity> {
 	List<PessoaEntity> buscaPessoasSemUsuarioPeloNome(String nome);
 
 	/**
-	 * Busca pelo nome todas as pessoas
+	 * Retorna os objetos que são instâncias da classe "PessoaEntity",
+	 * filtrando-os pelo nome da pessoa
 	 * 
 	 * @param nome
 	 * @return Pessoas

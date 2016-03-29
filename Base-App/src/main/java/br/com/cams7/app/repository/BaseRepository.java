@@ -18,7 +18,7 @@ import br.com.cams7.utils.SortOrder;
 public interface BaseRepository<E extends AbstractEntity> {
 
 	/**
-	 * Salva dos dados de uma nova entidade no banco de dados
+	 * Salva um objeto que é instância de "AbstractEntity"
 	 * 
 	 * @param entity
 	 *            Entidade
@@ -26,7 +26,7 @@ public interface BaseRepository<E extends AbstractEntity> {
 	void salva(E entity);
 
 	/**
-	 * Atualiza os dados da entidade no banco de dados
+	 * Atualiza um objeto que é instância de "AbstractEntity"
 	 * 
 	 * @param entity
 	 *            Entidade
@@ -34,7 +34,7 @@ public interface BaseRepository<E extends AbstractEntity> {
 	void atualiza(E entity);
 
 	/**
-	 * Remove a entidade do banco de dados
+	 * Remove um objeto que é instância de "AbstractEntity", filtrando-o pelo id
 	 * 
 	 * @param id
 	 *            Id da entidade
@@ -42,7 +42,8 @@ public interface BaseRepository<E extends AbstractEntity> {
 	void remove(Long id);
 
 	/**
-	 * Remove as entidades do banco de dados
+	 * Remove os objetos que são instâncias de "AbstractEntity", filtrando-os
+	 * pelos ids
 	 * 
 	 * @param ids
 	 *            Ids das entidades
@@ -50,14 +51,15 @@ public interface BaseRepository<E extends AbstractEntity> {
 	void remove(List<Long> ids);
 
 	/**
-	 * Busca todas as entidades no banco de dados
+	 * Retorna todos os objetos que são instâncias de "AbstractEntity"
 	 * 
 	 * @return Entidades
 	 */
 	List<E> buscaTodos();
 
 	/**
-	 * Busca a entidade pelo id no banco de dados
+	 * Retorna um objeto que é instância de "AbstractEntity", filtrando-o pelo
+	 * id
 	 * 
 	 * @param id
 	 *            Id da entidade
@@ -66,24 +68,37 @@ public interface BaseRepository<E extends AbstractEntity> {
 	E buscaPeloId(Long id);
 
 	/**
-	 * Busca, pagina e ordena os dados das entidades
+	 * Filtra, pagina e ordena os objetos que são instâncias de "AbstractEntity"
 	 * 
 	 * @param pageFirst
 	 *            Indice
 	 * @param pageSize
 	 *            Total de linhas
 	 * @param sortField
-	 *            Nome do campo
+	 *            Nome do atributo da entidade
 	 * @param sortOrder
-	 *            Tipo de ordenacao
+	 *            Tipo de ordenação
 	 * @param filters
 	 *            Filtros
-	 * @return Entidades
+	 * @param globalFilters
+	 *            Nomes dos atributos da entidade
+	 * @return Entidade
 	 */
-	List<E> search(int pageFirst, short pageSize, String sortField, SortOrder sortOrder, Map<String, Object> filters);
+	List<E> search(int pageFirst, short pageSize, String sortField, SortOrder sortOrder, Map<String, Object> filters,
+			String... globalFilters);
 
 	/**
-	 * Numero total de entidades
+	 * Retorna o numero total de instâncias de "AbstractEntity". Essa pesquisa é
+	 * feita com auxilio de filtros
+	 * 
+	 * @param filters
+	 * @param globalFilters
+	 * @return
+	 */
+	int getTotalElements(Map<String, Object> filters, String... globalFilters);
+
+	/**
+	 * Retorna o numero total de instâncias de "AbstractEntity"
 	 * 
 	 * @return
 	 */

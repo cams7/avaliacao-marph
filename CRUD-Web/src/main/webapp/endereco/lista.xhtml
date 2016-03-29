@@ -37,7 +37,19 @@
 				rowsPerPageTemplate="3,5,10,15" selectionMode="single"
 				selection="#{enderecoMB.selectedEntity}" lazy="true"
 				emptyMessage="Nenhum endereco foi cadastrado"
-				widgetVar="enderecoTable" resizableColumns="true">
+				widgetVar="enderecoTable" resizableColumns="true" filterDelay="1000"
+				filterEvent="keyup">
+
+				<f:facet name="header">
+					<p:outputPanel style="text-align: right;">
+						<h:outputText value="Busca:" />
+						<p:inputText id="globalFilter" style="width:300px"
+							placeholder="Nome, bairro, rua ou telefone" immediate="true">
+							<p:ajax event="keyup" delay="1000"
+								oncomplete="PF('enderecoTable').filter()" />
+						</p:inputText>
+					</p:outputPanel>
+				</f:facet>
 
 				<sec:authorize ifAnyGranted="SECRETARIO,ADMINISTRADOR">
 					<p:ajax event="rowSelect" listener="#{enderecoMB.onRowSelect}"
@@ -45,19 +57,23 @@
 						onsuccess="PF('enderecoDialog').show();" />
 				</sec:authorize>
 
-				<p:column headerText="Nome">
+				<p:column headerText="Nome" sortBy="#{endereco.pessoa.nome}"
+					filterBy="#{endereco.pessoa.nome}" filterMatchMode="contains">
 					<h:outputText value="#{endereco.pessoa.nome}" />
 				</p:column>
 
-				<p:column headerText="Rua" sortBy="#{endereco.rua}">
+				<p:column headerText="Rua" sortBy="#{endereco.rua}"
+					filterBy="#{endereco.rua}" filterMatchMode="contains">
 					<h:outputText value="#{endereco.rua}" />
 				</p:column>
 
-				<p:column headerText="Bairro" sortBy="#{endereco.bairro}">
+				<p:column headerText="Bairro" sortBy="#{endereco.bairro}"
+					filterBy="#{endereco.bairro}" filterMatchMode="contains">
 					<h:outputText value="#{endereco.bairro}" />
 				</p:column>
 
-				<p:column headerText="Telefone" sortBy="#{endereco.telefone}">
+				<p:column headerText="Telefone" sortBy="#{endereco.telefone}"
+					filterBy="#{endereco.telefone}" filterMatchMode="contains">
 					<h:outputText value="#{endereco.telefone}">
 						<f:converter converterId="telefoneConverter" />
 					</h:outputText>

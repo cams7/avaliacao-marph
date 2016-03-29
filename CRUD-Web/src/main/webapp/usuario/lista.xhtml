@@ -36,7 +36,19 @@
 				rowsPerPageTemplate="3,5,10,15" selectionMode="single"
 				selection="#{usuarioMB.selectedEntity}" lazy="true"
 				emptyMessage="Nenhum Usuario foi cadastrado"
-				widgetVar="usuarioTable" resizableColumns="true">
+				widgetVar="usuarioTable" resizableColumns="true" filterDelay="1000"
+				filterEvent="keyup">
+
+				<f:facet name="header">
+					<p:outputPanel style="text-align: right;">
+						<h:outputText value="Busca:" />
+						<p:inputText id="globalFilter" style="width:300px"
+							placeholder="Nome ou login" immediate="true">
+							<p:ajax event="keyup" delay="1000"
+								oncomplete="PF('usuarioTable').filter()" />
+						</p:inputText>
+					</p:outputPanel>
+				</f:facet>
 
 				<sec:authorize access="hasRole('ADMINISTRADOR')">
 					<p:ajax event="rowSelect" listener="#{usuarioMB.onRowSelect}"
@@ -44,15 +56,26 @@
 						onsuccess="PF('usuarioDialog').show();" />
 				</sec:authorize>
 
-				<p:column headerText="Nome">
+				<p:column headerText="Nome" sortBy="#{usuario.pessoa.nome}"
+					filterBy="#{usuario.pessoa.nome}" filterMatchMode="contains">
 					<h:outputText value="#{usuario.pessoa.nome}" />
 				</p:column>
 
-				<p:column headerText="Login" sortBy="#{usuario.login}">
+				<p:column headerText="Login" sortBy="#{usuario.login}"
+					filterBy="#{usuario.login}" filterMatchMode="contains">
 					<h:outputText value="#{usuario.login}" />
 				</p:column>
 
-				<p:column headerText="Esta ativo" sortBy="#{usuario.habilitado}">
+				<p:column headerText="Esta ativo" sortBy="#{usuario.habilitado}"
+					filterBy="#{usuario.habilitado}" filterMatchMode="equals">
+					<f:facet name="filter">
+						<p:selectOneButton onchange="PF('usuarioTable').filter()">
+							<f:converter converterId="javax.faces.Boolean" />
+							<f:selectItem itemLabel="Todos" itemValue="" />
+							<f:selectItem itemLabel="Sim" itemValue="true" />
+							<f:selectItem itemLabel="Nao" itemValue="false" />
+						</p:selectOneButton>
+					</f:facet>
 					<h:outputText value="#{usuario.habilitado ? 'Sim': 'Nao'}" />
 				</p:column>
 
