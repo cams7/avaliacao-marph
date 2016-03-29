@@ -1,7 +1,10 @@
 CREATE DATABASE  IF NOT EXISTS `avaliacao_marph`;
 USE `avaliacao_marph`;
 
+DROP TABLE IF EXISTS `usuario`;
+DROP TABLE IF EXISTS `endereco`;
 DROP TABLE IF EXISTS `pessoa`;
+
 CREATE TABLE `pessoa` (
   `id_pessoa` bigint(20) NOT NULL AUTO_INCREMENT,
   `cpf` varchar(11) NOT NULL,
@@ -11,7 +14,6 @@ CREATE TABLE `pessoa` (
   UNIQUE KEY `UK_pessoa_cpf` (`cpf`)
 ) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=latin1;
 
-DROP TABLE IF EXISTS `usuario`;
 CREATE TABLE `usuario` (
   `id_usuario` bigint(20) NOT NULL AUTO_INCREMENT,
   `status` bit(1) NOT NULL,
@@ -25,7 +27,6 @@ CREATE TABLE `usuario` (
   CONSTRAINT `FK_usuario_pessoa` FOREIGN KEY (`id_pessoa`) REFERENCES `pessoa` (`id_pessoa`)
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 
-DROP TABLE IF EXISTS `endereco`;
 CREATE TABLE `endereco` (
   `id_endereco` bigint(20) NOT NULL AUTO_INCREMENT,
   `bairro` varchar(50) NOT NULL,
