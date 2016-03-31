@@ -3,16 +3,16 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
-		<groupId>br.com.cams7</groupId>
-		<artifactId>avaliacao-marph</artifactId>
+		<groupId>br.com.cams7.marph</groupId>
+		<artifactId>cw</artifactId>
 		<version>1.0-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>base-app</artifactId>
+	<artifactId>cw-lib</artifactId>
 	<packaging>jar</packaging>
 
-	<name>Base App</name>
-	<description>Modulo comum a aplicação</description>
+	<name>Biblioteca comum - Containers Web</name>
+	<description>Modulo comum à aplicação que roda num Containers Web: Tomcat7</description>
 
 	<dependencies>
 		<dependency>

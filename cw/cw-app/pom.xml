@@ -3,16 +3,16 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
-		<groupId>br.com.cams7</groupId>
-		<artifactId>avaliacao-marph</artifactId>
+		<groupId>br.com.cams7.marph</groupId>
+		<artifactId>cw</artifactId>
 		<version>1.0-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>crud-web</artifactId>
+	<artifactId>cw-app</artifactId>
 	<packaging>war</packaging>
 
-	<name>CRUD Web</name>
-	<description>Aplicação Web</description>
+	<name>Aplicação - Containers Web</name>
+	<description>Aplicação que roda num Containers Web: Tomcat7</description>
 
 	<properties>
 		<jackson.version>2.7.2</jackson.version>
@@ -22,8 +22,8 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>br.com.cams7</groupId>
-			<artifactId>base-app</artifactId>
+			<groupId>br.com.cams7.marph</groupId>
+			<artifactId>cw-lib</artifactId>
 			<version>${project.version}</version>
 			<type>jar</type>
 		</dependency>

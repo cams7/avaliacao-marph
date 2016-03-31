@@ -19,6 +19,7 @@ temp/
 .project
 .settings/
 bin/
+.metadata/
 
 *.class
 
