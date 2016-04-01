@@ -11,7 +11,7 @@
 
 	<artifactId>app-as-lib</artifactId>
 	<packaging>jar</packaging>
-	
+
 	<name>Biblioteca comum: servidor de aplicação</name>
 	<description>Biblioteca que é comum à aplicação executada num servidor de aplicação: Wildfly</description>
 
@@ -19,7 +19,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>br.com.cams7.marph</groupId>
-			<artifactId>app-lib</artifactId>
+			<artifactId>common-lib</artifactId>
 			<scope>provided</scope>
 		</dependency>
 	</dependencies>

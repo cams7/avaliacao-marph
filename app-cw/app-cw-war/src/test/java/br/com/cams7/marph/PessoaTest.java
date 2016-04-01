@@ -15,10 +15,10 @@ import java.util.Map;
 import org.springframework.test.context.ContextConfiguration;
 import org.testng.annotations.Test;
 
-import br.com.cams7.app.AbstractAppTest;
+import br.com.cams7.app.utils.SortOrder;
+import br.com.cams7.cw.AbstractAppTest;
 import br.com.cams7.marph.entity.PessoaEntity;
 import br.com.cams7.marph.service.PessoaService;
-import br.com.cams7.utils.SortOrder;
 
 /**
  * Testa o CRUD (cria, lê, atualiza e remove) da entidade "Pessoa"
@@ -261,7 +261,7 @@ public final class PessoaTest extends AbstractAppTest<PessoaService, PessoaEntit
 	public void testBuscaPessoasSemUsuarioPeloNome() {
 		List<PessoaEntity> pessoas = getService().buscaPessoasSemUsuarioPeloNome("an");
 
-		checkList(pessoas, 3);
+		checkList(pessoas, 4);
 	}
 
 	/**

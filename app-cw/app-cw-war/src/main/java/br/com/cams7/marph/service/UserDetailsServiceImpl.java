@@ -3,6 +3,7 @@
  */
 package br.com.cams7.marph.service;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import org.hibernate.Query;
@@ -18,6 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import br.com.cams7.marph.entity.UsuarioEntity;
+import br.com.cams7.marph.entity.UsuarioEntity.Autorizacao;
 
 /**
  * @author cesar
@@ -47,7 +49,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		query.setParameter("login", login);
 		UsuarioEntity usuario = (UsuarioEntity) query.uniqueResult();
 
-		return buildUserForAuthentication(usuario, usuario.getAutorizacoes());
+		return buildUserForAuthentication(usuario, getAuthority(usuario.getAutorizacoes()));
 	}
 
 	// Converts br.com.cams7.marph.entity.UsuarioEntity user to
@@ -58,6 +60,23 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		boolean habilitado = usuario.getHabilitado();
 
 		return new User(login, senha, habilitado, true, true, true, autorizacoes);
+	}
+
+	private Set<Authority> getAuthority(Set<Autorizacao> autorizacoes) {
+		Set<Authority> authorities = new HashSet<>();
+		for (Autorizacao autorizacao : autorizacoes)
+			authorities.add(Authority.valueOf(autorizacao.name()));
+
+		return authorities;
+	}
+
+	public enum Authority implements GrantedAuthority {
+		CLIENTE, SECRETARIO, ADMINISTRADOR;
+
+		@Override
+		public String getAuthority() {
+			return toString();
+		}
 	}
 
 }

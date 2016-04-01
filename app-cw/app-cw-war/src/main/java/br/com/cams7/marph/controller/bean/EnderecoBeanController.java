@@ -14,7 +14,7 @@ import org.primefaces.event.SelectEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
-import br.com.cams7.app.controller.AbstractBeanController;
+import br.com.cams7.cw.controller.AbstractBeanController;
 import br.com.cams7.marph.entity.EnderecoEntity;
 import br.com.cams7.marph.entity.PessoaEntity;
 import br.com.cams7.marph.service.EnderecoService;

@@ -11,7 +11,7 @@
 
 	<artifactId>app-jpa</artifactId>
 	<packaging>jar</packaging>
-	
+
 	<name>Entidades da aplicação</name>
 	<description>Todas as entidades da aplicação</description>
 
@@ -19,25 +19,19 @@
 	<dependencies>
 		<dependency>
 			<groupId>br.com.cams7.marph</groupId>
-			<artifactId>app-lib</artifactId>
+			<artifactId>common-lib</artifactId>
 			<scope>provided</scope>
-		</dependency>	
-		
-		<!-- Import the JPA API, we use provided scope as the API is included in 
-			JBoss WildFly -->
-		<!--dependency>
+		</dependency>
+
+		<dependency>
 			<groupId>org.hibernate.javax.persistence</groupId>
 			<artifactId>hibernate-jpa-2.1-api</artifactId>
 			<scope>provided</scope>
-		</dependency-->
-
-		<!-- JSR-303 (Bean Validation) Implementation -->
-		<!-- Provides portable constraints such as @Email -->
-		<!-- Hibernate Validator is shipped in JBoss WildFly -->
-		<!--dependency>
+		</dependency>
+		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-validator</artifactId>
 			<scope>provided</scope>
-		</dependency-->
+		</dependency>
 	</dependencies>
 </project>

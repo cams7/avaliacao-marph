@@ -19,7 +19,7 @@
 			<bean
 				class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
 				<property name="objectMapper">
-					<bean class="br.com.cams7.utils.HibernateAwareObjectMapper" />
+					<bean class="br.com.cams7.cw.utils.HibernateAwareObjectMapper" />
 				</property>
 			</bean>
 		</mvc:message-converters>

@@ -8,7 +8,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import br.com.cams7.app.service.AbstractService;
+import br.com.cams7.cw.service.AbstractService;
 import br.com.cams7.marph.entity.PessoaEntity;
 import br.com.cams7.marph.repository.PessoaRepository;
 

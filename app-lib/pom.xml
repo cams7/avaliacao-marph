@@ -11,11 +11,27 @@
 
 	<artifactId>app-lib</artifactId>
 	<packaging>jar</packaging>
-	
-	<name>Biblioteca comum</name>
-	<description>Biblioteca comum a toda aplicação</description>
+
+	<name>Biblioteca comum a todas aplicações</name>
+	<description>Biblioteca comum a todas aplicações</description>
 
 
 	<dependencies>
+		<dependency>
+			<groupId>br.com.cams7.marph</groupId>
+			<artifactId>common-lib</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>br.com.cams7.marph</groupId>
+			<artifactId>app-jpa</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.jboss.spec.javax.faces</groupId>
+			<artifactId>jboss-jsf-api_2.2_spec</artifactId>
+			<scope>provided</scope>
+		</dependency>
 	</dependencies>
 </project>

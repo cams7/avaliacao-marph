@@ -21,7 +21,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>br.com.cams7.marph</groupId>
-			<artifactId>app-lib</artifactId>
+			<artifactId>common-lib</artifactId>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
@@ -33,7 +33,7 @@
 			<groupId>br.com.cams7.marph</groupId>
 			<artifactId>app-as-lib</artifactId>
 			<scope>provided</scope>
-		</dependency>		
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -43,6 +43,11 @@
 				<configuration>
 					<ejbVersion>3.1</ejbVersion>
 					<generateClient>true</generateClient>
+					<!--clientIncludes> <clientInclude>br/com/cams7/marph/repository/*</clientInclude> 
+						<clientInclude>br/com/cams7/marph/service/*</clientInclude> </clientIncludes -->
+					<clientExcludes>
+						<clientExclude>br/com/cams7/marph/**/*Impl</clientExclude>
+					</clientExcludes>
 				</configuration>
 			</plugin>
 		</plugins>

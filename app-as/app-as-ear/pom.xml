@@ -21,7 +21,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>br.com.cams7.marph</groupId>
-			<artifactId>app-lib</artifactId>
+			<artifactId>common-lib</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>br.com.cams7.marph</groupId>
@@ -29,8 +29,12 @@
 		</dependency>
 		<dependency>
 			<groupId>br.com.cams7.marph</groupId>
+			<artifactId>app-lib</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>br.com.cams7.marph</groupId>
 			<artifactId>app-as-lib</artifactId>
-		</dependency>		
+		</dependency>
 		<dependency>
 			<groupId>br.com.cams7.marph</groupId>
 			<artifactId>app-as-ejb</artifactId>
@@ -41,15 +45,13 @@
 			<artifactId>app-as-war</artifactId>
 			<type>war</type>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.primefaces</groupId>
 			<artifactId>primefaces</artifactId>
 		</dependency>
-		<!--dependency>
-			<groupId>commons-fileupload</groupId>
-			<artifactId>commons-fileupload</artifactId>
-		</dependency-->
+		<!--dependency> <groupId>commons-fileupload</groupId> <artifactId>commons-fileupload</artifactId> 
+			</dependency -->
 	</dependencies>
 
 	<build>

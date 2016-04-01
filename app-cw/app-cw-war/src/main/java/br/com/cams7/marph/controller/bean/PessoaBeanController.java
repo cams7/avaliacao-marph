@@ -10,7 +10,7 @@ import javax.faces.bean.RequestScoped;
 
 import org.springframework.stereotype.Controller;
 
-import br.com.cams7.app.controller.AbstractBeanController;
+import br.com.cams7.cw.controller.AbstractBeanController;
 import br.com.cams7.marph.entity.PessoaEntity;
 import br.com.cams7.marph.service.PessoaService;
 

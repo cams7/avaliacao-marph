@@ -15,13 +15,14 @@
 	<description>Aplicação que é executada num recipiente web: Tomcat7</description>
 
 	<properties>
+		<!--jackson.version>2.7.3</jackson.version -->
+		<jackson.version>2.7.2</jackson.version>
 	</properties>
 
 	<modules>
 		<module>app-cw-war</module>
 		<module>app-cw-lib</module>
 	</modules>
-
 
 	<dependencyManagement>
 		<dependencies>
@@ -76,6 +77,18 @@
 			</dependency>
 
 			<dependency>
+				<groupId>com.fasterxml.jackson.core</groupId>
+				<artifactId>jackson-databind</artifactId>
+				<version>${jackson.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.fasterxml.jackson.datatype</groupId>
+				<artifactId>jackson-datatype-hibernate4</artifactId>
+				<version>${jackson.version}</version>
+			</dependency>
+
+			<dependency>
 				<groupId>net.sf.jasperreports</groupId>
 				<artifactId>jasperreports</artifactId>
 				<version>6.2.1</version>
@@ -107,5 +120,5 @@
 				<version>2.4.6</version>
 			</dependency>
 		</dependencies>
-	</dependencyManagement>	
+	</dependencyManagement>		
 </project>

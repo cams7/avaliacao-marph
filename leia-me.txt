@@ -1,0 +1,3 @@
+Comandos úteis:
+Para busca os aquivos de texto com uma palavra específica, execute o comando abaixo no diretório onde estão esses. 
+find . -type f -exec grep -H 'palavra procurada' {} \;

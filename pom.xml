@@ -17,15 +17,20 @@
 		<version.compiler.plugin>3.5.1</version.compiler.plugin>
 		<maven.compiler.source>1.7</maven.compiler.source>
 		<maven.compiler.target>1.7</maven.compiler.target>
+		<version.surefire.plugin>2.19.1</version.surefire.plugin>
 
 		<version.war.plugin>2.6</version.war.plugin>
+
+		<version.wildfly.maven.plugin>1.0.2.Final</version.wildfly.maven.plugin>
+		<version.arquillian.container>8.2.1.Final</version.arquillian.container>
 
 		<user.name>CAMs7</user.name>
 	</properties>
 
 	<modules>
-		<module>app-lib</module>
+		<module>common-lib</module>
 		<module>app-jpa</module>
+		<module>app-lib</module>
 		<module>app-as</module>
 		<module>app-cw</module>
 	</modules>
@@ -46,7 +51,7 @@
 		<dependencies>
 			<dependency>
 				<groupId>br.com.cams7.marph</groupId>
-				<artifactId>app-lib</artifactId>
+				<artifactId>common-lib</artifactId>
 				<version>${project.version}</version>
 				<type>jar</type>
 			</dependency>
@@ -58,28 +63,48 @@
 			</dependency>
 			<dependency>
 				<groupId>br.com.cams7.marph</groupId>
+				<artifactId>app-lib</artifactId>
+				<version>${project.version}</version>
+				<type>jar</type>
+			</dependency>
+			<dependency>
+				<groupId>br.com.cams7.marph</groupId>
 				<artifactId>app-as-ejb</artifactId>
 				<version>${project.version}</version>
 				<type>ejb-client</type>
 			</dependency>
-			
+
+			<dependency>
+				<groupId>org.wildfly.bom</groupId>
+				<artifactId>jboss-javaee-7.0-with-hibernate</artifactId>
+				<version>8.2.2.Final</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+
 			<dependency>
 				<groupId>org.testng</groupId>
 				<artifactId>testng</artifactId>
-				<version>6.9.10</version>				
+				<version>6.9.10</version>
 			</dependency>
 			<dependency>
 				<groupId>org.primefaces</groupId>
 				<artifactId>primefaces</artifactId>
-				<!--version>5.3</version-->
+				<!--version>5.3</version -->
 				<version>5.2</version>
-			</dependency>			
+			</dependency>
 		</dependencies>
 	</dependencyManagement>
 
 	<build>
 		<pluginManagement>
 			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-surefire-plugin</artifactId>
+					<version>${version.surefire.plugin}</version>
+				</plugin>
+
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-war-plugin</artifactId>
@@ -104,6 +129,41 @@
 							</manifestEntries>
 						</archive>
 					</configuration>
+				</plugin>
+
+				<plugin>
+					<groupId>org.apache.tomcat.maven</groupId>
+					<artifactId>tomcat7-maven-plugin</artifactId>
+					<version>2.2</version>
+					<configuration>
+						<path>/avaliacao_marph</path>
+						<update>true</update>
+						<url>http://localhost:8080/manager/text</url>
+						<username>tomcat</username>
+						<password>tomcat</password>
+					</configuration>
+				</plugin>
+
+				<plugin>
+					<groupId>org.mortbay.jetty</groupId>
+					<artifactId>maven-jetty-plugin</artifactId>
+					<version>6.1.25</version>
+					<!--executions> <execution> <id>start-jetty</id> <phase>pre-integration-test</phase> 
+						<goals> <goal>run-forked</goal> </goals> </execution> </executions -->
+					<configuration>
+						<jvmArgs>-Xmx2048m -Xms1536m -XX:PermSize=128m
+							-XX:MaxPermSize=256m</jvmArgs>
+						<scanIntervalSeconds>10</scanIntervalSeconds>
+						<webApp>
+							<contextPath>/</contextPath>
+						</webApp>
+					</configuration>
+				</plugin>
+
+				<plugin>
+					<groupId>org.wildfly.plugins</groupId>
+					<artifactId>wildfly-maven-plugin</artifactId>
+					<version>${version.wildfly.maven.plugin}</version>
 				</plugin>
 			</plugins>
 		</pluginManagement>
@@ -141,7 +201,74 @@
 					<downloadSources>true</downloadSources>
 					<downloadJavadocs>true</downloadJavadocs>
 				</configuration>
-			</plugin>			
+			</plugin>
 		</plugins>
 	</build>
+
+	<profiles>
+		<profile>
+			<id>default</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-surefire-plugin</artifactId>
+						<configuration>
+							<skip>true</skip>
+						</configuration>
+					</plugin>
+
+					<!-- The WildFly plugin deploys your war to a local JBoss AS container -->
+					<!-- To use, set the JBOSS_HOME environment variable and run: mvn package 
+						wildfly:deploy -->
+					<plugin>
+						<groupId>org.wildfly.plugins</groupId>
+						<artifactId>wildfly-maven-plugin</artifactId>
+						<configuration>
+							<skip>true</skip>
+						</configuration>
+						<!--configuration> <jboss-home>C:\Users\cams7\Desenv\java\jboss\wildfly-8.2.0.Final_maven</jboss-home> 
+							</configuration> <executions> <execution> <phase>install</phase> <goals> 
+							<goal>run</goal> <goal>deploy</goal> </goals> </execution> </executions -->
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+
+		<profile>
+
+			<!-- An optional Arquillian testing profile that executes tests in your 
+				WildFly instance -->
+			<!-- This profile will start a new WildFly instance, and execute the test, 
+				shutting it down when done -->
+			<!-- Run with: mvn clean test -Parq-wildfly-managed -->
+			<id>arq-wildfly-managed</id>
+			<dependencies>
+				<dependency>
+					<groupId>org.wildfly</groupId>
+					<artifactId>wildfly-arquillian-container-managed</artifactId>
+					<version>${version.arquillian.container}</version>
+					<scope>test</scope>
+				</dependency>
+			</dependencies>
+		</profile>
+
+		<profile>
+			<!-- An optional Arquillian testing profile that executes tests in a remote 
+				WildFly instance -->
+			<!-- Run with: mvn clean test -Parq-wildfly-remote -->
+			<id>arq-wildfly-remote</id>
+			<dependencies>
+				<dependency>
+					<groupId>org.wildfly</groupId>
+					<artifactId>wildfly-arquillian-container-remote</artifactId>
+					<version>${version.arquillian.container}</version>
+					<scope>test</scope>
+				</dependency>
+			</dependencies>
+		</profile>
+	</profiles>
 </project>

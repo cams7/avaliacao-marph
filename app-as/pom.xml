@@ -17,11 +17,7 @@
 
 	<properties>
 		<version.ear.plugin>2.10.1</version.ear.plugin>
-		<version.ejb.plugin>2.5.1</version.ejb.plugin>
-		<version.surefire.plugin>2.19.1</version.surefire.plugin>
-
-		<version.wildfly.maven.plugin>1.0.2.Final</version.wildfly.maven.plugin>
-		<version.arquillian.container>8.2.1.Final</version.arquillian.container>		
+		<version.ejb.plugin>2.5.1</version.ejb.plugin>				
 	</properties>
 
 	<modules>
@@ -52,20 +48,13 @@
 				<type>war</type>
 			</dependency>
 
-			<dependency>
+			<!--dependency>
 				<groupId>org.wildfly.bom</groupId>
 				<artifactId>wildfly-javaee7-with-tools</artifactId>
 				<version>10.0.1.Final</version>
 				<type>pom</type>
 				<scope>import</scope>
-			</dependency>
-			<dependency>
-				<groupId>org.wildfly.bom</groupId>
-				<artifactId>jboss-javaee-7.0-with-hibernate</artifactId>
-				<version>8.2.2.Final</version>
-				<type>pom</type>
-				<scope>import</scope>
-			</dependency>			
+			</dependency-->						
 		</dependencies>
 	</dependencyManagement>	
 
@@ -81,92 +70,8 @@
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-ejb-plugin</artifactId>
 					<version>${version.ejb.plugin}</version>
-				</plugin>	
-
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-surefire-plugin</artifactId>
-					<version>${version.surefire.plugin}</version>
-				</plugin>			
-				<plugin>
-					<groupId>org.wildfly.plugins</groupId>
-					<artifactId>wildfly-maven-plugin</artifactId>
-					<version>${version.wildfly.maven.plugin}</version>
-				</plugin>				
+				</plugin>							
 			</plugins>
 		</pluginManagement>
-	</build>
-
-	<profiles>
-		<profile>
-			<!-- The default profile skips all tests, though you can tune it to run just unit tests based on a custom pattern -->
-			<!-- Seperate profiles are provided for running all tests, including Arquillian tests that execute in the specified container -->
-			<id>default</id>
-			<activation>
-				<activeByDefault>true</activeByDefault>
-			</activation>
-			<build>
-				<plugins>
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-surefire-plugin</artifactId>
-						<configuration>
-							<skip>true</skip>
-						</configuration>
-					</plugin>
-					<!-- The WildFly plugin deploys your war to a local JBoss AS container -->
-					<!-- To use, set the JBOSS_HOME environment variable and run: mvn package wildfly:deploy -->
-					<plugin>
-						<groupId>org.wildfly.plugins</groupId>
-						<artifactId>wildfly-maven-plugin</artifactId>
-						<configuration>
-							<skip>true</skip>
-						</configuration>
-						<!--configuration>
-							<jboss-home>C:\Users\cams7\Desenv\java\jboss\wildfly-8.2.0.Final_maven</jboss-home>
-						</configuration>
-						<executions>
-							<execution>
-								<phase>install</phase>
-								<goals>
-									<goal>run</goal>
-									<goal>deploy</goal>
-								</goals>
-							</execution>
-						</executions-->
-					</plugin>
-				</plugins>
-			</build>
-		</profile>
-
-		<profile>
-
-			<!-- An optional Arquillian testing profile that executes tests in your WildFly instance -->
-			<!-- This profile will start a new WildFly instance, and execute the test, shutting it down when done -->
-			<!-- Run with: mvn clean test -Parq-wildfly-managed -->
-			<id>arq-wildfly-managed</id>
-			<dependencies>
-				<dependency>
-					<groupId>org.wildfly</groupId>
-					<artifactId>wildfly-arquillian-container-managed</artifactId>
-					<version>${version.arquillian.container}</version>
-					<scope>test</scope>
-				</dependency>
-			</dependencies>
-		</profile>
-
-		<profile>
-			<!-- An optional Arquillian testing profile that executes tests in a remote WildFly instance -->
-			<!-- Run with: mvn clean test -Parq-wildfly-remote -->
-			<id>arq-wildfly-remote</id>
-			<dependencies>
-				<dependency>
-					<groupId>org.wildfly</groupId>
-					<artifactId>wildfly-arquillian-container-remote</artifactId>
-					<version>${version.arquillian.container}</version>
-					<scope>test</scope>
-				</dependency>
-			</dependencies>
-		</profile>
-	</profiles>
+	</build>	
 </project>

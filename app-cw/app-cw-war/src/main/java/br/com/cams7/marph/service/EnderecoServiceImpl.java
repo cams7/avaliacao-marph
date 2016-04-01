@@ -5,7 +5,7 @@ package br.com.cams7.marph.service;
 
 import org.springframework.stereotype.Service;
 
-import br.com.cams7.app.service.AbstractService;
+import br.com.cams7.cw.service.AbstractService;
 import br.com.cams7.marph.entity.EnderecoEntity;
 import br.com.cams7.marph.repository.EnderecoRepository;
 

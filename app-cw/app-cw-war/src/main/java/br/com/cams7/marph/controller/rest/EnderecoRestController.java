@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.cams7.app.controller.AbstractRestController;
+import br.com.cams7.cw.controller.AbstractRestController;
 import br.com.cams7.marph.entity.EnderecoEntity;
 import br.com.cams7.marph.service.EnderecoService;
 

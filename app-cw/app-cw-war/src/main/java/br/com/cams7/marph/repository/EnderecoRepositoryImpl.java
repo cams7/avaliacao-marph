@@ -10,9 +10,9 @@ import org.hibernate.Criteria;
 import org.hibernate.sql.JoinType;
 import org.springframework.stereotype.Repository;
 
-import br.com.cams7.app.repository.AbstractRepository;
+import br.com.cams7.app.utils.SortOrder;
+import br.com.cams7.cw.repository.AbstractRepository;
 import br.com.cams7.marph.entity.EnderecoEntity;
-import br.com.cams7.utils.SortOrder;
 
 /**
  * @author cesar
