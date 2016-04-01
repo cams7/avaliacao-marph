@@ -1,0 +1,172 @@
+<?xml version="1.0"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>br.com.cams7.marph</groupId>
+		<artifactId>avaliacao-marph</artifactId>
+		<version>1.0-SNAPSHOT</version>
+	</parent>
+
+	<artifactId>app-as</artifactId>
+	<packaging>pom</packaging>
+
+	<name>Aplicação: servidor de aplicação</name>
+	<description>Aplicação que é executada num servidor de aplicação: Wildfly</description>
+
+	<properties>
+		<version.ear.plugin>2.10.1</version.ear.plugin>
+		<version.ejb.plugin>2.5.1</version.ejb.plugin>
+		<version.surefire.plugin>2.19.1</version.surefire.plugin>
+
+		<version.wildfly.maven.plugin>1.0.2.Final</version.wildfly.maven.plugin>
+		<version.arquillian.container>8.2.1.Final</version.arquillian.container>		
+	</properties>
+
+	<modules>
+		<module>app-as-ear</module>
+		<module>app-as-war</module>
+		<module>app-as-ejb</module>
+		<module>app-as-lib</module>
+	</modules>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>br.com.cams7.marph</groupId>
+				<artifactId>app-as-lib</artifactId>
+				<version>${project.version}</version>
+				<type>jar</type>
+			</dependency>			
+			<dependency>
+				<groupId>br.com.cams7.marph</groupId>
+				<artifactId>app-as-ejb</artifactId>
+				<version>${project.version}</version>
+				<type>ejb</type>
+			</dependency>
+			<dependency>
+				<groupId>br.com.cams7.marph</groupId>
+				<artifactId>app-as-war</artifactId>
+				<version>${project.version}</version>
+				<type>war</type>
+			</dependency>
+
+			<dependency>
+				<groupId>org.wildfly.bom</groupId>
+				<artifactId>wildfly-javaee7-with-tools</artifactId>
+				<version>10.0.1.Final</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.wildfly.bom</groupId>
+				<artifactId>jboss-javaee-7.0-with-hibernate</artifactId>
+				<version>8.2.2.Final</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>			
+		</dependencies>
+	</dependencyManagement>	
+
+	<build>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-ear-plugin</artifactId>
+					<version>${version.ear.plugin}</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-ejb-plugin</artifactId>
+					<version>${version.ejb.plugin}</version>
+				</plugin>	
+
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-surefire-plugin</artifactId>
+					<version>${version.surefire.plugin}</version>
+				</plugin>			
+				<plugin>
+					<groupId>org.wildfly.plugins</groupId>
+					<artifactId>wildfly-maven-plugin</artifactId>
+					<version>${version.wildfly.maven.plugin}</version>
+				</plugin>				
+			</plugins>
+		</pluginManagement>
+	</build>
+
+	<profiles>
+		<profile>
+			<!-- The default profile skips all tests, though you can tune it to run just unit tests based on a custom pattern -->
+			<!-- Seperate profiles are provided for running all tests, including Arquillian tests that execute in the specified container -->
+			<id>default</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-surefire-plugin</artifactId>
+						<configuration>
+							<skip>true</skip>
+						</configuration>
+					</plugin>
+					<!-- The WildFly plugin deploys your war to a local JBoss AS container -->
+					<!-- To use, set the JBOSS_HOME environment variable and run: mvn package wildfly:deploy -->
+					<plugin>
+						<groupId>org.wildfly.plugins</groupId>
+						<artifactId>wildfly-maven-plugin</artifactId>
+						<configuration>
+							<skip>true</skip>
+						</configuration>
+						<!--configuration>
+							<jboss-home>C:\Users\cams7\Desenv\java\jboss\wildfly-8.2.0.Final_maven</jboss-home>
+						</configuration>
+						<executions>
+							<execution>
+								<phase>install</phase>
+								<goals>
+									<goal>run</goal>
+									<goal>deploy</goal>
+								</goals>
+							</execution>
+						</executions-->
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+
+		<profile>
+
+			<!-- An optional Arquillian testing profile that executes tests in your WildFly instance -->
+			<!-- This profile will start a new WildFly instance, and execute the test, shutting it down when done -->
+			<!-- Run with: mvn clean test -Parq-wildfly-managed -->
+			<id>arq-wildfly-managed</id>
+			<dependencies>
+				<dependency>
+					<groupId>org.wildfly</groupId>
+					<artifactId>wildfly-arquillian-container-managed</artifactId>
+					<version>${version.arquillian.container}</version>
+					<scope>test</scope>
+				</dependency>
+			</dependencies>
+		</profile>
+
+		<profile>
+			<!-- An optional Arquillian testing profile that executes tests in a remote WildFly instance -->
+			<!-- Run with: mvn clean test -Parq-wildfly-remote -->
+			<id>arq-wildfly-remote</id>
+			<dependencies>
+				<dependency>
+					<groupId>org.wildfly</groupId>
+					<artifactId>wildfly-arquillian-container-remote</artifactId>
+					<version>${version.arquillian.container}</version>
+					<scope>test</scope>
+				</dependency>
+			</dependencies>
+		</profile>
+	</profiles>
+</project>

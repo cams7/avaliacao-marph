@@ -8,29 +8,42 @@
 		<version>1.0-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>cw</artifactId>
+	<artifactId>app-cw</artifactId>
 	<packaging>pom</packaging>
 
-	<name>Containers Web</name>
-	<description>Aplicação que roda num Containers Web: Tomcat7</description>
+	<name>Aplicação: recipiente web</name>
+	<description>Aplicação que é executada num recipiente web: Tomcat7</description>
 
 	<properties>
-		<spring.version>4.1.6.RELEASE</spring.version>		
-		<hibernate.version>4.3.9.Final</hibernate.version>
 	</properties>
 
 	<modules>
-		<module>cw-app</module>
-		<module>cw-lib</module>
+		<module>app-cw-war</module>
+		<module>app-cw-lib</module>
 	</modules>
 
 
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
+				<groupId>br.com.cams7.marph</groupId>
+				<artifactId>app-cw-lib</artifactId>
+				<version>${project.version}</version>
+				<type>jar</type>
+			</dependency>
+
+			<dependency>
+				<groupId>javax</groupId>
+				<artifactId>javaee-web-api</artifactId>
+				<version>7.0</version>
+				<scope>provided</scope>
+			</dependency>
+
+			<dependency>
 				<groupId>org.springframework</groupId>
 				<artifactId>spring-framework-bom</artifactId>
-				<version>${spring.version}</version>
+				<!--version>4.2.5.RELEASE</version-->
+				<version>4.1.6.RELEASE</version>
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
@@ -38,6 +51,7 @@
 			<dependency>
 				<groupId>cglib</groupId>
 				<artifactId>cglib</artifactId>
+				<!--version>3.2.1</version-->
 				<version>3.1</version>
 			</dependency>
 
@@ -50,20 +64,15 @@
 			<dependency>
 				<groupId>org.hibernate</groupId>
 				<artifactId>hibernate-entitymanager</artifactId>
-				<version>${hibernate.version}</version>
+				<!--version>5.1.0.Final</version-->
+				<version>4.3.9.Final</version>
 			</dependency>
 
 			<dependency>
 				<groupId>org.hibernate</groupId>
 				<artifactId>hibernate-validator</artifactId>
+				<!--version>5.2.4.Final</version-->
 				<version>5.1.3.Final</version>
-			</dependency>
-
-			<dependency>
-				<groupId>javax</groupId>
-				<artifactId>javaee-web-api</artifactId>
-				<version>7.0</version>
-				<scope>provided</scope>
 			</dependency>
 
 			<dependency>

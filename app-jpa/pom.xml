@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>br.com.cams7.marph</groupId>
+		<artifactId>avaliacao-marph</artifactId>
+		<version>1.0-SNAPSHOT</version>
+	</parent>
+
+	<artifactId>app-jpa</artifactId>
+	<packaging>jar</packaging>
+	
+	<name>Entidades da aplicação</name>
+	<description>Todas as entidades da aplicação</description>
+
+
+	<dependencies>
+		<dependency>
+			<groupId>br.com.cams7.marph</groupId>
+			<artifactId>app-lib</artifactId>
+			<scope>provided</scope>
+		</dependency>	
+		
+		<!-- Import the JPA API, we use provided scope as the API is included in 
+			JBoss WildFly -->
+		<!--dependency>
+			<groupId>org.hibernate.javax.persistence</groupId>
+			<artifactId>hibernate-jpa-2.1-api</artifactId>
+			<scope>provided</scope>
+		</dependency-->
+
+		<!-- JSR-303 (Bean Validation) Implementation -->
+		<!-- Provides portable constraints such as @Email -->
+		<!-- Hibernate Validator is shipped in JBoss WildFly -->
+		<!--dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-validator</artifactId>
+			<scope>provided</scope>
+		</dependency-->
+	</dependencies>
+</project>
