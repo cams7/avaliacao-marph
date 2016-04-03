@@ -12,8 +12,8 @@
 	<artifactId>app-as-war</artifactId>
 	<packaging>war</packaging>
 
-	<name>Aplicação web: servidor de aplicação</name>
-	<description>Aplicação web que é executada num servidor de aplicação: Wildfly</description>
+	<name>Aplicação WEB executada no Wildfly</name>
+	<description>Aplicação WEB que é executada num servidor de aplicação: Wildfly</description>
 
 	<properties>
 	</properties>
@@ -52,8 +52,30 @@
 			<artifactId>primefaces</artifactId>
 			<scope>provided</scope>
 		</dependency>
+
+		<dependency>
+			<groupId>javax.enterprise</groupId>
+			<artifactId>cdi-api</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.jboss.spec.javax.ejb</groupId>
+			<artifactId>jboss-ejb-api_3.2_spec</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.jboss.resteasy</groupId>
+			<artifactId>jaxrs-api</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
 		<!--dependency> <groupId>commons-fileupload</groupId> <artifactId>commons-fileupload</artifactId> 
 			</dependency -->
+
+		<!-- dependency> <groupId>org.jboss.spec.javax.json</groupId> <artifactId>jboss-json-api_1.0_spec</artifactId> 
+			<scope>provided</scope> </dependency -->
 	</dependencies>
 
 	<build>

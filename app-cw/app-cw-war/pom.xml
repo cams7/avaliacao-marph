@@ -11,8 +11,8 @@
 	<artifactId>app-cw-war</artifactId>
 	<packaging>war</packaging>
 
-	<name>Aplicação web: recipiente web</name>
-	<description>Aplicação web que é executada num recipiente web: Tomcat7</description>
+	<name>Aplicação WEB executada no Tomcat7</name>
+	<description>Aplicação WEB que é executada num recipiente web: Tomcat7</description>
 
 	<properties>
 		<!--jsf.version>2.2.13</jsf.version -->
@@ -223,7 +223,7 @@
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-surefire-plugin</artifactId>
 						<configuration>
-							<skip>true</skip>
+							<skip>${pula.teste_unitario}</skip>
 						</configuration>
 					</plugin>
 					<plugin>

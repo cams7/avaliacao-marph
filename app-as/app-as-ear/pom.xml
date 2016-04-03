@@ -12,8 +12,8 @@
 	<artifactId>app-as-ear</artifactId>
 	<packaging>ear</packaging>
 
-	<name>EAR: servidor de aplicação</name>
-	<description>EAR da aplicação que é executada num servidor de aplicação: Wildfly</description>
+	<name>Aplicação EAR executada no Wildfly</name>
+	<description>Aplicação EAR que é executada num servidor de aplicação: Wildfly</description>
 
 	<properties>
 	</properties>

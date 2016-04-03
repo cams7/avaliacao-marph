@@ -86,10 +86,13 @@ public abstract class AbstractRepository<E extends AbstractEntity> extends Abstr
 	 * @see br.com.cams7.app.repository.BaseRepository#remove(java.lang.Long)
 	 */
 	@Override
-	public void remove(Long id) {
+	public boolean remove(Long id) {
 		E entity = buscaPeloId(id);
-		if (entity != null)
+		if (entity != null) {
 			remove(entity);
+			return true;
+		}
+		return false;
 	}
 
 	/*
@@ -98,9 +101,13 @@ public abstract class AbstractRepository<E extends AbstractEntity> extends Abstr
 	 * @see br.com.cams7.app.repository.BaseRepository#remove(java.util.List)
 	 */
 	@Override
-	public void remove(List<Long> ids) {
+	public int remove(List<Long> ids) {
+		int count = 0;
 		for (Long id : ids)
-			remove(id);
+			if (remove(id))
+				count++;
+
+		return count;
 	}
 
 	/*
@@ -181,25 +188,16 @@ public abstract class AbstractRepository<E extends AbstractEntity> extends Abstr
 	}
 
 	/**
-	 * Filtra, pagina e ordena
+	 * Filtra
 	 * 
 	 * @param select
 	 *            Criteria
-	 * @param pageFirst
-	 *            Indice
-	 * @param pageSize
-	 *            Total de linhas
-	 * @param sortField
-	 *            Nome do atributo da entidade
-	 * @param sortOrder
-	 *            Tipo de ordenacao
 	 * @param filters
 	 *            Filtros
 	 * @param globalFilters
 	 *            Nomes dos atributos da entidade
 	 */
-	protected void setFiltroPaginacaoOrdenacao(Criteria select, Integer pageFirst, Short pageSize, String sortField,
-			SortOrder sortOrder, Map<String, Object> filters, String... globalFilters) {
+	protected void setFiltro(Criteria select, Map<String, Object> filters, String... globalFilters) {
 		if (filters != null) {
 			boolean containsKeyGlobalFilter = false;
 
@@ -228,6 +226,30 @@ public abstract class AbstractRepository<E extends AbstractEntity> extends Abstr
 				select.add(or);
 			}
 		}
+	}
+
+	/**
+	 * Filtra, pagina e ordena
+	 * 
+	 * @param select
+	 *            Criteria
+	 * @param pageFirst
+	 *            Indice
+	 * @param pageSize
+	 *            Total de linhas
+	 * @param sortField
+	 *            Nome do atributo da entidade
+	 * @param sortOrder
+	 *            Tipo de ordenacao
+	 * @param filters
+	 *            Filtros
+	 * @param globalFilters
+	 *            Nomes dos atributos da entidade
+	 */
+	protected void setFiltroPaginacaoOrdenacao(Criteria select, Integer pageFirst, Short pageSize, String sortField,
+			SortOrder sortOrder, Map<String, Object> filters, String... globalFilters) {
+
+		setFiltro(select, filters, globalFilters);
 
 		if (pageFirst != null && pageSize != null) {
 			select.setFirstResult(pageFirst);
@@ -252,20 +274,6 @@ public abstract class AbstractRepository<E extends AbstractEntity> extends Abstr
 
 			select.addOrder(order);
 		}
-	}
-
-	/**
-	 * Filtra
-	 * 
-	 * @param select
-	 *            Criteria
-	 * @param filters
-	 *            Filtros
-	 * @param globalFilters
-	 *            Nomes dos atributos da entidade
-	 */
-	protected void setFiltro(Criteria select, Map<String, Object> filters, String... globalFilters) {
-		setFiltroPaginacaoOrdenacao(select, null, null, null, null, filters, globalFilters);
 	}
 
 	/*
@@ -294,7 +302,7 @@ public abstract class AbstractRepository<E extends AbstractEntity> extends Abstr
 	 * @param select
 	 * @return
 	 */
-	protected int getTotalElements(Criteria select) {
+	protected int getCount(Criteria select) {
 		select.setProjection(Projections.rowCount());
 
 		Long count = (Long) select.uniqueResult();
@@ -313,9 +321,9 @@ public abstract class AbstractRepository<E extends AbstractEntity> extends Abstr
 		Criteria select = getCurrentSession().createCriteria(getEntityType());
 		setFiltro(select, filters, globalFilters);
 
-		int total = getTotalElements(select);
+		int count = getCount(select);
 
-		return total;
+		return count;
 	}
 
 	/*
@@ -326,9 +334,10 @@ public abstract class AbstractRepository<E extends AbstractEntity> extends Abstr
 	@Override
 	public int count() {
 		Criteria select = getCurrentSession().createCriteria(getEntityType());
-		select.setProjection(Projections.rowCount());
-		Long count = (Long) select.uniqueResult();
-		return count.intValue();
+
+		int count = getCount(select);
+
+		return count;
 	}
 
 	/**

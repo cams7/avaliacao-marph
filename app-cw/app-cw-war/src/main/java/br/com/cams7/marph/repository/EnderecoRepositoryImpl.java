@@ -67,7 +67,7 @@ public class EnderecoRepositoryImpl extends AbstractRepository<EnderecoEntity> i
 		Criteria select = getSelect();
 		setFiltro(select, filters, globalFilters);
 
-		int total = getTotalElements(select);
+		int total = getCount(select);
 
 		return total;
 	}

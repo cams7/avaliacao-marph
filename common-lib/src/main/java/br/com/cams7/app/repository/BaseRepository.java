@@ -39,7 +39,7 @@ public interface BaseRepository<E extends AbstractEntity> {
 	 * @param id
 	 *            Id da entidade
 	 */
-	void remove(Long id);
+	boolean remove(Long id);
 
 	/**
 	 * Remove os objetos que são instâncias de "AbstractEntity", filtrando-os
@@ -48,7 +48,7 @@ public interface BaseRepository<E extends AbstractEntity> {
 	 * @param ids
 	 *            Ids das entidades
 	 */
-	void remove(List<Long> ids);
+	int remove(List<Long> ids);
 
 	/**
 	 * Retorna todos os objetos que são instâncias de "AbstractEntity"

@@ -1,9 +1,7 @@
 /**
  * 
  */
-package br.com.cams7.cw.controller;
-
-import org.springframework.beans.factory.annotation.Autowired;
+package br.com.cams7.app.controller;
 
 import br.com.cams7.app.AbstractBase;
 import br.com.cams7.app.entity.AbstractEntity;
@@ -19,11 +17,6 @@ public abstract class AbstractController<S extends BaseService<E>, E extends Abs
 
 	private final byte ENTITY_ARGUMENT_NUMBER = 1;
 
-	/**
-	 * Utiliza a injecao de dependencia do <code>Spring Framework</code> para
-	 * resolver a instancia do <code>Service</code>.
-	 */
-	@Autowired
 	private S service;
 
 	public AbstractController() {
@@ -31,10 +24,18 @@ public abstract class AbstractController<S extends BaseService<E>, E extends Abs
 	}
 
 	/**
-	 * @return Service
+	 * @return the service
 	 */
 	protected S getService() {
 		return service;
+	}
+
+	/**
+	 * @param service
+	 *            the service to set
+	 */
+	protected void setService(S service) {
+		this.service = service;
 	}
 
 	/*

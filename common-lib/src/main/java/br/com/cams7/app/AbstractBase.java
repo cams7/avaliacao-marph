@@ -5,6 +5,8 @@ package br.com.cams7.app;
 
 import java.util.logging.Logger;
 
+import javax.annotation.PostConstruct;
+
 import br.com.cams7.app.entity.AbstractEntity;
 import br.com.cams7.app.utils.AppHelper;
 
@@ -17,15 +19,18 @@ public abstract class AbstractBase<E extends AbstractEntity> {
 
 	private final byte ENTITY_ARGUMENT_NUMBER = 0;
 
-	private final Logger LOG;
-	private final Class<E> ENTITY_TYPE;
+	private Logger log;
+	private Class<E> entityType;
 
-	@SuppressWarnings("unchecked")
 	public AbstractBase() {
 		super();
+	}
 
-		LOG = Logger.getLogger(this.getClass().getName());
-		ENTITY_TYPE = (Class<E>) AppHelper.getType(this.getClass(), getEntityArgumentNumber());
+	@SuppressWarnings("unchecked")
+	@PostConstruct
+	protected void init() {
+		log = Logger.getLogger(this.getClass().getName());
+		entityType = (Class<E>) AppHelper.getType(this.getClass(), getEntityArgumentNumber());
 	}
 
 	/**
@@ -34,7 +39,7 @@ public abstract class AbstractBase<E extends AbstractEntity> {
 	 * @return Logger
 	 */
 	protected Logger getLog() {
-		return LOG;
+		return log;
 	}
 
 	/**
@@ -52,7 +57,7 @@ public abstract class AbstractBase<E extends AbstractEntity> {
 	 * @return Tipo Entity
 	 */
 	protected Class<E> getEntityType() {
-		return ENTITY_TYPE;
+		return entityType;
 	}
 
 }

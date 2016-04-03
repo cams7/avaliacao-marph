@@ -12,14 +12,26 @@
 	<artifactId>common-lib</artifactId>
 	<packaging>jar</packaging>
 
-	<name>Biblioteca comum a todos módulos</name>
-	<description>Biblioteca comum a todos módulos</description>
+	<name>Biblioteca comum a todos módulos da aplicação</name>
+	<description>Biblioteca comum a todos módulos da aplicação</description>
 
 
 	<dependencies>
 		<dependency>
-			<groupId>javax.validation</groupId>
-			<artifactId>validation-api</artifactId>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-validator</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.jboss.spec.javax.faces</groupId>
+			<artifactId>jboss-jsf-api_2.2_spec</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.primefaces</groupId>
+			<artifactId>primefaces</artifactId>
 			<scope>provided</scope>
 		</dependency>
 	</dependencies>

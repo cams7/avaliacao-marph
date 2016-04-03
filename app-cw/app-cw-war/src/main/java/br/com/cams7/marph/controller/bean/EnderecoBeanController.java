@@ -14,7 +14,7 @@ import org.primefaces.event.SelectEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
-import br.com.cams7.cw.controller.AbstractBeanController;
+import br.com.cams7.app.controller.AbstractBeanController;
 import br.com.cams7.marph.entity.EnderecoEntity;
 import br.com.cams7.marph.entity.PessoaEntity;
 import br.com.cams7.marph.service.EnderecoService;
@@ -38,14 +38,28 @@ public class EnderecoBeanController extends AbstractBeanController<EnderecoServi
 	private final String LIST_PAGE = "listaEnderecos";
 
 	/**
-	 * Utiliza a injecao de dependencia do <code>Spring Framework</code> para
-	 * resolver a instancia do <code>PessoaService</code>.
+	 * Utiliza a injeção de dependência do <code>Spring Framework</code> para
+	 * resolver a instância do <code>PessoaService</code>.
 	 */
 	@Autowired
 	private PessoaService pessoaService;
 
 	public EnderecoBeanController() {
 		super("bairro", "rua", "telefone", "pessoa.nome");
+	}
+
+	/*
+	 * Utiliza a injeção de dependência do <code>Spring Framework</code> para
+	 * resolver a instância do <code>EnderecoService</code>.
+	 * 
+	 * @see
+	 * br.com.cams7.cw.controller.AbstractController#setService(br.com.cams7.app
+	 * .service.BaseService)
+	 */
+	@Autowired
+	@Override
+	protected void setService(EnderecoService service) {
+		super.setService(service);
 	}
 
 	/*

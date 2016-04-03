@@ -3,14 +3,17 @@
  */
 package br.com.cams7.marph.controller.rest;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
+import static org.springframework.web.bind.annotation.RequestMethod.POST;
+import static org.springframework.web.bind.annotation.RequestMethod.PUT;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import br.com.cams7.cw.controller.AbstractRestController;
 import br.com.cams7.marph.entity.PessoaEntity;
@@ -21,35 +24,37 @@ import br.com.cams7.marph.service.PessoaService;
  *
  */
 @RestController
-@RequestMapping(value = "/pessoa", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/pessoa", produces = APPLICATION_JSON_VALUE)
 public class PessoaRestController extends AbstractRestController<PessoaService, PessoaEntity> {
 
 	public PessoaRestController() {
 		super();
 	}
 
-	/**
-	 * Altera os dados da pessoa cadastrada
+	/*
+	 * Utiliza a injeção de dependência do <code>Spring Framework</code> para
+	 * resolver a instância do <code>PessoaService</code>.
 	 * 
-	 * @param id
-	 *            - Id da pessoa
-	 * @param pessoa
-	 *            - Entidade pessoa
-	 * @return
+	 * @see
+	 * br.com.cams7.cw.controller.AbstractController#setService(br.com.cams7.app
+	 * .service.BaseService)
 	 */
-	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-	public ResponseEntity<PessoaEntity> atualizaPessoa(@PathVariable("id") Long id, @RequestBody PessoaEntity pessoa) {
-		PessoaEntity pessoaCadastrada = getService().buscaPeloId(id);
+	@Autowired
+	@Override
+	protected void setService(PessoaService service) {
+		super.setService(service);
+	}
 
-		if (pessoaCadastrada == null)
-			return new ResponseEntity<PessoaEntity>(HttpStatus.NOT_FOUND);
+	@RequestMapping(method = POST)
+	@Override
+	public ResponseEntity<Void> addEntity(@RequestBody PessoaEntity entity, UriComponentsBuilder ucBuilder) {
+		return super.addEntity(entity, ucBuilder);
+	}
 
-		pessoaCadastrada.setNome(pessoa.getNome());
-		pessoaCadastrada.setCpf(pessoa.getCpf());
-		pessoaCadastrada.setNascimento(pessoa.getNascimento());
-
-		getService().atualiza(pessoaCadastrada);
-		return new ResponseEntity<PessoaEntity>(pessoaCadastrada, HttpStatus.OK);
+	@RequestMapping(value = "/{id}", method = PUT)
+	@Override
+	public ResponseEntity<PessoaEntity> updateEntity(@PathVariable("id") Long id, @RequestBody PessoaEntity entity) {
+		return super.updateEntity(id, entity);
 	}
 
 }

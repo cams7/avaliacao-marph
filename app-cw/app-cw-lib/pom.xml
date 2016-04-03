@@ -11,7 +11,7 @@
 	<artifactId>app-cw-lib</artifactId>
 	<packaging>jar</packaging>
 
-	<name>Biblioteca comum: recipiente web</name>
+	<name>Biblioteca comum à aplicação executada no Tomcat7</name>
 	<description>Biblioteca que é comum à aplicação executada num recipiente web: Tomcat7</description>
 
 	<dependencies>
@@ -24,11 +24,6 @@
 		<dependency>
 			<groupId>org.testng</groupId>
 			<artifactId>testng</artifactId>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.primefaces</groupId>
-			<artifactId>primefaces</artifactId>
 			<scope>provided</scope>
 		</dependency>
 

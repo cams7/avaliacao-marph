@@ -11,7 +11,7 @@
 	<artifactId>app-cw</artifactId>
 	<packaging>pom</packaging>
 
-	<name>Aplicação: recipiente web</name>
+	<name>Aplicação executada no Tomcat7</name>
 	<description>Aplicação que é executada num recipiente web: Tomcat7</description>
 
 	<properties>

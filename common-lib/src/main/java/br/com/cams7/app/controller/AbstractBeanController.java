@@ -1,7 +1,7 @@
 /**
  * 
  */
-package br.com.cams7.cw.controller;
+package br.com.cams7.app.controller;
 
 import java.io.Serializable;
 //import java.text.MessageFormat;
@@ -75,7 +75,9 @@ public abstract class AbstractBeanController<S extends BaseService<E>, E extends
 	 * Metodo chamado na criacao do componente
 	 */
 	@PostConstruct
-	private void init() {
+	protected void init() {
+		super.init();
+
 		lastPageFirst = PAGE_FIRST;
 		lastPageSize = PAGE_SIZE;
 

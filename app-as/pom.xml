@@ -12,7 +12,7 @@
 	<artifactId>app-as</artifactId>
 	<packaging>pom</packaging>
 
-	<name>Aplicação: servidor de aplicação</name>
+	<name>Aplicação executada no Wildfly</name>
 	<description>Aplicação que é executada num servidor de aplicação: Wildfly</description>
 
 	<properties>
@@ -54,7 +54,14 @@
 				<version>10.0.1.Final</version>
 				<type>pom</type>
 				<scope>import</scope>
-			</dependency-->						
+			</dependency-->	
+			<!--dependency>
+				<groupId>org.wildfly.bom</groupId>
+				<artifactId>jboss-javaee-7.0-with-resteasy</artifactId>
+				<version>8.2.2.Final</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency-->				
 		</dependencies>
 	</dependencyManagement>	
 
@@ -65,11 +72,49 @@
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-ear-plugin</artifactId>
 					<version>${version.ear.plugin}</version>
+					<configuration>
+						<archive>
+							<manifest>
+								<addClasspath>true</addClasspath>
+								<classpathPrefix />
+							</manifest>
+							<manifestEntries>
+								<url>${pom.url}</url>
+								<Implementation-Build>${buildNumber}</Implementation-Build>
+								<Implementation-Title>${project.name}</Implementation-Title>
+								<Implementation-Vendor>N/A</Implementation-Vendor>
+								<Implementation-Version>${project.version}</Implementation-Version>
+								<Built-By>${user.name}</Built-By>
+								<Built-OS>${os.name}</Built-OS>
+								<Build-Date>${timestamp}</Build-Date>
+								<SCM>${buildNumber}</SCM>
+							</manifestEntries>
+						</archive>
+					</configuration>
 				</plugin>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-ejb-plugin</artifactId>
 					<version>${version.ejb.plugin}</version>
+					<configuration>
+						<archive>
+							<manifest>
+								<addClasspath>true</addClasspath>
+								<classpathPrefix />
+							</manifest>
+							<manifestEntries>
+								<url>${pom.url}</url>
+								<Implementation-Build>${buildNumber}</Implementation-Build>
+								<Implementation-Title>${project.name}</Implementation-Title>
+								<Implementation-Vendor>N/A</Implementation-Vendor>
+								<Implementation-Version>${project.version}</Implementation-Version>
+								<Built-By>${user.name}</Built-By>
+								<Built-OS>${os.name}</Built-OS>
+								<Build-Date>${timestamp}</Build-Date>
+								<SCM>${buildNumber}</SCM>
+							</manifestEntries>
+						</archive>
+					</configuration>
 				</plugin>							
 			</plugins>
 		</pluginManagement>

@@ -12,8 +12,8 @@
 	<artifactId>app-as-ejb</artifactId>
 	<packaging>ejb</packaging>
 
-	<name>EJB: servidor de aplicação</name>
-	<description>EJB da aplicação que é executada num servidor de aplicação: Wildfly</description>
+	<name>Aplicação EJB executada no Wildfly</name>
+	<description>Aplicação EJB que é executada num servidor de aplicação: Wildfly</description>
 
 	<properties>
 	</properties>
@@ -34,6 +34,18 @@
 			<artifactId>app-as-lib</artifactId>
 			<scope>provided</scope>
 		</dependency>
+
+		<dependency>
+			<groupId>org.hibernate.javax.persistence</groupId>
+			<artifactId>hibernate-jpa-2.1-api</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.jboss.spec.javax.ejb</groupId>
+			<artifactId>jboss-ejb-api_3.2_spec</artifactId>
+			<scope>provided</scope>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -43,10 +55,8 @@
 				<configuration>
 					<ejbVersion>3.1</ejbVersion>
 					<generateClient>true</generateClient>
-					<!--clientIncludes> <clientInclude>br/com/cams7/marph/repository/*</clientInclude> 
-						<clientInclude>br/com/cams7/marph/service/*</clientInclude> </clientIncludes -->
 					<clientExcludes>
-						<clientExclude>br/com/cams7/marph/**/*Impl</clientExclude>
+						<clientExclude>br/com/cams7/marph/**/*Impl.class</clientExclude>
 					</clientExcludes>
 				</configuration>
 			</plugin>

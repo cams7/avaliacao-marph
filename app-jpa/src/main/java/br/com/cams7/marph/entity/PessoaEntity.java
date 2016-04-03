@@ -42,7 +42,7 @@ public class PessoaEntity extends AbstractEntity {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_pessoa")
 	private Long id;
 
@@ -60,8 +60,8 @@ public class PessoaEntity extends AbstractEntity {
 	@Column(nullable = true)
 	private Date nascimento;
 
-	@OneToMany(mappedBy = "pessoa")
-	private List<EnderecoEntity> enderecos;
+//	@OneToMany(mappedBy = "pessoa")
+//	private List<EnderecoEntity> enderecos;
 
 	public PessoaEntity() {
 		super();
@@ -105,12 +105,12 @@ public class PessoaEntity extends AbstractEntity {
 		this.nascimento = nascimento;
 	}
 
-	public List<EnderecoEntity> getEnderecos() {
-		return enderecos;
-	}
-
-	public void setEnderecos(List<EnderecoEntity> enderecos) {
-		this.enderecos = enderecos;
-	}
+//	public List<EnderecoEntity> getEnderecos() {
+//		return enderecos;
+//	}
+//
+//	public void setEnderecos(List<EnderecoEntity> enderecos) {
+//		this.enderecos = enderecos;
+//	}
 
 }

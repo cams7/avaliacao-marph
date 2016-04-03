@@ -67,7 +67,7 @@ public class UsuarioRepositoryImpl extends AbstractRepository<UsuarioEntity> imp
 		Criteria select = getSelect();
 		setFiltro(select, filters, globalFilters);
 
-		int total = getTotalElements(select);
+		int total = getCount(select);
 
 		return total;
 	}

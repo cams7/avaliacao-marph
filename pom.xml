@@ -8,23 +8,18 @@
 	<packaging>pom</packaging>
 
 	<name>Avaliação Marph</name>
-	<description>Avaliação para desenvolvedor Java</description>
+	<!--TODO Alterar a 'url' quando fazer o merge da branch 'as' com 'master'-->
+	<url>https://github.com/cams7/avaliacao-marph/tree/as</url>
+	<description>Avaliação para desenvolvedor Java</description>  	
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.build.timestamp.format>yyyyMMdd'T'HHmmss</maven.build.timestamp.format>
 
-		<version.compiler.plugin>3.5.1</version.compiler.plugin>
-		<maven.compiler.source>1.7</maven.compiler.source>
-		<maven.compiler.target>1.7</maven.compiler.target>
-		<version.surefire.plugin>2.19.1</version.surefire.plugin>
-
-		<version.war.plugin>2.6</version.war.plugin>
-
-		<version.wildfly.maven.plugin>1.0.2.Final</version.wildfly.maven.plugin>
 		<version.arquillian.container>8.2.1.Final</version.arquillian.container>
 
-		<user.name>CAMs7</user.name>
+		<user.name>César Magalhães</user.name>
+		<pula.teste_unitario>false</pula.teste_unitario>
 	</properties>
 
 	<modules>
@@ -74,9 +69,16 @@
 				<type>ejb-client</type>
 			</dependency>
 
-			<dependency>
+			<!--dependency>
 				<groupId>org.wildfly.bom</groupId>
 				<artifactId>jboss-javaee-7.0-with-hibernate</artifactId>
+				<version>8.2.2.Final</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency-->
+			<dependency>
+				<groupId>org.wildfly.bom</groupId>
+				<artifactId>jboss-javaee-7.0-with-all</artifactId>
 				<version>8.2.2.Final</version>
 				<type>pom</type>
 				<scope>import</scope>
@@ -101,14 +103,42 @@
 			<plugins>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-surefire-plugin</artifactId>
-					<version>${version.surefire.plugin}</version>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>3.5.1</version>
+					<configuration>
+						<source>1.7</source>
+						<target>1.7</target>
+					</configuration>
 				</plugin>
 
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-jar-plugin</artifactId>
+					<configuration>
+						<archive>
+							<manifest>
+								<addClasspath>true</addClasspath>
+								<classpathPrefix />
+							</manifest>
+							<manifestEntries>
+								<url>${pom.url}</url>
+								<Implementation-Build>${buildNumber}</Implementation-Build>
+								<Implementation-Title>${project.name}</Implementation-Title>
+								<Implementation-Vendor>N/A</Implementation-Vendor>
+								<Implementation-Version>${project.version}</Implementation-Version>
+								<Built-By>${user.name}</Built-By>
+								<Built-OS>${os.name}</Built-OS>
+								<Build-Date>${timestamp}</Build-Date>
+								<SCM>${buildNumber}</SCM>
+							</manifestEntries>
+						</archive>
+					</configuration>
+				</plugin>
+				
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-war-plugin</artifactId>
-					<version>${version.war.plugin}</version>
+					<version>2.6</version>
 					<configuration>
 						<failOnMissingWebXml>true</failOnMissingWebXml>
 						<archive>
@@ -129,6 +159,12 @@
 							</manifestEntries>
 						</archive>
 					</configuration>
+				</plugin>
+
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-surefire-plugin</artifactId>
+					<version>2.19.1</version>
 				</plugin>
 
 				<plugin>
@@ -163,7 +199,7 @@
 				<plugin>
 					<groupId>org.wildfly.plugins</groupId>
 					<artifactId>wildfly-maven-plugin</artifactId>
-					<version>${version.wildfly.maven.plugin}</version>
+					<version>1.0.2.Final</version>
 				</plugin>
 			</plugins>
 		</pluginManagement>
@@ -171,12 +207,7 @@
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>${version.compiler.plugin}</version>
-				<configuration>
-					<source>${maven.compiler.source}</source>
-					<target>${maven.compiler.target}</target>
-				</configuration>
+				<artifactId>maven-compiler-plugin</artifactId>				
 			</plugin>
 
 			<plugin>
@@ -221,16 +252,13 @@
 						</configuration>
 					</plugin>
 
-					<!-- The WildFly plugin deploys your war to a local JBoss AS container -->
-					<!-- To use, set the JBOSS_HOME environment variable and run: mvn package 
-						wildfly:deploy -->
 					<plugin>
 						<groupId>org.wildfly.plugins</groupId>
 						<artifactId>wildfly-maven-plugin</artifactId>
 						<configuration>
 							<skip>true</skip>
 						</configuration>
-						<!--configuration> <jboss-home>C:\Users\cams7\Desenv\java\jboss\wildfly-8.2.0.Final_maven</jboss-home> 
+						<!--configuration> <jboss-home>/home/cesar/desenv/java/as/wildfly-10.0.0.Final</jboss-home> 
 							</configuration> <executions> <execution> <phase>install</phase> <goals> 
 							<goal>run</goal> <goal>deploy</goal> </goals> </execution> </executions -->
 					</plugin>
@@ -239,12 +267,6 @@
 		</profile>
 
 		<profile>
-
-			<!-- An optional Arquillian testing profile that executes tests in your 
-				WildFly instance -->
-			<!-- This profile will start a new WildFly instance, and execute the test, 
-				shutting it down when done -->
-			<!-- Run with: mvn clean test -Parq-wildfly-managed -->
 			<id>arq-wildfly-managed</id>
 			<dependencies>
 				<dependency>
@@ -256,10 +278,7 @@
 			</dependencies>
 		</profile>
 
-		<profile>
-			<!-- An optional Arquillian testing profile that executes tests in a remote 
-				WildFly instance -->
-			<!-- Run with: mvn clean test -Parq-wildfly-remote -->
+		<profile>			
 			<id>arq-wildfly-remote</id>
 			<dependencies>
 				<dependency>

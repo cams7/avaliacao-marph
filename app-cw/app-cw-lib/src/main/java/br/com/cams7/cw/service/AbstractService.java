@@ -70,8 +70,8 @@ public abstract class AbstractService<R extends BaseRepository<E>, E extends Abs
 	 */
 	@Transactional
 	@Override
-	public void remove(Long id) {
-		getRepository().remove(id);
+	public boolean remove(Long id) {
+		return getRepository().remove(id);
 	}
 
 	/*
@@ -81,8 +81,8 @@ public abstract class AbstractService<R extends BaseRepository<E>, E extends Abs
 	 */
 	@Transactional
 	@Override
-	public void remove(List<Long> ids) {
-		getRepository().remove(ids);
+	public int remove(List<Long> ids) {
+		return getRepository().remove(ids);
 	}
 
 	/*

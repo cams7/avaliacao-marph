@@ -6,6 +6,7 @@ package br.com.cams7.app.utils;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
 import java.util.Arrays;
 import java.util.Date;
@@ -136,6 +137,50 @@ public final class AppHelper {
 			return entity;
 		} catch (InstantiationException | IllegalAccessException e) {
 			throw new AppException(e.getMessage(), e.getCause());
+		}
+	}
+
+	/**
+	 * @param changedEntity
+	 * @param entity
+	 * @throws AppException
+	 */
+	public static <E extends AbstractEntity> void changeValues(E changedEntity, E entity) throws AppException {
+		if (changedEntity == null || entity == null)
+			throw new AppException("Entidade NULA");
+
+		@SuppressWarnings("unchecked")
+		Class<E> entityType = (Class<E>) changedEntity.getClass();
+
+		final String PREFIX_GET_METHOD = "get";
+		final String PREFIX_IS_METHOD = "is";
+
+		Method[] allMethods = entityType.getDeclaredMethods();
+		for (Method getMethod : allMethods) {
+			String getMethodName = getMethod.getName();
+
+			String prefix = null;
+
+			if (getMethodName.startsWith(PREFIX_GET_METHOD))
+				prefix = PREFIX_GET_METHOD;
+			else if (getMethodName.startsWith(PREFIX_IS_METHOD))
+				prefix = PREFIX_IS_METHOD;
+
+			if (prefix == null)
+				continue;
+
+			String setMethodName = getMethodName.replaceFirst(prefix, "set");
+
+			try {
+				Object value = getMethod.invoke(entity);
+
+				Method setMethod = entityType.getDeclaredMethod(setMethodName,
+						new Class<?>[] { getMethod.getReturnType() });
+				setMethod.invoke(changedEntity, value);
+			} catch (InvocationTargetException | IllegalAccessException | IllegalArgumentException
+					| NoSuchMethodException | SecurityException e) {
+				continue;
+			}
 		}
 	}
 

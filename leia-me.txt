@@ -1,3 +1,21 @@
-Comandos úteis:
-Para busca os aquivos de texto com uma palavra específica, execute o comando abaixo no diretório onde estão esses. 
+- Comandos úteis:
+
+- Para busca os aquivos de texto com uma palavra específica, execute o comando abaixo no diretório onde estão esses. 
 find . -type f -exec grep -H 'palavra procurada' {} \;
+
+- The WildFly plugin deploys your war to a local JBoss AS container. 
+- To use, set the JBOSS_HOME environment variable and run: 
+mvn package wildfly:deploy
+
+- An optional Arquillian testing profile that executes tests in your WildFly instance.
+- This profile will start a new WildFly instance, and execute the test, shutting it down when done.
+- Run with: 
+mvn clean test -Parq-wildfly-managed
+
+- An optional Arquillian testing profile that executes tests in a remote WildFly instance.
+- Run with: 
+mvn clean test -Parq-wildfly-remote
+
+
+
+

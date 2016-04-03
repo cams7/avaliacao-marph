@@ -8,9 +8,10 @@ import static br.com.cams7.marph.controller.bean.PessoaBeanController.CONTROLLER
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
-import br.com.cams7.cw.controller.AbstractBeanController;
+import br.com.cams7.app.controller.AbstractBeanController;
 import br.com.cams7.marph.entity.PessoaEntity;
 import br.com.cams7.marph.service.PessoaService;
 
@@ -32,6 +33,20 @@ public class PessoaBeanController extends AbstractBeanController<PessoaService, 
 
 	public PessoaBeanController() {
 		super("nome", "cpf");
+	}
+
+	/*
+	 * Utiliza a injeção de dependência do <code>Spring Framework</code> para
+	 * resolver a instância do <code>PessoaService</code>.
+	 * 
+	 * @see
+	 * br.com.cams7.cw.controller.AbstractController#setService(br.com.cams7.app
+	 * .service.BaseService)
+	 */
+	@Autowired
+	@Override
+	protected void setService(PessoaService service) {
+		super.setService(service);
 	}
 
 	/*
