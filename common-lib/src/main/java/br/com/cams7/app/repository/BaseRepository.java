@@ -38,6 +38,7 @@ public interface BaseRepository<E extends AbstractEntity> {
 	 * 
 	 * @param id
 	 *            Id da entidade
+	 * @return
 	 */
 	boolean remove(Long id);
 
@@ -47,6 +48,7 @@ public interface BaseRepository<E extends AbstractEntity> {
 	 * 
 	 * @param ids
 	 *            Ids das entidades
+	 * @return
 	 */
 	int remove(List<Long> ids);
 

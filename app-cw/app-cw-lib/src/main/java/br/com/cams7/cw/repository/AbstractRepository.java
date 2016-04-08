@@ -5,7 +5,6 @@ package br.com.cams7.cw.repository;
 
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
 
 import org.hibernate.Criteria;
 import org.hibernate.Session;
@@ -36,8 +35,8 @@ public abstract class AbstractRepository<E extends AbstractEntity> extends Abstr
 		implements BaseRepository<E> {
 
 	/**
-	 * Utiliza a injecao de dependencia do <code>Spring Framework</code> para
-	 * resolver a instancia do <code>SessionFactory</code>.
+	 * Utiliza a injeção de dependência do <code>Spring Framework</code> para
+	 * resolver a instância do <code>SessionFactory</code>.
 	 */
 	@Autowired
 	private SessionFactory sessionFactory;
@@ -70,16 +69,6 @@ public abstract class AbstractRepository<E extends AbstractEntity> extends Abstr
 		getCurrentSession().update(entity);
 	}
 
-	/**
-	 * Remove a entidade do banco de dados
-	 * 
-	 * @param entity
-	 *            Entidade
-	 */
-	private void remove(E entity) {
-		getCurrentSession().delete(entity);
-	}
-
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -87,12 +76,11 @@ public abstract class AbstractRepository<E extends AbstractEntity> extends Abstr
 	 */
 	@Override
 	public boolean remove(Long id) {
-		E entity = buscaPeloId(id);
-		if (entity != null) {
-			remove(entity);
-			return true;
-		}
-		return false;
+		E entity = AppHelper.getNewEntity(getEntityType());
+		entity.setId(id);
+
+		getCurrentSession().delete(entity);
+		return true;
 	}
 
 	/*
@@ -106,7 +94,7 @@ public abstract class AbstractRepository<E extends AbstractEntity> extends Abstr
 		for (Long id : ids)
 			if (remove(id))
 				count++;
-
+		
 		return count;
 	}
 
@@ -142,13 +130,9 @@ public abstract class AbstractRepository<E extends AbstractEntity> extends Abstr
 	 * @param fieldValue
 	 * @return
 	 */
-	private Object getFieldValue(String fieldName, Object fieldValue) {
-		Object value = null;
-		try {
-			value = AppHelper.getFieldValue(getEntityType(), fieldName, fieldValue);
-		} catch (AppException e) {
-			getLog().log(Level.WARNING, e.getMessage());
-		}
+	private Object getFieldValue(String fieldName, Object fieldValue) throws AppException {
+		Object value = AppHelper.getFieldValue(getEntityType(), fieldName, fieldValue);
+
 		return value;
 	}
 

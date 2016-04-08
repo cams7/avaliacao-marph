@@ -19,7 +19,7 @@
 		<version.arquillian.container>8.2.1.Final</version.arquillian.container>
 
 		<user.name>César Magalhães</user.name>
-		<pula.teste_unitario>false</pula.teste_unitario>
+		<pula.teste_unitario>true</pula.teste_unitario>
 	</properties>
 
 	<modules>

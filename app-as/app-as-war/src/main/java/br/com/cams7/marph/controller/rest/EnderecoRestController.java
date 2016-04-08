@@ -11,19 +11,19 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 
 import br.com.cams7.as.controller.rest.AbstractRestController;
-import br.com.cams7.marph.entity.PessoaEntity;
-import br.com.cams7.marph.service.PessoaService;
+import br.com.cams7.marph.entity.EnderecoEntity;
+import br.com.cams7.marph.service.EnderecoService;
 
 /**
  * @author cesar
  *
  */
-@Path("/pessoa")
+@Path("/endereco")
 @Produces(APPLICATION_JSON)
 @RequestScoped
-public class PessoaRestController extends AbstractRestController<PessoaService, PessoaEntity> {
+public class EnderecoRestController extends AbstractRestController<EnderecoService, EnderecoEntity> {
 
-	public PessoaRestController() {
+	public EnderecoRestController() {
 		super();
 	}
 
@@ -36,9 +36,8 @@ public class PessoaRestController extends AbstractRestController<PessoaService, 
 	 */
 	@Inject
 	@Override
-	public void setService(PessoaService service) {
+	protected void setService(EnderecoService service) {
 		super.setService(service);
 	}
-	
-	
+
 }

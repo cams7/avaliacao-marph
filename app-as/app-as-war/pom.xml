@@ -43,7 +43,6 @@
 			<groupId>br.com.cams7.marph</groupId>
 			<artifactId>app-as-ejb</artifactId>
 			<scope>provided</scope>
-			<!--type>ejb</type -->
 			<type>ejb-client</type>
 		</dependency>
 
@@ -56,12 +55,6 @@
 		<dependency>
 			<groupId>javax.enterprise</groupId>
 			<artifactId>cdi-api</artifactId>
-			<scope>provided</scope>
-		</dependency>
-
-		<dependency>
-			<groupId>org.jboss.spec.javax.ejb</groupId>
-			<artifactId>jboss-ejb-api_3.2_spec</artifactId>
 			<scope>provided</scope>
 		</dependency>
 

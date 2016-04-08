@@ -28,7 +28,7 @@ public abstract class AbstractBase<E extends AbstractEntity> {
 
 	@SuppressWarnings("unchecked")
 	@PostConstruct
-	protected void init() {
+	protected void initialize() {
 		log = Logger.getLogger(this.getClass().getName());
 		entityType = (Class<E>) AppHelper.getType(this.getClass(), getEntityArgumentNumber());
 	}

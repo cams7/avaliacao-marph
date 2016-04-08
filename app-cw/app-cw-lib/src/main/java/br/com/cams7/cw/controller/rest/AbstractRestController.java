@@ -1,9 +1,8 @@
 /**
  * 
  */
-package br.com.cams7.cw.controller;
+package br.com.cams7.cw.controller.rest;
 
-import static org.springframework.http.HttpStatus.CONFLICT;
 import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
@@ -17,8 +16,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 
-import org.springframework.http.HttpHeaders;
+import org.hibernate.HibernateException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
+import org.springframework.orm.hibernate4.HibernateOptimisticLockingFailureException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -47,7 +48,8 @@ public abstract class AbstractRestController<S extends BaseService<E>, E extends
 	/**
 	 * Busca todas as entidades cadastradas
 	 * 
-	 * URL de exemplo: http://localhost:8080/avaliacao_marph/req/pessoa
+	 * @Exemplo Executado no Poster (plug-in do Firefox):
+	 * @URL: http://localhost:8080/avaliacao_marph/req/pessoa
 	 * 
 	 * @return
 	 */
@@ -63,7 +65,8 @@ public abstract class AbstractRestController<S extends BaseService<E>, E extends
 	/**
 	 * Busca apenas uma entidade cadastrada
 	 * 
-	 * URL de exemplo: http://localhost:8080/avaliacao_marph/req/pessoa/1
+	 * @Exemplo Executado no Poster (plug-in do Firefox):
+	 * @URL: http://localhost:8080/avaliacao_marph/req/pessoa/1
 	 * 
 	 * @param id
 	 *            - Id da entidade
@@ -81,27 +84,29 @@ public abstract class AbstractRestController<S extends BaseService<E>, E extends
 	/**
 	 * Cadastra uma nova entidade
 	 * 
-	 * URL de exemplo: http://localhost:8080/avaliacao_marph/req/pessoa
+	 * @Exemplo Executado no Poster (plug-in do Firefox):
+	 * @URL: http://localhost:8080/avaliacao_marph/req/pessoa
+	 * @Content Type: application/json
+	 * @Content: {"nome":"Luiz Alberto da Silva","cpf":"82211304273"}
 	 * 
 	 * @param entity
 	 *            - Entidade
 	 * @param ucBuilder
 	 * @return
 	 */
-	public ResponseEntity<Void> addEntity(E entity, UriComponentsBuilder ucBuilder) {
-
-		if (/* service.isUserExist(user) */1 == 2)
-			return new ResponseEntity<Void>(CONFLICT);
-
+	public ResponseEntity<E> addEntity(E entity, UriComponentsBuilder ucBuilder) {
 		getService().salva(entity);
 
-		return new ResponseEntity<Void>(CREATED);
+		return new ResponseEntity<E>(entity, CREATED);
 	}
 
 	/**
 	 * Altera os dados da entidade cadastrada
 	 * 
-	 * URL de exemplo: http://localhost:8080/avaliacao_marph/req/pessoa/1
+	 * @Exemplo Executado no Poster (plug-in do Firefox):
+	 * @URL: http://localhost:8080/avaliacao_marph/req/pessoa/1
+	 * @Content Type: application/json
+	 * @Content: {"nome":"Alfredo Alberto Almeida","cpf":"83605637051"}
 	 * 
 	 * @param id
 	 *            - Id da entidade
@@ -116,38 +121,33 @@ public abstract class AbstractRestController<S extends BaseService<E>, E extends
 		if (changedEntity == null)
 			return new ResponseEntity<E>(NOT_FOUND);
 
-		try {
-			AppHelper.changeValues(changedEntity, entity);
-			getService().atualiza(changedEntity);
-			return new ResponseEntity<E>(changedEntity, OK);
-		} catch (AppException e) {
-		}
-
-		return new ResponseEntity<E>(INTERNAL_SERVER_ERROR);
+		AppHelper.changeValues(changedEntity, entity);
+		getService().atualiza(changedEntity);
+		return new ResponseEntity<E>(changedEntity, OK);
 	}
 
 	/**
 	 * Remove a entidade cadastrada
 	 * 
-	 * URL de exemplo: http://localhost:8080/avaliacao_marph/req/pessoa/1
+	 * @Exemplo Executado no Poster (plug-in do Firefox):
+	 * @URL: http://localhost:8080/avaliacao_marph/req/pessoa/38
 	 * 
 	 * @param id
 	 *            - Id da entidade
 	 * @return
 	 */
 	@RequestMapping(value = "/{id}", method = DELETE)
-	public ResponseEntity<E> removeEntity(@PathVariable("id") Long id) {
-		if (getService().remove(id))
-			new ResponseEntity<E>(OK);
+	public ResponseEntity<Void> removeEntity(@PathVariable("id") Long id) {
+		getService().remove(id);
 
-		return new ResponseEntity<E>(NOT_FOUND);
+		return new ResponseEntity<Void>(OK);
 	}
 
 	/**
 	 * Remove as entidades cadastradas
 	 * 
-	 * URL de exemplo:
-	 * http://localhost:8080/avaliacao_marph/req/pessoa/ids/1,2,3
+	 * @Exemplo Executado no Poster (plug-in do Firefox):
+	 * @URL: http://localhost:8080/avaliacao_marph/req/pessoa/ids/1,2,3
 	 * 
 	 * @param ids
 	 *            - Ids das entidades
@@ -156,43 +156,32 @@ public abstract class AbstractRestController<S extends BaseService<E>, E extends
 	@RequestMapping(value = "/ids/{ids}", method = DELETE)
 	public ResponseEntity<Map<String, Integer>> removeEntities(@PathVariable("ids") List<Long> ids) {
 		int count = getService().remove(ids);
-		if (count > 0) {
-			Map<String, Integer> message = new HashMap<>();
-			message.put("total", count);
-			new ResponseEntity<Map<String, Integer>>(message, OK);
-		}
 
-		return new ResponseEntity<Map<String, Integer>>(NOT_FOUND);
+		Map<String, Integer> message = new HashMap<>();
+		message.put("total", count);
+
+		return new ResponseEntity<Map<String, Integer>>(message, OK);
 	}
 
 	/**
 	 * Manipula a Excecao
 	 * 
 	 * @param exception
-	 *            AppException
+	 *            RuntimeException
 	 * @return
 	 */
-	@ExceptionHandler({ AppException.class })
-	public @ResponseBody ResponseEntity<?> handleException(AppException exception) {
-		String errorMessage = exception.getMessage();
+	@ExceptionHandler({ AppException.class, HibernateException.class, DataIntegrityViolationException.class,
+			HibernateOptimisticLockingFailureException.class })
+	public @ResponseBody ResponseEntity<Map<String, String>> handleException(RuntimeException exception) {
+		String exceptionMessage = exception.getMessage();
 
-		ResponseEntity<?> response = new ResponseEntity<>(getHeaders(errorMessage), INTERNAL_SERVER_ERROR);
-		getLog().log(Level.SEVERE, errorMessage, exception);
+		Map<String, String> message = new HashMap<>();
+		message.put("errorMessage", exceptionMessage);
+
+		ResponseEntity<Map<String, String>> response = new ResponseEntity<>(message, INTERNAL_SERVER_ERROR);
+		getLog().log(Level.SEVERE, exceptionMessage, exception);
 
 		return response;
-	}
-
-	/**
-	 * Inclui o parametro "errorMessage" no cabecario
-	 * 
-	 * @param message
-	 *            Messagem de erro
-	 * @return
-	 */
-	private HttpHeaders getHeaders(String message) {
-		HttpHeaders headers = new HttpHeaders();
-		headers.add("errorMessage", message);
-		return headers;
 	}
 
 }

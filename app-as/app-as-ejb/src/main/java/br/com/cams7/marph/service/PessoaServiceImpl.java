@@ -41,6 +41,23 @@ public class PessoaServiceImpl extends AbstractService<PessoaRepository, PessoaE
 	/*
 	 * (non-Javadoc)
 	 * 
+	 * @see
+	 * br.com.cams7.as.service.AbstractService#salva(br.com.cams7.app.entity.
+	 * AbstractEntity)
+	 */
+	@Override
+	public void salva(PessoaEntity entity) {
+		super.salva(entity);
+	}
+
+	@Override
+	public void atualiza(PessoaEntity entity) {
+		super.atualiza(entity);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see br.com.cams7.marph.repository.PessoaRepository#
 	 * buscaPessoasSemUsuarioPeloNome(java.lang.String)
 	 */

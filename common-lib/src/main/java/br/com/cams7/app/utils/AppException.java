@@ -8,7 +8,7 @@ package br.com.cams7.app.utils;
  * 
  * @author cesar
  */
-public class AppException extends Exception {
+public class AppException extends RuntimeException {
 
 	private static final long serialVersionUID = 1L;
 

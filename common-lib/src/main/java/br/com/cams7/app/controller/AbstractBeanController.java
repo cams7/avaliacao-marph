@@ -75,8 +75,8 @@ public abstract class AbstractBeanController<S extends BaseService<E>, E extends
 	 * Metodo chamado na criacao do componente
 	 */
 	@PostConstruct
-	protected void init() {
-		super.init();
+	protected void initialize() {
+		super.initialize();
 
 		lastPageFirst = PAGE_FIRST;
 		lastPageSize = PAGE_SIZE;
@@ -232,6 +232,7 @@ public abstract class AbstractBeanController<S extends BaseService<E>, E extends
 	 */
 	public String createEntity() {
 		setSort();
+
 		getService().salva(getSelectedEntity());
 		getLog().info("Foi criada uma nova entidade");
 
@@ -246,11 +247,11 @@ public abstract class AbstractBeanController<S extends BaseService<E>, E extends
 	 * na mesma tela.
 	 */
 	public void updateEntity() {
+		RequestContext context = RequestContext.getCurrentInstance();
+
 		getService().atualiza(getSelectedEntity());
 
-		RequestContext context = RequestContext.getCurrentInstance();
 		context.addCallbackParam(PARAM_CHANGED, true);
-
 		getLog().info(String.format("A entidade \"%s\" foi atualizada", getSelectedEntity()));
 	}
 

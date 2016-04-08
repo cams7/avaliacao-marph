@@ -1,11 +1,9 @@
 /**
  * 
  */
-package br.com.cams7.as.controller;
+package br.com.cams7.as.controller.rest;
 
-import static javax.ws.rs.core.Response.Status.CONFLICT;
 import static javax.ws.rs.core.Response.Status.CREATED;
-import static javax.ws.rs.core.Response.Status.INTERNAL_SERVER_ERROR;
 import static javax.ws.rs.core.Response.Status.NOT_FOUND;
 import static javax.ws.rs.core.Response.Status.NO_CONTENT;
 import static javax.ws.rs.core.Response.Status.OK;
@@ -27,7 +25,6 @@ import javax.ws.rs.core.Response.ResponseBuilder;
 import br.com.cams7.app.controller.AbstractController;
 import br.com.cams7.app.entity.AbstractEntity;
 import br.com.cams7.app.service.BaseService;
-import br.com.cams7.app.utils.AppException;
 import br.com.cams7.app.utils.AppHelper;
 
 /**
@@ -44,7 +41,9 @@ public abstract class AbstractRestController<S extends BaseService<E>, E extends
 	/**
 	 * Busca todas as entidades cadastradas
 	 * 
-	 * URL de exemplo: http://localhost:8080/avaliacao_marph/req/pessoa
+	 * 
+	 * @Exemplo Executado no Poster (plug-in do Firefox):
+	 * @URL: http://localhost:8080/avaliacao_marph/req/pessoa
 	 * 
 	 * @return
 	 */
@@ -64,7 +63,8 @@ public abstract class AbstractRestController<S extends BaseService<E>, E extends
 	/**
 	 * Busca apenas uma entidade cadastrada
 	 * 
-	 * URL de exemplo: http://localhost:8080/avaliacao_marph/req/pessoa/1
+	 * @Exemplo Executado no Poster (plug-in do Firefox):
+	 * @URL: http://localhost:8080/avaliacao_marph/req/pessoa/1
 	 * 
 	 * @param id
 	 *            - Id da entidade
@@ -87,7 +87,10 @@ public abstract class AbstractRestController<S extends BaseService<E>, E extends
 	/**
 	 * Cadastra uma nova entidade
 	 * 
-	 * URL de exemplo: http://localhost:8080/avaliacao_marph/req/pessoa
+	 * @Exemplo Executado no Poster (plug-in do Firefox):
+	 * @URL: http://localhost:8080/avaliacao_marph/req/pessoa
+	 * @Content Type: application/json
+	 * @Content: {"nome":"Luiz Alberto da Silva","cpf":"82211304273"}
 	 * 
 	 * @param entity
 	 *            - Entidade
@@ -96,15 +99,8 @@ public abstract class AbstractRestController<S extends BaseService<E>, E extends
 	 */
 	@POST
 	public Response addEntity(E entity) {
-
-		ResponseBuilder builder;
-
-		if (/* service.isUserExist(user) */1 == 2)
-			builder = Response.status(CONFLICT);
-		else {
-			getService().salva(entity);
-			builder = Response.status(CREATED);
-		}
+		getService().salva(entity);
+		ResponseBuilder builder = Response.status(CREATED).entity(entity);
 
 		return builder.build();
 	}
@@ -112,7 +108,10 @@ public abstract class AbstractRestController<S extends BaseService<E>, E extends
 	/**
 	 * Altera os dados da entidade cadastrada
 	 * 
-	 * URL de exemplo: http://localhost:8080/avaliacao_marph/req/pessoa/1
+	 * @Exemplo Executado no Poster (plug-in do Firefox):
+	 * @URL: http://localhost:8080/avaliacao_marph/req/pessoa/1
+	 * @Content Type: application/json
+	 * @Content: {"nome":"Alfredo Alberto Almeida","cpf":"83605637051"}
 	 * 
 	 * @param id
 	 *            - Id da entidade
@@ -129,14 +128,11 @@ public abstract class AbstractRestController<S extends BaseService<E>, E extends
 		ResponseBuilder builder;
 		if (changedEntity == null)
 			builder = Response.status(NOT_FOUND);
-		else
-			try {
-				AppHelper.changeValues(changedEntity, entity);
-				getService().atualiza(changedEntity);
-				builder = Response.status(OK).entity(changedEntity);
-			} catch (AppException e) {
-				builder = Response.status(INTERNAL_SERVER_ERROR);
-			}
+		else {
+			AppHelper.changeValues(changedEntity, entity);
+			getService().atualiza(changedEntity);
+			builder = Response.status(OK).entity(changedEntity);
+		}
 
 		return builder.build();
 	}
@@ -144,7 +140,8 @@ public abstract class AbstractRestController<S extends BaseService<E>, E extends
 	/**
 	 * Remove a entidade cadastrada
 	 * 
-	 * URL de exemplo: http://localhost:8080/avaliacao_marph/req/pessoa/1
+	 * @Exemplo Executado no Poster (plug-in do Firefox):
+	 * @URL: http://localhost:8080/avaliacao_marph/req/pessoa/38
 	 * 
 	 * @param id
 	 *            - Id da entidade
@@ -165,8 +162,8 @@ public abstract class AbstractRestController<S extends BaseService<E>, E extends
 	/**
 	 * Remove as entidades cadastradas
 	 * 
-	 * URL de exemplo:
-	 * http://localhost:8080/avaliacao_marph/req/pessoa?id=1&id=2&id=3
+	 * @Exemplo Executado no Poster (plug-in do Firefox):
+	 * @URL: http://localhost:8080/avaliacao_marph/req/pessoa?id=37&id=38&id=39
 	 * 
 	 * @param ids
 	 *            - Ids das entidades
@@ -182,7 +179,7 @@ public abstract class AbstractRestController<S extends BaseService<E>, E extends
 			message.put("total", count);
 			builder = Response.status(OK).entity(message);
 		} else
-			builder = Response.status(NOT_FOUND);
+			builder = Response.status(NO_CONTENT);
 
 		return builder.build();
 	}

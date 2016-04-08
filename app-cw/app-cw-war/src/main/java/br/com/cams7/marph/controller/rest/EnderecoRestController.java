@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import br.com.cams7.cw.controller.AbstractRestController;
+import br.com.cams7.cw.controller.rest.AbstractRestController;
 import br.com.cams7.marph.entity.EnderecoEntity;
 import br.com.cams7.marph.service.EnderecoService;
 
@@ -47,7 +47,8 @@ public class EnderecoRestController extends AbstractRestController<EnderecoServi
 
 	@RequestMapping(method = POST)
 	@Override
-	public ResponseEntity<Void> addEntity(@RequestBody EnderecoEntity entity, UriComponentsBuilder ucBuilder) {
+	public ResponseEntity<EnderecoEntity> addEntity(@RequestBody EnderecoEntity entity,
+			UriComponentsBuilder ucBuilder) {
 		return super.addEntity(entity, ucBuilder);
 	}
 

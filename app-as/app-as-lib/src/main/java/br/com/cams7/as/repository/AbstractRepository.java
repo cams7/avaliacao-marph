@@ -4,7 +4,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.logging.Level;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -66,16 +65,6 @@ public abstract class AbstractRepository<E extends AbstractEntity> extends Abstr
 		entity = getEntityManager().merge(entity);
 	}
 
-	/**
-	 * Remove a entidade do banco de dados
-	 * 
-	 * @param entity
-	 *            Entidade
-	 */
-	private void remove(E entity) {
-		getEntityManager().remove(entity);
-	}
-
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -85,7 +74,7 @@ public abstract class AbstractRepository<E extends AbstractEntity> extends Abstr
 	public boolean remove(Long id) {
 		E entity = buscaPeloId(id);
 		if (entity != null) {
-			remove(entity);
+			getEntityManager().remove(entity);
 			return true;
 		}
 		return false;
@@ -143,13 +132,8 @@ public abstract class AbstractRepository<E extends AbstractEntity> extends Abstr
 	 * @param fieldValue
 	 * @return
 	 */
-	private Object getFieldValue(String fieldName, Object fieldValue) {
-		Object value = null;
-		try {
-			value = AppHelper.getFieldValue(getEntityType(), fieldName, fieldValue);
-		} catch (AppException e) {
-			getLog().log(Level.WARNING, e.getMessage());
-		}
+	private Object getFieldValue(String fieldName, Object fieldValue) throws AppException {
+		Object value = AppHelper.getFieldValue(getEntityType(), fieldName, fieldValue);
 		return value;
 	}
 

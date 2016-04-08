@@ -64,14 +64,9 @@ public abstract class AbstractAppTest<S extends BaseService<E>, E extends Abstra
 	 * @param newEntity
 	 * @return
 	 */
-	protected E getNewEntity(E newEntity) {
-		E entity = null;
-		try {
-			entity = AppHelper.getNewEntity(getEntityType());
-			setEntity(entity, newEntity);
-		} catch (AppException e) {
-			System.err.println(e);
-		}
+	protected E getNewEntity(E newEntity) throws AppException {
+		E entity = AppHelper.getNewEntity(getEntityType());
+		setEntity(entity, newEntity);
 
 		assertNotNull(newEntity);
 

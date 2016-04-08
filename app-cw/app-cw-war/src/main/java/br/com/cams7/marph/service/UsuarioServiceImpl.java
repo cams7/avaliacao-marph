@@ -39,8 +39,12 @@ public class UsuarioServiceImpl extends AbstractService<UsuarioRepository, Usuar
 		return hashedPassword;
 	}
 
-	/* (non-Javadoc)
-	 * @see br.com.cams7.app.service.AbstractService#salva(br.com.cams7.app.entity.AbstractEntity)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * br.com.cams7.app.service.AbstractService#salva(br.com.cams7.app.entity.
+	 * AbstractEntity)
 	 */
 	@Transactional
 	@Override
@@ -51,8 +55,12 @@ public class UsuarioServiceImpl extends AbstractService<UsuarioRepository, Usuar
 		super.salva(usuario);
 	}
 
-	/* (non-Javadoc)
-	 * @see br.com.cams7.app.service.AbstractService#atualiza(br.com.cams7.app.entity.AbstractEntity)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * br.com.cams7.app.service.AbstractService#atualiza(br.com.cams7.app.entity
+	 * .AbstractEntity)
 	 */
 	@Transactional
 	@Override
@@ -63,8 +71,11 @@ public class UsuarioServiceImpl extends AbstractService<UsuarioRepository, Usuar
 		super.atualiza(usuario);
 	}
 
-	/* (non-Javadoc)
-	 * @see br.com.cams7.marph.repository.UsuarioRepository#buscaTodosDadosPessoais()
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * br.com.cams7.marph.repository.UsuarioRepository#buscaTodosDadosPessoais()
 	 */
 	@Transactional(readOnly = true)
 	@Override
