@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.util.UriComponentsBuilder;
 
 import br.com.cams7.cw.controller.rest.AbstractRestController;
 import br.com.cams7.marph.entity.EnderecoEntity;
@@ -47,9 +46,8 @@ public class EnderecoRestController extends AbstractRestController<EnderecoServi
 
 	@RequestMapping(method = POST)
 	@Override
-	public ResponseEntity<EnderecoEntity> addEntity(@RequestBody EnderecoEntity entity,
-			UriComponentsBuilder ucBuilder) {
-		return super.addEntity(entity, ucBuilder);
+	public ResponseEntity<EnderecoEntity> addEntity(@RequestBody EnderecoEntity entity) {
+		return super.addEntity(entity);
 	}
 
 	@RequestMapping(value = "/{id}", method = PUT)

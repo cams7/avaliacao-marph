@@ -3,6 +3,7 @@
  */
 package br.com.cams7.cw.controller.rest;
 
+import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
@@ -11,10 +12,14 @@ import static org.springframework.http.HttpStatus.OK;
 import static org.springframework.web.bind.annotation.RequestMethod.DELETE;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.logging.Level;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.hibernate.HibernateException;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -24,13 +29,13 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.util.UriComponentsBuilder;
 
 import br.com.cams7.app.controller.AbstractController;
 import br.com.cams7.app.entity.AbstractEntity;
 import br.com.cams7.app.service.BaseService;
 import br.com.cams7.app.utils.AppException;
 import br.com.cams7.app.utils.AppHelper;
+import br.com.cams7.app.utils.SortOrder;
 
 /**
  * Classe comum as classes RestControllers
@@ -94,7 +99,7 @@ public abstract class AbstractRestController<S extends BaseService<E>, E extends
 	 * @param ucBuilder
 	 * @return
 	 */
-	public ResponseEntity<E> addEntity(E entity, UriComponentsBuilder ucBuilder) {
+	public ResponseEntity<E> addEntity(E entity) {
 		getService().salva(entity);
 
 		return new ResponseEntity<E>(entity, CREATED);
@@ -143,24 +148,212 @@ public abstract class AbstractRestController<S extends BaseService<E>, E extends
 		return new ResponseEntity<Void>(OK);
 	}
 
+	private Map<String, Integer> getCount(int count) {
+		Map<String, Integer> message = new HashMap<>();
+		message.put("count", count);
+		return message;
+	}
+
 	/**
 	 * Remove as entidades cadastradas
 	 * 
 	 * @Exemplo Executado no Poster (plug-in do Firefox):
-	 * @URL: http://localhost:8080/avaliacao_marph/req/pessoa/ids/1,2,3
+	 * @URL: http://localhost:8080/avaliacao_marph/req/pessoa?id=37&id=38&id=39
 	 * 
 	 * @param ids
 	 *            - Ids das entidades
 	 * @return
 	 */
-	@RequestMapping(value = "/ids/{ids}", method = DELETE)
-	public ResponseEntity<Map<String, Integer>> removeEntities(@PathVariable("ids") List<Long> ids) {
+	@RequestMapping(method = DELETE)
+	public ResponseEntity<Map<String, Integer>> removeEntities(HttpServletRequest request) {
+		Map<String, String[]> params = request.getParameterMap();
+		List<Long> ids = new ArrayList<>();
+		for (String id : params.get("id")) {
+			try {
+				ids.add(Long.parseLong(id));
+			} catch (NumberFormatException e) {
+				throw new AppException("URI inválida, porque o valor de algum parâmetro não é válido");
+			}
+		}
+
 		int count = getService().remove(ids);
+		return new ResponseEntity<Map<String, Integer>>(getCount(count), OK);
+	}
 
-		Map<String, Integer> message = new HashMap<>();
-		message.put("total", count);
+	/**
+	 * @param messages
+	 * @param paramName
+	 * @param paramValues
+	 * @return
+	 */
+	private boolean onlyOneParameter(Map<String, String> messages, String paramName, String[] paramValues) {
+		if (paramValues.length > 1) {
+			messages.put(paramName,
+					String.format("URI inválida, porque o parâmetro foi passado %s vezes", paramValues.length));
+			return false;
+		}
+		return true;
+	}
 
-		return new ResponseEntity<Map<String, Integer>>(message, OK);
+	/**
+	 * @param messages
+	 * @param paramName
+	 */
+	private void validParameter(Map<String, String> messages, String paramName) {
+		messages.put(paramName, "URI inválida, porque o parâmetro não é válido");
+	}
+
+	/**
+	 * Filtra, pagina e ordena os objetos que são instâncias de "AbstractEntity"
+	 * 
+	 * @Exemplo Executado no Poster (plug-in do Firefox):
+	 * @URL: http://localhost:8080/avaliacao_marph/req/pessoa/search?page_first=
+	 *       0&page_size=15&sort_field=nascimento&sort_order=DESCENDING&
+	 *       filter_field=nome&filter_field=cpf&globalFilter=m&nome=a&cpf=6
+	 * 
+	 * @param allUri
+	 * @return
+	 */
+	@RequestMapping(value = "/search", method = GET)
+	public ResponseEntity<Object> search(HttpServletRequest request) {
+		Integer pageFirst = null;
+		Short pageSize = null;
+		String sortField = null;
+		SortOrder sortOrder = null;
+		String[] globalFilters = null;
+		Map<String, Object> filters = new HashMap<>();
+
+		Map<String, String> messages = new HashMap<>();
+
+		final String PAGE_FIRST = "page_first";
+		final String PAGE_SIZE = "page_size";
+		final String SORT_FIELD = "sort_field";
+		final String SORT_ORDER = "sort_order";
+		final String FILTER_FIELD = "filter_field";
+		final String GLOBAL_FILTER = "globalFilter";
+
+		Map<String, String[]> allParams = request.getParameterMap();
+
+		for (Entry<String, String[]> param : allParams.entrySet()) {
+			String paramName = param.getKey();
+			String[] paramValues = param.getValue();
+
+			switch (paramName) {
+			case PAGE_FIRST:
+				if (onlyOneParameter(messages, paramName, paramValues))
+					try {
+						pageFirst = Integer.parseInt(paramValues[0]);
+					} catch (NumberFormatException e) {
+						validParameter(messages, paramName);
+					}
+				break;
+			case PAGE_SIZE:
+				if (onlyOneParameter(messages, paramName, paramValues))
+					try {
+						pageSize = Short.parseShort(paramValues[0]);
+					} catch (NumberFormatException e) {
+						validParameter(messages, paramName);
+					}
+				break;
+			case SORT_FIELD:
+				if (onlyOneParameter(messages, paramName, paramValues))
+					sortField = paramValues[0];
+				break;
+			case SORT_ORDER:
+				if (onlyOneParameter(messages, paramName, paramValues))
+					try {
+						sortOrder = SortOrder.valueOf(paramValues[0]);
+					} catch (IllegalArgumentException e) {
+						validParameter(messages, paramName);
+					}
+				break;
+			case FILTER_FIELD:
+				globalFilters = paramValues;
+				break;
+			default:
+				if (onlyOneParameter(messages, paramName, paramValues)) {
+					Object value = paramValues[0];
+					if (!GLOBAL_FILTER.equals(paramName))
+						try {
+							value = AppHelper.getFieldValue(getEntityType(), paramName, paramValues[0]);
+						} catch (AppException e) {
+							validParameter(messages, paramName);
+							break;
+						}
+					filters.put(paramName, value);
+				}
+				break;
+			}
+		}
+
+		if (!messages.isEmpty())
+			return new ResponseEntity<Object>(messages, BAD_REQUEST);
+
+		List<E> entities = getService().search(pageFirst, pageSize, sortField, sortOrder, filters, globalFilters);
+
+		if (entities.isEmpty())
+			return new ResponseEntity<Object>(NO_CONTENT);
+
+		return new ResponseEntity<Object>(entities, OK);
+	}
+
+	/**
+	 * Retorna o número total de instâncias de "AbstractEntity". Essa pesquisa é
+	 * feita com auxílio de filtros
+	 * 
+	 * @Exemplo Executado no Poster (plug-in do Firefox):
+	 * @URL: http://localhost:8080/avaliacao_marph/req/pessoa/count?filter_field
+	 *       =nome&filter_field=cpf&globalFilter=m&nome=a&cpf=6
+	 * 
+	 * @param allUri
+	 * @return
+	 */
+	@RequestMapping(value = "/count", method = GET)
+	public ResponseEntity<Map<String, ?>> count(HttpServletRequest request) {
+		String[] globalFilters = null;
+		Map<String, Object> filters = new HashMap<>();
+
+		Map<String, String> messages = new HashMap<>();
+
+		final String FILTER_FIELD = "filter_field";
+		final String GLOBAL_FILTER = "globalFilter";
+
+		Map<String, String[]> allParams = request.getParameterMap();
+
+		for (Entry<String, String[]> param : allParams.entrySet()) {
+			String paramName = param.getKey();
+			String[] paramValues = param.getValue();
+
+			switch (paramName) {
+			case FILTER_FIELD:
+				globalFilters = paramValues;
+				break;
+			default:
+				if (onlyOneParameter(messages, paramName, paramValues)) {
+					Object value = paramValues[0];
+					if (!GLOBAL_FILTER.equals(paramName))
+						try {
+							value = AppHelper.getFieldValue(getEntityType(), paramName, paramValues[0]);
+						} catch (AppException e) {
+							validParameter(messages, paramName);
+							break;
+						}
+					filters.put(paramName, value);
+				}
+				break;
+			}
+		}
+
+		if (!messages.isEmpty())
+			return new ResponseEntity<Map<String, ?>>(messages, BAD_REQUEST);
+
+		int count;
+		if (globalFilters == null && filters.isEmpty())
+			count = getService().count();
+		else
+			count = getService().getTotalElements(filters, globalFilters);
+
+		return new ResponseEntity<Map<String, ?>>(getCount(count), OK);
 	}
 
 	/**

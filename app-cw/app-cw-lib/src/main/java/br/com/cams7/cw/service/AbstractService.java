@@ -116,7 +116,7 @@ public abstract class AbstractService<R extends BaseRepository<E>, E extends Abs
 	 */
 	@Transactional(readOnly = true)
 	@Override
-	public List<E> search(int pageFirst, short pageSize, String sortField, SortOrder sortOrder,
+	public List<E> search(Integer pageFirst, Short pageSize, String sortField, SortOrder sortOrder,
 			Map<String, Object> filters, String... globalFilters) {
 		return getRepository().search(pageFirst, pageSize, sortField, sortOrder, filters, globalFilters);
 	}

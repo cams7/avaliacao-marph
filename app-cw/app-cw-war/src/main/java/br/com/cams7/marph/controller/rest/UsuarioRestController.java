@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.util.UriComponentsBuilder;
 
 import br.com.cams7.cw.controller.rest.AbstractRestController;
 import br.com.cams7.marph.entity.UsuarioEntity;
@@ -47,8 +46,8 @@ public class UsuarioRestController extends AbstractRestController<UsuarioService
 
 	@RequestMapping(method = POST)
 	@Override
-	public ResponseEntity<UsuarioEntity> addEntity(@RequestBody UsuarioEntity entity, UriComponentsBuilder ucBuilder) {
-		return super.addEntity(entity, ucBuilder);
+	public ResponseEntity<UsuarioEntity> addEntity(@RequestBody UsuarioEntity entity) {
+		return super.addEntity(entity);
 	}
 
 	@RequestMapping(value = "/{id}", method = PUT)

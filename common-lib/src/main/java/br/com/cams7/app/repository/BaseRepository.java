@@ -86,12 +86,12 @@ public interface BaseRepository<E extends AbstractEntity> {
 	 *            Nomes dos atributos da entidade
 	 * @return Entidade
 	 */
-	List<E> search(int pageFirst, short pageSize, String sortField, SortOrder sortOrder, Map<String, Object> filters,
+	List<E> search(Integer pageFirst, Short pageSize, String sortField, SortOrder sortOrder, Map<String, Object> filters,
 			String... globalFilters);
 
 	/**
-	 * Retorna o numero total de instâncias de "AbstractEntity". Essa pesquisa é
-	 * feita com auxilio de filtros
+	 * Retorna o número total de instâncias de "AbstractEntity". Essa pesquisa é
+	 * feita com auxílio de filtros
 	 * 
 	 * @param filters
 	 * @param globalFilters

@@ -38,12 +38,13 @@ public class EnderecoRepositoryImpl extends AbstractRepository<EnderecoEntity> i
 	 * Filtra, pagina e ordena os objetos que são instâncias da classe
 	 * "EnderecoEntity"
 	 * 
-	 * @see br.com.cams7.app.repository.AbstractRepository#search(int, short,
-	 * java.lang.String, br.com.cams7.utils.SortOrder, java.util.Map,
-	 * java.lang.String[])
+	 * @see
+	 * br.com.cams7.cw.repository.AbstractRepository#search(java.lang.Integer,
+	 * java.lang.Short, java.lang.String, br.com.cams7.app.utils.SortOrder,
+	 * java.util.Map, java.lang.String[])
 	 */
 	@Override
-	public List<EnderecoEntity> search(int pageFirst, short pageSize, String sortField, SortOrder sortOrder,
+	public List<EnderecoEntity> search(Integer pageFirst, Short pageSize, String sortField, SortOrder sortOrder,
 			Map<String, Object> filters, String... globalFilters) {
 		Criteria select = getSelect();
 		setFiltroPaginacaoOrdenacao(select, pageFirst, pageSize, sortField, sortOrder, filters, globalFilters);
@@ -70,6 +71,20 @@ public class EnderecoRepositoryImpl extends AbstractRepository<EnderecoEntity> i
 		int total = getCount(select);
 
 		return total;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see br.com.cams7.cw.repository.AbstractRepository#count()
+	 */
+	@Override
+	public int count() {
+		Criteria select = getSelect();
+
+		int count = getCount(select);
+
+		return count;
 	}
 
 }

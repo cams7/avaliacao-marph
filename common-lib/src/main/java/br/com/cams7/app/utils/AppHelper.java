@@ -28,30 +28,34 @@ public final class AppHelper {
 	 * 
 	 * @param entityType
 	 *            Tipo de classe Entity
-	 * @param fieldName
+	 * @param attributeName
 	 *            Nome do atributo da entidade
 	 * @return Tipo de classe
 	 * @throws AppException
 	 */
-	private static Class<?> getType(Class<?> entityType, String fieldName) throws AppException {
-		int index = fieldName.indexOf(".");
-		String fieldName2 = null;
+	@SuppressWarnings("unchecked")
+	public static <E extends AbstractEntity> FieldTypes<E> getFieldTypes(Class<E> entityType, String attributeName)
+			throws AppException {
+		int index = attributeName.indexOf(".");
+		String entityName = null;
 
 		if (index > -1) {
-			fieldName2 = fieldName.substring(index + 1);
-			fieldName = fieldName.substring(0, index);
+			entityName = attributeName.substring(0, index);
+			attributeName = attributeName.substring(index + 1);
 		}
 
 		try {
-			Field field = entityType.getDeclaredField(fieldName);
-			Class<?> type = field.getType();
+			if (entityName != null) {
+				Field field = entityType.getDeclaredField(entityName);
+				entityType = (Class<E>) field.getType();
+				return getFieldTypes(entityType, attributeName);
+			}
 
-			if (fieldName2 != null)
-				return getType(type, fieldName2);
-
-			return type;
+			Field field = entityType.getDeclaredField(attributeName);
+			return new FieldTypes<E>(entityType, field.getType());
 		} catch (NoSuchFieldException | SecurityException e) {
-			throw new AppException(e.getMessage(), e.getCause());
+			throw new AppException(String.format("O atributo '%s' não foi encontrado na entidade '%s'", attributeName,
+					entityType.getName()), e.getCause());
 		}
 	}
 
@@ -87,19 +91,20 @@ public final class AppHelper {
 	 *            Vator do atributo
 	 * @return
 	 */
-	public static Object getFieldValue(Class<?> entityType, String fieldName, Object fieldValue) throws AppException {
-		Class<?> type = getType(entityType, fieldName);
+	public static <E extends AbstractEntity> Object getFieldValue(Class<E> entityType, String fieldName,
+			Object fieldValue) throws AppException {
+		Class<?> attributeType = getFieldTypes(entityType, fieldName).getAttributeType();
 
 		fieldValue = getCorrectValue(fieldValue);
 
 		if (fieldValue == null)
 			return null;
 
-		if (type.equals(String.class))
+		if (attributeType.equals(String.class))
 			return fieldValue;
 
 		try {
-			Constructor<?> constructor = type.getDeclaredConstructor(String.class);
+			Constructor<?> constructor = attributeType.getDeclaredConstructor(String.class);
 			Object value = constructor.newInstance(String.valueOf(fieldValue));
 			return value;
 		} catch (SecurityException | IllegalArgumentException | NoSuchMethodException | InstantiationException
@@ -355,6 +360,31 @@ public final class AppHelper {
 	 */
 	public static boolean isEnum(Class<?> type) {
 		return type.isEnum();
+	}
+
+	/**
+	 * @author cesar
+	 *
+	 * @param <E>
+	 */
+	public static class FieldTypes<E extends AbstractEntity> {
+		private Class<E> entityType;
+		private Class<?> attributeType;
+
+		private FieldTypes(Class<E> entityType, Class<?> attributeType) {
+			super();
+			this.entityType = entityType;
+			this.attributeType = attributeType;
+		}
+
+		public Class<E> getEntityType() {
+			return entityType;
+		}
+
+		public Class<?> getAttributeType() {
+			return attributeType;
+		}
+
 	}
 
 }

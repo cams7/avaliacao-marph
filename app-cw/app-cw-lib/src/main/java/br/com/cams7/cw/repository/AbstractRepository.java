@@ -21,7 +21,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import br.com.cams7.app.AbstractBase;
 import br.com.cams7.app.entity.AbstractEntity;
 import br.com.cams7.app.repository.BaseRepository;
-import br.com.cams7.app.utils.AppException;
 import br.com.cams7.app.utils.AppHelper;
 import br.com.cams7.app.utils.SortOrder;
 
@@ -94,7 +93,7 @@ public abstract class AbstractRepository<E extends AbstractEntity> extends Abstr
 		for (Long id : ids)
 			if (remove(id))
 				count++;
-		
+
 		return count;
 	}
 
@@ -124,25 +123,12 @@ public abstract class AbstractRepository<E extends AbstractEntity> extends Abstr
 	}
 
 	/**
-	 * Converte o valor para o tipo correto
-	 * 
-	 * @param fieldName
-	 * @param fieldValue
-	 * @return
-	 */
-	private Object getFieldValue(String fieldName, Object fieldValue) throws AppException {
-		Object value = AppHelper.getFieldValue(getEntityType(), fieldName, fieldValue);
-
-		return value;
-	}
-
-	/**
 	 * @param fieldName
 	 * @param fieldValue
 	 * @return
 	 */
 	private Criterion getExpression(String fieldName, Object fieldValue) {
-		Object value = getFieldValue(fieldName, fieldValue);
+		Object value = AppHelper.getFieldValue(getEntityType(), fieldName, fieldValue);
 
 		if (value == null)
 			return null;
@@ -182,7 +168,7 @@ public abstract class AbstractRepository<E extends AbstractEntity> extends Abstr
 	 *            Nomes dos atributos da entidade
 	 */
 	protected void setFiltro(Criteria select, Map<String, Object> filters, String... globalFilters) {
-		if (filters != null) {
+		if (filters != null && !filters.isEmpty()) {
 			boolean containsKeyGlobalFilter = false;
 
 			final String GLOBALFILTER_KEY = "globalFilter";
@@ -235,10 +221,11 @@ public abstract class AbstractRepository<E extends AbstractEntity> extends Abstr
 
 		setFiltro(select, filters, globalFilters);
 
-		if (pageFirst != null && pageSize != null) {
+		if (pageFirst != null)
 			select.setFirstResult(pageFirst);
+
+		if (pageSize != null)
 			select.setMaxResults(pageSize);
-		}
 
 		if (sortField != null && sortOrder != null) {
 			Order order;
@@ -268,7 +255,7 @@ public abstract class AbstractRepository<E extends AbstractEntity> extends Abstr
 	 * java.lang.String[])
 	 */
 	@Override
-	public List<E> search(int pageFirst, short pageSize, String sortField, SortOrder sortOrder,
+	public List<E> search(Integer pageFirst, Short pageSize, String sortField, SortOrder sortOrder,
 			Map<String, Object> filters, String... globalFilters) {
 		Criteria select = getCurrentSession().createCriteria(getEntityType());
 		setFiltroPaginacaoOrdenacao(select, pageFirst, pageSize, sortField, sortOrder, filters, globalFilters);

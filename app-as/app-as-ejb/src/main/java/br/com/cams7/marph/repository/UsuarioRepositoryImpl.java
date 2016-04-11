@@ -13,6 +13,7 @@ import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Join;
+import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Root;
 
 import br.com.cams7.app.utils.SortOrder;
@@ -33,30 +34,24 @@ public class UsuarioRepositoryImpl extends AbstractRepository<UsuarioEntity> imp
 		super();
 	}
 
-	/**
-	 * @param root
-	 * @return
-	 */
-	private Join<UsuarioEntity, PessoaEntity> getJoin(Root<UsuarioEntity> root) {
-		Join<UsuarioEntity, PessoaEntity> join = root.join(UsuarioEntity_.pessoa);
-		return join;
-	}
-
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see br.com.cams7.app.repository.BaseRepository#search(int, short,
-	 * java.lang.String, br.com.cams7.app.utils.SortOrder, java.util.Map,
-	 * java.lang.String[])
+	 * @see
+	 * br.com.cams7.as.repository.AbstractRepository#search(java.lang.Integer,
+	 * java.lang.Short, java.lang.String, br.com.cams7.app.utils.SortOrder,
+	 * java.util.Map, java.lang.String[])
 	 */
 	@Override
-	public List<UsuarioEntity> search(int pageFirst, short pageSize, String sortField, SortOrder sortOrder,
+	public List<UsuarioEntity> search(Integer pageFirst, Short pageSize, String sortField, SortOrder sortOrder,
 			Map<String, Object> filters, String... globalFilters) {
 		CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
 		CriteriaQuery<UsuarioEntity> cq = cb.createQuery(getEntityType());
 
 		Root<UsuarioEntity> from = cq.from(getEntityType());
-		Join<UsuarioEntity, PessoaEntity> join = getJoin(from);
+		@SuppressWarnings("unchecked")
+		Join<UsuarioEntity, PessoaEntity> join = (Join<UsuarioEntity, PessoaEntity>) from.fetch(UsuarioEntity_.pessoa,
+				JoinType.LEFT);
 
 		TypedQuery<UsuarioEntity> tq = getFiltroPaginacaoOrdenacao(cb, cq, join, pageFirst, pageSize, sortField,
 				sortOrder, filters, globalFilters);
@@ -78,10 +73,28 @@ public class UsuarioRepositoryImpl extends AbstractRepository<UsuarioEntity> imp
 		CriteriaQuery<Long> cq = cb.createQuery(Long.class);
 
 		Root<UsuarioEntity> from = cq.from(getEntityType());
-		Join<UsuarioEntity, PessoaEntity> join = getJoin(from);
+		Join<UsuarioEntity, PessoaEntity> join = from.join(UsuarioEntity_.pessoa, JoinType.LEFT);
 
 		cq = (CriteriaQuery<Long>) getFiltro(cb, cq, join, filters, globalFilters);
-		int count = getCount(cb, cq, from);
+		int count = getCount(cb, cq, join);
+
+		return count;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see br.com.cams7.as.repository.AbstractRepository#count()
+	 */
+	@Override
+	public int count() {
+		CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
+		CriteriaQuery<Long> cq = cb.createQuery(Long.class);
+
+		Root<UsuarioEntity> from = cq.from(getEntityType());
+		Join<UsuarioEntity, PessoaEntity> join = from.join(UsuarioEntity_.pessoa, JoinType.LEFT);
+
+		int count = getCount(cb, cq, join);
 
 		return count;
 	}

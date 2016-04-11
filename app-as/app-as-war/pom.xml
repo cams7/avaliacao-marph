@@ -52,6 +52,9 @@
 			<scope>provided</scope>
 		</dependency>
 
+		<!--dependency> <groupId>commons-fileupload</groupId> <artifactId>commons-fileupload</artifactId> 
+			</dependency -->
+
 		<dependency>
 			<groupId>javax.enterprise</groupId>
 			<artifactId>cdi-api</artifactId>
@@ -63,12 +66,6 @@
 			<artifactId>jaxrs-api</artifactId>
 			<scope>provided</scope>
 		</dependency>
-
-		<!--dependency> <groupId>commons-fileupload</groupId> <artifactId>commons-fileupload</artifactId> 
-			</dependency -->
-
-		<!-- dependency> <groupId>org.jboss.spec.javax.json</groupId> <artifactId>jboss-json-api_1.0_spec</artifactId> 
-			<scope>provided</scope> </dependency -->
 	</dependencies>
 
 	<build>
