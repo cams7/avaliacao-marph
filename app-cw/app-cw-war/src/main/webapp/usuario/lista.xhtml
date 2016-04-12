@@ -7,7 +7,7 @@
 	template="/layout/template.xhtml">
 
 	<ui:define name="pageTitle">
-		<h:outputText value="Lista de usuarios" />
+		<h:outputText value="#{msg['page.title.lista.usuarios']}" />
 	</ui:define>
 
 	<f:metadata>
@@ -21,8 +21,8 @@
 	<ui:define name="content">
 		<div style="border-bottom: 1px solid #E5E5E5;">
 			<h4>
-				<h:outputText value="Usuarios" />
-				<small> <h:outputText value="Listagem" /></small>
+				<h:outputText value="#{msg['label.usuarios']}" />
+				<small> <h:outputText value="#{msg['label.listagem']}" /></small>
 			</h4>
 		</div>
 
@@ -35,15 +35,15 @@
 				paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
 				rowsPerPageTemplate="3,5,10,15" selectionMode="single"
 				selection="#{usuarioMB.selectedEntity}" lazy="true"
-				emptyMessage="Nenhum Usuario foi cadastrado"
+				emptyMessage="#{msg['msg.warn.usuariosNaoCadastrados']}"
 				widgetVar="usuarioTable" resizableColumns="true" filterDelay="1000"
 				filterEvent="keyup">
 
 				<f:facet name="header">
 					<p:outputPanel style="text-align: right;">
-						<h:outputText value="Busca:" />
+						<h:outputText value="#{msg['label.busca']}:" />
 						<p:inputText id="globalFilter" style="width:300px"
-							placeholder="Nome ou login" immediate="true">
+							placeholder="#{msg['label.usuarios.busca']}" immediate="true">
 							<p:ajax event="keyup" delay="1000"
 								oncomplete="PF('usuarioTable').filter()" />
 						</p:inputText>
@@ -56,33 +56,38 @@
 						onsuccess="PF('usuarioDialog').show();" />
 				</sec:authorize>
 
-				<p:column headerText="Nome" sortBy="#{usuario.pessoa.nome}"
-					filterBy="#{usuario.pessoa.nome}" filterMatchMode="contains">
+				<p:column headerText="#{msg['label.pessoa.nome']}"
+					sortBy="#{usuario.pessoa.nome}" filterBy="#{usuario.pessoa.nome}"
+					filterMatchMode="contains">
 					<h:outputText value="#{usuario.pessoa.nome}" />
 				</p:column>
 
-				<p:column headerText="Login" sortBy="#{usuario.login}"
-					filterBy="#{usuario.login}" filterMatchMode="contains">
+				<p:column headerText="#{msg['label.usuario.login']}"
+					sortBy="#{usuario.login}" filterBy="#{usuario.login}"
+					filterMatchMode="contains">
 					<h:outputText value="#{usuario.login}" />
 				</p:column>
 
-				<p:column headerText="Esta ativo" sortBy="#{usuario.habilitado}"
-					filterBy="#{usuario.habilitado}" filterMatchMode="equals">
+				<p:column headerText="#{msg['label.usuario.habilitado']}"
+					sortBy="#{usuario.habilitado}" filterBy="#{usuario.habilitado}"
+					filterMatchMode="equals">
 					<f:facet name="filter">
 						<p:selectOneButton onchange="PF('usuarioTable').filter()">
 							<f:converter converterId="javax.faces.Boolean" />
-							<f:selectItem itemLabel="Todos" itemValue="" />
-							<f:selectItem itemLabel="Sim" itemValue="true" />
-							<f:selectItem itemLabel="Nao" itemValue="false" />
+							<f:selectItem itemLabel="#{msg['label.filtro.todos']}"
+								itemValue="" />
+							<f:selectItem itemLabel="#{msg['label.sim']}" itemValue="true" />
+							<f:selectItem itemLabel="#{msg['label.nao']}" itemValue="false" />
 						</p:selectOneButton>
 					</f:facet>
-					<h:outputText value="#{usuario.habilitado ? 'Sim': 'Nao'}" />
+					<h:outputText
+						value="#{usuario.habilitado ? msg['label.sim']: msg['label.nao']}" />
 				</p:column>
 
 				<f:facet name="footer">
 					<p:panelGrid id="totalRows" columns="1" columnClasses="value"
 						style="width:100%">
-						<h:outputFormat value="Total de cadastrados: {0}">
+						<h:outputFormat value="#{msg['label.usuarios.totalCadastrados']}">
 							<f:param value="#{usuarioMB.totalRows}" />
 						</h:outputFormat>
 					</p:panelGrid>
@@ -90,8 +95,8 @@
 			</p:dataTable>
 
 			<sec:authorize access="hasRole('ADMINISTRADOR')">
-				<p:dialog header="Altera dados de usuario" widgetVar="usuarioDialog"
-					modal="true" resizable="false">
+				<p:dialog header="#{msg['page.title.edita.usuario']}"
+					widgetVar="usuarioDialog" modal="true" resizable="false">
 
 					<p:ajax event="close" listener="#{usuarioMB.handleClose}" />
 

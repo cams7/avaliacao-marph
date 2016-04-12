@@ -7,7 +7,7 @@
 	template="/layout/template.xhtml">
 
 	<ui:define name="pageTitle">
-		<h:outputText value="Lista de pessoas" />
+		<h:outputText value="#{msg['page.title.lista.pessoas']}" />
 	</ui:define>
 
 	<f:metadata>
@@ -21,8 +21,8 @@
 	<ui:define name="content">
 		<div style="border-bottom: 1px solid #E5E5E5;">
 			<h4>
-				<h:outputText value="Pessoas" />
-				<small> <h:outputText value="Listagem" /></small>
+				<h:outputText value="#{msg['label.pessoas']}" />
+				<small> <h:outputText value="#{msg['label.listagem']}" /></small>
 			</h4>
 		</div>
 
@@ -36,14 +36,15 @@
 				paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
 				rowsPerPageTemplate="3,5,10,15" selectionMode="single"
 				selection="#{pessoaMB.selectedEntity}" lazy="true"
-				emptyMessage="Nenhuma pessoa foi cadastrada" widgetVar="pessoaTable"
-				resizableColumns="true" filterDelay="1000" filterEvent="keyup">
+				emptyMessage="#{msg['msg.warn.pessoasNaoCadastradas']}"
+				widgetVar="pessoaTable" resizableColumns="true" filterDelay="1000"
+				filterEvent="keyup">
 
 				<f:facet name="header">
 					<p:outputPanel style="text-align: right;">
-						<h:outputText value="Busca:" />
+						<h:outputText value="#{msg['label.busca']}:" />
 						<p:inputText id="globalFilter" style="width:300px"
-							placeholder="Nome ou cpf" immediate="true">
+							placeholder="#{msg['label.pessoas.busca']}" immediate="true">
 							<p:ajax event="keyup" delay="1000"
 								oncomplete="PF('pessoaTable').filter()" />
 						</p:inputText>
@@ -56,19 +57,22 @@
 						onsuccess="PF('pessoaDialog').show();" />
 				</sec:authorize>
 
-				<p:column headerText="Nome" sortBy="#{pessoa.nome}"
-					filterBy="#{pessoa.nome}" filterMatchMode="contains">
+				<p:column headerText="#{msg['label.pessoa.nome']}"
+					sortBy="#{pessoa.nome}" filterBy="#{pessoa.nome}"
+					filterMatchMode="contains">
 					<h:outputText value="#{pessoa.nome}" />
 				</p:column>
 
-				<p:column headerText="CPF" sortBy="#{pessoa.cpf}"
-					filterBy="#{pessoa.cpf}" filterMatchMode="contains">
+				<p:column headerText="#{msg['label.pessoa.cpf']}"
+					sortBy="#{pessoa.cpf}" filterBy="#{pessoa.cpf}"
+					filterMatchMode="contains">
 					<h:outputText value="#{pessoa.cpf}">
 						<f:converter converterId="cpfConverter" />
 					</h:outputText>
 				</p:column>
 
-				<p:column headerText="Nascimento" sortBy="#{pessoa.nascimento}">
+				<p:column headerText="#{msg['label.pessoa.nascimento']}"
+					sortBy="#{pessoa.nascimento}">
 					<h:outputText value="#{pessoa.nascimento}">
 						<f:convertDateTime pattern="dd/MM/yyyy" />
 					</h:outputText>
@@ -77,43 +81,44 @@
 				<f:facet name="footer">
 					<sec:authorize ifAnyGranted="SECRETARIO,ADMINISTRADOR">
 						<p:panelGrid id="totalRows" columns="6">
-							<h:outputFormat value="Total: {0}">
+							<h:outputFormat value="#{msg['label.pessoas.totalCadastrados1']}">
 								<f:param value="#{pessoaMB.totalRows}" />
 							</h:outputFormat>
 
 							<h:outputLink
 								value="#{facesContext.externalContext.requestContextPath}/req/relatorio/pdf"
-								title="Download relatorio em PDF" target="_blank">
+								title="#{msg['button.visualiza.pdf']}" target="_blank">
 								<h:graphicImage name="img/download-pdf.png" />
 							</h:outputLink>
 
 							<h:outputLink
 								value="#{facesContext.externalContext.requestContextPath}/req/relatorio/csv"
-								title="Download relatorio em CSV" target="_blank">
+								title="#{msg['button.visualiza.csv']}" target="_blank">
 								<h:graphicImage name="img/download-csv.png" />
 							</h:outputLink>
 
 							<h:outputLink
 								value="#{facesContext.externalContext.requestContextPath}/req/relatorio/xls"
-								title="Download relatorio em XLS" target="_blank">
+								title="#{msg['button.visualiza.xls']}" target="_blank">
 								<h:graphicImage name="img/download-xls.png" />
 							</h:outputLink>
 
 							<h:outputLink
 								value="#{facesContext.externalContext.requestContextPath}/req/relatorio/html"
-								title="Download relatorio em HTML" target="_blank">
+								title="#{msg['button.visualiza.html']}" target="_blank">
 								<h:graphicImage name="img/download-html.png" />
 							</h:outputLink>
 
 							<h:outputLink
 								value="#{facesContext.externalContext.requestContextPath}/req/pessoa"
-								title="Visualizar pelo formato JSON" target="_blank">
+								title="#{msg['button.visualiza.json']}" target="_blank">
 								<h:graphicImage name="img/json.png" />
 							</h:outputLink>
 						</p:panelGrid>
 					</sec:authorize>
 					<sec:authorize ifNotGranted="SECRETARIO,ADMINISTRADOR">
-						<h:outputFormat id="totalRows" value="Total de cadastrados: {0}">
+						<h:outputFormat id="totalRows"
+							value="#{msg['label.pessoas.totalCadastrados2']}">
 							<f:param value="#{pessoaMB.totalRows}" />
 						</h:outputFormat>
 					</sec:authorize>
@@ -121,8 +126,8 @@
 			</p:dataTable>
 
 			<sec:authorize ifAnyGranted="SECRETARIO,ADMINISTRADOR">
-				<p:dialog header="Altera dados pessoais" widgetVar="pessoaDialog"
-					modal="true" resizable="false">
+				<p:dialog header="#{msg['page.title.edita.pessoa']}"
+					widgetVar="pessoaDialog" modal="true" resizable="false">
 
 					<p:ajax event="close" listener="#{pessoaMB.handleClose}" />
 

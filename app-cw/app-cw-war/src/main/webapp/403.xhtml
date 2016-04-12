@@ -5,11 +5,10 @@
 	template="/layout/template.xhtml">
 
 	<ui:define name="pageTitle">
-		<h:outputText value="HTTP Status 403 - Acesso negado" />
+		<h:outputText value="#{msg['page.title.status403']}" />
 	</ui:define>
 
 	<ui:define name="content">
-		<div class="alert alert-warning" role="alert">Voce nao tem
-			permissao para acessar esta pagina!</div>
+		<div class="alert alert-error">#{msg['msg.erro.sem.permissao']}!</div>
 	</ui:define>
 </ui:composition>

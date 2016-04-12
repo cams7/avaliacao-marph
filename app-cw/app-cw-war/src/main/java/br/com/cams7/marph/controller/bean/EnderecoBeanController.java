@@ -71,9 +71,8 @@ public class EnderecoBeanController extends AbstractBeanController<EnderecoServi
 	public String createEntity() {
 		String listPage = super.createEntity();
 
-		addINFOMessage("O endereco foi cadastrado com sucesso!!!",
-				String.format("O endereco no qual bairro e rua sao \"%s e %s\" respectivamente foi salvo.",
-						getSelectedEntity().getBairro(), getSelectedEntity().getRua()));
+		addINFOMessage(getMessageFromI18N("msg.ok.summary.salva.endereco"), getMessageFromI18N(
+				"msg.ok.detail.salva.endereco", getSelectedEntity().getBairro(), getSelectedEntity().getRua()));
 
 		return listPage;
 	}
@@ -87,9 +86,8 @@ public class EnderecoBeanController extends AbstractBeanController<EnderecoServi
 	public void updateEntity() {
 		super.updateEntity();
 
-		addINFOMessage("O endereco foi atualizado com sucesso!!!",
-				String.format("O endereco no qual bairro e rua sao \"%s e %s\" respectivamente foi atualizado.",
-						getSelectedEntity().getBairro(), getSelectedEntity().getRua()));
+		addINFOMessage(getMessageFromI18N("msg.ok.summary.atualiza.endereco"), getMessageFromI18N(
+				"msg.ok.detail.atualiza.endereco", getSelectedEntity().getBairro(), getSelectedEntity().getRua()));
 	}
 
 	/*
@@ -101,9 +99,8 @@ public class EnderecoBeanController extends AbstractBeanController<EnderecoServi
 	public void removeEntity() {
 		super.removeEntity();
 
-		addINFOMessage("O endereco foi removido com sucesso!!!",
-				String.format("O endereco no qual bairro e rua sao \"%s e %s\" respectivamente foi removido.",
-						getSelectedEntity().getBairro(), getSelectedEntity().getRua()));
+		addINFOMessage(getMessageFromI18N("msg.ok.summary.remove.endereco"), getMessageFromI18N(
+				"msg.ok.detail.remove.endereco", getSelectedEntity().getBairro(), getSelectedEntity().getRua()));
 	}
 
 	/**
@@ -123,8 +120,8 @@ public class EnderecoBeanController extends AbstractBeanController<EnderecoServi
 	 * @param event
 	 */
 	public void onItemSelect(SelectEvent event) {
-		addINFOMessage("Pessoa selecionada!!!", String.format("A pessoa cujo id e \"%s\" foi selecionada.",
-				((PessoaEntity) event.getObject()).getId()));
+		addINFOMessage(getMessageFromI18N("msg.ok.summary.pessoa.selecionada"),
+				getMessageFromI18N("msg.ok.detail.pessoa.selecionada", ((PessoaEntity) event.getObject()).getId()));
 	}
 
 	/*

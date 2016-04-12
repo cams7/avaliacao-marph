@@ -11,40 +11,43 @@
 		<h:panelGroup id="pessoaPanel" rendered="#{not empty pessoa}">
 			<c:if test="#{not createEntity}">
 				<div class="control-group">
-					<h:outputLabel for="pessoaId" value="Id" styleClass="control-label" />
-					<h:outputText id="pessoaId" value="#{pessoa.id}" label="Id"
-						styleClass="controls" style="float: left;margin-left: 20px;" />
+					<h:outputLabel for="pessoaId" value="#{msg['label.pessoa.id']}"
+						styleClass="control-label" />
+					<h:outputText id="pessoaId" value="#{pessoa.id}"
+						label="#{msg['label.pessoa.id']}" styleClass="controls"
+						style="float: left;margin-left: 20px;" />
 				</div>
 			</c:if>
 
 			<div class="control-group">
-				<h:outputLabel for="pessoaNome" value="Nome"
+				<h:outputLabel for="pessoaNome" value="#{msg['label.pessoa.nome']}"
 					styleClass="control-label" />
 				<div class="controls" style="float: left; margin-left: 20px;">
-					<p:inputText id="pessoaNome" value="#{pessoa.nome}" label="Nome"
-						styleClass="input-large" />
+					<p:inputText id="pessoaNome" value="#{pessoa.nome}"
+						label="#{msg['label.pessoa.nome']}" styleClass="input-large" />
 					<p:message for="pessoaNome" styleClass="alert alert-error" />
 				</div>
 			</div>
 
 			<div class="control-group">
-				<h:outputLabel for="pessoaCpf" value="CPF"
+				<h:outputLabel for="pessoaCpf" value="#{msg['label.pessoa.cpf']}"
 					styleClass="control-label" />
 				<div class="controls" style="float: left; margin-left: 20px;">
 					<p:inputMask mask="999.999.999-99" id="pessoaCpf"
-						value="#{pessoa.cpf}" label="CPF" styleClass="input-large"
-						converter="cpfConverter" />
+						value="#{pessoa.cpf}" label="#{msg['label.pessoa.cpf']}"
+						styleClass="input-large" converter="cpfConverter" />
 					<p:message for="pessoaCpf" styleClass="alert alert-error" />
 				</div>
 			</div>
 
 			<div class="control-group">
-				<h:outputLabel for="pessoaNascimento" value="Nascimento"
+				<h:outputLabel for="pessoaNascimento"
+					value="#{msg['label.pessoa.nascimento']}"
 					styleClass="control-label" />
 				<div class="controls" style="float: left; margin-left: 20px;">
 					<p:calendar id="pessoaNascimento" value="#{pessoa.nascimento}"
 						pattern="dd/MM/yyyy" locale="pt_BR" mask="true" navigator="true"
-						styleClass="input-large" />
+						styleClass="input-large" label="#{msg['label.pessoa.nascimento']}" />
 					<p:message for="pessoaNascimento" styleClass="alert alert-error" />
 				</div>
 			</div>
@@ -55,29 +58,29 @@
 						<c:when test="#{not createEntity}">
 							<h:outputLink
 								value="#{facesContext.externalContext.requestContextPath}/req/pessoa/#{pessoa.id}"
-								title="Visualizar pelo formato JSON" target="_blank">
+								title="#{msg['button.visualiza.json']}" target="_blank">
 								<h:graphicImage name="img/json.png" />
 							</h:outputLink>
-							<p:commandButton value="Atualiza"
+							<p:commandButton value="#{msg['button.atualiza']}"
 								actionListener="#{pessoaMB.updateEntity}"
 								styleClass="btn btn-success"
 								oncomplete="handleUpdateRequest(xhr, status, args);"
 								process="@form" />
 							<sec:authorize access="hasRole('ADMINISTRADOR')">
-								<p:commandButton value="Exclui"
+								<p:commandButton value="#{msg['button.exclui']}"
 									actionListener="#{pessoaMB.removeEntity}"
 									styleClass="btn btn-danger"
 									oncomplete="handleUpdateRequest(xhr, status, args);"
 									update="pessoaTable:totalRows" immediate="true"
 									rendered="#{not createEntity}" />
 							</sec:authorize>
-							<p:button value="Cancela" onclick="PF('pessoaDialog').hide();"
-								styleClass="btn" />
+							<p:button value="#{msg['button.cancela']}"
+								onclick="PF('pessoaDialog').hide();" styleClass="btn" />
 						</c:when>
 						<c:otherwise>
-							<p:commandButton value="Salva" action="#{pessoaMB.createEntity}"
-								styleClass="btn btn-success" update="pessoaPanel"
-								process="@form" />
+							<p:commandButton value="#{msg['button.salva']}"
+								action="#{pessoaMB.createEntity}" styleClass="btn btn-success"
+								update="pessoaPanel" process="@form" />
 						</c:otherwise>
 					</c:choose>
 				</div>

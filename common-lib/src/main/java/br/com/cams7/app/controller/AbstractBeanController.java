@@ -4,11 +4,11 @@
 package br.com.cams7.app.controller;
 
 import java.io.Serializable;
-//import java.text.MessageFormat;
+import java.text.MessageFormat;
 import java.util.List;
-//import java.util.Locale;
+import java.util.Locale;
 import java.util.Map;
-//import java.util.ResourceBundle;
+import java.util.ResourceBundle;
 import java.util.logging.Level;
 
 import javax.annotation.PostConstruct;
@@ -36,7 +36,7 @@ public abstract class AbstractBeanController<S extends BaseService<E>, E extends
 
 	private static final long serialVersionUID = 1L;
 
-	// private final String RESOURCE_BUNDLE = "i18n.messages";
+	private final String RESOURCE_BUNDLE = "i18n.messages";
 	protected final String PARAM_CHANGED = "changed";
 	private final String PARAM_MESSAGE = "message";
 
@@ -110,21 +110,15 @@ public abstract class AbstractBeanController<S extends BaseService<E>, E extends
 
 				filters = AppHelper.removeEmptyValue(filters);
 
-				if (pageSize != lastPageSize) {
+				if (pageSize != lastPageSize)
 					lastPageSize = (byte) pageSize;
-				} else // if ((first == 0 || first == lastPageFirst)) {
-				if (sortField != null && (!sortField.equals(lastSortField) || !sortOrder.equals(lastSortOrder))) {
+				else if (sortField != null && (!sortField.equals(lastSortField) || !sortOrder.equals(lastSortOrder)))
 					setSort(sortField, sortOrder);
-					// } else if (((!filters.isEmpty() || lastFilters !=
-					// null)
-					// && !AppHelper.equalMaps(filters, lastFilters))) {
-				} else if (!AppHelper.equalMaps(filters, lastFilters)) {
+				else if (!AppHelper.equalMaps(filters, lastFilters))
 					if (!filters.isEmpty())
 						lastFilters = filters;
 					else
 						lastFilters = null;
-				}
-				// }
 
 				lastPageFirst = (short) first;
 
@@ -348,21 +342,19 @@ public abstract class AbstractBeanController<S extends BaseService<E>, E extends
 	 * @return Recupera a mensagem do arquivo properties
 	 *         <code>ResourceBundle</code>.
 	 */
-	// protected String getMessageFromI18N(String key, Object... params) {
-	// Locale locale =
-	// FacesContext.getCurrentInstance().getViewRoot().getLocale();
-	//
-	// ResourceBundle bundle = ResourceBundle.getBundle(RESOURCE_BUNDLE, locale,
-	// this.getClass().getClassLoader());
-	//
-	// String message;
-	// if (params.length > 0)
-	// message = MessageFormat.format(bundle.getString(key), params);
-	// else
-	// message = bundle.getString(key);
-	//
-	// return message;
-	// }
+	protected String getMessageFromI18N(String key, Object... params) {
+		Locale locale = FacesContext.getCurrentInstance().getViewRoot().getLocale();
+
+		ResourceBundle bundle = ResourceBundle.getBundle(RESOURCE_BUNDLE, locale, this.getClass().getClassLoader());
+
+		String message;
+		if (params.length > 0)
+			message = MessageFormat.format(bundle.getString(key), params);
+		else
+			message = bundle.getString(key);
+
+		return message;
+	}
 
 	public LazyDataModel<E> getLazyModel() {
 		return lazyModel;

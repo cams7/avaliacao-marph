@@ -4,7 +4,7 @@
 	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
 	version="3.1">
 
-	<display-name>AVALIACAO DESENVOLVEDOR JAVA</display-name>
+	<display-name>Avaliação Marph</display-name>
 
 	<welcome-file-list>
 		<welcome-file>index.html</welcome-file>
@@ -63,8 +63,11 @@
 
 	<!-- Define o ciclo de vida da aplicacao para o JSF. Em Production o desempenho 
 		eh melhor. -->
-	<!-- context-param> <param-name>javax.faces.PROJECT_STAGE</param-name> <param-value>Production</param-value> 
-		<param-value>Development</param-value> </context-param -->
+	<context-param>
+		<param-name>javax.faces.PROJECT_STAGE</param-name>
+		<param-value>Production</param-value>
+		<!--param-value>Development</param-value -->
+	</context-param>
 	<!-- context-param> <param-name>facelets.DEVELOPMENT</param-name> <param-value>true</param-value> 
 		</context-param -->
 

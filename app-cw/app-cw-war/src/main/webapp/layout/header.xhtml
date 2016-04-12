@@ -7,25 +7,25 @@
 
 	<div class="logo">
 		<h:graphicImage library="img" name="logo_java.jpg"
-			title="Avaliacao para desenvolvedor Java"
-			alt="Avaliacao para desenvolvedor Java" />
+			title="#{msg['app.title']}" alt="#{msg['app.title']}" />
 	</div>
 	<div class="menu_app">
 		<p:menubar>
-			<p:submenu label="Inicio" icon="ui-icon-document">
-				<p:menuitem value="Home" outcome="/home" icon="ui-icon-home" />
+			<p:submenu label="#{msg['menu.inicio']}" icon="ui-icon-document">
+				<p:menuitem value="#{msg['menu.home']}" outcome="/home"
+					icon="ui-icon-home" />
 				<sec:authorize access="hasRole('ADMINISTRADOR')">
-					<p:submenu label="Inclui" icon="ui-icon-disk">
-						<p:menuitem value="Usuario" outcome="/usuario/inclui"
-							icon="ui-icon-person">
+					<p:submenu label="#{msg['menu.inclui']}" icon="ui-icon-disk">
+						<p:menuitem value="#{msg['menu.usuario']}"
+							outcome="/usuario/inclui" icon="ui-icon-person">
 							<f:param name="active" value="inclui_usuario" />
 						</p:menuitem>
-						<p:menuitem value="Dados pessoais" outcome="/pessoa/inclui"
+						<p:menuitem value="#{msg['menu.pessoa']}" outcome="/pessoa/inclui"
 							icon="ui-icon-contact">
 							<f:param name="active" value="inclui_pessoa" />
 						</p:menuitem>
-						<p:menuitem value="Endereco" outcome="/endereco/inclui"
-							icon="ui-icon-contact">
+						<p:menuitem value="#{msg['menu.endereco']}"
+							outcome="/endereco/inclui" icon="ui-icon-contact">
 							<f:param name="active" value="inclui_endereco" />
 						</p:menuitem>
 					</p:submenu>
@@ -33,47 +33,49 @@
 
 				<sec:authorize access="isAnonymous()">
 					<p:separator />
-					<p:menuitem value="Login" outcome="/login" icon="ui-icon-person" />
+					<p:menuitem value="#{msg['menu.login']}" outcome="/login"
+						icon="ui-icon-person" />
 				</sec:authorize>
 
 				<sec:authorize access="isAuthenticated()">
 					<p:separator />
-					<p:menuitem value="Sair"
+					<p:menuitem value="#{msg['menu.sair']}"
 						url="#{facesContext.externalContext.requestContextPath}/j_spring_security_logout"
 						icon="ui-icon-extlink" />
 				</sec:authorize>
 			</p:submenu>
 
 			<sec:authorize access="isAuthenticated()">
-				<p:submenu label="Lista" icon="ui-icon-search">
+				<p:submenu label="#{msg['menu.lista']}" icon="ui-icon-search">
 					<sec:authorize ifAnyGranted="SECRETARIO,ADMINISTRADOR">
-						<p:menuitem value="Usuarios" outcome="/usuario/lista"
-							icon="ui-icon-person">
+						<p:menuitem value="#{msg['menu.usuarios']}"
+							outcome="/usuario/lista" icon="ui-icon-person">
 							<f:param name="active" value="lista_usuarios" />
 						</p:menuitem>
 					</sec:authorize>
 
-					<p:menuitem value="Pessoas" outcome="/pessoa/lista"
+					<p:menuitem value="#{msg['menu.pessoas']}" outcome="/pessoa/lista"
 						icon="ui-icon-contact">
 						<f:param name="active" value="lista_pessoas" />
 					</p:menuitem>
 
-					<p:menuitem value="Enderecos" outcome="/endereco/lista"
-						icon="ui-icon-contact">
+					<p:menuitem value="#{msg['menu.enderecos']}"
+						outcome="/endereco/lista" icon="ui-icon-contact">
 						<f:param name="active" value="lista_enderecos" />
 					</p:menuitem>
 				</p:submenu>
 			</sec:authorize>
 
-			<p:submenu label="Ajuda" icon="ui-icon-help">
-				<p:menuitem value="Sobre" outcome="/sobre" icon="ui-icon-gear">
+			<p:submenu label="#{msg['menu.ajuda']}" icon="ui-icon-help">
+				<p:menuitem value="#{msg['menu.sobre']}" outcome="/sobre"
+					icon="ui-icon-gear">
 					<f:param name="active" value="sobre" />
 				</p:menuitem>
 			</p:submenu>
 
 			<sec:authorize access="isAuthenticated()">
 				<f:facet name="options">
-					<h:outputFormat value="Seja bem vindo {0}">
+					<h:outputFormat value="#{msg['menu.saudacao']}">
 						<f:param
 							value="#{facesContext.externalContext.request.userPrincipal.name}" />
 					</h:outputFormat>

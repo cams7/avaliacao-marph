@@ -5,7 +5,7 @@
 	xmlns:p="http://primefaces.org/ui" template="/layout/template.xhtml">
 
 	<ui:define name="pageTitle">
-		<h:outputText value="Inclui endereco" />
+		<h:outputText value="#{msg['page.title.inclui.endereco']}" />
 	</ui:define>
 
 	<f:metadata>
@@ -22,8 +22,8 @@
 			<p:growl id="mensagens" showDetail="true" life="5000" />
 			<fieldset>
 				<legend>
-					<h:outputText value="Endereco" />
-					<small> <h:outputText value="Inclui" /></small>
+					<h:outputText value="#{msg['label.endereco']}" />
+					<small> <h:outputText value="#{msg['label.inclui']}" /></small>
 				</legend>
 				<ui:include src="form.xhtml">
 					<ui:param name="endereco" value="#{enderecoMB.selectedEntity}" />

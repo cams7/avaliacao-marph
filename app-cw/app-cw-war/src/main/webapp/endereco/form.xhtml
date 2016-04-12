@@ -12,29 +12,30 @@
 			<c:choose>
 				<c:when test="#{not createEntity}">
 					<div class="control-group">
-						<h:outputLabel for="enderecoId" value="Id"
-							styleClass="control-label" />
-						<h:outputText id="enderecoId" value="#{endereco.id}" label="Id"
-							styleClass="controls" style="float: left;margin-left: 20px;" />
+						<h:outputLabel for="enderecoId"
+							value="#{msg['label.endereco.id']}" styleClass="control-label" />
+						<h:outputText id="enderecoId" value="#{endereco.id}"
+							label="#{msg['label.endereco.id']}" styleClass="controls"
+							style="float: left;margin-left: 20px;" />
 					</div>
 					<div class="control-group">
-						<h:outputLabel for="pessoaNome" value="Nome"
-							styleClass="control-label" />
+						<h:outputLabel for="pessoaNome"
+							value="#{msg['label.pessoa.nome']}" styleClass="control-label" />
 						<h:outputText id="pessoaNome" value="#{endereco.pessoa.nome}"
-							label="Nome" styleClass="controls"
+							label="#{msg['label.pessoa.nome']}" styleClass="controls"
 							style="float: left;margin-left: 20px;" />
 					</div>
 				</c:when>
 				<c:otherwise>
 					<div class="control-group">
-						<h:outputLabel for="pessoaNome" value="Nome"
-							styleClass="control-label" />
+						<h:outputLabel for="pessoaNome"
+							value="#{msg['label.pessoa.nome']}" styleClass="control-label" />
 						<div class="controls" style="float: left; margin-left: 20px;">
 							<p:autoComplete id="pessoaNome" value="#{endereco.pessoa}"
 								var="p" itemLabel="#{p.nome}" itemValue="#{p}"
 								converter="pessoaConverter" effect="fade" queryDelay="500"
 								completeMethod="#{enderecoMB.buscaPessoas}"
-								styleClass="input-large">
+								styleClass="input-large" label="#{msg['label.pessoa.nome']}">
 								<p:ajax event="itemSelect" listener="#{enderecoMB.onItemSelect}"
 									update="mensagens" />
 							</p:autoComplete>
@@ -45,32 +46,34 @@
 			</c:choose>
 
 			<div class="control-group">
-				<h:outputLabel for="enderecoRua" value="Rua"
-					styleClass="control-label" />
+				<h:outputLabel for="enderecoRua"
+					value="#{msg['label.endereco.rua']}" styleClass="control-label" />
 				<div class="controls" style="float: left; margin-left: 20px;">
-					<p:inputText id="enderecoRua" value="#{endereco.rua}" label="Rua"
-						styleClass="input-large" />
+					<p:inputText id="enderecoRua" value="#{endereco.rua}"
+						label="#{msg['label.endereco.rua']}" styleClass="input-large" />
 					<p:message for="enderecoRua" styleClass="alert alert-error" />
 				</div>
 			</div>
 
 			<div class="control-group">
-				<h:outputLabel for="enderecoBairro" value="Bairro"
-					styleClass="control-label" />
+				<h:outputLabel for="enderecoBairro"
+					value="#{msg['label.endereco.bairro']}" styleClass="control-label" />
 				<div class="controls" style="float: left; margin-left: 20px;">
 					<p:inputText id="enderecoBairro" value="#{endereco.bairro}"
-						label="Bairro" styleClass="input-large" />
+						label="#{msg['label.endereco.bairro']}" styleClass="input-large" />
 					<p:message for="enderecoBairro" styleClass="alert alert-error" />
 				</div>
 			</div>
 
 			<div class="control-group">
-				<h:outputLabel for="enderecoTelefone" value="Telefone"
+				<h:outputLabel for="enderecoTelefone"
+					value="#{msg['label.endereco.telefone']}"
 					styleClass="control-label" />
 				<div class="controls" style="float: left; margin-left: 20px;">
 					<p:inputMask mask="(99) 9999-9999" id="enderecoTelefone"
-						value="#{endereco.telefone}" label="Telefone"
-						styleClass="input-large" converter="telefoneConverter" />
+						value="#{endereco.telefone}"
+						label="#{msg['label.endereco.telefone']}" styleClass="input-large"
+						converter="telefoneConverter" />
 					<p:message for="enderecoTelefone" styleClass="alert alert-error" />
 				</div>
 			</div>
@@ -79,24 +82,24 @@
 				<div class="controls">
 					<c:choose>
 						<c:when test="#{not createEntity}">
-							<p:commandButton value="Atualiza"
+							<p:commandButton value="#{msg['button.atualiza']}"
 								actionListener="#{enderecoMB.updateEntity}"
 								styleClass="btn btn-success"
 								oncomplete="handleUpdateRequest(xhr, status, args);"
 								process="@form" />
 							<sec:authorize access="hasRole('ADMINISTRADOR')">
-								<p:commandButton value="Exclui"
+								<p:commandButton value="#{msg['button.exclui']}"
 									actionListener="#{enderecoMB.removeEntity}"
 									styleClass="btn btn-danger"
 									oncomplete="handleUpdateRequest(xhr, status, args);"
 									update="enderecoTable:totalRows" immediate="true"
 									rendered="#{not createEntity}" />
 							</sec:authorize>
-							<p:button value="Cancela" onclick="PF('enderecoDialog').hide();"
-								styleClass="btn" />
+							<p:button value="#{msg['button.cancela']}"
+								onclick="PF('enderecoDialog').hide();" styleClass="btn" />
 						</c:when>
 						<c:otherwise>
-							<p:commandButton value="Salva"
+							<p:commandButton value="#{msg['button.salva']}"
 								action="#{enderecoMB.createEntity}" styleClass="btn btn-success"
 								update="enderecoPanel" process="@form" />
 						</c:otherwise>

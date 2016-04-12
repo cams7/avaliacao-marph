@@ -6,13 +6,13 @@
 	xmlns:sec="http://www.springframework.org/security/tags">
 
 	<ul class="nav nav-list" style="padding-top: 15px;">
-		<li><em><h:outputText value="Pessoas" /></em></li>
+		<li><em><h:outputText value="#{msg['label.pessoas']}" /></em></li>
 
 
 		<li
 			class="#{empty param.active || param.active == 'lista_pessoas' ? 'active' : ''}">
 			<h:link outcome="/pessoa/lista">
-				<h:outputText value="Lista" escape="false" />
+				<h:outputText value="#{msg['menu.lista']}" escape="false" />
 				<f:param name="active" value="lista_pessoas" />
 			</h:link>
 		</li>
@@ -20,14 +20,14 @@
 		<sec:authorize access="hasRole('ADMINISTRADOR')">
 			<li class="#{param.active == 'inclui_pessoa' ? 'active' : ''}"><h:link
 					outcome="/pessoa/inclui">
-					<h:outputText value="Inclui" escape="false" />
+					<h:outputText value="#{msg['menu.inclui']}" escape="false" />
 					<f:param name="active" value="inclui_pessoa" />
 				</h:link></li>
 		</sec:authorize>
 		<li class="divider"></li>
 		<li><h:outputLink
 				value="#{facesContext.externalContext.requestContextPath}/j_spring_security_logout">
-				<h:outputText value="Sair" escape="false" />
+				<h:outputText value="#{msg['menu.sair']}" escape="false" />
 			</h:outputLink></li>
 	</ul>
 

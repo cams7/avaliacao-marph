@@ -5,7 +5,7 @@
 	xmlns:p="http://primefaces.org/ui" template="/layout/template.xhtml">
 
 	<ui:define name="pageTitle">
-		<h:outputText value="Inclui dados pessoais" />
+		<h:outputText value="#{msg['page.title.inclui.pessoa']}" />
 	</ui:define>
 
 	<f:metadata>
@@ -21,8 +21,8 @@
 			<p:growl id="mensagens" showDetail="true" life="5000" />
 			<fieldset>
 				<legend>
-					<h:outputText value="Pessoa" />
-					<small> <h:outputText value="Inclui" /></small>
+					<h:outputText value="#{msg['label.pessoa']}" />
+					<small> <h:outputText value="#{msg['label.inclui']}" /></small>
 				</legend>
 				<ui:include src="form.xhtml">
 					<ui:param name="pessoa" value="#{pessoaMB.selectedEntity}" />

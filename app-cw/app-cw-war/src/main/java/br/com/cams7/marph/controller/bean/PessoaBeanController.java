@@ -58,8 +58,8 @@ public class PessoaBeanController extends AbstractBeanController<PessoaService, 
 	public String createEntity() {
 		String listPage = super.createEntity();
 
-		addINFOMessage("Os dados pessoais foram cadastrados com sucesso!!!",
-				String.format("Os dados pessoais de \"%s\" foram salvos.", getSelectedEntity().getNome()));
+		addINFOMessage(getMessageFromI18N("msg.ok.summary.salva.pessoa"),
+				getMessageFromI18N("msg.ok.detail.salva.pessoa", getSelectedEntity().getNome()));
 
 		return listPage;
 	}
@@ -73,8 +73,8 @@ public class PessoaBeanController extends AbstractBeanController<PessoaService, 
 	public void updateEntity() {
 		super.updateEntity();
 
-		addINFOMessage("Os dados pessoais foram atualizados com sucesso!!!",
-				String.format("Os dados pessoais de \"%s\" foram atualizados.", getSelectedEntity().getNome()));
+		addINFOMessage(getMessageFromI18N("msg.ok.summary.atualiza.pessoa"),
+				getMessageFromI18N("msg.ok.detail.atualiza.pessoa", getSelectedEntity().getNome()));
 	}
 
 	/*
@@ -86,8 +86,8 @@ public class PessoaBeanController extends AbstractBeanController<PessoaService, 
 	public void removeEntity() {
 		super.removeEntity();
 
-		addINFOMessage("Os dados pessoais foram removidos com sucesso!!!",
-				String.format("Os dados pessoais de \"%s\" foram removidos.", getSelectedEntity().getNome()));
+		addINFOMessage(getMessageFromI18N("msg.ok.summary.remove.pessoa"),
+				getMessageFromI18N("msg.ok.detail.remove.pessoa", getSelectedEntity().getNome()));
 	}
 
 	/*

@@ -5,14 +5,14 @@
 
 <ui:composition template="/layout/template.xhtml">
 	<ui:define name="pageTitle">
-		<h:outputText value="Sobre o projeto" />
+		<h:outputText value="#{msg['page.title.sobre']}" />
 	</ui:define>
 
 	<ui:define name="content">
 		<div style="border-bottom: 1px solid #E5E5E5; margin-bottom: 10px">
 			<h3>
-				<h:outputText value="Projeto" />
-				<small> <h:outputText value="Sobre" /></small>
+				<h:outputText value="#{msg['label.sobre.projeto']}" />
+				<small> <h:outputText value="#{msg['label.sobre']}" /></small>
 			</h3>
 		</div>
 
@@ -22,7 +22,7 @@
 			<div class="span10">
 				<ui:repeat var="p" value="#{sobreMB}">
 					<p>
-						<h:outputText value="#{p}" />
+						<h:outputText value="#{msg[p]}" />
 					</p>
 				</ui:repeat>
 			</div>

@@ -79,8 +79,8 @@ public class UsuarioBeanController extends AbstractBeanController<UsuarioService
 	public String createEntity() {
 		String listPage = super.createEntity();
 
-		addINFOMessage("Os dados de usuario foram cadastrados com sucesso!!!",
-				String.format("Os dados do usuario \"%s\" foram salvos.", getSelectedEntity().getLogin()));
+		addINFOMessage(getMessageFromI18N("msg.ok.summary.salva.usuario"),
+				getMessageFromI18N("msg.ok.detail.salva.usuario", getSelectedEntity().getLogin()));
 
 		return listPage;
 	}
@@ -94,8 +94,8 @@ public class UsuarioBeanController extends AbstractBeanController<UsuarioService
 	public void updateEntity() {
 		super.updateEntity();
 
-		addINFOMessage("Os dados de usuario foram atualizados com sucesso!!!",
-				String.format("Os dados do usuario \"%s\" foram atualizados.", getSelectedEntity().getLogin()));
+		addINFOMessage(getMessageFromI18N("msg.ok.summary.atualiza.usuario"),
+				getMessageFromI18N("msg.ok.detail.atualiza.usuario", getSelectedEntity().getLogin()));
 	}
 
 	/*
@@ -107,8 +107,8 @@ public class UsuarioBeanController extends AbstractBeanController<UsuarioService
 	public void removeEntity() {
 		super.removeEntity();
 
-		addINFOMessage("O usuario foi removido com sucesso!!!",
-				String.format("O usuario \"%s\" foi removido.", getSelectedEntity().getLogin()));
+		addINFOMessage(getMessageFromI18N("msg.ok.summary.remove.usuario"),
+				getMessageFromI18N("msg.ok.detail.remove.usuario", getSelectedEntity().getLogin()));
 	}
 
 	/**
@@ -128,8 +128,8 @@ public class UsuarioBeanController extends AbstractBeanController<UsuarioService
 	 * @param event
 	 */
 	public void onItemSelect(SelectEvent event) {
-		addINFOMessage("Pessoa selecionada!!!", String.format("A pessoa cujo id e \"%s\" foi selecionada.",
-				((PessoaEntity) event.getObject()).getId()));
+		addINFOMessage(getMessageFromI18N("msg.ok.summary.pessoa.selecionada"),
+				getMessageFromI18N("msg.ok.detail.pessoa.selecionada", ((PessoaEntity) event.getObject()).getId()));
 	}
 
 	/**
@@ -149,21 +149,22 @@ public class UsuarioBeanController extends AbstractBeanController<UsuarioService
 		String passwordId = uiInputPassword.getClientId();
 
 		// get confirm password
-		UIInput uiInputConfirmPassword = (UIInput) component.findComponent("confirmaoSenha");
+		UIInput uiInputConfirmPassword = (UIInput) component.findComponent("senhaConfirmacao");
 		String confirmPassword = uiInputConfirmPassword.getLocalValue() == null ? ""
 				: uiInputConfirmPassword.getLocalValue().toString().trim();
 		String confirmId = uiInputConfirmPassword.getClientId();
 
 		if (password.isEmpty() || confirmPassword.isEmpty()) {
 			if (password.isEmpty()) {
-				FacesMessage message = new FacesMessage("O campo 'Senha' e obrigatorio");
+				FacesMessage message = new FacesMessage(getMessageFromI18N("msg.warn.usuario.senha.requiredMessage"));
 				message.setSeverity(SEVERITY_ERROR);
 
 				context.addMessage(passwordId, message);
 			}
 
 			if (confirmPassword.isEmpty()) {
-				FacesMessage message = new FacesMessage("O campo 'Confirmacao' e obrigatorio");
+				FacesMessage message = new FacesMessage(
+						getMessageFromI18N("msg.warn.usuario.senhaConfirmacao.requiredMessage"));
 				message.setSeverity(SEVERITY_ERROR);
 
 				context.addMessage(confirmId, message);
@@ -171,7 +172,7 @@ public class UsuarioBeanController extends AbstractBeanController<UsuarioService
 
 			context.renderResponse();
 		} else if (!password.equals(confirmPassword)) {
-			FacesMessage message = new FacesMessage("A 'Senha' deve coincidir com a 'Confirmacao'");
+			FacesMessage message = new FacesMessage(getMessageFromI18N("msg.warn.usuario.senhaDiferenteDaConfirmacao"));
 			message.setSeverity(SEVERITY_ERROR);
 
 			context.addMessage(passwordId, message);

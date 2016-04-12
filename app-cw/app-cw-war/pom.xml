@@ -15,8 +15,7 @@
 	<description>Aplicação WEB que é executada num recipiente web: Tomcat7</description>
 
 	<properties>
-		<!--jsf.version>2.2.13</jsf.version -->
-		<jsf.version>2.2.11</jsf.version>
+		<jsf.version>2.2.13</jsf.version>
 		<!--spring.security.version>4.0.4.RELEASE</spring.security.version -->
 		<spring.security.version>3.2.7.RELEASE</spring.security.version>
 	</properties>
