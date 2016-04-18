@@ -11,7 +11,7 @@
 	</ui:define>
 
 	<f:metadata>
-		<f:event type="preRenderView" listener="#{usuarioMB.reset}" />
+		<f:event type="preRenderView" listener="#{usuarioMB.count}" />
 	</f:metadata>
 
 	<ui:define name="sidebar">
@@ -27,8 +27,6 @@
 		</div>
 
 		<h:form id="usuarioForm" styleClass="form-horizontal">
-			<p:growl showDetail="true" life="5000" widgetVar="mensagens" />
-
 			<p:dataTable id="usuarioTable" var="usuario"
 				value="#{usuarioMB.lazyModel}" paginator="true"
 				rows="#{usuarioMB.rows}" first="#{usuarioMB.first}"
@@ -102,6 +100,7 @@
 
 					<ui:include src="form.xhtml">
 						<ui:param name="usuario" value="#{usuarioMB.selectedEntity}" />
+						<ui:param name="pessoa" value="#{usuarioMB.selectedEntity.pessoa}" />
 						<ui:param name="createEntity" value="#{false}" />
 					</ui:include>
 				</p:dialog>

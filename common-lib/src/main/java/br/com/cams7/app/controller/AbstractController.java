@@ -17,8 +17,6 @@ public abstract class AbstractController<S extends BaseService<E>, E extends Abs
 
 	private final byte ENTITY_ARGUMENT_NUMBER = 1;
 
-	private S service;
-
 	public AbstractController() {
 		super();
 	}
@@ -26,17 +24,7 @@ public abstract class AbstractController<S extends BaseService<E>, E extends Abs
 	/**
 	 * @return the service
 	 */
-	protected S getService() {
-		return service;
-	}
-
-	/**
-	 * @param service
-	 *            the service to set
-	 */
-	protected void setService(S service) {
-		this.service = service;
-	}
+	protected abstract S getService();
 
 	/*
 	 * (non-Javadoc)

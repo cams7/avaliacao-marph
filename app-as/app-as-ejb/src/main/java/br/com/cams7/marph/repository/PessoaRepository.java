@@ -34,5 +34,23 @@ public interface PessoaRepository extends BaseRepository<PessoaEntity> {
 	 * @return Pessoas
 	 */
 	List<PessoaEntity> buscaPeloNome(String nome);
+	
+	/**
+	 * Verica se o CPF foi cadastrado anteriormente
+	 * 
+	 * @param cpf
+	 *            CPF
+	 * @return
+	 */
+	boolean cpfFoiCadastradoAnteriormente(String cpf);
+
+	/**
+	 * Retorna o cpf cadastrado
+	 * 
+	 * @param id
+	 *            Id da pessoa
+	 * @return
+	 */
+	String buscaCpfPeloId(Long id);
 
 }

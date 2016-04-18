@@ -23,4 +23,21 @@ public interface UsuarioRepository extends BaseRepository<UsuarioEntity> {
 	 * @return Usuarios
 	 */
 	List<UsuarioEntity> buscaTodosDadosPessoais();
+	
+	/**
+	 * Verica se o login foi cadastrado anteriormente
+	 * 
+	 * @param login
+	 *            Login do usuário
+	 * @return
+	 */
+	boolean loginFoiCadastradoAnteriormente(String login);
+	
+	/**
+	 * Retorna o login cadastrado
+	 * 
+	 * @param id
+	 * @return
+	 */
+	String buscaLoginPeloId(Long id);
 }

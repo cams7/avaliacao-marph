@@ -26,22 +26,15 @@ import br.com.cams7.marph.service.PessoaService;
 @RequestMapping(value = "/pessoa", produces = APPLICATION_JSON_VALUE)
 public class PessoaRestController extends AbstractRestController<PessoaService, PessoaEntity> {
 
-	public PessoaRestController() {
-		super();
-	}
-
-	/*
+	/**
 	 * Utiliza a injeção de dependência do <code>Spring Framework</code> para
 	 * resolver a instância do <code>PessoaService</code>.
-	 * 
-	 * @see
-	 * br.com.cams7.cw.controller.AbstractController#setService(br.com.cams7.app
-	 * .service.BaseService)
 	 */
 	@Autowired
-	@Override
-	protected void setService(PessoaService service) {
-		super.setService(service);
+	private PessoaService service;
+
+	public PessoaRestController() {
+		super();
 	}
 
 	@RequestMapping(method = POST)
@@ -54,6 +47,16 @@ public class PessoaRestController extends AbstractRestController<PessoaService, 
 	@Override
 	public ResponseEntity<PessoaEntity> updateEntity(@PathVariable("id") Long id, @RequestBody PessoaEntity entity) {
 		return super.updateEntity(id, entity);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see br.com.cams7.app.controller.AbstractController#getService()
+	 */
+	@Override
+	protected PessoaService getService() {
+		return service;
 	}
 
 }

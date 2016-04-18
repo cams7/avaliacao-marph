@@ -7,10 +7,11 @@ import java.util.List;
 import java.util.Map;
 
 import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.sql.JoinType;
 import org.springframework.stereotype.Repository;
 
-import br.com.cams7.app.utils.SortOrder;
+import br.com.cams7.app.SortOrder;
 import br.com.cams7.cw.repository.AbstractRepository;
 import br.com.cams7.marph.entity.UsuarioEntity;
 
@@ -73,7 +74,9 @@ public class UsuarioRepositoryImpl extends AbstractRepository<UsuarioEntity> imp
 		return total;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see br.com.cams7.cw.repository.AbstractRepository#count()
 	 */
 	@Override
@@ -96,6 +99,39 @@ public class UsuarioRepositoryImpl extends AbstractRepository<UsuarioEntity> imp
 		@SuppressWarnings("unchecked")
 		List<UsuarioEntity> usuarios = getCurrentSession().getNamedQuery("Usuario.buscaTodosDadosPessoais").list();
 		return usuarios;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see br.com.cams7.marph.repository.UsuarioRepository#
+	 * loginFoiCadastradoAnteriormente(java.lang.String)
+	 */
+	@Override
+	public boolean loginFoiCadastradoAnteriormente(String login) {
+		Query query = getCurrentSession().getNamedQuery("Usuario.buscaQtdCadastradoPeloLogin");
+		query.setParameter("login", login);
+
+		Long count = (Long) query.uniqueResult();
+		if (count.equals(0l))
+			return false;
+
+		return true;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * br.com.cams7.marph.repository.UsuarioRepository#buscaLoginPeloId(java.
+	 * lang.Long)
+	 */
+	@Override
+	public String buscaLoginPeloId(Long id) {
+		Query query = getCurrentSession().getNamedQuery("Usuario.buscaLoginPeloId");
+		query.setParameter("id", id);
+
+		return (String) query.uniqueResult();
 	}
 
 }

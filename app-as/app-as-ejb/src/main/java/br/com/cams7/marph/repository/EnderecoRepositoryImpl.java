@@ -15,7 +15,7 @@ import javax.persistence.criteria.Join;
 import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Root;
 
-import br.com.cams7.app.utils.SortOrder;
+import br.com.cams7.app.SortOrder;
 import br.com.cams7.as.repository.AbstractRepository;
 import br.com.cams7.marph.entity.EnderecoEntity;
 import br.com.cams7.marph.entity.EnderecoEntity_;

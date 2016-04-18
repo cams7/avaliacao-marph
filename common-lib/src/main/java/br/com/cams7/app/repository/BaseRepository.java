@@ -6,8 +6,8 @@ package br.com.cams7.app.repository;
 import java.util.List;
 import java.util.Map;
 
+import br.com.cams7.app.SortOrder;
 import br.com.cams7.app.entity.AbstractEntity;
-import br.com.cams7.app.utils.SortOrder;
 
 /**
  * Interface comum as classes Repository

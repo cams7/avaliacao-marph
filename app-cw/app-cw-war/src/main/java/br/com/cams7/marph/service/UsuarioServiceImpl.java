@@ -83,4 +83,52 @@ public class UsuarioServiceImpl extends AbstractService<UsuarioRepository, Usuar
 		return getRepository().buscaTodosDadosPessoais();
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see br.com.cams7.marph.repository.UsuarioRepository#
+	 * loginFoiCadastradoAnteriormente(java.lang.String)
+	 */
+	@Transactional(readOnly = true)
+	@Override
+	public boolean loginFoiCadastradoAnteriormente(String login) {
+		return getRepository().loginFoiCadastradoAnteriormente(login);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * br.com.cams7.marph.repository.UsuarioRepository#buscaLoginPeloId(java.
+	 * lang.Long)
+	 */
+	@Transactional(readOnly = true)
+	@Override
+	public String buscaLoginPeloId(Long id) {
+		return getRepository().buscaLoginPeloId(id);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * br.com.cams7.marph.service.UsuarioService#loginValido(java.lang.Long,
+	 * java.lang.String)
+	 */
+	@Transactional(readOnly = true)
+	@Override
+	public boolean loginValido(Long usuarioId, String login) {
+		if (usuarioId != null) {
+			String usuarioLogin = buscaLoginPeloId(usuarioId);
+			if (login.equals(usuarioLogin))
+				return true;
+		}
+
+		boolean loginCadastrado = loginFoiCadastradoAnteriormente(login);
+		if (loginCadastrado)
+			return false;
+
+		return true;
+	}
+
 }

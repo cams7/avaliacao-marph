@@ -26,22 +26,15 @@ import br.com.cams7.marph.service.EnderecoService;
 @RequestMapping(value = "/endereco", produces = MediaType.APPLICATION_JSON_VALUE)
 public class EnderecoRestController extends AbstractRestController<EnderecoService, EnderecoEntity> {
 
-	public EnderecoRestController() {
-		super();
-	}
-
-	/*
+	/**
 	 * Utiliza a injeção de dependência do <code>Spring Framework</code> para
 	 * resolver a instância do <code>EnderecoService</code>.
-	 * 
-	 * @see
-	 * br.com.cams7.cw.controller.AbstractController#setService(br.com.cams7.app
-	 * .service.BaseService)
 	 */
 	@Autowired
-	@Override
-	protected void setService(EnderecoService service) {
-		super.setService(service);
+	private EnderecoService service;
+
+	public EnderecoRestController() {
+		super();
 	}
 
 	@RequestMapping(method = POST)
@@ -55,6 +48,16 @@ public class EnderecoRestController extends AbstractRestController<EnderecoServi
 	public ResponseEntity<EnderecoEntity> updateEntity(@PathVariable("id") Long id,
 			@RequestBody EnderecoEntity entity) {
 		return super.updateEntity(id, entity);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see br.com.cams7.app.controller.AbstractController#getService()
+	 */
+	@Override
+	protected EnderecoService getService() {
+		return service;
 	}
 
 }

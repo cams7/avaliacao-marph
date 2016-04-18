@@ -11,7 +11,7 @@
 	</ui:define>
 
 	<f:metadata>
-		<f:event type="preRenderView" listener="#{pessoaMB.reset}" />
+		<f:event type="preRenderView" listener="#{pessoaMB.count}" />
 	</f:metadata>
 
 	<ui:define name="sidebar">
@@ -27,9 +27,6 @@
 		</div>
 
 		<h:form id="pessoaForm" styleClass="form-horizontal">
-			<p:growl id="mensagens" widgetVar="mensagens" showDetail="true"
-				showSummary="true" life="5000" />
-
 			<p:dataTable id="pessoaTable" var="pessoa"
 				value="#{pessoaMB.lazyModel}" paginator="true"
 				rows="#{pessoaMB.rows}" first="#{pessoaMB.first}"

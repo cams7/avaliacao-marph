@@ -15,8 +15,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.context.ContextConfiguration;
 import org.testng.annotations.Test;
 
-import br.com.cams7.app.utils.SortOrder;
-import br.com.cams7.cw.AbstractAppTest;
+import br.com.cams7.app.SortOrder;
+import br.com.cams7.cw.utils.test.AbstractAppTest;
 import br.com.cams7.marph.entity.PessoaEntity;
 import br.com.cams7.marph.entity.UsuarioEntity;
 import br.com.cams7.marph.service.UsuarioService;

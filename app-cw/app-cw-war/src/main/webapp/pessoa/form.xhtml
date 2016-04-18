@@ -6,6 +6,16 @@
 	xmlns:c="http://java.sun.com/jsp/jstl/core"
 	xmlns:sec="http://www.springframework.org/security/tags">
 
+	<!--f:metadata>
+		<f:event type="preRenderComponent"
+			listener="#{pessoaMB.preRenderComponent}" />
+		<f:event type="preRenderView" listener="#{pessoaMB.preRenderView}" />
+		<f:event type="postAddToView" listener="#{pessoaMB.postAddToView}" />
+		<f:event type="preValidate" listener="#{pessoaMB.preValidate}" />
+		<f:event type="postValidate" listener="#{pessoaMB.postValidate}" />
+	</f:metadata-->
+
+	<f:event listener="#{pessoaMB.verificaCpf}" type="postValidate" />
 
 	<p:outputPanel id="pessoaDetail" style="text-align:center;">
 		<h:panelGroup id="pessoaPanel" rendered="#{not empty pessoa}">
@@ -51,50 +61,53 @@
 					<p:message for="pessoaNascimento" styleClass="alert alert-error" />
 				</div>
 			</div>
-
-			<div class="control-group">
-				<div class="controls">
-					<c:choose>
-						<c:when test="#{not createEntity}">
-							<h:outputLink
-								value="#{facesContext.externalContext.requestContextPath}/req/pessoa/#{pessoa.id}"
-								title="#{msg['button.visualiza.json']}" target="_blank">
-								<h:graphicImage name="img/json.png" />
-							</h:outputLink>
-							<p:commandButton value="#{msg['button.atualiza']}"
-								actionListener="#{pessoaMB.updateEntity}"
-								styleClass="btn btn-success"
-								oncomplete="handleUpdateRequest(xhr, status, args);"
-								process="@form" />
-							<sec:authorize access="hasRole('ADMINISTRADOR')">
-								<p:commandButton value="#{msg['button.exclui']}"
-									actionListener="#{pessoaMB.removeEntity}"
-									styleClass="btn btn-danger"
-									oncomplete="handleUpdateRequest(xhr, status, args);"
-									update="pessoaTable:totalRows" immediate="true"
-									rendered="#{not createEntity}" />
-							</sec:authorize>
-							<p:button value="#{msg['button.cancela']}"
-								onclick="PF('pessoaDialog').hide();" styleClass="btn" />
-						</c:when>
-						<c:otherwise>
-							<p:commandButton value="#{msg['button.salva']}"
-								action="#{pessoaMB.createEntity}" styleClass="btn btn-success"
-								update="pessoaPanel" process="@form" />
-						</c:otherwise>
-					</c:choose>
-				</div>
-			</div>
 		</h:panelGroup>
+
+		<div class="control-group">
+			<div class="controls">
+				<c:choose>
+					<c:when test="#{not createEntity}">
+						<h:outputLink
+							value="#{facesContext.externalContext.requestContextPath}/req/pessoa/#{pessoa.id}"
+							title="#{msg['button.visualiza.json']}" target="_blank">
+							<h:graphicImage name="img/json.png" />
+						</h:outputLink>
+						<p:commandButton value="#{msg['button.atualiza']}"
+							actionListener="#{pessoaMB.updateEntity}"
+							styleClass="btn btn-success"
+							oncomplete="handleUpdateRequest(xhr, status, args);"
+							process="@form" />
+						<sec:authorize access="hasRole('ADMINISTRADOR')">
+							<p:commandButton value="#{msg['button.exclui']}"
+								actionListener="#{pessoaMB.removeEntity}"
+								styleClass="btn btn-danger"
+								oncomplete="handleUpdateRequest(xhr, status, args);"
+								update="pessoaTable:totalRows" immediate="true"
+								rendered="#{not createEntity}" />
+						</sec:authorize>
+						<p:commandButton value="#{msg['button.cancela']}"
+							actionListener="#{pessoaMB.handleClose}" styleClass="btn"
+							oncomplete="PF('pessoaDialog').hide();" />
+					</c:when>
+					<c:otherwise>
+						<p:commandButton value="#{msg['button.salva']}"
+							action="#{pessoaMB.createEntity}" styleClass="btn btn-success"
+							update="pessoaPanel" process="@form" />
+					</c:otherwise>
+				</c:choose>
+			</div>
+		</div>
 	</p:outputPanel>
+
 	<c:if test="#{not createEntity}">
 		<p:remoteCommand name="atualizaFomulario" update="pessoaPanel" />
 
 		<h:outputScript library="js" name="list.page.js" />
 
 		<script type="text/javascript">
-			function handleUpdateRequest(xhr, status, args) {
-				updateListPage("mensagens", "pessoaTable", "pessoaDialog", args);
+			function handleUpdateRequest(xhr, status, param) {
+				updateListPage("mensagens", "pessoaTable", "pessoaDialog",
+						param);
 			}
 		</script>
 	</c:if>

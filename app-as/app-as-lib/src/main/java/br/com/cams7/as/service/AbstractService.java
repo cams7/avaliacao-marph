@@ -7,10 +7,10 @@ import java.util.List;
 import java.util.Map;
 
 import br.com.cams7.app.AbstractBase;
+import br.com.cams7.app.SortOrder;
 import br.com.cams7.app.entity.AbstractEntity;
 import br.com.cams7.app.repository.BaseRepository;
 import br.com.cams7.app.service.BaseService;
-import br.com.cams7.app.utils.SortOrder;
 
 /**
  * @author cesar
@@ -20,9 +20,6 @@ public abstract class AbstractService<R extends BaseRepository<E>, E extends Abs
 		implements BaseService<E> {
 
 	private final byte ENTITY_ARGUMENT_NUMBER = 1;
-
-	// @EJB
-	private R repository;
 
 	public AbstractService() {
 		super();
@@ -131,17 +128,7 @@ public abstract class AbstractService<R extends BaseRepository<E>, E extends Abs
 	/**
 	 * @return the repository
 	 */
-	protected R getRepository() {
-		return repository;
-	}
-
-	/**
-	 * @param repository
-	 *            the repository to set
-	 */
-	protected void setRepository(R repository) {
-		this.repository = repository;
-	}
+	protected abstract R getRepository();
 
 	/*
 	 * (non-Javadoc)

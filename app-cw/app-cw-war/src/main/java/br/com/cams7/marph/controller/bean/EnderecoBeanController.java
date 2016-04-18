@@ -3,15 +3,16 @@
  */
 package br.com.cams7.marph.controller.bean;
 
+import static br.com.cams7.app.controller.AbstractBeanController.CONTROLLER_SCOPE;
 import static br.com.cams7.marph.controller.bean.EnderecoBeanController.CONTROLLER_NAME;
 
 import java.util.List;
 
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
+import javax.faces.event.ActionEvent;
 
 import org.primefaces.event.SelectEvent;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
 import br.com.cams7.app.controller.AbstractBeanController;
@@ -26,9 +27,7 @@ import br.com.cams7.marph.service.PessoaService;
  */
 
 @Controller(CONTROLLER_NAME)
-@ManagedBean(name = CONTROLLER_NAME)
-// @ViewScoped
-@RequestScoped
+@Scope(CONTROLLER_SCOPE)
 public class EnderecoBeanController extends AbstractBeanController<EnderecoService, EnderecoEntity> {
 
 	private static final long serialVersionUID = 1L;
@@ -36,6 +35,13 @@ public class EnderecoBeanController extends AbstractBeanController<EnderecoServi
 	public final static String CONTROLLER_NAME = "enderecoMB";
 
 	private final String LIST_PAGE = "listaEnderecos";
+
+	/**
+	 * Utiliza a injeção de dependência do <code>Spring Framework</code> para
+	 * resolver a instância do <code>EnderecoService</code>.
+	 */
+	@Autowired
+	private EnderecoService service;
 
 	/**
 	 * Utiliza a injeção de dependência do <code>Spring Framework</code> para
@@ -49,20 +55,6 @@ public class EnderecoBeanController extends AbstractBeanController<EnderecoServi
 	}
 
 	/*
-	 * Utiliza a injeção de dependência do <code>Spring Framework</code> para
-	 * resolver a instância do <code>EnderecoService</code>.
-	 * 
-	 * @see
-	 * br.com.cams7.cw.controller.AbstractController#setService(br.com.cams7.app
-	 * .service.BaseService)
-	 */
-	@Autowired
-	@Override
-	protected void setService(EnderecoService service) {
-		super.setService(service);
-	}
-
-	/*
 	 * (non-Javadoc)
 	 * 
 	 * @see br.com.cams7.app.controller.AbstractBeanController#createEntity()
@@ -71,8 +63,10 @@ public class EnderecoBeanController extends AbstractBeanController<EnderecoServi
 	public String createEntity() {
 		String listPage = super.createEntity();
 
-		addINFOMessage(getMessageFromI18N("msg.ok.summary.salva.endereco"), getMessageFromI18N(
-				"msg.ok.detail.salva.endereco", getSelectedEntity().getBairro(), getSelectedEntity().getRua()));
+		// addINFOMessage(getMessageFromI18N("msg.ok.summary.salva.endereco"),
+		// getMessageFromI18N(
+		// "msg.ok.detail.salva.endereco", getSelectedEntity().getBairro(),
+		// getSelectedEntity().getRua()));
 
 		return listPage;
 	}
@@ -83,8 +77,8 @@ public class EnderecoBeanController extends AbstractBeanController<EnderecoServi
 	 * @see br.com.cams7.app.controller.AbstractBeanController#updateEntity()
 	 */
 	@Override
-	public void updateEntity() {
-		super.updateEntity();
+	public void updateEntity(ActionEvent event) {
+		super.updateEntity(event);
 
 		addINFOMessage(getMessageFromI18N("msg.ok.summary.atualiza.endereco"), getMessageFromI18N(
 				"msg.ok.detail.atualiza.endereco", getSelectedEntity().getBairro(), getSelectedEntity().getRua()));
@@ -96,8 +90,8 @@ public class EnderecoBeanController extends AbstractBeanController<EnderecoServi
 	 * @see br.com.cams7.app.controller.AbstractBeanController#removeEntity()
 	 */
 	@Override
-	public void removeEntity() {
-		super.removeEntity();
+	public void removeEntity(ActionEvent event) {
+		super.removeEntity(event);
 
 		addINFOMessage(getMessageFromI18N("msg.ok.summary.remove.endereco"), getMessageFromI18N(
 				"msg.ok.detail.remove.endereco", getSelectedEntity().getBairro(), getSelectedEntity().getRua()));
@@ -120,8 +114,22 @@ public class EnderecoBeanController extends AbstractBeanController<EnderecoServi
 	 * @param event
 	 */
 	public void onItemSelect(SelectEvent event) {
+		PessoaEntity pessoa = (PessoaEntity) event.getObject();
+		pessoa = pessoaService.buscaPeloId(pessoa.getId());
+		getSelectedEntity().setPessoa(pessoa);
+
 		addINFOMessage(getMessageFromI18N("msg.ok.summary.pessoa.selecionada"),
-				getMessageFromI18N("msg.ok.detail.pessoa.selecionada", ((PessoaEntity) event.getObject()).getId()));
+				getMessageFromI18N("msg.ok.detail.pessoa.selecionada", pessoa.getNome()));
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see br.com.cams7.app.controller.AbstractController#getService()
+	 */
+	@Override
+	protected EnderecoService getService() {
+		return service;
 	}
 
 	/*

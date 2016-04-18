@@ -71,8 +71,6 @@
 				<type>ejb-client</type>
 			</dependency>
 
-			<!--dependency> <groupId>org.wildfly.bom</groupId> <artifactId>jboss-javaee-7.0-with-hibernate</artifactId> 
-				<version>8.2.2.Final</version> <type>pom</type> <scope>import</scope> </dependency -->
 			<dependency>
 				<groupId>org.wildfly.bom</groupId>
 				<artifactId>jboss-javaee-7.0-with-all</artifactId>
@@ -80,17 +78,12 @@
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
-
-			<dependency>
-				<groupId>org.testng</groupId>
-				<artifactId>testng</artifactId>
-				<version>6.9.10</version>
-			</dependency>
+			
 			<dependency>
 				<groupId>org.primefaces</groupId>
 				<artifactId>primefaces</artifactId>
-				<!--version>5.3</version -->
-				<version>5.2</version>
+				<version>5.3</version>
+				<!-- version>5.2</version-->
 			</dependency>
 
 			<!--dependency>

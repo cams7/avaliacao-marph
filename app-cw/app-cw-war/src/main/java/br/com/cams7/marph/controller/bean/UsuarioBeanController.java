@@ -3,6 +3,7 @@
  */
 package br.com.cams7.marph.controller.bean;
 
+import static br.com.cams7.app.controller.AbstractBeanController.CONTROLLER_SCOPE;
 import static br.com.cams7.marph.controller.bean.UsuarioBeanController.CONTROLLER_NAME;
 import static javax.faces.application.FacesMessage.SEVERITY_ERROR;
 
@@ -11,15 +12,15 @@ import java.util.List;
 import java.util.Set;
 
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIInput;
 import javax.faces.context.FacesContext;
+import javax.faces.event.ActionEvent;
 import javax.faces.event.ComponentSystemEvent;
 
 import org.primefaces.event.SelectEvent;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
 import br.com.cams7.app.controller.AbstractBeanController;
@@ -34,9 +35,7 @@ import br.com.cams7.marph.service.UsuarioService;
  *
  */
 @Controller(CONTROLLER_NAME)
-@ManagedBean(name = CONTROLLER_NAME)
-// @ViewScoped
-@RequestScoped
+@Scope(CONTROLLER_SCOPE)
 public class UsuarioBeanController extends AbstractBeanController<UsuarioService, UsuarioEntity> {
 
 	private static final long serialVersionUID = 1L;
@@ -44,6 +43,13 @@ public class UsuarioBeanController extends AbstractBeanController<UsuarioService
 	public final static String CONTROLLER_NAME = "usuarioMB";
 
 	private final String LIST_PAGE = "listaUsuarios";
+
+	/**
+	 * Utiliza a injeção de dependência do <code>Spring Framework</code> para
+	 * resolver a instância do <code>UsuarioService</code>.
+	 */
+	@Autowired
+	private UsuarioService service;
 
 	/**
 	 * Utiliza a injeção de dependência do <code>Spring Framework</code> para
@@ -57,20 +63,6 @@ public class UsuarioBeanController extends AbstractBeanController<UsuarioService
 	}
 
 	/*
-	 * Utiliza a injeção de dependência do <code>Spring Framework</code> para
-	 * resolver a instância do <code>UsuarioService</code>.
-	 * 
-	 * @see
-	 * br.com.cams7.cw.controller.AbstractController#setService(br.com.cams7.app
-	 * .service.BaseService)
-	 */
-	@Autowired
-	@Override
-	protected void setService(UsuarioService service) {
-		super.setService(service);
-	}
-
-	/*
 	 * (non-Javadoc)
 	 * 
 	 * @see br.com.cams7.app.controller.AbstractBeanController#createEntity()
@@ -79,8 +71,9 @@ public class UsuarioBeanController extends AbstractBeanController<UsuarioService
 	public String createEntity() {
 		String listPage = super.createEntity();
 
-		addINFOMessage(getMessageFromI18N("msg.ok.summary.salva.usuario"),
-				getMessageFromI18N("msg.ok.detail.salva.usuario", getSelectedEntity().getLogin()));
+		// addINFOMessage(getMessageFromI18N("msg.ok.summary.salva.usuario"),
+		// getMessageFromI18N("msg.ok.detail.salva.usuario",
+		// getSelectedEntity().getLogin()));
 
 		return listPage;
 	}
@@ -91,8 +84,8 @@ public class UsuarioBeanController extends AbstractBeanController<UsuarioService
 	 * @see br.com.cams7.app.controller.AbstractBeanController#updateEntity()
 	 */
 	@Override
-	public void updateEntity() {
-		super.updateEntity();
+	public void updateEntity(ActionEvent event) {
+		super.updateEntity(event);
 
 		addINFOMessage(getMessageFromI18N("msg.ok.summary.atualiza.usuario"),
 				getMessageFromI18N("msg.ok.detail.atualiza.usuario", getSelectedEntity().getLogin()));
@@ -104,8 +97,8 @@ public class UsuarioBeanController extends AbstractBeanController<UsuarioService
 	 * @see br.com.cams7.app.controller.AbstractBeanController#removeEntity()
 	 */
 	@Override
-	public void removeEntity() {
-		super.removeEntity();
+	public void removeEntity(ActionEvent event) {
+		super.removeEntity(event);
 
 		addINFOMessage(getMessageFromI18N("msg.ok.summary.remove.usuario"),
 				getMessageFromI18N("msg.ok.detail.remove.usuario", getSelectedEntity().getLogin()));
@@ -128,8 +121,12 @@ public class UsuarioBeanController extends AbstractBeanController<UsuarioService
 	 * @param event
 	 */
 	public void onItemSelect(SelectEvent event) {
+		PessoaEntity pessoa = (PessoaEntity) event.getObject();
+		pessoa = pessoaService.buscaPeloId(pessoa.getId());
+		getSelectedEntity().setPessoa(pessoa);
+
 		addINFOMessage(getMessageFromI18N("msg.ok.summary.pessoa.selecionada"),
-				getMessageFromI18N("msg.ok.detail.pessoa.selecionada", ((PessoaEntity) event.getObject()).getId()));
+				getMessageFromI18N("msg.ok.detail.pessoa.selecionada", pessoa.getNome()));
 	}
 
 	/**
@@ -181,6 +178,43 @@ public class UsuarioBeanController extends AbstractBeanController<UsuarioService
 	}
 
 	/**
+	 * Verifica se o login foi cadastrado anteriormente
+	 * 
+	 * @param event
+	 */
+	public void verificaLogin(ComponentSystemEvent event) {
+		UIComponent component = event.getComponent();
+
+		UIComponent uiLogin = component.findComponent("usuarioLogin");
+
+		if (!(uiLogin instanceof UIInput))
+			return;
+
+		UIInput uiInputLogin = (UIInput) uiLogin;
+		String login = uiInputLogin.getLocalValue() == null ? "" : String.valueOf(uiInputLogin.getLocalValue());
+
+		if (login.isEmpty())
+			return;
+
+		UsuarioEntity usuario = getSelectedEntity();
+		Long usuarioId = usuario.getId();
+
+		boolean loginValido = getService().loginValido(usuarioId, login);
+		if (loginValido)
+			return;
+
+		uiInputLogin.resetValue();
+
+		String loginId = uiInputLogin.getClientId();
+		FacesMessage message = new FacesMessage(getMessageFromI18N("msg.warn.usuario.loginCadastrado", login));
+		message.setSeverity(SEVERITY_ERROR);
+
+		FacesContext context = FacesContext.getCurrentInstance();
+		context.addMessage(loginId, message);
+		context.renderResponse();
+	}
+
+	/**
 	 * @return Autorizacoes
 	 */
 	public Set<Autorizacao> getAutorizacoes() {
@@ -190,6 +224,16 @@ public class UsuarioBeanController extends AbstractBeanController<UsuarioService
 			autorizacoes.add(autorizacao);
 
 		return autorizacoes;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see br.com.cams7.app.controller.AbstractController#getService()
+	 */
+	@Override
+	protected UsuarioService getService() {
+		return service;
 	}
 
 	/*

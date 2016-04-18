@@ -35,7 +35,9 @@ import br.com.cams7.app.entity.AbstractEntity;
 @Table(name = "usuario", uniqueConstraints = @UniqueConstraint(columnNames = "login"))
 @NamedQueries({
 		@NamedQuery(name = "Usuario.buscaPeloLogin", query = "SELECT u FROM UsuarioEntity u WHERE u.login=:login"),
-		@NamedQuery(name = "Usuario.buscaTodosDadosPessoais", query = "SELECT u FROM UsuarioEntity u JOIN FETCH u.pessoa") })
+		@NamedQuery(name = "Usuario.buscaTodosDadosPessoais", query = "SELECT u FROM UsuarioEntity u JOIN FETCH u.pessoa"),
+		@NamedQuery(name = "Usuario.buscaQtdCadastradoPeloLogin", query = "SELECT COUNT(u) FROM UsuarioEntity u WHERE u.login=:login"),
+		@NamedQuery(name = "Usuario.buscaLoginPeloId", query = "SELECT u.login FROM UsuarioEntity u WHERE u.id=:id")})
 public class UsuarioEntity extends AbstractEntity {
 
 	private static final long serialVersionUID = 1L;

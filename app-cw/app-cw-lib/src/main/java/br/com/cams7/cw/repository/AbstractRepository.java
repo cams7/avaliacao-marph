@@ -19,10 +19,10 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import br.com.cams7.app.AbstractBase;
+import br.com.cams7.app.SortOrder;
 import br.com.cams7.app.entity.AbstractEntity;
 import br.com.cams7.app.repository.BaseRepository;
 import br.com.cams7.app.utils.AppHelper;
-import br.com.cams7.app.utils.SortOrder;
 
 /**
  * Classe comum as classes Repositories

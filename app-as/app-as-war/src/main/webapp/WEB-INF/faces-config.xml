@@ -12,12 +12,12 @@
 		</locale-config>
 
 		<resource-bundle>
-			<base-name>messages</base-name>
+			<base-name>i18n.messages</base-name>
 			<var>msg</var>
 		</resource-bundle>
 	</application>
-	
-	<!--navigation-rule>
+
+	<navigation-rule>
 		<from-view-id>/pessoa/inclui.xhtml</from-view-id>
 		<navigation-case>
 			<from-outcome>listaPessoas</from-outcome>
@@ -42,19 +42,19 @@
 			<to-view-id>/endereco/lista.xhtml</to-view-id>
 			<redirect />
 		</navigation-case>
-	</navigation-rule-->
+	</navigation-rule>
 
-	<!-- define uma lista para servir como MB para a tela sobre -->
+	<!-- Define uma lista para servir como Managed Bean para a página sobre. -->
 	<managed-bean>
-		<description>Sobre a aplicacao</description>
-		<managed-bean-name>sobreView</managed-bean-name>
+		<description>Sobre a aplicação</description>
+		<managed-bean-name>sobreMB</managed-bean-name>
 		<managed-bean-class>java.util.ArrayList</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 		<list-entries>
-			<value>about.title</value>
-			<value>about.built</value>
-			<value>about.site</value>
-			<value>about.build</value>
+			<value>sobre.title</value>
+			<value>sobre.built</value>
+			<value>sobre.site</value>
+			<value>sobre.build</value>
 		</list-entries>
 	</managed-bean>
 </faces-config>

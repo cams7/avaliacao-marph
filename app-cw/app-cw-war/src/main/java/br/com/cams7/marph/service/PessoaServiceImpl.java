@@ -48,4 +48,51 @@ public class PessoaServiceImpl extends AbstractService<PessoaRepository, PessoaE
 		return getRepository().buscaPeloNome(nome);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see br.com.cams7.marph.repository.PessoaRepository#
+	 * cpfFoiCadastradoAnteriormente(java.lang.String)
+	 */
+	@Transactional(readOnly = true)
+	@Override
+	public boolean cpfFoiCadastradoAnteriormente(String cpf) {
+		return getRepository().cpfFoiCadastradoAnteriormente(cpf);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * br.com.cams7.marph.repository.PessoaRepository#buscaCpfPeloId(java.lang.
+	 * Long)
+	 */
+	@Transactional(readOnly = true)
+	@Override
+	public String buscaCpfPeloId(Long id) {
+		return getRepository().buscaCpfPeloId(id);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see br.com.cams7.marph.service.PessoaService#cpfValido(java.lang.Long,
+	 * java.lang.String)
+	 */
+	@Transactional(readOnly = true)
+	@Override
+	public boolean cpfValido(Long pessoaId, String cpf) {
+		if (pessoaId != null) {
+			String pessoaCpf = buscaCpfPeloId(pessoaId);
+			if (cpf.equals(pessoaCpf))
+				return true;
+		}
+
+		boolean cpfCadastrado = cpfFoiCadastradoAnteriormente(cpf);
+		if (cpfCadastrado)
+			return false;
+
+		return true;
+	}
+
 }

@@ -32,10 +32,12 @@ import br.com.cams7.app.validator.CPF;
  *
  */
 @Entity
-@Table(name = "pessoa", uniqueConstraints = @UniqueConstraint(columnNames = "cpf") )
+@Table(name = "pessoa", uniqueConstraints = @UniqueConstraint(columnNames = "cpf"))
 @NamedQueries({
 		@NamedQuery(name = "Pessoa.buscaPessoasSemUsuarioPeloNome", query = "SELECT p FROM PessoaEntity p WHERE p.id NOT IN(SELECT p.id FROM UsuarioEntity u INNER JOIN u.pessoa p) AND LOWER(p.nome) LIKE :nome"),
-		@NamedQuery(name = "Pessoa.buscaPeloNome", query = "SELECT p FROM PessoaEntity p WHERE LOWER(p.nome) LIKE :nome") })
+		@NamedQuery(name = "Pessoa.buscaPeloNome", query = "SELECT p FROM PessoaEntity p WHERE LOWER(p.nome) LIKE :nome"),
+		@NamedQuery(name = "Pessoa.buscaQtdCadastradaPeloCPF", query = "SELECT COUNT(p) FROM PessoaEntity p WHERE p.cpf=:cpf"),
+		@NamedQuery(name = "Pessoa.buscaCpfPeloId", query = "SELECT p.cpf FROM PessoaEntity p WHERE p.id=:id") })
 
 public class PessoaEntity extends AbstractEntity {
 

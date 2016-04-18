@@ -5,6 +5,7 @@ package br.com.cams7.app.controller;
 
 import java.io.Serializable;
 import java.text.MessageFormat;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -14,11 +15,17 @@ import java.util.logging.Level;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.application.FacesMessage.Severity;
+import javax.faces.component.UIComponent;
+import javax.faces.component.UIInput;
 import javax.faces.context.FacesContext;
+import javax.faces.event.ActionEvent;
+import javax.faces.event.FacesEvent;
 
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.CloseEvent;
 import org.primefaces.event.SelectEvent;
+import org.primefaces.json.JSONException;
+import org.primefaces.json.JSONObject;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 
@@ -37,8 +44,10 @@ public abstract class AbstractBeanController<S extends BaseService<E>, E extends
 	private static final long serialVersionUID = 1L;
 
 	private final String RESOURCE_BUNDLE = "i18n.messages";
-	protected final String PARAM_CHANGED = "changed";
-	private final String PARAM_MESSAGE = "message";
+	protected final String PARAM_CHANGED = "entityChanged";
+	private final String PARAM_MESSAGE = "messageAfterAction";
+	
+	public final static String CONTROLLER_SCOPE = "view";
 
 	/**
 	 * Mantém as entidades apresentadas na listagem.
@@ -50,14 +59,15 @@ public abstract class AbstractBeanController<S extends BaseService<E>, E extends
 	 * inclusão (nova), edição e exclusão.
 	 */
 	private E selectedEntity;
+	private boolean entityRemoved = false;
 
-	private final short PAGE_FIRST = 0;
-	private final byte PAGE_SIZE = 10;
+	private final int PAGE_FIRST = 0;
+	private final short PAGE_SIZE = 10;
 
 	private int totalRows;
 
-	private short lastPageFirst;
-	private byte lastPageSize;
+	private int lastPageFirst;
+	private short lastPageSize;
 
 	private String lastSortField;
 	private SortOrder lastSortOrder;
@@ -66,13 +76,19 @@ public abstract class AbstractBeanController<S extends BaseService<E>, E extends
 
 	private String[] globalFilters;
 
+	// private int countPreRenderComponent;
+	// private int countPreRenderView;
+	// private int countPostAddToView;
+	// private int countPreValidate;
+	// private int countPostValidate;
+
 	public AbstractBeanController(String... globalFilters) {
 		super();
 		this.globalFilters = globalFilters;
 	}
 
 	/**
-	 * Metodo chamado na criacao do componente
+	 * Método chamado na criação do componente
 	 */
 	@PostConstruct
 	protected void initialize() {
@@ -82,6 +98,7 @@ public abstract class AbstractBeanController<S extends BaseService<E>, E extends
 		lastPageSize = PAGE_SIZE;
 
 		lastSortOrder = SortOrder.UNSORTED;
+		lastFilters = new HashMap<>();
 
 		lazyModel = new LazyDataModel<E>() {
 
@@ -107,108 +124,68 @@ public abstract class AbstractBeanController<S extends BaseService<E>, E extends
 			@Override
 			public List<E> load(int first, int pageSize, String sortField, SortOrder sortOrder,
 					Map<String, Object> filters) {
-
 				filters = AppHelper.removeEmptyValue(filters);
 
+				boolean totalRowsChanged = false;
+
 				if (pageSize != lastPageSize)
-					lastPageSize = (byte) pageSize;
-				else if (sortField != null && (!sortField.equals(lastSortField) || !sortOrder.equals(lastSortOrder)))
-					setSort(sortField, sortOrder);
-				else if (!AppHelper.equalMaps(filters, lastFilters))
+					lastPageSize = (short) pageSize;
+				else if (sortField != null && !(sortField.equals(lastSortField) && sortOrder.equals(lastSortOrder))) {
+					lastSortField = sortField;
+					lastSortOrder = sortOrder;
+				} else if (!AppHelper.equalMaps(filters, lastFilters)) {
 					if (!filters.isEmpty())
 						lastFilters = filters;
 					else
-						lastFilters = null;
+						lastFilters = new HashMap<>();
 
-				lastPageFirst = (short) first;
-
-				br.com.cams7.app.utils.SortOrder direction = br.com.cams7.app.utils.SortOrder.UNSORTED;
-
-				switch (lastSortOrder) {
-				case ASCENDING:
-					direction = br.com.cams7.app.utils.SortOrder.ASCENDING;
-					break;
-				case DESCENDING:
-					direction = br.com.cams7.app.utils.SortOrder.DESCENDING;
-					break;
-				default:
-					break;
+					totalRowsChanged = true;
 				}
 
-				entities = search(lastPageFirst, lastPageSize, lastSortField, direction, lastFilters, globalFilters);
+				lastPageFirst = first;
 
-				if (lastFilters != null) {
-					int totalRows = getTotalElements(lastFilters, globalFilters);
+				br.com.cams7.app.SortOrder currentSortOrder = br.com.cams7.app.SortOrder.UNSORTED;
+				if (lastSortOrder != null)
+					currentSortOrder = br.com.cams7.app.SortOrder.valueOf(lastSortOrder.name());
+
+				entities = getService().search(lastPageFirst, lastPageSize, lastSortField, currentSortOrder,
+						lastFilters, globalFilters);
+
+				if (totalRowsChanged || entityRemoved) {
+					int totalRows = getService().getTotalElements(lastFilters, globalFilters);
 					setRowCount(totalRows);
+					entityRemoved = false;
 				}
 
 				return entities;
 			}
 		};
+		getLog().log(Level.INFO, "Componet initialized");
+	}
 
-		reset();
+	private boolean isPostback() {
+		FacesContext context = FacesContext.getCurrentInstance();
+		return context.isPostback();
 	}
 
 	/**
-	 * Busca, pagina e ordena os dados das entidades
-	 * 
-	 * @param pageFirst
-	 *            Indice
-	 * @param pageSize
-	 *            Total de linhas
-	 * @param sortField
-	 *            Nome do campo
-	 * @param sortOrder
-	 *            Tipo de ordenacao
-	 * @param filters
-	 *            filtros
-	 * @return Entidades
+	 * Operação acionada toda a vez que a tela de listagem for carregada.
 	 */
-	private List<E> search(int pageFirst, short pageSize, String sortField, br.com.cams7.app.utils.SortOrder sortOrder,
-			Map<String, Object> filters, String... globalFilters) {
-		return getService().search(pageFirst, pageSize, sortField, sortOrder, filters, globalFilters);
-	}
+	public void count() {
+		if (isPostback())
+			return;
 
-	/**
-	 * @param filters
-	 * @param globalFilters
-	 * @return
-	 */
-	private int getTotalElements(Map<String, Object> filters, String... globalFilters) {
-		return getService().getTotalElements(filters, globalFilters);
-	}
-
-	/**
-	 * 
-	 * @param sortField
-	 *            Nome do campo
-	 * @param sortOrder
-	 *            Tipo de ordenacao
-	 */
-	private void setSort(String sortField, SortOrder sortOrder) {
-		lastSortField = sortField;
-		lastSortOrder = sortOrder;
-	}
-
-	/**
-	 * 
-	 */
-	private void setSort() {
-		setSort(null, SortOrder.UNSORTED);
-	}
-
-	/**
-	 * Operacao acionada toda a vez que a tela de listagem for carregada.
-	 */
-	public void reset() {
 		totalRows = getService().count();
 		lazyModel.setRowCount(totalRows);
 	}
 
 	/**
-	 * Acao executada quando a pagina de inclusao da entidade for carregada.
+	 * Acao executada quando a página de inclusão da entidade for carregada.
 	 */
 	public void includeNewEntity() {
+		if (isPostback())
+			return;
+
 		try {
 			setSelectedEntity(AppHelper.getNewEntity(getEntityType()));
 			getLog().info("Nova entidade");
@@ -218,15 +195,13 @@ public abstract class AbstractBeanController<S extends BaseService<E>, E extends
 	}
 
 	/**
-	 * Operacao acionada pela tela de inclusao, atraves do
+	 * Operacao acionada pela tela de inclusão, através do
 	 * <code>commandButton</code> <strong>Salva</strong>.
 	 * 
-	 * @return Se a inclusao foi realizada vai para listagem, senao permanece na
-	 *         mesma tela.
+	 * @return Se a inclusão for realizada, irá para listagem, senão permanece
+	 *         na mesma tela.
 	 */
 	public String createEntity() {
-		setSort();
-
 		getService().salva(getSelectedEntity());
 		getLog().info("Foi criada uma nova entidade");
 
@@ -234,13 +209,13 @@ public abstract class AbstractBeanController<S extends BaseService<E>, E extends
 	}
 
 	/**
-	 * Operacao acionada pela tela de edicao, atraves do
+	 * Operação acionada pela tela de edição, através do
 	 * <code>commandButton</code> <strong>Atualiza</strong>.
 	 * 
-	 * obs.: Se a alteracao for realizada vai para a listagem, senao permanece
+	 * obs.: Se a alteração for realizada, irá para a listagem, senão permanece
 	 * na mesma tela.
 	 */
-	public void updateEntity() {
+	public void updateEntity(ActionEvent event) {
 		RequestContext context = RequestContext.getCurrentInstance();
 
 		getService().atualiza(getSelectedEntity());
@@ -250,19 +225,19 @@ public abstract class AbstractBeanController<S extends BaseService<E>, E extends
 	}
 
 	/**
-	 * Operacao acionada pela tela de edicao, atraves do
+	 * Operação acionada pela tela de edição, através do
 	 * <code>commandButton</code> <strong>Exclui</strong>.
 	 * 
-	 * obs.: Se a exclusao for realizada vai para a listagem, senao permanece na
-	 * mesma tela.
+	 * obs.: Se a exclusão for realizada, irá para a listagem, senão permanece
+	 * na mesma tela.
 	 */
-	public void removeEntity() {
+	public void removeEntity(ActionEvent event) {
 		getService().remove(getSelectedEntity().getId());
 
 		RequestContext context = RequestContext.getCurrentInstance();
 		context.addCallbackParam(PARAM_CHANGED, true);
 
-		reset();
+		entityRemoved = true;
 		getLog().info(String.format("A entidade \"%s\" foi excluida", getSelectedEntity()));
 	}
 
@@ -280,12 +255,66 @@ public abstract class AbstractBeanController<S extends BaseService<E>, E extends
 	}
 
 	/**
-	 * Metodo chamado para limpa a entidade selecionada
+	 * Limpa os campos do formulário
+	 * 
+	 * @param children
+	 */
+	private void resetInputValues(List<UIComponent> children) {
+		for (UIComponent component : children)
+			if (component instanceof UIInput) {
+				UIInput input = (UIInput) component;
+				input.resetValue();
+				input.setValid(true);
+			} else if (component.getChildCount() > 0)
+				resetInputValues(component.getChildren());
+	}
+
+	/**
+	 * Limpa a entidade selecionada e os campos do fomúlario
+	 * 
+	 * @param event
+	 */
+	private void resetEntityAndInputValues(FacesEvent event) {
+		setSelectedEntity(null);
+		resetInputValues(event.getComponent().getChildren());
+	}
+
+	/**
+	 * Método chamado para limpa a entidade selecionada e o formulário
 	 * 
 	 * @param event
 	 */
 	public void handleClose(CloseEvent event) {
-		setSelectedEntity(null);
+		resetEntityAndInputValues(event);
+	}
+
+	/**
+	 * Operação acionada pela tela de edição, através do
+	 * <code>commandButton</code> <strong>Cancela</strong>.
+	 * 
+	 * @param event
+	 */
+	public void handleClose(ActionEvent event) {
+		resetEntityAndInputValues(event);
+	}
+
+	/**
+	 * Cria um objeto JSON
+	 * 
+	 * @param message
+	 * @return
+	 */
+	private JSONObject getMessage(FacesMessage message) {
+		try {
+			JSONObject object = new JSONObject();
+			object.put("summary", message.getSummary());
+			object.put("detail", message.getDetail());
+			object.put("severity", MessageSeverity.values()[message.getSeverity().getOrdinal()].name().toLowerCase());
+			return object;
+		} catch (JSONException e) {
+			getLog().log(Level.SEVERE, e.getMessage(), e);
+		}
+		return null;
 	}
 
 	/**
@@ -298,7 +327,7 @@ public abstract class AbstractBeanController<S extends BaseService<E>, E extends
 		FacesContext.getCurrentInstance().addMessage(null, message);
 
 		RequestContext context = RequestContext.getCurrentInstance();
-		context.addCallbackParam(PARAM_MESSAGE, message);
+		context.addCallbackParam(PARAM_MESSAGE, getMessage(message));
 	}
 
 	/**
@@ -371,14 +400,14 @@ public abstract class AbstractBeanController<S extends BaseService<E>, E extends
 	/**
 	 * @return the first
 	 */
-	public short getFirst() {
+	public int getFirst() {
 		return lastPageFirst;
 	}
 
 	/**
 	 * @return
 	 */
-	public byte getRows() {
+	public short getRows() {
 		return lastPageSize;
 	}
 
@@ -390,5 +419,62 @@ public abstract class AbstractBeanController<S extends BaseService<E>, E extends
 	}
 
 	protected abstract String getListPage();
+
+	private enum MessageSeverity {
+		INFO, WARN, ERROR, FATAL
+	}
+
+	/**
+	 * 1 - postAddToView: runs right after the component is added to view during
+	 * view build time (which is usually during restore view phase, but can also
+	 * be during render response phase, e.g. navigation).
+	 */
+	// public void postAddToView() {
+	// getLog().log(Level.INFO, String.format("invoke postAddToView(): %s",
+	// countPostAddToView));
+	// countPostAddToView++;
+	// }
+
+	/**
+	 * 2 - preRenderView: runs right before the view is rendered during render
+	 * response phase.
+	 */
+	// public void preRenderView() {
+	// getLog().log(Level.INFO, String.format("invoke preRenderView(): %s",
+	// countPreRenderView));
+	// countPreRenderView++;
+	// }
+
+	/**
+	 * 3 - preRenderComponent: runs right before the component is rendered
+	 * during render response phase.
+	 */
+	// public void preRenderComponent() {
+	// getLog().log(Level.INFO, String.format("invoke preRenderComponent(): %s",
+	// countPreRenderComponent));
+	// countPreRenderComponent++;
+	// }
+
+	/**
+	 * 4 - preValidate: runs right before the component is to be validated
+	 * (which is usually during validations phase, but can also be apply request
+	 * values phase if immediate="true").
+	 */
+	// public void preValidate(ComponentSystemEvent event) {
+	// getLog().log(Level.INFO, String.format("invoke preValidate(%s): %s",
+	// event, countPreValidate));
+	// countPreValidate++;
+	// }
+
+	/**
+	 * 5 - postValidate: runs right after the component is been validated (which
+	 * is usually during validations phase, but can also be apply request values
+	 * phase if immediate="true").
+	 */
+	// public void postValidate(ComponentSystemEvent event) {
+	// getLog().log(Level.INFO, String.format("invoke postValidate(%s): %s",
+	// event, countPostValidate));
+	// countPostValidate++;
+	// }
 
 }

@@ -1,4 +1,4 @@
-package br.com.cams7.app.utils;
+package br.com.cams7.app;
 
 /**
  * Tipos de ordenacao

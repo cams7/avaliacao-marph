@@ -16,7 +16,7 @@ import javax.persistence.criteria.Join;
 import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Root;
 
-import br.com.cams7.app.utils.SortOrder;
+import br.com.cams7.app.SortOrder;
 import br.com.cams7.as.repository.AbstractRepository;
 import br.com.cams7.marph.entity.PessoaEntity;
 import br.com.cams7.marph.entity.UsuarioEntity;
@@ -111,6 +111,39 @@ public class UsuarioRepositoryImpl extends AbstractRepository<UsuarioEntity> imp
 		@SuppressWarnings("unchecked")
 		List<UsuarioEntity> usuarios = query.getResultList();
 		return usuarios;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see br.com.cams7.marph.repository.UsuarioRepository#
+	 * loginFoiCadastradoAnteriormente(java.lang.String)
+	 */
+	@Override
+	public boolean loginFoiCadastradoAnteriormente(String login) {
+		Query query = getEntityManager().createNamedQuery("Usuario.buscaQtdCadastradoPeloLogin");
+		query.setParameter("login", login);
+
+		Long count = (Long) query.getSingleResult();
+		if (count.equals(0l))
+			return false;
+
+		return true;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * br.com.cams7.marph.repository.UsuarioRepository#buscaLoginPeloId(java.
+	 * lang.Long)
+	 */
+	@Override
+	public String buscaLoginPeloId(Long id) {
+		Query query = getEntityManager().createNamedQuery("Usuario.buscaLoginPeloId");
+		query.setParameter("id", id);
+
+		return (String) query.getSingleResult();
 	}
 
 }

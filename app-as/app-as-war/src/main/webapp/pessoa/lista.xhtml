@@ -1,0 +1,137 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui" template="/layout/template.xhtml">
+
+	<ui:define name="pageTitle">
+		<h:outputText value="#{msg['page.title.lista.pessoas']}" />
+	</ui:define>
+
+	<f:metadata>
+		<f:event type="preRenderView" listener="#{pessoaMB.count}" />
+	</f:metadata>
+
+	<ui:define name="sidebar">
+		<ui:include src="menu.xhtml" />
+	</ui:define>
+
+	<ui:define name="content">
+		<div style="border-bottom: 1px solid #E5E5E5;">
+			<h4>
+				<h:outputText value="#{msg['label.pessoas']}" />
+				<small> <h:outputText value="#{msg['label.listagem']}" /></small>
+			</h4>
+		</div>
+
+		<h:form id="pessoaForm" styleClass="form-horizontal">
+			<p:dataTable id="pessoaTable" var="pessoa"
+				value="#{pessoaMB.lazyModel}" paginator="true"
+				rows="#{pessoaMB.rows}" first="#{pessoaMB.first}"
+				paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+				rowsPerPageTemplate="3,5,10,15" selectionMode="single"
+				selection="#{pessoaMB.selectedEntity}" lazy="true"
+				emptyMessage="#{msg['msg.warn.pessoasNaoCadastradas']}"
+				widgetVar="pessoaTable" resizableColumns="true" filterDelay="1000"
+				filterEvent="keyup">
+
+				<f:facet name="header">
+					<p:outputPanel style="text-align: right;">
+						<h:outputText value="#{msg['label.busca']}:" />
+						<p:inputText id="globalFilter" style="width:300px"
+							placeholder="#{msg['label.pessoas.busca']}" immediate="true">
+							<p:ajax event="keyup" delay="1000"
+								oncomplete="PF('pessoaTable').filter()" />
+						</p:inputText>
+					</p:outputPanel>
+				</f:facet>
+
+				<!--sec:authorize ifAnyGranted="SECRETARIO,ADMINISTRADOR"-->
+				<p:ajax event="rowSelect" listener="#{pessoaMB.onRowSelect}"
+					update=":pessoaForm:pessoaDetail"
+					onsuccess="PF('pessoaDialog').show();" />
+				<!--/sec:authorize-->
+
+				<p:column headerText="#{msg['label.pessoa.nome']}"
+					sortBy="#{pessoa.nome}" filterBy="#{pessoa.nome}"
+					filterMatchMode="contains">
+					<h:outputText value="#{pessoa.nome}" />
+				</p:column>
+
+				<p:column headerText="#{msg['label.pessoa.cpf']}"
+					sortBy="#{pessoa.cpf}" filterBy="#{pessoa.cpf}"
+					filterMatchMode="contains">
+					<h:outputText value="#{pessoa.cpf}">
+						<f:converter converterId="cpfConverter" />
+					</h:outputText>
+				</p:column>
+
+				<p:column headerText="#{msg['label.pessoa.nascimento']}"
+					sortBy="#{pessoa.nascimento}">
+					<h:outputText value="#{pessoa.nascimento}">
+						<f:convertDateTime pattern="dd/MM/yyyy" />
+					</h:outputText>
+				</p:column>
+
+				<f:facet name="footer">
+					<!--sec:authorize ifAnyGranted="SECRETARIO,ADMINISTRADOR">
+						<p:panelGrid id="totalRows" columns="6">
+							<h:outputFormat value="#{msg['label.pessoas.totalCadastrados1']}">
+								<f:param value="#{pessoaMB.totalRows}" />
+							</h:outputFormat>
+
+							<h:outputLink
+								value="#{facesContext.externalContext.requestContextPath}/req/relatorio/pdf"
+								title="#{msg['button.visualiza.pdf']}" target="_blank">
+								<h:graphicImage name="img/download-pdf.png" />
+							</h:outputLink>
+
+							<h:outputLink
+								value="#{facesContext.externalContext.requestContextPath}/req/relatorio/csv"
+								title="#{msg['button.visualiza.csv']}" target="_blank">
+								<h:graphicImage name="img/download-csv.png" />
+							</h:outputLink>
+
+							<h:outputLink
+								value="#{facesContext.externalContext.requestContextPath}/req/relatorio/xls"
+								title="#{msg['button.visualiza.xls']}" target="_blank">
+								<h:graphicImage name="img/download-xls.png" />
+							</h:outputLink>
+
+							<h:outputLink
+								value="#{facesContext.externalContext.requestContextPath}/req/relatorio/html"
+								title="#{msg['button.visualiza.html']}" target="_blank">
+								<h:graphicImage name="img/download-html.png" />
+							</h:outputLink>
+
+							<h:outputLink
+								value="#{facesContext.externalContext.requestContextPath}/req/pessoa"
+								title="#{msg['button.visualiza.json']}" target="_blank">
+								<h:graphicImage name="img/json.png" />
+							</h:outputLink>
+						</p:panelGrid>
+					</sec:authorize-->
+					<!--sec:authorize ifNotGranted="SECRETARIO,ADMINISTRADOR"-->
+					<h:outputFormat id="totalRows"
+						value="#{msg['label.pessoas.totalCadastrados2']}">
+						<f:param value="#{pessoaMB.totalRows}" />
+					</h:outputFormat>
+					<!--/sec:authorize-->
+				</f:facet>
+			</p:dataTable>
+
+			<!--sec:authorize ifAnyGranted="SECRETARIO,ADMINISTRADOR"-->
+			<p:dialog header="#{msg['page.title.edita.pessoa']}"
+				widgetVar="pessoaDialog" modal="true" resizable="false">
+
+				<p:ajax event="close" listener="#{pessoaMB.handleClose}" />
+
+				<ui:include src="form.xhtml">
+					<ui:param name="pessoa" value="#{pessoaMB.selectedEntity}" />
+					<ui:param name="createEntity" value="#{false}" />
+				</ui:include>
+			</p:dialog>
+			<!--/sec:authorize-->
+		</h:form>
+	</ui:define>
+</ui:composition>

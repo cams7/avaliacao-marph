@@ -20,6 +20,9 @@ import br.com.cams7.marph.repository.EnderecoRepository;
 public class EnderecoServiceImpl extends AbstractService<EnderecoRepository, EnderecoEntity>
 		implements EnderecoService {
 
+	@EJB
+	private EnderecoRepository repository;
+
 	public EnderecoServiceImpl() {
 		super();
 	}
@@ -27,14 +30,11 @@ public class EnderecoServiceImpl extends AbstractService<EnderecoRepository, End
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * br.com.cams7.as.service.AbstractService#setRepository(br.com.cams7.app.
-	 * repository.BaseRepository)
+	 * @see br.com.cams7.as.service.AbstractService#getRepository()
 	 */
-	@EJB
 	@Override
-	protected void setRepository(EnderecoRepository repository) {
-		super.setRepository(repository);
+	protected EnderecoRepository getRepository() {
+		return repository;
 	}
 
 }

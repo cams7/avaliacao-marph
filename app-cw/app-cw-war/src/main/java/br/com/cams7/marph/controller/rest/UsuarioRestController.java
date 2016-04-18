@@ -26,22 +26,15 @@ import br.com.cams7.marph.service.UsuarioService;
 @RequestMapping(value = "/usuario", produces = MediaType.APPLICATION_JSON_VALUE)
 public class UsuarioRestController extends AbstractRestController<UsuarioService, UsuarioEntity> {
 
-	public UsuarioRestController() {
-		super();
-	}
-
-	/*
+	/**
 	 * Utiliza a injeção de dependência do <code>Spring Framework</code> para
 	 * resolver a instância do <code>UsuarioService</code>.
-	 * 
-	 * @see
-	 * br.com.cams7.cw.controller.AbstractController#setService(br.com.cams7.app
-	 * .service.BaseService)
 	 */
 	@Autowired
-	@Override
-	protected void setService(UsuarioService service) {
-		super.setService(service);
+	private UsuarioService service;
+
+	public UsuarioRestController() {
+		super();
 	}
 
 	@RequestMapping(method = POST)
@@ -54,6 +47,16 @@ public class UsuarioRestController extends AbstractRestController<UsuarioService
 	@Override
 	public ResponseEntity<UsuarioEntity> updateEntity(@PathVariable("id") Long id, @RequestBody UsuarioEntity entity) {
 		return super.updateEntity(id, entity);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see br.com.cams7.app.controller.AbstractController#getService()
+	 */
+	@Override
+	protected UsuarioService getService() {
+		return service;
 	}
 
 }

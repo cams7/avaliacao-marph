@@ -6,9 +6,17 @@
 	xmlns:c="http://java.sun.com/jsp/jstl/core"
 	xmlns:sec="http://www.springframework.org/security/tags">
 
+	<!--f:metadata>
+		<f:event type="preRenderComponent"
+			listener="#{enderecoMB.preRenderComponent}" />
+		<f:event type="preRenderView" listener="#{enderecoMB.preRenderView}" />
+		<f:event type="postAddToView" listener="#{enderecoMB.postAddToView}" />
+		<f:event type="preValidate" listener="#{enderecoMB.preValidate}" />
+		<f:event type="postValidate" listener="#{enderecoMB.postValidate}" />
+	</f:metadata-->
+
 	<p:outputPanel id="enderecoDetail" style="text-align:center;">
 		<h:panelGroup id="enderecoPanel" rendered="#{not empty endereco}">
-
 			<c:choose>
 				<c:when test="#{not createEntity}">
 					<div class="control-group">
@@ -21,7 +29,7 @@
 					<div class="control-group">
 						<h:outputLabel for="pessoaNome"
 							value="#{msg['label.pessoa.nome']}" styleClass="control-label" />
-						<h:outputText id="pessoaNome" value="#{endereco.pessoa.nome}"
+						<h:outputText id="pessoaNome" value="#{pessoa.nome}"
 							label="#{msg['label.pessoa.nome']}" styleClass="controls"
 							style="float: left;margin-left: 20px;" />
 					</div>
@@ -31,8 +39,8 @@
 						<h:outputLabel for="pessoaNome"
 							value="#{msg['label.pessoa.nome']}" styleClass="control-label" />
 						<div class="controls" style="float: left; margin-left: 20px;">
-							<p:autoComplete id="pessoaNome" value="#{endereco.pessoa}"
-								var="p" itemLabel="#{p.nome}" itemValue="#{p}"
+							<p:autoComplete id="pessoaNome" value="#{pessoa}" var="p"
+								itemLabel="#{p.nome}" itemValue="#{p}"
 								converter="pessoaConverter" effect="fade" queryDelay="500"
 								completeMethod="#{enderecoMB.buscaPessoas}"
 								styleClass="input-large" label="#{msg['label.pessoa.nome']}">
@@ -77,46 +85,48 @@
 					<p:message for="enderecoTelefone" styleClass="alert alert-error" />
 				</div>
 			</div>
-
-			<div class="control-group">
-				<div class="controls">
-					<c:choose>
-						<c:when test="#{not createEntity}">
-							<p:commandButton value="#{msg['button.atualiza']}"
-								actionListener="#{enderecoMB.updateEntity}"
-								styleClass="btn btn-success"
-								oncomplete="handleUpdateRequest(xhr, status, args);"
-								process="@form" />
-							<sec:authorize access="hasRole('ADMINISTRADOR')">
-								<p:commandButton value="#{msg['button.exclui']}"
-									actionListener="#{enderecoMB.removeEntity}"
-									styleClass="btn btn-danger"
-									oncomplete="handleUpdateRequest(xhr, status, args);"
-									update="enderecoTable:totalRows" immediate="true"
-									rendered="#{not createEntity}" />
-							</sec:authorize>
-							<p:button value="#{msg['button.cancela']}"
-								onclick="PF('enderecoDialog').hide();" styleClass="btn" />
-						</c:when>
-						<c:otherwise>
-							<p:commandButton value="#{msg['button.salva']}"
-								action="#{enderecoMB.createEntity}" styleClass="btn btn-success"
-								update="enderecoPanel" process="@form" />
-						</c:otherwise>
-					</c:choose>
-				</div>
-			</div>
 		</h:panelGroup>
+
+		<div class="control-group">
+			<div class="controls">
+				<c:choose>
+					<c:when test="#{not createEntity}">
+						<p:commandButton value="#{msg['button.atualiza']}"
+							actionListener="#{enderecoMB.updateEntity}"
+							styleClass="btn btn-success"
+							oncomplete="handleUpdateRequest(xhr, status, args);"
+							process="@form" />
+						<sec:authorize access="hasRole('ADMINISTRADOR')">
+							<p:commandButton value="#{msg['button.exclui']}"
+								actionListener="#{enderecoMB.removeEntity}"
+								styleClass="btn btn-danger"
+								oncomplete="handleUpdateRequest(xhr, status, args);"
+								update="enderecoTable:totalRows" immediate="true"
+								rendered="#{not createEntity}" />
+						</sec:authorize>
+						<p:commandButton value="#{msg['button.cancela']}"
+							actionListener="#{enderecoMB.handleClose}" styleClass="btn"
+							oncomplete="PF('enderecoDialog').hide();" />
+					</c:when>
+					<c:otherwise>
+						<p:commandButton value="#{msg['button.salva']}"
+							action="#{enderecoMB.createEntity}" styleClass="btn btn-success"
+							update="enderecoPanel" process="@form" />
+					</c:otherwise>
+				</c:choose>
+			</div>
+		</div>
 	</p:outputPanel>
+
 	<c:if test="#{not createEntity}">
 		<p:remoteCommand name="atualizaFomulario" update="enderecoPanel" />
 
 		<h:outputScript library="js" name="list.page.js" />
 
 		<script type="text/javascript">
-			function handleUpdateRequest(xhr, status, args) {
+			function handleUpdateRequest(xhr, status, param) {
 				updateListPage("mensagens", "enderecoTable", "enderecoDialog",
-						args);
+						param);
 			}
 		</script>
 	</c:if>
