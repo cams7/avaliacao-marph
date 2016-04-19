@@ -13,7 +13,8 @@ import java.util.Map;
 import org.springframework.test.context.ContextConfiguration;
 import org.testng.annotations.Test;
 
-import br.com.cams7.app.SortOrder;
+import br.com.cams7.app.SearchParams;
+import br.com.cams7.app.SearchParams.SortOrder;
 import br.com.cams7.cw.utils.test.AbstractAppTest;
 import br.com.cams7.marph.entity.EnderecoEntity;
 import br.com.cams7.marph.entity.PessoaEntity;
@@ -201,8 +202,8 @@ public final class EnderecoTest extends AbstractAppTest<EnderecoService, Enderec
 		FILTERS.put("bairro", "b");
 		FILTERS.put("telefone", "0");
 
-		List<EnderecoEntity> enderecos = getService().search(0, (short) 10, "bairro", SortOrder.UNSORTED, FILTERS,
-				GLOBAL_FILTERS);
+		SearchParams params = new SearchParams(0, (short) 10, "bairro", SortOrder.UNSORTED, FILTERS, GLOBAL_FILTERS);
+		List<EnderecoEntity> enderecos = getService().search(params);
 
 		checkList(enderecos, 3);
 	}

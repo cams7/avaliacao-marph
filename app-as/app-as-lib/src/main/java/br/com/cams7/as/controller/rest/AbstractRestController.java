@@ -3,7 +3,6 @@
  */
 package br.com.cams7.as.controller.rest;
 
-import static javax.ws.rs.core.Response.Status.BAD_REQUEST;
 import static javax.ws.rs.core.Response.Status.CREATED;
 import static javax.ws.rs.core.Response.Status.NOT_FOUND;
 import static javax.ws.rs.core.Response.Status.NO_CONTENT;
@@ -27,12 +26,12 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.ResponseBuilder;
 import javax.ws.rs.core.UriInfo;
 
-import br.com.cams7.app.SortOrder;
+import br.com.cams7.app.SearchParams;
 import br.com.cams7.app.controller.AbstractController;
 import br.com.cams7.app.entity.AbstractEntity;
 import br.com.cams7.app.service.BaseService;
-import br.com.cams7.app.utils.AppException;
 import br.com.cams7.app.utils.AppHelper;
+import br.com.cams7.app.utils.URIHelper;
 
 /**
  * @author cesar
@@ -196,26 +195,17 @@ public abstract class AbstractRestController<S extends BaseService<E>, E extends
 	}
 
 	/**
-	 * @param messages
-	 * @param paramName
-	 * @param paramValues
+	 * @param queryParams
 	 * @return
 	 */
-	private boolean onlyOneParameter(Map<String, String> messages, String paramName, List<String> paramValues) {
-		if (paramValues.size() > 1) {
-			messages.put(paramName,
-					String.format("URI inválida, porque o parâmetro foi passado %s vezes", paramValues.size()));
-			return false;
+	private Map<String, String[]> getAllParams(MultivaluedMap<String, String> queryParams) {
+		Map<String, String[]> allParams = new HashMap<>();
+		for (Entry<String, List<String>> param : queryParams.entrySet()) {
+			String paramName = param.getKey();
+			List<String> paramValues = param.getValue();
+			allParams.put(paramName, paramValues.toArray(new String[] {}));
 		}
-		return true;
-	}
-
-	/**
-	 * @param messages
-	 * @param paramName
-	 */
-	private void validParameter(Map<String, String> messages, String paramName) {
-		messages.put(paramName, "URI inválida, porque o parâmetro não é válido");
+		return allParams;
 	}
 
 	/**
@@ -232,87 +222,15 @@ public abstract class AbstractRestController<S extends BaseService<E>, E extends
 	@GET
 	@Path("/search")
 	public Response search(@Context UriInfo allUri) {
-		Integer pageFirst = null;
-		Short pageSize = null;
-		String sortField = null;
-		SortOrder sortOrder = null;
-		String[] globalFilters = null;
-		Map<String, Object> filters = new HashMap<>();
+		Map<String, String[]> allParams = getAllParams(allUri.getQueryParameters());
+		SearchParams params = URIHelper.getParams(getEntityType(), allParams);
 
-		Map<String, String> messages = new HashMap<>();
-
-		final String PAGE_FIRST = "page_first";
-		final String PAGE_SIZE = "page_size";
-		final String SORT_FIELD = "sort_field";
-		final String SORT_ORDER = "sort_order";
-		final String FILTER_FIELD = "filter_field";
-		final String GLOBAL_FILTER = "globalFilter";
-
-		MultivaluedMap<String, String> allParams = allUri.getQueryParameters();
-
-		for (Entry<String, List<String>> param : allParams.entrySet()) {
-			String paramName = param.getKey();
-			List<String> paramValues = param.getValue();
-
-			switch (paramName) {
-			case PAGE_FIRST:
-				if (onlyOneParameter(messages, paramName, paramValues))
-					try {
-						pageFirst = Integer.parseInt(paramValues.get(0));
-					} catch (NumberFormatException e) {
-						validParameter(messages, paramName);
-					}
-				break;
-			case PAGE_SIZE:
-				if (onlyOneParameter(messages, paramName, paramValues))
-					try {
-						pageSize = Short.parseShort(paramValues.get(0));
-					} catch (NumberFormatException e) {
-						validParameter(messages, paramName);
-					}
-				break;
-			case SORT_FIELD:
-				if (onlyOneParameter(messages, paramName, paramValues))
-					sortField = paramValues.get(0);
-				break;
-			case SORT_ORDER:
-				if (onlyOneParameter(messages, paramName, paramValues))
-					try {
-						sortOrder = SortOrder.valueOf(paramValues.get(0));
-					} catch (IllegalArgumentException e) {
-						validParameter(messages, paramName);
-					}
-				break;
-			case FILTER_FIELD:
-				globalFilters = paramValues.toArray(new String[] {});
-				break;
-			default:
-				if (onlyOneParameter(messages, paramName, paramValues)) {
-					Object value = paramValues.get(0);
-					if (!GLOBAL_FILTER.equals(paramName))
-						try {
-							value = AppHelper.getFieldValue(getEntityType(), paramName, paramValues.get(0));
-						} catch (AppException e) {
-							validParameter(messages, paramName);
-							break;
-						}
-					filters.put(paramName, value);
-				}
-				break;
-			}
-		}
-
+		List<E> entities = getService().search(params);
 		ResponseBuilder builder;
-
-		if (messages.isEmpty()) {
-			List<E> entities = getService().search(pageFirst, pageSize, sortField, sortOrder, filters, globalFilters);
-
-			if (entities.isEmpty())
-				builder = Response.status(NO_CONTENT);
-			else
-				builder = Response.status(OK).entity(entities);
-		} else
-			builder = Response.status(BAD_REQUEST).entity(messages);
+		if (entities.isEmpty())
+			builder = Response.status(NO_CONTENT);
+		else
+			builder = Response.status(OK).entity(entities);
 
 		return builder.build();
 	}
@@ -331,54 +249,16 @@ public abstract class AbstractRestController<S extends BaseService<E>, E extends
 	@GET
 	@Path("/count")
 	public Response count(@Context UriInfo allUri) {
-		String[] globalFilters = null;
-		Map<String, Object> filters = new HashMap<>();
+		Map<String, String[]> allParams = getAllParams(allUri.getQueryParameters());
+		SearchParams params = URIHelper.getParams(getEntityType(), allParams);
 
-		Map<String, String> messages = new HashMap<>();
+		int count;
+		if (params.getGlobalFilters() == null && params.getFilters().isEmpty())
+			count = getService().count();
+		else
+			count = getService().getTotalElements(params.getFilters(), params.getGlobalFilters());
 
-		final String FILTER_FIELD = "filter_field";
-		final String GLOBAL_FILTER = "globalFilter";
-
-		MultivaluedMap<String, String> allParams = allUri.getQueryParameters();
-
-		for (Entry<String, List<String>> param : allParams.entrySet()) {
-			String paramName = param.getKey();
-			List<String> paramValues = param.getValue();
-
-			switch (paramName) {
-			case FILTER_FIELD:
-				globalFilters = paramValues.toArray(new String[] {});
-				break;
-			default:
-				if (onlyOneParameter(messages, paramName, paramValues)) {
-					Object value = paramValues.get(0);
-					if (!GLOBAL_FILTER.equals(paramName))
-						try {
-							value = AppHelper.getFieldValue(getEntityType(), paramName, paramValues.get(0));
-						} catch (AppException e) {
-							validParameter(messages, paramName);
-							break;
-						}
-					filters.put(paramName, value);
-				}
-				break;
-			}
-		}
-
-		ResponseBuilder builder;
-
-		if (messages.isEmpty()) {
-			int count;
-			if (globalFilters == null && filters.isEmpty())
-				count = getService().count();
-			else
-				count = getService().getTotalElements(filters, globalFilters);
-
-			builder = Response.status(OK).entity(getCount(count));
-		} else
-			builder = Response.status(BAD_REQUEST).entity(messages);
-
-		return builder.build();
+		return Response.status(OK).entity(getCount(count)).build();
 	}
 
 }

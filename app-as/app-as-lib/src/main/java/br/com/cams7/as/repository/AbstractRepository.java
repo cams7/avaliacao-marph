@@ -19,7 +19,7 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 import br.com.cams7.app.AbstractBase;
-import br.com.cams7.app.SortOrder;
+import br.com.cams7.app.SearchParams;
 import br.com.cams7.app.entity.AbstractEntity;
 import br.com.cams7.app.repository.BaseRepository;
 import br.com.cams7.app.utils.AppHelper;
@@ -264,33 +264,28 @@ public abstract class AbstractRepository<E extends AbstractEntity> extends Abstr
 	 *            CriteriaQuery<E>
 	 * @param from
 	 *            From<?, ?>
-	 * @param pageFirst
-	 * @param pageSize
-	 * @param sortField
-	 * @param sortOrder
-	 * @param filters
-	 * @param globalFilters
-	 * @return TypedQuery<E>
+	 * @param params
+	 *            parâmetros
+	 * @return
 	 */
 	@SuppressWarnings("unchecked")
 	protected TypedQuery<E> getFiltroPaginacaoOrdenacao(CriteriaBuilder cb, CriteriaQuery<E> cq, From<?, ?> from,
-			Integer pageFirst, Short pageSize, String sortField, SortOrder sortOrder, Map<String, Object> filters,
-			String... globalFilters) {
-		cq = (CriteriaQuery<E>) getFiltro(cb, cq, from, filters, globalFilters);
+			SearchParams params) {
+		cq = (CriteriaQuery<E>) getFiltro(cb, cq, from, params.getFilters(), params.getGlobalFilters());
 
-		if (sortField != null && sortOrder != null) {
-			AttributeFrom attributeFrom = getFrom(from, sortField);
-			sortField = attributeFrom.attributeName;
+		if (params.getSortField() != null && params.getSortOrder() != null) {
+			AttributeFrom attributeFrom = getFrom(from, params.getSortField());
+			params.setSortField(attributeFrom.attributeName);
 			From<?, ?> sortFrom = attributeFrom.from;
 
 			Order order;
 
-			switch (sortOrder) {
+			switch (params.getSortOrder()) {
 			case ASCENDING:
-				order = cb.asc(sortFrom.get(sortField));
+				order = cb.asc(sortFrom.get(params.getSortField()));
 				break;
 			case DESCENDING:
-				order = cb.desc(sortFrom.get(sortField));
+				order = cb.desc(sortFrom.get(params.getSortField()));
 				break;
 
 			default:
@@ -304,11 +299,11 @@ public abstract class AbstractRepository<E extends AbstractEntity> extends Abstr
 		cq.select(root);
 
 		TypedQuery<E> tq = getEntityManager().createQuery(cq);
-		if (pageFirst != null)
-			tq.setFirstResult(pageFirst);
+		if (params.getPageFirst() != null)
+			tq.setFirstResult(params.getPageFirst());
 
-		if (pageSize != null)
-			tq.setMaxResults(pageSize);
+		if (params.getPageSize() != null)
+			tq.setMaxResults(params.getPageSize());
 
 		return tq;
 	}
@@ -316,20 +311,17 @@ public abstract class AbstractRepository<E extends AbstractEntity> extends Abstr
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see br.com.cams7.app.repository.BaseRepository#search(int, short,
-	 * java.lang.String, br.com.cams7.app.utils.SortOrder, java.util.Map,
-	 * java.lang.String[])
+	 * @see br.com.cams7.app.repository.BaseRepository#search(br.com.cams7.app.
+	 * SearchParams)
 	 */
 	@Override
-	public List<E> search(Integer pageFirst, Short pageSize, String sortField, SortOrder sortOrder,
-			Map<String, Object> filters, String... globalFilters) {
+	public List<E> search(SearchParams params) {
 		CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
 		CriteriaQuery<E> cq = cb.createQuery(getEntityType());
 
 		Root<E> from = cq.from(getEntityType());
 
-		TypedQuery<E> tq = getFiltroPaginacaoOrdenacao(cb, cq, from, pageFirst, pageSize, sortField, sortOrder, filters,
-				globalFilters);
+		TypedQuery<E> tq = getFiltroPaginacaoOrdenacao(cb, cq, from, params);
 		List<E> entities = tq.getResultList();
 		return entities;
 	}

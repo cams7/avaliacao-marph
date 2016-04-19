@@ -10,7 +10,7 @@ import org.hibernate.Criteria;
 import org.hibernate.sql.JoinType;
 import org.springframework.stereotype.Repository;
 
-import br.com.cams7.app.SortOrder;
+import br.com.cams7.app.SearchParams;
 import br.com.cams7.cw.repository.AbstractRepository;
 import br.com.cams7.marph.entity.EnderecoEntity;
 
@@ -39,15 +39,13 @@ public class EnderecoRepositoryImpl extends AbstractRepository<EnderecoEntity> i
 	 * "EnderecoEntity"
 	 * 
 	 * @see
-	 * br.com.cams7.cw.repository.AbstractRepository#search(java.lang.Integer,
-	 * java.lang.Short, java.lang.String, br.com.cams7.app.utils.SortOrder,
-	 * java.util.Map, java.lang.String[])
+	 * br.com.cams7.cw.repository.AbstractRepository#search(br.com.cams7.app.
+	 * SearchParams)
 	 */
 	@Override
-	public List<EnderecoEntity> search(Integer pageFirst, Short pageSize, String sortField, SortOrder sortOrder,
-			Map<String, Object> filters, String... globalFilters) {
+	public List<EnderecoEntity> search(SearchParams params) {
 		Criteria select = getSelect();
-		setFiltroPaginacaoOrdenacao(select, pageFirst, pageSize, sortField, sortOrder, filters, globalFilters);
+		setFiltroPaginacaoOrdenacao(select, params);
 
 		@SuppressWarnings("unchecked")
 		List<EnderecoEntity> enderecos = select.list();

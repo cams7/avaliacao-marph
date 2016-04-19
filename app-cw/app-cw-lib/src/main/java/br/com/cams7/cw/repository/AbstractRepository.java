@@ -19,7 +19,7 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import br.com.cams7.app.AbstractBase;
-import br.com.cams7.app.SortOrder;
+import br.com.cams7.app.SearchParams;
 import br.com.cams7.app.entity.AbstractEntity;
 import br.com.cams7.app.repository.BaseRepository;
 import br.com.cams7.app.utils.AppHelper;
@@ -203,39 +203,28 @@ public abstract class AbstractRepository<E extends AbstractEntity> extends Abstr
 	 * 
 	 * @param select
 	 *            Criteria
-	 * @param pageFirst
-	 *            Indice
-	 * @param pageSize
-	 *            Total de linhas
-	 * @param sortField
-	 *            Nome do atributo da entidade
-	 * @param sortOrder
-	 *            Tipo de ordenacao
-	 * @param filters
-	 *            Filtros
-	 * @param globalFilters
-	 *            Nomes dos atributos da entidade
+	 * @param params
+	 *            parâmetros
 	 */
-	protected void setFiltroPaginacaoOrdenacao(Criteria select, Integer pageFirst, Short pageSize, String sortField,
-			SortOrder sortOrder, Map<String, Object> filters, String... globalFilters) {
+	protected void setFiltroPaginacaoOrdenacao(Criteria select, SearchParams params) {
 
-		setFiltro(select, filters, globalFilters);
+		setFiltro(select, params.getFilters(), params.getGlobalFilters());
 
-		if (pageFirst != null)
-			select.setFirstResult(pageFirst);
+		if (params.getPageFirst() != null)
+			select.setFirstResult(params.getPageFirst());
 
-		if (pageSize != null)
-			select.setMaxResults(pageSize);
+		if (params.getPageSize() != null)
+			select.setMaxResults(params.getPageSize());
 
-		if (sortField != null && sortOrder != null) {
+		if (params.getSortField() != null && params.getSortOrder() != null) {
 			Order order;
 
-			switch (sortOrder) {
+			switch (params.getSortOrder()) {
 			case ASCENDING:
-				order = Order.asc(sortField);
+				order = Order.asc(params.getSortField());
 				break;
 			case DESCENDING:
-				order = Order.desc(sortField);
+				order = Order.desc(params.getSortField());
 				break;
 
 			default:
@@ -250,15 +239,13 @@ public abstract class AbstractRepository<E extends AbstractEntity> extends Abstr
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see br.com.cams7.app.repository.BaseRepository#search(int, short,
-	 * java.lang.String, br.com.cams7.utils.SortOrder, java.util.Map,
-	 * java.lang.String[])
+	 * @see br.com.cams7.app.repository.BaseRepository#search(br.com.cams7.app.
+	 * SearchParams)
 	 */
 	@Override
-	public List<E> search(Integer pageFirst, Short pageSize, String sortField, SortOrder sortOrder,
-			Map<String, Object> filters, String... globalFilters) {
+	public List<E> search(SearchParams params) {
 		Criteria select = getCurrentSession().createCriteria(getEntityType());
-		setFiltroPaginacaoOrdenacao(select, pageFirst, pageSize, sortField, sortOrder, filters, globalFilters);
+		setFiltroPaginacaoOrdenacao(select, params);
 
 		@SuppressWarnings("unchecked")
 		List<E> entities = select.list();

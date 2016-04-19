@@ -19,7 +19,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>br.com.cams7.marph</groupId>
-			<artifactId>common-lib</artifactId>
+			<artifactId>app-common-lib</artifactId>
 			<scope>provided</scope>
 		</dependency>
 

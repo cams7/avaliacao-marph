@@ -16,7 +16,6 @@ import org.testng.annotations.BeforeClass;
 
 import br.com.cams7.app.entity.AbstractEntity;
 import br.com.cams7.app.service.BaseService;
-import br.com.cams7.app.utils.AppException;
 import br.com.cams7.app.utils.AppHelper;
 
 /**
@@ -64,7 +63,7 @@ public abstract class AbstractAppTest<S extends BaseService<E>, E extends Abstra
 	 * @param newEntity
 	 * @return
 	 */
-	protected E getNewEntity(E newEntity) throws AppException {
+	protected E getNewEntity(E newEntity) {
 		E entity = AppHelper.getNewEntity(getEntityType());
 		setEntity(entity, newEntity);
 

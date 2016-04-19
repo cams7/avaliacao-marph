@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import br.com.cams7.app.AbstractBase;
-import br.com.cams7.app.SortOrder;
+import br.com.cams7.app.SearchParams;
 import br.com.cams7.app.entity.AbstractEntity;
 import br.com.cams7.app.repository.BaseRepository;
 import br.com.cams7.app.service.BaseService;
@@ -98,9 +98,8 @@ public abstract class AbstractService<R extends BaseRepository<E>, E extends Abs
 	 * java.lang.String[])
 	 */
 	@Override
-	public List<E> search(Integer pageFirst, Short pageSize, String sortField, SortOrder sortOrder,
-			Map<String, Object> filters, String... globalFilters) {
-		return getRepository().search(pageFirst, pageSize, sortField, sortOrder, filters, globalFilters);
+	public List<E> search(SearchParams params) {
+		return getRepository().search(params);
 	}
 
 	/*

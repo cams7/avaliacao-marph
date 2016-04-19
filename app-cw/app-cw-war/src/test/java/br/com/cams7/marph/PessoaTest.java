@@ -15,7 +15,8 @@ import java.util.Map;
 import org.springframework.test.context.ContextConfiguration;
 import org.testng.annotations.Test;
 
-import br.com.cams7.app.SortOrder;
+import br.com.cams7.app.SearchParams;
+import br.com.cams7.app.SearchParams.SortOrder;
 import br.com.cams7.cw.utils.test.AbstractAppTest;
 import br.com.cams7.marph.entity.PessoaEntity;
 import br.com.cams7.marph.service.PessoaService;
@@ -218,8 +219,8 @@ public final class PessoaTest extends AbstractAppTest<PessoaService, PessoaEntit
 		FILTERS.put("nome", "a");
 		FILTERS.put("cpf", "0");
 
-		List<PessoaEntity> pessoas = getService().search(5, (short) 5, "cpf", SortOrder.DESCENDING, FILTERS,
-				GLOBAL_FILTERS);
+		SearchParams params = new SearchParams(5, (short) 5, "cpf", SortOrder.DESCENDING, FILTERS, GLOBAL_FILTERS);
+		List<PessoaEntity> pessoas = getService().search(params);
 
 		checkList(pessoas, 3);
 	}

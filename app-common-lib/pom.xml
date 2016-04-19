@@ -9,22 +9,17 @@
 		<version>1.0-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>app-lib</artifactId>
+	<artifactId>app-common-lib</artifactId>
 	<packaging>jar</packaging>
 
-	<name>Biblioteca comum a todas aplicações</name>
-	<description>Biblioteca comum a todas aplicações</description>
+	<name>Biblioteca comum a todos módulos da aplicação</name>
+	<description>Biblioteca comum a todos módulos da aplicação</description>
 
 
 	<dependencies>
 		<dependency>
-			<groupId>br.com.cams7.marph</groupId>
-			<artifactId>common-lib</artifactId>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>br.com.cams7.marph</groupId>
-			<artifactId>app-jpa</artifactId>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-validator</artifactId>
 			<scope>provided</scope>
 		</dependency>
 
@@ -38,5 +33,11 @@
 			<artifactId>jsf-api</artifactId>
 			<scope>provided</scope>
 		</dependency-->
+
+		<dependency>
+			<groupId>org.primefaces</groupId>
+			<artifactId>primefaces</artifactId>
+			<scope>provided</scope>
+		</dependency>
 	</dependencies>
 </project>

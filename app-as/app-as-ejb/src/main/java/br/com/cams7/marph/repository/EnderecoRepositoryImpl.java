@@ -15,7 +15,7 @@ import javax.persistence.criteria.Join;
 import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Root;
 
-import br.com.cams7.app.SortOrder;
+import br.com.cams7.app.SearchParams;
 import br.com.cams7.as.repository.AbstractRepository;
 import br.com.cams7.marph.entity.EnderecoEntity;
 import br.com.cams7.marph.entity.EnderecoEntity_;
@@ -42,8 +42,7 @@ public class EnderecoRepositoryImpl extends AbstractRepository<EnderecoEntity> i
 	 * java.util.Map, java.lang.String[])
 	 */
 	@Override
-	public List<EnderecoEntity> search(Integer pageFirst, Short pageSize, String sortField, SortOrder sortOrder,
-			Map<String, Object> filters, String... globalFilters) {
+	public List<EnderecoEntity> search(SearchParams params) {
 		CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
 		CriteriaQuery<EnderecoEntity> cq = cb.createQuery(getEntityType());
 
@@ -52,8 +51,7 @@ public class EnderecoRepositoryImpl extends AbstractRepository<EnderecoEntity> i
 		Join<EnderecoEntity, PessoaEntity> join = (Join<EnderecoEntity, PessoaEntity>) from
 				.fetch(EnderecoEntity_.pessoa, JoinType.LEFT);
 
-		TypedQuery<EnderecoEntity> tq = getFiltroPaginacaoOrdenacao(cb, cq, join, pageFirst, pageSize, sortField,
-				sortOrder, filters, globalFilters);
+		TypedQuery<EnderecoEntity> tq = getFiltroPaginacaoOrdenacao(cb, cq, join, params);
 		List<EnderecoEntity> entities = tq.getResultList();
 		return entities;
 	}

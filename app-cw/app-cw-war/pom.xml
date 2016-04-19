@@ -23,7 +23,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>br.com.cams7.marph</groupId>
-			<artifactId>common-lib</artifactId>
+			<artifactId>app-common-lib</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>br.com.cams7.marph</groupId>
@@ -31,17 +31,17 @@
 		</dependency>
 		<dependency>
 			<groupId>br.com.cams7.marph</groupId>
-			<artifactId>app-lib</artifactId>
+			<artifactId>app-as-ejb</artifactId>
+			<type>ejb-client</type>
+		</dependency>
+		<dependency>
+			<groupId>br.com.cams7.marph</groupId>
+			<artifactId>app-web-lib</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>br.com.cams7.marph</groupId>
 			<artifactId>app-cw-lib</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>br.com.cams7.marph</groupId>
-			<artifactId>app-as-ejb</artifactId>
-			<type>ejb-client</type>
-		</dependency>
+		</dependency>		
 
 		<dependency>
 			<groupId>org.testng</groupId>
@@ -168,19 +168,7 @@
 		<dependency>
 			<groupId>org.apache.poi</groupId>
 			<artifactId>poi</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>com.lowagie</groupId>
-			<artifactId>itext</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>log4j</groupId>
-			<artifactId>log4j</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>commons-digester</groupId>
-			<artifactId>commons-digester</artifactId>
-		</dependency>
+		</dependency>		
 		<dependency>
 			<groupId>org.codehaus.groovy</groupId>
 			<artifactId>groovy-all</artifactId>

@@ -3,14 +3,18 @@
  */
 package br.com.cams7.app.utils;
 
+import java.util.Map;
+
 /**
- * Classe Exception da aplicacao
+ * Exceção padrão da aplicação
  * 
  * @author cesar
  */
 public class AppException extends RuntimeException {
 
 	private static final long serialVersionUID = 1L;
+
+	private Map<String, String> messages;
 
 	public AppException() {
 		super();
@@ -30,6 +34,15 @@ public class AppException extends RuntimeException {
 
 	public AppException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
 		super(message, cause, enableSuppression, writableStackTrace);
+	}
+
+	public AppException(Map<String, String> messages) {
+		super();
+		this.messages = messages;
+	}
+
+	public Map<String, String> getMessages() {
+		return messages;
 	}
 
 }

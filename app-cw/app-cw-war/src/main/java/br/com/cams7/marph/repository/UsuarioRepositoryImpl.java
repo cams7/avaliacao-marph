@@ -11,7 +11,7 @@ import org.hibernate.Query;
 import org.hibernate.sql.JoinType;
 import org.springframework.stereotype.Repository;
 
-import br.com.cams7.app.SortOrder;
+import br.com.cams7.app.SearchParams;
 import br.com.cams7.cw.repository.AbstractRepository;
 import br.com.cams7.marph.entity.UsuarioEntity;
 
@@ -40,15 +40,13 @@ public class UsuarioRepositoryImpl extends AbstractRepository<UsuarioEntity> imp
 	 * "UsuarioEntity"
 	 * 
 	 * @see
-	 * br.com.cams7.cw.repository.AbstractRepository#search(java.lang.Integer,
-	 * java.lang.Short, java.lang.String, br.com.cams7.app.utils.SortOrder,
-	 * java.util.Map, java.lang.String[])
+	 * br.com.cams7.cw.repository.AbstractRepository#search(br.com.cams7.app.
+	 * SearchParams)
 	 */
 	@Override
-	public List<UsuarioEntity> search(Integer pageFirst, Short pageSize, String sortField, SortOrder sortOrder,
-			Map<String, Object> filters, String... globalFilters) {
+	public List<UsuarioEntity> search(SearchParams params) {
 		Criteria select = getSelect();
-		setFiltroPaginacaoOrdenacao(select, pageFirst, pageSize, sortField, sortOrder, filters, globalFilters);
+		setFiltroPaginacaoOrdenacao(select, params);
 
 		@SuppressWarnings("unchecked")
 		List<UsuarioEntity> usuarios = select.list();

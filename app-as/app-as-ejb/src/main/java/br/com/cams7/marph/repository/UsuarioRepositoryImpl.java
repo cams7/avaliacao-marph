@@ -16,7 +16,7 @@ import javax.persistence.criteria.Join;
 import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Root;
 
-import br.com.cams7.app.SortOrder;
+import br.com.cams7.app.SearchParams;
 import br.com.cams7.as.repository.AbstractRepository;
 import br.com.cams7.marph.entity.PessoaEntity;
 import br.com.cams7.marph.entity.UsuarioEntity;
@@ -43,8 +43,7 @@ public class UsuarioRepositoryImpl extends AbstractRepository<UsuarioEntity> imp
 	 * java.util.Map, java.lang.String[])
 	 */
 	@Override
-	public List<UsuarioEntity> search(Integer pageFirst, Short pageSize, String sortField, SortOrder sortOrder,
-			Map<String, Object> filters, String... globalFilters) {
+	public List<UsuarioEntity> search(SearchParams params) {
 		CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
 		CriteriaQuery<UsuarioEntity> cq = cb.createQuery(getEntityType());
 
@@ -53,8 +52,7 @@ public class UsuarioRepositoryImpl extends AbstractRepository<UsuarioEntity> imp
 		Join<UsuarioEntity, PessoaEntity> join = (Join<UsuarioEntity, PessoaEntity>) from.fetch(UsuarioEntity_.pessoa,
 				JoinType.LEFT);
 
-		TypedQuery<UsuarioEntity> tq = getFiltroPaginacaoOrdenacao(cb, cq, join, pageFirst, pageSize, sortField,
-				sortOrder, filters, globalFilters);
+		TypedQuery<UsuarioEntity> tq = getFiltroPaginacaoOrdenacao(cb, cq, join, params);
 		List<UsuarioEntity> entities = tq.getResultList();
 		return entities;
 	}

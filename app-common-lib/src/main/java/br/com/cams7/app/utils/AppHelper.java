@@ -31,11 +31,9 @@ public final class AppHelper {
 	 * @param attributeName
 	 *            Nome do atributo da entidade
 	 * @return Tipo de classe
-	 * @throws AppException
 	 */
 	@SuppressWarnings("unchecked")
-	public static <E extends AbstractEntity> FieldTypes<E> getFieldTypes(Class<E> entityType, String attributeName)
-			throws AppException {
+	public static <E extends AbstractEntity> FieldTypes<E> getFieldTypes(Class<E> entityType, String attributeName) {
 		int index = attributeName.indexOf(".");
 		String entityName = null;
 
@@ -92,7 +90,7 @@ public final class AppHelper {
 	 * @return
 	 */
 	public static <E extends AbstractEntity> Object getFieldValue(Class<E> entityType, String fieldName,
-			Object fieldValue) throws AppException {
+			Object fieldValue) {
 		Class<?> attributeType = getFieldTypes(entityType, fieldName).getAttributeType();
 
 		fieldValue = getCorrectValue(fieldValue);
@@ -134,9 +132,8 @@ public final class AppHelper {
 	 * @param entityType
 	 *            Tipo de classe Entity
 	 * @return Entity
-	 * @throws AppException
 	 */
-	public static <E extends AbstractEntity> E getNewEntity(Class<E> entityType) throws AppException {
+	public static <E extends AbstractEntity> E getNewEntity(Class<E> entityType) {
 		try {
 			E entity = entityType.newInstance();
 			return entity;
@@ -148,9 +145,8 @@ public final class AppHelper {
 	/**
 	 * @param changedEntity
 	 * @param entity
-	 * @throws AppException
 	 */
-	public static <E extends AbstractEntity> void changeValues(E changedEntity, E entity) throws AppException {
+	public static <E extends AbstractEntity> void changeValues(E changedEntity, E entity) {
 		if (changedEntity == null || entity == null)
 			throw new AppException("Entidade NULA");
 
@@ -385,6 +381,27 @@ public final class AppHelper {
 			return attributeType;
 		}
 
+	}
+
+	/**
+	 * @param values
+	 * @return
+	 */
+	public static String getString(String[] values) {
+		String stringValue = "";
+
+		if (values == null)
+			return stringValue;
+
+		stringValue += "[";
+		for (int i = 0; i < values.length; i++) {
+			stringValue += values[i];
+			if (i < values.length - 1)
+				stringValue += ", ";
+		}
+		stringValue += "]";
+
+		return stringValue;
 	}
 
 }

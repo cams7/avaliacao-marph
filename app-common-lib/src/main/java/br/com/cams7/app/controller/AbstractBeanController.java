@@ -29,6 +29,7 @@ import org.primefaces.json.JSONObject;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 
+import br.com.cams7.app.SearchParams;
 import br.com.cams7.app.entity.AbstractEntity;
 import br.com.cams7.app.service.BaseService;
 import br.com.cams7.app.utils.AppException;
@@ -46,7 +47,7 @@ public abstract class AbstractBeanController<S extends BaseService<E>, E extends
 	private final String RESOURCE_BUNDLE = "i18n.messages";
 	protected final String PARAM_CHANGED = "entityChanged";
 	private final String PARAM_MESSAGE = "messageAfterAction";
-	
+
 	public final static String CONTROLLER_SCOPE = "view";
 
 	/**
@@ -144,12 +145,13 @@ public abstract class AbstractBeanController<S extends BaseService<E>, E extends
 
 				lastPageFirst = first;
 
-				br.com.cams7.app.SortOrder currentSortOrder = br.com.cams7.app.SortOrder.UNSORTED;
+				br.com.cams7.app.SearchParams.SortOrder currentSortOrder = br.com.cams7.app.SearchParams.SortOrder.UNSORTED;
 				if (lastSortOrder != null)
-					currentSortOrder = br.com.cams7.app.SortOrder.valueOf(lastSortOrder.name());
+					currentSortOrder = br.com.cams7.app.SearchParams.SortOrder.valueOf(lastSortOrder.name());
 
-				entities = getService().search(lastPageFirst, lastPageSize, lastSortField, currentSortOrder,
+				SearchParams params = new SearchParams(lastPageFirst, lastPageSize, lastSortField, currentSortOrder,
 						lastFilters, globalFilters);
+				entities = getService().search(params);
 
 				if (totalRowsChanged || entityRemoved) {
 					int totalRows = getService().getTotalElements(lastFilters, globalFilters);

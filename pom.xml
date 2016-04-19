@@ -19,15 +19,16 @@
 		<!--jsf.version>2.2.13</jsf.version-->
 
 		<version.arquillian.container>8.2.1.Final</version.arquillian.container>
+		<jackson.version>2.7.3</jackson.version>
 
 		<user.name>César Magalhães</user.name>
 		<pula.teste_unitario>true</pula.teste_unitario>
 	</properties>
 
 	<modules>
-		<module>common-lib</module>
+		<module>app-common-lib</module>
 		<module>app-jpa</module>
-		<module>app-lib</module>
+		<module>app-web-lib</module>
 		<module>app-as</module>
 		<module>app-cw</module>
 	</modules>
@@ -48,7 +49,7 @@
 		<dependencies>
 			<dependency>
 				<groupId>br.com.cams7.marph</groupId>
-				<artifactId>common-lib</artifactId>
+				<artifactId>app-common-lib</artifactId>
 				<version>${project.version}</version>
 				<type>jar</type>
 			</dependency>
@@ -60,17 +61,17 @@
 			</dependency>
 			<dependency>
 				<groupId>br.com.cams7.marph</groupId>
-				<artifactId>app-lib</artifactId>
-				<version>${project.version}</version>
-				<type>jar</type>
-			</dependency>
-			<dependency>
-				<groupId>br.com.cams7.marph</groupId>
 				<artifactId>app-as-ejb</artifactId>
 				<version>${project.version}</version>
 				<type>ejb-client</type>
 			</dependency>
-
+			<dependency>
+				<groupId>br.com.cams7.marph</groupId>
+				<artifactId>app-web-lib</artifactId>
+				<version>${project.version}</version>
+				<type>jar</type>
+			</dependency>
+			
 			<dependency>
 				<groupId>org.wildfly.bom</groupId>
 				<artifactId>jboss-javaee-7.0-with-all</artifactId>
@@ -78,29 +79,39 @@
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
+						
+			<dependency>
+				<groupId>com.fasterxml.jackson.datatype</groupId>
+				<artifactId>jackson-datatype-hibernate4</artifactId>
+				<version>${jackson.version}</version>
+			</dependency>
 			
 			<dependency>
 				<groupId>org.primefaces</groupId>
 				<artifactId>primefaces</artifactId>
 				<version>5.3</version>
-				<!-- version>5.2</version-->
 			</dependency>
 
-			<!--dependency>
-				<groupId>com.sun.facelets</groupId>
-				<artifactId>jsf-facelets</artifactId>
-				<version>1.1.14</version>
+			 <!-- Jasper Reports -->  
+        		<dependency>  
+            			<groupId>net.sf.jasperreports</groupId>  
+            			<artifactId>jasperreports</artifactId>  
+            			<version>6.2.1</version>  
+            			<exclusions>  
+                			<exclusion>  
+                    				<!-- Since Jasper version 6.1.0, a castor-xml library dependency was added to able customized chart themes using Spring framework.  
+                    				As a result, many Spring libraries were added to our WAR file. Thus, the code below avoids such libraries to be added. -->  
+                    				<groupId>org.codehaus.castor</groupId>  
+                    				<artifactId>castor-xml</artifactId>  
+                			</exclusion>  
+            			</exclusions>  
+        		</dependency>  
+        		<!-- for using groovy as script language inside jasper reports -->  
+        		<dependency>
+				<groupId>org.codehaus.groovy</groupId>
+				<artifactId>groovy-all</artifactId>
+				<version>2.4.6</version>
 			</dependency>
-			<dependency>
-				<groupId>com.sun.faces</groupId>
-				<artifactId>jsf-api</artifactId>
-				<version>${jsf.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>com.sun.faces</groupId>
-				<artifactId>jsf-impl</artifactId>
-				<version>${jsf.version}</version>
-			</dependency-->
 		</dependencies>
 	</dependencyManagement>
 

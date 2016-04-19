@@ -6,7 +6,7 @@ package br.com.cams7.app.repository;
 import java.util.List;
 import java.util.Map;
 
-import br.com.cams7.app.SortOrder;
+import br.com.cams7.app.SearchParams;
 import br.com.cams7.app.entity.AbstractEntity;
 
 /**
@@ -72,29 +72,19 @@ public interface BaseRepository<E extends AbstractEntity> {
 	/**
 	 * Filtra, pagina e ordena os objetos que são instâncias de "AbstractEntity"
 	 * 
-	 * @param pageFirst
-	 *            Indice
-	 * @param pageSize
-	 *            Total de linhas
-	 * @param sortField
-	 *            Nome do atributo da entidade
-	 * @param sortOrder
-	 *            Tipo de ordenação
-	 * @param filters
-	 *            Filtros
-	 * @param globalFilters
-	 *            Nomes dos atributos da entidade
-	 * @return Entidade
+	 * @params parâmetros usados na busca
+	 * @return
 	 */
-	List<E> search(Integer pageFirst, Short pageSize, String sortField, SortOrder sortOrder, Map<String, Object> filters,
-			String... globalFilters);
+	List<E> search(SearchParams params);
 
 	/**
 	 * Retorna o número total de instâncias de "AbstractEntity". Essa pesquisa é
 	 * feita com auxílio de filtros
 	 * 
 	 * @param filters
+	 *            Filtros
 	 * @param globalFilters
+	 *            Nomes dos atributos da entidade
 	 * @return
 	 */
 	int getTotalElements(Map<String, Object> filters, String... globalFilters);

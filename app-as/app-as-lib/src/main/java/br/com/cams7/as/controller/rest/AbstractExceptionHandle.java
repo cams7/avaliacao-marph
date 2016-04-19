@@ -17,16 +17,20 @@ import javax.ws.rs.ext.ExceptionMapper;
  */
 public abstract class AbstractExceptionHandle<E extends RuntimeException> implements ExceptionMapper<E> {
 
+	protected Map<String, String> getMessage(String exceptionMessage) {
+		Map<String, String> message = new HashMap<>();
+		message.put("errorMessage", exceptionMessage);
+		return message;
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * 
 	 * @see javax.ws.rs.ext.ExceptionMapper#toResponse(java.lang.Throwable)
 	 */
 	@Override
-	public Response toResponse(E exception) {
-		Map<String, String> message = new HashMap<>();
-		message.put("errorMessage", exception.getMessage());
-		return Response.status(INTERNAL_SERVER_ERROR).entity(message).build();
+	public Response toResponse(E ex) {
+		return Response.status(INTERNAL_SERVER_ERROR).entity(getMessage(ex.getMessage())).build();
 	}
 
 }

@@ -15,7 +15,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.context.ContextConfiguration;
 import org.testng.annotations.Test;
 
-import br.com.cams7.app.SortOrder;
+import br.com.cams7.app.SearchParams;
+import br.com.cams7.app.SearchParams.SortOrder;
 import br.com.cams7.cw.utils.test.AbstractAppTest;
 import br.com.cams7.marph.entity.PessoaEntity;
 import br.com.cams7.marph.entity.UsuarioEntity;
@@ -214,8 +215,8 @@ public final class UsuarioTest extends AbstractAppTest<UsuarioService, UsuarioEn
 		FILTERS.put("login", "s");
 		FILTERS.put("habilitado", true);
 
-		List<UsuarioEntity> usuarios = getService().search(0, (short) 10, "login", SortOrder.ASCENDING, FILTERS,
-				GLOBAL_FILTERS);
+		SearchParams params = new SearchParams(0, (short) 10, "login", SortOrder.ASCENDING, FILTERS, GLOBAL_FILTERS);
+		List<UsuarioEntity> usuarios = getService().search(params);
 
 		checkList(usuarios, 2);
 	}

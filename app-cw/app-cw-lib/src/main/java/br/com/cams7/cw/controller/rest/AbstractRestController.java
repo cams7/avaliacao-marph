@@ -16,7 +16,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.logging.Level;
 
 import javax.servlet.http.HttpServletRequest;
@@ -30,12 +29,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import br.com.cams7.app.SortOrder;
+import br.com.cams7.app.SearchParams;
 import br.com.cams7.app.controller.AbstractController;
 import br.com.cams7.app.entity.AbstractEntity;
 import br.com.cams7.app.service.BaseService;
 import br.com.cams7.app.utils.AppException;
 import br.com.cams7.app.utils.AppHelper;
+import br.com.cams7.app.utils.URIHelper;
 
 /**
  * Classe comum as classes RestControllers
@@ -181,29 +181,6 @@ public abstract class AbstractRestController<S extends BaseService<E>, E extends
 	}
 
 	/**
-	 * @param messages
-	 * @param paramName
-	 * @param paramValues
-	 * @return
-	 */
-	private boolean onlyOneParameter(Map<String, String> messages, String paramName, String[] paramValues) {
-		if (paramValues.length > 1) {
-			messages.put(paramName,
-					String.format("URI inválida, porque o parâmetro foi passado %s vezes", paramValues.length));
-			return false;
-		}
-		return true;
-	}
-
-	/**
-	 * @param messages
-	 * @param paramName
-	 */
-	private void validParameter(Map<String, String> messages, String paramName) {
-		messages.put(paramName, "URI inválida, porque o parâmetro não é válido");
-	}
-
-	/**
 	 * Filtra, pagina e ordena os objetos que são instâncias de "AbstractEntity"
 	 * 
 	 * @Exemplo Executado no Poster (plug-in do Firefox):
@@ -216,80 +193,8 @@ public abstract class AbstractRestController<S extends BaseService<E>, E extends
 	 */
 	@RequestMapping(value = "/search", method = GET)
 	public ResponseEntity<Object> search(HttpServletRequest request) {
-		Integer pageFirst = null;
-		Short pageSize = null;
-		String sortField = null;
-		SortOrder sortOrder = null;
-		String[] globalFilters = null;
-		Map<String, Object> filters = new HashMap<>();
-
-		Map<String, String> messages = new HashMap<>();
-
-		final String PAGE_FIRST = "page_first";
-		final String PAGE_SIZE = "page_size";
-		final String SORT_FIELD = "sort_field";
-		final String SORT_ORDER = "sort_order";
-		final String FILTER_FIELD = "filter_field";
-		final String GLOBAL_FILTER = "globalFilter";
-
-		Map<String, String[]> allParams = request.getParameterMap();
-
-		for (Entry<String, String[]> param : allParams.entrySet()) {
-			String paramName = param.getKey();
-			String[] paramValues = param.getValue();
-
-			switch (paramName) {
-			case PAGE_FIRST:
-				if (onlyOneParameter(messages, paramName, paramValues))
-					try {
-						pageFirst = Integer.parseInt(paramValues[0]);
-					} catch (NumberFormatException e) {
-						validParameter(messages, paramName);
-					}
-				break;
-			case PAGE_SIZE:
-				if (onlyOneParameter(messages, paramName, paramValues))
-					try {
-						pageSize = Short.parseShort(paramValues[0]);
-					} catch (NumberFormatException e) {
-						validParameter(messages, paramName);
-					}
-				break;
-			case SORT_FIELD:
-				if (onlyOneParameter(messages, paramName, paramValues))
-					sortField = paramValues[0];
-				break;
-			case SORT_ORDER:
-				if (onlyOneParameter(messages, paramName, paramValues))
-					try {
-						sortOrder = SortOrder.valueOf(paramValues[0]);
-					} catch (IllegalArgumentException e) {
-						validParameter(messages, paramName);
-					}
-				break;
-			case FILTER_FIELD:
-				globalFilters = paramValues;
-				break;
-			default:
-				if (onlyOneParameter(messages, paramName, paramValues)) {
-					Object value = paramValues[0];
-					if (!GLOBAL_FILTER.equals(paramName))
-						try {
-							value = AppHelper.getFieldValue(getEntityType(), paramName, paramValues[0]);
-						} catch (AppException e) {
-							validParameter(messages, paramName);
-							break;
-						}
-					filters.put(paramName, value);
-				}
-				break;
-			}
-		}
-
-		if (!messages.isEmpty())
-			return new ResponseEntity<Object>(messages, BAD_REQUEST);
-
-		List<E> entities = getService().search(pageFirst, pageSize, sortField, sortOrder, filters, globalFilters);
+		SearchParams params = URIHelper.getParams(getEntityType(), request.getParameterMap());
+		List<E> entities = getService().search(params);
 
 		if (entities.isEmpty())
 			return new ResponseEntity<Object>(NO_CONTENT);
@@ -310,71 +215,52 @@ public abstract class AbstractRestController<S extends BaseService<E>, E extends
 	 */
 	@RequestMapping(value = "/count", method = GET)
 	public ResponseEntity<Map<String, ?>> count(HttpServletRequest request) {
-		String[] globalFilters = null;
-		Map<String, Object> filters = new HashMap<>();
-
-		Map<String, String> messages = new HashMap<>();
-
-		final String FILTER_FIELD = "filter_field";
-		final String GLOBAL_FILTER = "globalFilter";
-
-		Map<String, String[]> allParams = request.getParameterMap();
-
-		for (Entry<String, String[]> param : allParams.entrySet()) {
-			String paramName = param.getKey();
-			String[] paramValues = param.getValue();
-
-			switch (paramName) {
-			case FILTER_FIELD:
-				globalFilters = paramValues;
-				break;
-			default:
-				if (onlyOneParameter(messages, paramName, paramValues)) {
-					Object value = paramValues[0];
-					if (!GLOBAL_FILTER.equals(paramName))
-						try {
-							value = AppHelper.getFieldValue(getEntityType(), paramName, paramValues[0]);
-						} catch (AppException e) {
-							validParameter(messages, paramName);
-							break;
-						}
-					filters.put(paramName, value);
-				}
-				break;
-			}
-		}
-
-		if (!messages.isEmpty())
-			return new ResponseEntity<Map<String, ?>>(messages, BAD_REQUEST);
+		SearchParams params = URIHelper.getParams(getEntityType(), request.getParameterMap());
 
 		int count;
-		if (globalFilters == null && filters.isEmpty())
+		if (params.getGlobalFilters() == null && params.getFilters().isEmpty())
 			count = getService().count();
 		else
-			count = getService().getTotalElements(filters, globalFilters);
+			count = getService().getTotalElements(params.getFilters(), params.getGlobalFilters());
 
 		return new ResponseEntity<Map<String, ?>>(getCount(count), OK);
 	}
 
 	/**
+	 * @param exceptionMessage
+	 *            Mensagem de exceção
+	 * @return
+	 */
+	private Map<String, String> getMessage(String exceptionMessage) {
+		Map<String, String> message = new HashMap<>();
+		message.put("errorMessage", exceptionMessage);
+		return message;
+	}
+
+	/**
 	 * Manipula a Excecao
 	 * 
-	 * @param exception
+	 * @param ex
 	 *            RuntimeException
 	 * @return
 	 */
 	@ExceptionHandler({ AppException.class, HibernateException.class, DataIntegrityViolationException.class,
 			HibernateOptimisticLockingFailureException.class })
-	public @ResponseBody ResponseEntity<Map<String, String>> handleException(RuntimeException exception) {
-		String exceptionMessage = exception.getMessage();
+	public @ResponseBody ResponseEntity<Map<String, ?>> handleException(RuntimeException ex) {
+		if (ex instanceof AppException) {
+			AppException exception = (AppException) ex;
+			Map<String, String> messages = exception.getMessages();
+			if (messages != null)
+				return new ResponseEntity<Map<String, ?>>(messages, BAD_REQUEST);
 
-		Map<String, String> message = new HashMap<>();
-		message.put("errorMessage", exceptionMessage);
+			getLog().log(Level.WARNING, exception.getMessage(), exception);
 
-		ResponseEntity<Map<String, String>> response = new ResponseEntity<>(message, INTERNAL_SERVER_ERROR);
-		getLog().log(Level.SEVERE, exceptionMessage, exception);
+			return new ResponseEntity<Map<String, ?>>(getMessage(exception.getMessage()), BAD_REQUEST);
+		}
 
-		return response;
+		getLog().log(Level.SEVERE, ex.getMessage(), ex);
+
+		return new ResponseEntity<Map<String, ?>>(getMessage(ex.getMessage()), INTERNAL_SERVER_ERROR);
 	}
 
 }
