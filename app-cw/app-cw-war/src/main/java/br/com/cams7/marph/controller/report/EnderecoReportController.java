@@ -19,10 +19,7 @@ import br.com.cams7.marph.service.EnderecoService;
 @RequestMapping("/endereco/report")
 public class EnderecoReportController extends AbstractReportController<EnderecoService, EnderecoEntity> {
 
-	private final String PDF_REPORT = "pdf_enderecos";
-	private final String XLS_REPORT = "xls_enderecos";
-	private final String CSV_REPORT = "csv_enderecos";
-	private final String HTML_REPORT = "html_enderecos";
+	private final String PDF_VIEW = "enderecoPdfView";
 
 	/**
 	 * Utiliza a injeção de dependência do <code>Spring Framework</code> para
@@ -41,23 +38,8 @@ public class EnderecoReportController extends AbstractReportController<EnderecoS
 	}
 
 	@Override
-	protected String getPdfReport() {
-		return PDF_REPORT;
-	}
-
-	@Override
-	protected String getXlsReport() {
-		return XLS_REPORT;
-	}
-
-	@Override
-	protected String getCsvReport() {
-		return CSV_REPORT;
-	}
-
-	@Override
-	protected String getHtmlReport() {
-		return HTML_REPORT;
+	protected String getPdfView() {
+		return PDF_VIEW;
 	}
 
 }

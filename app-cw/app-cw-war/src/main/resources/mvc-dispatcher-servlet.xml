@@ -24,8 +24,6 @@
 		</mvc:message-converters>
 	</mvc:annotation-driven>
 
-	<import resource="report/jasper-views.xml" />
-
 	<bean class="org.springframework.web.servlet.view.XmlViewResolver"
 		p:location="classpath:report/jasper-views.xml" p:order="0" />
 </beans>

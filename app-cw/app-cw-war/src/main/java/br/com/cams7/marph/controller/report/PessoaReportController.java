@@ -19,10 +19,7 @@ import br.com.cams7.marph.service.PessoaService;
 @RequestMapping("/pessoa/report")
 public class PessoaReportController extends AbstractReportController<PessoaService, PessoaEntity> {
 
-	private final String PDF_REPORT = "pdf_pessoas";
-	private final String XLS_REPORT = "xls_pessoas";
-	private final String CSV_REPORT = "csv_pessoas";
-	private final String HTML_REPORT = "html_pessoas";
+	private final String PDF_VIEW = "pessoaPdfView";
 
 	/**
 	 * Utiliza a injeção de dependência do <code>Spring Framework</code> para
@@ -41,23 +38,8 @@ public class PessoaReportController extends AbstractReportController<PessoaServi
 	}
 
 	@Override
-	protected String getPdfReport() {
-		return PDF_REPORT;
-	}
-
-	@Override
-	protected String getXlsReport() {
-		return XLS_REPORT;
-	}
-
-	@Override
-	protected String getCsvReport() {
-		return CSV_REPORT;
-	}
-
-	@Override
-	protected String getHtmlReport() {
-		return HTML_REPORT;
+	protected String getPdfView() {
+		return PDF_VIEW;
 	}
 
 }

@@ -8,51 +8,16 @@
 	<!--here all the url value should contains the valid path for the jrxml 
 		file -->
 
-	<bean id="pdf_pessoas"
+	<bean id="pessoaPdfView"
 		class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView"
 		p:url="classpath:report/relatorio_pessoas.jrxml" p:reportDataKey="datasource" />
 
-	<bean id="xls_pessoas"
-		class="org.springframework.web.servlet.view.jasperreports.JasperReportsXlsView"
-		p:url="classpath:report/relatorio_pessoas.jrxml" p:reportDataKey="datasource" />
-
-	<bean id="csv_pessoas"
-		class="org.springframework.web.servlet.view.jasperreports.JasperReportsCsvView"
-		p:url="classpath:report/relatorio_pessoas.jrxml" p:reportDataKey="datasource" />
-
-	<bean id="html_pessoas"
-		class="org.springframework.web.servlet.view.jasperreports.JasperReportsHtmlView"
-		p:url="classpath:report/relatorio_pessoas.jrxml" p:reportDataKey="datasource" />
-
-	<bean id="pdf_usuarios"
+	<bean id="usuarioPdfView"
 		class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView"
 		p:url="classpath:report/relatorio_usuarios.jrxml" p:reportDataKey="datasource" />
 
-	<bean id="xls_usuarios"
-		class="org.springframework.web.servlet.view.jasperreports.JasperReportsXlsView"
-		p:url="classpath:report/relatorio_usuarios.jrxml" p:reportDataKey="datasource" />
-
-	<bean id="csv_usuarios"
-		class="org.springframework.web.servlet.view.jasperreports.JasperReportsCsvView"
-		p:url="classpath:report/relatorio_usuarios.jrxml" p:reportDataKey="datasource" />
-
-	<bean id="html_usuarios"
-		class="org.springframework.web.servlet.view.jasperreports.JasperReportsHtmlView"
-		p:url="classpath:report/relatorio_usuarios.jrxml" p:reportDataKey="datasource" />
-
-	<bean id="pdf_enderecos"
+	<bean id="enderecoPdfView"
 		class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView"
 		p:url="classpath:report/relatorio_enderecos.jrxml" p:reportDataKey="datasource" />
 
-	<bean id="xls_enderecos"
-		class="org.springframework.web.servlet.view.jasperreports.JasperReportsXlsView"
-		p:url="classpath:report/relatorio_enderecos.jrxml" p:reportDataKey="datasource" />
-
-	<bean id="csv_enderecos"
-		class="org.springframework.web.servlet.view.jasperreports.JasperReportsCsvView"
-		p:url="classpath:report/relatorio_enderecos.jrxml" p:reportDataKey="datasource" />
-
-	<bean id="html_enderecos"
-		class="org.springframework.web.servlet.view.jasperreports.JasperReportsHtmlView"
-		p:url="classpath:report/relatorio_enderecos.jrxml" p:reportDataKey="datasource" />
 </beans>

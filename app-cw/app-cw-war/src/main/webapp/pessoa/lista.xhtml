@@ -76,49 +76,15 @@
 				</p:column>
 
 				<f:facet name="footer">
-					<sec:authorize ifAnyGranted="SECRETARIO,ADMINISTRADOR">
-						<p:panelGrid id="totalRows" columns="6">
-							<h:outputFormat value="#{msg['label.pessoas.totalCadastrados1']}">
-								<f:param value="#{pessoaMB.totalRows}" />
-							</h:outputFormat>
-
-							<h:outputLink
-								value="#{facesContext.externalContext.requestContextPath}/req/pessoa/report/pdf"
-								title="#{msg['button.visualiza.pdf']}" target="_blank">
-								<h:graphicImage name="img/download-pdf.png" />
-							</h:outputLink>
-
-							<h:outputLink
-								value="#{facesContext.externalContext.requestContextPath}/req/pessoa/report/csv"
-								title="#{msg['button.visualiza.csv']}" target="_blank">
-								<h:graphicImage name="img/download-csv.png" />
-							</h:outputLink>
-
-							<h:outputLink
-								value="#{facesContext.externalContext.requestContextPath}/req/pessoa/report/xls"
-								title="#{msg['button.visualiza.xls']}" target="_blank">
-								<h:graphicImage name="img/download-xls.png" />
-							</h:outputLink>
-
-							<h:outputLink
-								value="#{facesContext.externalContext.requestContextPath}/req/pessoa/report/html"
-								title="#{msg['button.visualiza.html']}" target="_blank">
-								<h:graphicImage name="img/download-html.png" />
-							</h:outputLink>
-
-							<h:outputLink
-								value="#{facesContext.externalContext.requestContextPath}/req/pessoa"
-								title="#{msg['button.visualiza.json']}" target="_blank">
-								<h:graphicImage name="img/json.png" />
-							</h:outputLink>
-						</p:panelGrid>
-					</sec:authorize>
-					<sec:authorize ifNotGranted="SECRETARIO,ADMINISTRADOR">
-						<h:outputFormat id="totalRows"
-							value="#{msg['label.pessoas.totalCadastrados2']}">
+					<p:panelGrid id="totalRows" columns="2">
+						<h:outputFormat value="#{msg['label.pessoas.totalCadastrados']}">
 							<f:param value="#{pessoaMB.totalRows}" />
 						</h:outputFormat>
-					</sec:authorize>
+
+						<p:commandButton value="#{msg['button.visualiza.relatorio']}"
+							styleClass="btn" oncomplete="PF('relatorioDialog').show();"
+							update=":relatorioForm:relatorioDetail" />
+					</p:panelGrid>
 				</f:facet>
 			</p:dataTable>
 
@@ -135,5 +101,9 @@
 				</p:dialog>
 			</sec:authorize>
 		</h:form>
+
+		<ui:include src="/layout/relatorio_dialog.xhtml">
+			<ui:param name="mb" value="#{pessoaMB}" />
+		</ui:include>
 	</ui:define>
 </ui:composition>

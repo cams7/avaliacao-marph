@@ -72,70 +72,9 @@ public abstract class AbstractReportController<S extends BaseService<E>, E exten
 	public ModelAndView generatePdfReport(HttpServletRequest request) {
 		SearchParams params = URIHelper.getParams(getEntityType(), request.getParameterMap());
 		// pdfReport foi declarado no arquivo jasper-views.xml
-		return getModelAndView(getReportParams(params), getPdfReport());
+		return getModelAndView(getReportParams(params), getPdfView());
 	}
 
-	/**
-	 * Gera arquivo XLS
-	 * 
-	 * @URL: http://localhost:8080/avaliacao_marph/req/pessoa/report/xls?
-	 *       page_first=
-	 *       0&page_size=15&sort_field=nascimento&sort_order=DESCENDING&
-	 *       filter_field=nome&filter_field=cpf&globalFilter=m&nome=a&cpf=6
-	 * 
-	 * @param request
-	 * @return
-	 */
-	@RequestMapping(value = "/xls", method = GET)
-	public ModelAndView generateXlsReport(HttpServletRequest request) {
-		SearchParams params = URIHelper.getParams(getEntityType(), request.getParameterMap());
-		// xlsReport foi declarado no arquivo jasper-views.xml
-		return getModelAndView(getReportParams(params), getXlsReport());
-	}
-
-	/**
-	 * Gera arquivo CSV
-	 * 
-	 * @URL: http://localhost:8080/avaliacao_marph/req/pessoa/report/csv?
-	 *       page_first=
-	 *       0&page_size=15&sort_field=nascimento&sort_order=DESCENDING&
-	 *       filter_field=nome&filter_field=cpf&globalFilter=m&nome=a&cpf=6
-	 * 
-	 * @param request
-	 * @return
-	 */
-	@RequestMapping(value = "/csv", method = GET)
-	public ModelAndView generateCsvReport(HttpServletRequest request) {
-		SearchParams params = URIHelper.getParams(getEntityType(), request.getParameterMap());
-		// csvReport foi declarado no arquivo jasper-views.xml
-		return getModelAndView(getReportParams(params), getCsvReport());
-	}
-
-	/**
-	 * Gera arquivo HTML
-	 * 
-	 * @URL: http://localhost:8080/avaliacao_marph/req/pessoa/report/html?
-	 *       page_first=
-	 *       0&page_size=15&sort_field=nascimento&sort_order=DESCENDING&
-	 *       filter_field=nome&filter_field=cpf&globalFilter=m&nome=a&cpf=6
-	 * 
-	 * @param request
-	 * @return
-	 */
-	@RequestMapping(value = "/html", method = GET)
-	public ModelAndView generateHtmlReport(HttpServletRequest request) {
-		SearchParams params = URIHelper.getParams(getEntityType(), request.getParameterMap());
-		// htmlReport foi declarado no arquivo jasper-views.xml
-		return getModelAndView(getReportParams(params), getHtmlReport());
-
-	}
-
-	protected abstract String getPdfReport();
-
-	protected abstract String getXlsReport();
-
-	protected abstract String getCsvReport();
-
-	protected abstract String getHtmlReport();
+	protected abstract String getPdfView();
 
 }

@@ -113,4 +113,8 @@ public final class URIHelper {
 		return params;
 	}
 
+	public static String getQueryDelimiter(boolean isQueryDelimiter) {
+		return isQueryDelimiter ? "&" : "?";
+	}
+
 }

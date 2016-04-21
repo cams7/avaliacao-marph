@@ -1,0 +1,70 @@
+<ui:fragment xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+	<h:form id="relatorioForm">
+		<p:dialog header="#{msg['page.title.relatorio.intervalos']}"
+			widgetVar="relatorioDialog" modal="true" resizable="false">
+
+			<p:outputPanel id="relatorioDetail" style="text-align:center;">
+				<p:outputPanel id="relatorioPanel">
+					<p:selectOneRadio id="interval" value="#{mb.report.interval}"
+						layout="custom" converter="intervalPagesConverter">
+						<f:selectItems value="#{mb.intervals}" />
+						<p:ajax event="change" update="intervalPages" />
+					</p:selectOneRadio>
+
+					<h:panelGrid columns="3" cellpadding="5">
+						<p:radioButton id="allPages" for="interval" itemIndex="0" />
+						<p:outputLabel for="allPages"
+							value="#{msg['label.relatorio.todas_paginas']}"
+							style="text-align:left" />
+						<h:outputText />
+
+						<p:radioButton id="informedInterval" for="interval" itemIndex="1" />
+						<p:outputLabel id="informedPages" for="informedInterval"
+							value="#{msg['label.relatorio.paginas']} (#{mb.report.firstPage} - #{mb.report.lastPage})"
+							style="text-align:left" />
+						<p:slider id="intervalPages" for="firstPage,lastPage"
+							display="informedPages" style="width: 200px" range="true"
+							displayTemplate="#{msg['label.relatorio.paginas']} ({min} - {max})"
+							minValue="1" maxValue="#{mb.report.totalPages}"
+							disabled="#{mb.report.interval ne 'INFORMED_INTERVAL'}" />
+
+						<p:radioButton id="currentPage" for="interval" itemIndex="2" />
+						<p:outputLabel for="currentPage"
+							value="#{msg['label.relatorio.pagina_atual']}"
+							style="text-align:left" />
+						<h:outputText />
+					</h:panelGrid>
+
+					<h:inputHidden id="firstPage" value="#{mb.report.firstPage}" />
+					<h:inputHidden id="lastPage" value="#{mb.report.lastPage}" />
+				</p:outputPanel>
+
+				<div class="control-group">
+					<div class="controls">
+						<p:commandButton actionListener="#{mb.generatePdfReport}"
+							value="#{msg['button.ok']}" styleClass="btn btn-success"
+							oncomplete="handleGeneratePdfReport(xhr, status, args);" />
+
+						<p:commandButton value="#{msg['button.cancela']}" styleClass="btn"
+							oncomplete="PF('relatorioDialog').hide();" />
+					</div>
+				</div>
+			</p:outputPanel>
+		</p:dialog>
+	</h:form>
+
+	<script type="text/javascript">
+		function handleGeneratePdfReport(xhr, status, param) {
+			if (param.urlReport != undefined) {
+				window.open(param.urlReport, '_blank');
+				// window.location.assign(param.urlReport);
+				PF("relatorioDialog").hide();
+			}
+		}
+	</script>
+</ui:fragment>

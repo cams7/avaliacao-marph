@@ -67,11 +67,6 @@
 			<div class="controls">
 				<c:choose>
 					<c:when test="#{not createEntity}">
-						<h:outputLink
-							value="#{facesContext.externalContext.requestContextPath}/req/pessoa/#{pessoa.id}"
-							title="#{msg['button.visualiza.json']}" target="_blank">
-							<h:graphicImage name="img/json.png" />
-						</h:outputLink>
 						<p:commandButton value="#{msg['button.atualiza']}"
 							actionListener="#{pessoaMB.updateEntity}"
 							styleClass="btn btn-success"

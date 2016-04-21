@@ -165,10 +165,10 @@
 			<groupId>net.sf.jasperreports</groupId>
 			<artifactId>jasperreports</artifactId>
 		</dependency>
-		<dependency>
+		<!--dependency>
 			<groupId>org.apache.poi</groupId>
 			<artifactId>poi</artifactId>
-		</dependency>		
+		</dependency-->		
 		<dependency>
 			<groupId>org.codehaus.groovy</groupId>
 			<artifactId>groovy-all</artifactId>

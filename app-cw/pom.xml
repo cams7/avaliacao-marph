@@ -86,11 +86,11 @@
 				<version>${jackson.version}</version>
 			</dependency>		
 			
-			<dependency>
+			<!--dependency>
 				<groupId>org.apache.poi</groupId>
 				<artifactId>poi</artifactId>
 				<version>3.14</version>
-			</dependency>					
+			</dependency-->					
 		</dependencies>
 	</dependencyManagement>		
 </project>

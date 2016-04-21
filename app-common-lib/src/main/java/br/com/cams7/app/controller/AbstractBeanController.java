@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.Map.Entry;
 import java.util.logging.Level;
 
 import javax.annotation.PostConstruct;
@@ -29,11 +30,14 @@ import org.primefaces.json.JSONObject;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 
+import br.com.cams7.app.ReportView;
+import br.com.cams7.app.ReportView.IntervalPages;
 import br.com.cams7.app.SearchParams;
 import br.com.cams7.app.entity.AbstractEntity;
 import br.com.cams7.app.service.BaseService;
 import br.com.cams7.app.utils.AppException;
 import br.com.cams7.app.utils.AppHelper;
+import br.com.cams7.app.utils.URIHelper;
 
 /**
  * @author cesar
@@ -47,6 +51,7 @@ public abstract class AbstractBeanController<S extends BaseService<E>, E extends
 	private final String RESOURCE_BUNDLE = "i18n.messages";
 	protected final String PARAM_CHANGED = "entityChanged";
 	private final String PARAM_MESSAGE = "messageAfterAction";
+	private final String PARAM_URL_REPORT = "urlReport";
 
 	public final static String CONTROLLER_SCOPE = "view";
 
@@ -62,13 +67,13 @@ public abstract class AbstractBeanController<S extends BaseService<E>, E extends
 	private E selectedEntity;
 	private boolean entityRemoved = false;
 
-	private final int PAGE_FIRST = 0;
-	private final short PAGE_SIZE = 10;
+	private final int FIRST_PAGE = 0;
+	private final short SIZE_PAGE = 10;
 
 	private int totalRows;
 
-	private int lastPageFirst;
-	private short lastPageSize;
+	private int lastFirstPage;
+	private short lastSizePage;
 
 	private String lastSortField;
 	private SortOrder lastSortOrder;
@@ -76,6 +81,8 @@ public abstract class AbstractBeanController<S extends BaseService<E>, E extends
 	private Map<String, Object> lastFilters;
 
 	private String[] globalFilters;
+
+	private ReportView report;
 
 	// private int countPreRenderComponent;
 	// private int countPreRenderView;
@@ -95,11 +102,14 @@ public abstract class AbstractBeanController<S extends BaseService<E>, E extends
 	protected void initialize() {
 		super.initialize();
 
-		lastPageFirst = PAGE_FIRST;
-		lastPageSize = PAGE_SIZE;
+		lastFirstPage = FIRST_PAGE;
+		lastSizePage = SIZE_PAGE;
 
 		lastSortOrder = SortOrder.UNSORTED;
 		lastFilters = new HashMap<>();
+
+		report = new ReportView();
+		report.setInterval(IntervalPages.CURRENT_PAGE);
 
 		lazyModel = new LazyDataModel<E>() {
 
@@ -129,8 +139,8 @@ public abstract class AbstractBeanController<S extends BaseService<E>, E extends
 
 				boolean totalRowsChanged = false;
 
-				if (pageSize != lastPageSize)
-					lastPageSize = (short) pageSize;
+				if (pageSize != lastSizePage)
+					lastSizePage = (short) pageSize;
 				else if (sortField != null && !(sortField.equals(lastSortField) && sortOrder.equals(lastSortOrder))) {
 					lastSortField = sortField;
 					lastSortOrder = sortOrder;
@@ -143,26 +153,42 @@ public abstract class AbstractBeanController<S extends BaseService<E>, E extends
 					totalRowsChanged = true;
 				}
 
-				lastPageFirst = first;
+				lastFirstPage = first;
 
-				br.com.cams7.app.SearchParams.SortOrder currentSortOrder = br.com.cams7.app.SearchParams.SortOrder.UNSORTED;
-				if (lastSortOrder != null)
-					currentSortOrder = br.com.cams7.app.SearchParams.SortOrder.valueOf(lastSortOrder.name());
-
-				SearchParams params = new SearchParams(lastPageFirst, lastPageSize, lastSortField, currentSortOrder,
-						lastFilters, globalFilters);
+				SearchParams params = new SearchParams(lastFirstPage, lastSizePage, lastSortField,
+						getSortOrder(lastSortOrder), lastFilters, globalFilters);
 				entities = getService().search(params);
 
+				int totalRows = getRowCount();
 				if (totalRowsChanged || entityRemoved) {
-					int totalRows = getService().getTotalElements(lastFilters, globalFilters);
+					totalRows = getService().getTotalElements(lastFilters, globalFilters);
 					setRowCount(totalRows);
 					entityRemoved = false;
 				}
 
+				int firstPage = getPage(lastFirstPage) + 1;
+				int totalPages = getPage(totalRows);
+
+				report.setFirstPage(firstPage);
+				report.setLastPage(firstPage);
+				report.setTotalPages(totalPages);
+
 				return entities;
 			}
+
 		};
 		getLog().log(Level.INFO, "Componet initialized");
+	}
+
+	private br.com.cams7.app.SearchParams.SortOrder getSortOrder(SortOrder sortOrder) {
+		if (sortOrder == null)
+			return br.com.cams7.app.SearchParams.SortOrder.UNSORTED;
+
+		return br.com.cams7.app.SearchParams.SortOrder.valueOf(sortOrder.name());
+	}
+
+	private int getPage(int page) {
+		return page % lastSizePage == 0 ? page / lastSizePage : page / lastSizePage + 1;
 	}
 
 	private boolean isPostback() {
@@ -241,6 +267,75 @@ public abstract class AbstractBeanController<S extends BaseService<E>, E extends
 
 		entityRemoved = true;
 		getLog().info(String.format("A entidade \"%s\" foi excluida", getSelectedEntity()));
+	}
+
+	private String getUrlReport() {
+		FacesContext context = FacesContext.getCurrentInstance();
+
+		String viewId = context.getViewRoot().getViewId();
+		String page = viewId.substring(viewId.indexOf("/") + 1, viewId.lastIndexOf("/"));
+
+		String urlReport = context.getExternalContext().getRequestContextPath() + "/req/" + page + "/report/pdf";
+
+		IntervalPages intervalPages = getReport().getInterval();
+
+		StringBuffer uri = new StringBuffer(urlReport);
+		boolean includedQuestionMark = false;
+
+		if (intervalPages != IntervalPages.ALL_PAGES) {
+			int firstPage = lastFirstPage;
+			short sizePage = lastSizePage;
+
+			if (intervalPages == IntervalPages.INFORMED_INTERVAL) {
+				firstPage = getReport().getFirstPage();
+
+				sizePage *= (getReport().getLastPage() - firstPage + 1);
+
+				firstPage--;
+				firstPage *= lastSizePage;
+			}
+
+			uri.append("?" + URIHelper.PAGE_FIRST + "=" + firstPage);
+			uri.append("&" + URIHelper.PAGE_SIZE + "=" + sizePage);
+			includedQuestionMark = true;
+		}
+
+		if (lastSortField != null) {
+			uri.append(URIHelper.getQueryDelimiter(includedQuestionMark) + URIHelper.SORT_FIELD + "=" + lastSortField);
+			uri.append("&" + URIHelper.SORT_ORDER + "=" + getSortOrder(lastSortOrder));
+			includedQuestionMark = true;
+		}
+
+		if (!lastFilters.isEmpty()) {
+			if (lastFilters.containsKey(URIHelper.GLOBAL_FILTER)) {
+				uri.append(URIHelper.getQueryDelimiter(includedQuestionMark) + URIHelper.GLOBAL_FILTER + "="
+						+ lastFilters.get(URIHelper.GLOBAL_FILTER));
+				for (String field : globalFilters)
+					uri.append("&" + URIHelper.FILTER_FIELD + "=" + field);
+
+				includedQuestionMark = true;
+			}
+
+			for (Entry<String, Object> param : lastFilters.entrySet()) {
+				String paramName = param.getKey();
+				Object paramValue = param.getValue();
+
+				if (URIHelper.GLOBAL_FILTER.equals(paramName))
+					continue;
+
+				uri.append(URIHelper.getQueryDelimiter(includedQuestionMark) + paramName + "=" + paramValue);
+				includedQuestionMark = true;
+			}
+		}
+
+		urlReport = uri.toString();
+		return urlReport;
+	}
+
+	public void generatePdfReport(ActionEvent event) {
+		RequestContext context = RequestContext.getCurrentInstance();
+		String urlReport = getUrlReport();
+		context.addCallbackParam(PARAM_URL_REPORT, urlReport);
 	}
 
 	/**
@@ -403,14 +498,14 @@ public abstract class AbstractBeanController<S extends BaseService<E>, E extends
 	 * @return the first
 	 */
 	public int getFirst() {
-		return lastPageFirst;
+		return lastFirstPage;
 	}
 
 	/**
 	 * @return
 	 */
 	public short getRows() {
-		return lastPageSize;
+		return lastSizePage;
 	}
 
 	/**
@@ -418,6 +513,17 @@ public abstract class AbstractBeanController<S extends BaseService<E>, E extends
 	 */
 	public int getTotalRows() {
 		return totalRows;
+	}
+
+	public ReportView getReport() {
+		return report;
+	}
+
+	/**
+	 * @return
+	 */
+	public IntervalPages[] getIntervals() {
+		return IntervalPages.values();
 	}
 
 	protected abstract String getListPage();
