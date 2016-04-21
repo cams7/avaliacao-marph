@@ -8,8 +8,8 @@
 						http://www.springframework.org/schema/mvc		http://www.springframework.org/schema/mvc/spring-mvc-4.2.xsd">
 
 
-	<context:component-scan base-package="br.com.cams7.marph.controller.rest" />
-	<context:component-scan base-package="br.com.cams7.marph.controller.report" />
+	<context:component-scan base-package="br.com.cams7.crud.controller.rest" />
+	<context:component-scan base-package="br.com.cams7.crud.controller.report" />
 
 	<context:annotation-config />
 

@@ -9,7 +9,7 @@
 	<bean id="sessionFactory"
 		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />
-		<property name="packagesToScan" value="br.com.cams7.marph.entity" />
+		<property name="packagesToScan" value="br.com.cams7.crud.entity" />
 
 		<property name="hibernateProperties">
 			<props>

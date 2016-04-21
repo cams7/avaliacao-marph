@@ -10,9 +10,9 @@
 
 		<jta-data-source>java:/MySqlDS</jta-data-source>
 
-		<class>br.com.cams7.marph.entity.PessoaEntity</class>
-		<class>br.com.cams7.marph.entity.UsuarioEntity</class>
-		<class>br.com.cams7.marph.entity.EnderecoEntity</class>
+		<class>br.com.cams7.crud.entity.PessoaEntity</class>
+		<class>br.com.cams7.crud.entity.UsuarioEntity</class>
+		<class>br.com.cams7.crud.entity.EnderecoEntity</class>
 
 		<properties>
 			<!--property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect" 

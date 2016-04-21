@@ -18,11 +18,11 @@ import javax.persistence.criteria.Order;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
-import br.com.cams7.app.AbstractBase;
-import br.com.cams7.app.SearchParams;
-import br.com.cams7.app.entity.AbstractEntity;
-import br.com.cams7.app.repository.BaseRepository;
-import br.com.cams7.app.utils.AppHelper;
+import br.com.cams7.sys.AbstractBase;
+import br.com.cams7.sys.SearchParams;
+import br.com.cams7.sys.entity.AbstractEntity;
+import br.com.cams7.sys.repository.BaseRepository;
+import br.com.cams7.sys.utils.AppHelper;
 
 /**
  * Classe comum as classes Repositories

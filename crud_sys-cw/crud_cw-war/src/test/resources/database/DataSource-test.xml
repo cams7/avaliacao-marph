@@ -5,6 +5,5 @@
 
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
 		destroy-method="close" p:driverClassName="org.hsqldb.jdbcDriver"
-		p:url="jdbc:hsqldb:mem:avaliacao-marph-test" p:username="sa"
-		p:password="" />
+		p:url="jdbc:hsqldb:mem:crud_sys-test" p:username="sa" p:password="" />
 </beans>

@@ -10,8 +10,7 @@
 	<import resource="database/Hibernate.xml" />
 	<import resource="cw-context.xml" />
 
-	<context:component-scan base-package="br.com.cams7.marph.repository" />
-	<context:component-scan base-package="br.com.cams7.marph.service" />
-	<context:component-scan base-package="br.com.cams7.marph.controller.bean" />
-	<!-- context:component-scan base-package="br.com.cams7.marph.faces.converter" /-->
+	<context:component-scan base-package="br.com.cams7.crud.repository" />
+	<context:component-scan base-package="br.com.cams7.crud.service" />
+	<context:component-scan base-package="br.com.cams7.crud.controller.bean" />
 </beans>

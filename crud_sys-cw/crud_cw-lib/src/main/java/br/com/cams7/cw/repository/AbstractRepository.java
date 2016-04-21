@@ -18,11 +18,11 @@ import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import br.com.cams7.app.AbstractBase;
-import br.com.cams7.app.SearchParams;
-import br.com.cams7.app.entity.AbstractEntity;
-import br.com.cams7.app.repository.BaseRepository;
-import br.com.cams7.app.utils.AppHelper;
+import br.com.cams7.sys.AbstractBase;
+import br.com.cams7.sys.SearchParams;
+import br.com.cams7.sys.entity.AbstractEntity;
+import br.com.cams7.sys.repository.BaseRepository;
+import br.com.cams7.sys.utils.AppHelper;
 
 /**
  * Classe comum as classes Repositories

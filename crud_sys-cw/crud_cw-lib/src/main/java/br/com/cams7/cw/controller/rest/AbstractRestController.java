@@ -29,13 +29,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import br.com.cams7.app.SearchParams;
-import br.com.cams7.app.controller.AbstractController;
-import br.com.cams7.app.entity.AbstractEntity;
-import br.com.cams7.app.service.BaseService;
-import br.com.cams7.app.utils.AppException;
-import br.com.cams7.app.utils.AppHelper;
-import br.com.cams7.app.utils.URIHelper;
+import br.com.cams7.sys.SearchParams;
+import br.com.cams7.sys.controller.AbstractController;
+import br.com.cams7.sys.entity.AbstractEntity;
+import br.com.cams7.sys.service.BaseService;
+import br.com.cams7.sys.utils.AppException;
+import br.com.cams7.sys.utils.AppHelper;
+import br.com.cams7.sys.utils.URIHelper;
 
 /**
  * Classe comum as classes RestControllers

@@ -14,9 +14,9 @@ import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 
-import br.com.cams7.app.entity.AbstractEntity;
-import br.com.cams7.app.service.BaseService;
-import br.com.cams7.app.utils.AppHelper;
+import br.com.cams7.sys.entity.AbstractEntity;
+import br.com.cams7.sys.service.BaseService;
+import br.com.cams7.sys.utils.AppHelper;
 
 /**
  * @author cesar

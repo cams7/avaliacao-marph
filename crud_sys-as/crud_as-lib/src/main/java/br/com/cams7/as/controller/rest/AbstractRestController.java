@@ -26,12 +26,12 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.ResponseBuilder;
 import javax.ws.rs.core.UriInfo;
 
-import br.com.cams7.app.SearchParams;
-import br.com.cams7.app.controller.AbstractController;
-import br.com.cams7.app.entity.AbstractEntity;
-import br.com.cams7.app.service.BaseService;
-import br.com.cams7.app.utils.AppHelper;
-import br.com.cams7.app.utils.URIHelper;
+import br.com.cams7.sys.SearchParams;
+import br.com.cams7.sys.controller.AbstractController;
+import br.com.cams7.sys.entity.AbstractEntity;
+import br.com.cams7.sys.service.BaseService;
+import br.com.cams7.sys.utils.AppHelper;
+import br.com.cams7.sys.utils.URIHelper;
 
 /**
  * @author cesar

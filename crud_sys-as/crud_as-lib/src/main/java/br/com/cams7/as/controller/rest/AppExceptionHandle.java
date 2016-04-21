@@ -11,7 +11,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.ResponseBuilder;
 import javax.ws.rs.ext.Provider;
 
-import br.com.cams7.app.utils.AppException;
+import br.com.cams7.sys.utils.AppException;
 
 /**
  * @author cesar

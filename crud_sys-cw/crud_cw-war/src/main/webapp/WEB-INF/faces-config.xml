@@ -48,7 +48,7 @@
 
 	<!-- Define uma lista para servir como Managed Bean para a pagina sobre. -->
 	<managed-bean>
-		<description>Sobre a aplicacao</description>
+		<description>Sobre a aplicação</description>
 		<managed-bean-name>sobreMB</managed-bean-name>
 		<managed-bean-class>java.util.ArrayList</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>

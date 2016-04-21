@@ -6,11 +6,11 @@ package br.com.cams7.as.service;
 import java.util.List;
 import java.util.Map;
 
-import br.com.cams7.app.AbstractBase;
-import br.com.cams7.app.SearchParams;
-import br.com.cams7.app.entity.AbstractEntity;
-import br.com.cams7.app.repository.BaseRepository;
-import br.com.cams7.app.service.BaseService;
+import br.com.cams7.sys.AbstractBase;
+import br.com.cams7.sys.SearchParams;
+import br.com.cams7.sys.entity.AbstractEntity;
+import br.com.cams7.sys.repository.BaseRepository;
+import br.com.cams7.sys.service.BaseService;
 
 /**
  * @author cesar
