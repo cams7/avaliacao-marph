@@ -32,7 +32,7 @@ public class PessoaServiceImpl extends AbstractService<PessoaRepository, PessoaE
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * br.com.cams7.as.service.AbstractService#salva(br.com.cams7.app.entity.
+	 * br.com.cams7.as.service.AbstractService#salva(br.com.cams7.sys.entity.
 	 * AbstractEntity)
 	 */
 	@Override
@@ -40,6 +40,13 @@ public class PessoaServiceImpl extends AbstractService<PessoaRepository, PessoaE
 		super.salva(entity);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * br.com.cams7.as.service.AbstractService#atualiza(br.com.cams7.sys.entity.
+	 * AbstractEntity)
+	 */
 	@Override
 	public void atualiza(PessoaEntity entity) {
 		super.atualiza(entity);
@@ -48,7 +55,7 @@ public class PessoaServiceImpl extends AbstractService<PessoaRepository, PessoaE
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see br.com.cams7.marph.repository.PessoaRepository#
+	 * @see br.com.cams7.crud.repository.PessoaRepository#
 	 * buscaPessoasSemUsuarioPeloNome(java.lang.String)
 	 */
 	@Override
@@ -60,7 +67,7 @@ public class PessoaServiceImpl extends AbstractService<PessoaRepository, PessoaE
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * br.com.cams7.marph.repository.PessoaRepository#buscaPeloNome(java.lang.
+	 * br.com.cams7.crud.repository.PessoaRepository#buscaPeloNome(java.lang.
 	 * String)
 	 */
 	@Override
@@ -71,7 +78,7 @@ public class PessoaServiceImpl extends AbstractService<PessoaRepository, PessoaE
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see br.com.cams7.marph.repository.PessoaRepository#
+	 * @see br.com.cams7.crud.repository.PessoaRepository#
 	 * cpfFoiCadastradoAnteriormente(java.lang.String)
 	 */
 	@Override
@@ -83,7 +90,7 @@ public class PessoaServiceImpl extends AbstractService<PessoaRepository, PessoaE
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * br.com.cams7.marph.repository.PessoaRepository#buscaCpfPeloId(java.lang.
+	 * br.com.cams7.crud.repository.PessoaRepository#buscaCpfPeloId(java.lang.
 	 * Long)
 	 */
 	@Override
@@ -94,7 +101,7 @@ public class PessoaServiceImpl extends AbstractService<PessoaRepository, PessoaE
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see br.com.cams7.marph.service.PessoaService#cpfValido(java.lang.Long,
+	 * @see br.com.cams7.crud.service.PessoaService#cpfValido(java.lang.Long,
 	 * java.lang.String)
 	 */
 	@Override

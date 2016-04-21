@@ -60,8 +60,8 @@ public final class PessoaTest extends AbstractAppTest<PessoaService, PessoaEntit
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * br.com.cams7.marph.AbstractAppTest#setEntity(br.com.cams7.app.entity.
-	 * AbstractEntity, br.com.cams7.app.entity.AbstractEntity)
+	 * br.com.cams7.cw.utils.test.AbstractAppTest#setEntity(br.com.cams7.sys.
+	 * entity.AbstractEntity, br.com.cams7.sys.entity.AbstractEntity)
 	 */
 	@Override
 	protected void setEntity(PessoaEntity pessoa, PessoaEntity novaPessoa) {
@@ -88,8 +88,8 @@ public final class PessoaTest extends AbstractAppTest<PessoaService, PessoaEntit
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * br.com.cams7.marph.AbstractAppTest#checkEntity(br.com.cams7.app.entity.
-	 * AbstractEntity, br.com.cams7.app.entity.AbstractEntity)
+	 * br.com.cams7.cw.utils.test.AbstractAppTest#checkEntity(br.com.cams7.sys.
+	 * entity.AbstractEntity, br.com.cams7.sys.entity.AbstractEntity)
 	 */
 	@Override
 	@SuppressWarnings("deprecation")
@@ -105,7 +105,7 @@ public final class PessoaTest extends AbstractAppTest<PessoaService, PessoaEntit
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see br.com.cams7.marph.AbstractAppTest#testSalva()
+	 * @see br.com.cams7.cw.utils.test.AbstractAppTest#testSalva()
 	 */
 	@Test
 	@Override
@@ -129,7 +129,7 @@ public final class PessoaTest extends AbstractAppTest<PessoaService, PessoaEntit
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see br.com.cams7.marph.AbstractAppTest#testAtualiza()
+	 * @see br.com.cams7.cw.utils.test.AbstractAppTest#testAtualiza()
 	 */
 	@Test
 	@Override
@@ -158,7 +158,7 @@ public final class PessoaTest extends AbstractAppTest<PessoaService, PessoaEntit
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see br.com.cams7.marph.AbstractAppTest#testRemove()
+	 * @see br.com.cams7.cw.utils.test.AbstractAppTest#testRemove()
 	 */
 	@Test
 	@Override
@@ -174,7 +174,7 @@ public final class PessoaTest extends AbstractAppTest<PessoaService, PessoaEntit
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see br.com.cams7.marph.AbstractAppTest#testBuscaTodos()
+	 * @see br.com.cams7.cw.utils.test.AbstractAppTest#testBuscaTodos()
 	 */
 	@Test
 	@Override
@@ -187,7 +187,7 @@ public final class PessoaTest extends AbstractAppTest<PessoaService, PessoaEntit
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see br.com.cams7.marph.AbstractAppTest#testBuscaPorId()
+	 * @see br.com.cams7.cw.utils.test.AbstractAppTest#testBuscaPeloId()
 	 */
 	@Test
 	@Override
@@ -208,7 +208,7 @@ public final class PessoaTest extends AbstractAppTest<PessoaService, PessoaEntit
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see br.com.cams7.marph.AbstractAppTest#testSearch()
+	 * @see br.com.cams7.cw.utils.test.AbstractAppTest#testSearch()
 	 */
 	@Test
 	@Override
@@ -228,7 +228,7 @@ public final class PessoaTest extends AbstractAppTest<PessoaService, PessoaEntit
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see br.com.cams7.app.AbstractAppTest#testGetTotalElements()
+	 * @see br.com.cams7.cw.utils.test.AbstractAppTest#testGetTotalElements()
 	 */
 	@Test
 	@Override
@@ -246,7 +246,7 @@ public final class PessoaTest extends AbstractAppTest<PessoaService, PessoaEntit
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see br.com.cams7.marph.AbstractAppTest#testCount()
+	 * @see br.com.cams7.cw.utils.test.AbstractAppTest#testCount()
 	 */
 	@Test
 	@Override

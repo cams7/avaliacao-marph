@@ -60,8 +60,7 @@ public abstract class AbstractReportController<S extends BaseService<E>, E exten
 	/**
 	 * Gera relatório PDF
 	 * 
-	 * @URL: http://localhost:8080/avaliacao_marph/req/pessoa/report/pdf?
-	 *       page_first=
+	 * @URL: http://localhost:8080/crud_sys/req/pessoa/report/pdf? page_first=
 	 *       0&page_size=15&sort_field=nascimento&sort_order=DESCENDING&
 	 *       filter_field=nome&filter_field=cpf&globalFilter=m&nome=a&cpf=6
 	 * 

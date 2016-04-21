@@ -38,9 +38,8 @@ public class UsuarioRepositoryImpl extends AbstractRepository<UsuarioEntity> imp
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * br.com.cams7.as.repository.AbstractRepository#search(java.lang.Integer,
-	 * java.lang.Short, java.lang.String, br.com.cams7.app.utils.SortOrder,
-	 * java.util.Map, java.lang.String[])
+	 * br.com.cams7.as.repository.AbstractRepository#search(br.com.cams7.sys.
+	 * SearchParams)
 	 */
 	@Override
 	public List<UsuarioEntity> search(SearchParams params) {
@@ -61,7 +60,7 @@ public class UsuarioRepositoryImpl extends AbstractRepository<UsuarioEntity> imp
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * br.com.cams7.app.repository.BaseRepository#getTotalElements(java.util.
+	 * br.com.cams7.as.repository.AbstractRepository#getTotalElements(java.util.
 	 * Map, java.lang.String[])
 	 */
 	@SuppressWarnings("unchecked")
@@ -101,7 +100,7 @@ public class UsuarioRepositoryImpl extends AbstractRepository<UsuarioEntity> imp
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * br.com.cams7.marph.repository.UsuarioRepository#buscaTodosDadosPessoais()
+	 * br.com.cams7.crud.repository.UsuarioRepository#buscaTodosDadosPessoais()
 	 */
 	@Override
 	public List<UsuarioEntity> buscaTodosDadosPessoais() {
@@ -114,7 +113,7 @@ public class UsuarioRepositoryImpl extends AbstractRepository<UsuarioEntity> imp
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see br.com.cams7.marph.repository.UsuarioRepository#
+	 * @see br.com.cams7.crud.repository.UsuarioRepository#
 	 * loginFoiCadastradoAnteriormente(java.lang.String)
 	 */
 	@Override
@@ -133,8 +132,8 @@ public class UsuarioRepositoryImpl extends AbstractRepository<UsuarioEntity> imp
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * br.com.cams7.marph.repository.UsuarioRepository#buscaLoginPeloId(java.
-	 * lang.Long)
+	 * br.com.cams7.crud.repository.UsuarioRepository#buscaLoginPeloId(java.lang
+	 * .Long)
 	 */
 	@Override
 	public String buscaLoginPeloId(Long id) {

@@ -49,7 +49,7 @@ public abstract class AbstractRestController<S extends BaseService<E>, E extends
 	 * 
 	 * 
 	 * @Exemplo Executado no Poster (plug-in do Firefox):
-	 * @URL: http://localhost:8080/avaliacao_marph/req/pessoa
+	 * @URL: http://localhost:8080/crud_sys/req/pessoa
 	 * 
 	 * @return
 	 */
@@ -70,7 +70,7 @@ public abstract class AbstractRestController<S extends BaseService<E>, E extends
 	 * Busca apenas uma entidade cadastrada
 	 * 
 	 * @Exemplo Executado no Poster (plug-in do Firefox):
-	 * @URL: http://localhost:8080/avaliacao_marph/req/pessoa/1
+	 * @URL: http://localhost:8080/crud_sys/req/pessoa/1
 	 * 
 	 * @param id
 	 *            - Id da entidade
@@ -94,7 +94,7 @@ public abstract class AbstractRestController<S extends BaseService<E>, E extends
 	 * Cadastra uma nova entidade
 	 * 
 	 * @Exemplo Executado no Poster (plug-in do Firefox):
-	 * @URL: http://localhost:8080/avaliacao_marph/req/pessoa
+	 * @URL: http://localhost:8080/crud_sys/req/pessoa
 	 * @Content Type: application/json
 	 * @Content: {"nome":"Luiz Alberto da Silva","cpf":"82211304273"}
 	 * 
@@ -115,7 +115,7 @@ public abstract class AbstractRestController<S extends BaseService<E>, E extends
 	 * Altera os dados da entidade cadastrada
 	 * 
 	 * @Exemplo Executado no Poster (plug-in do Firefox):
-	 * @URL: http://localhost:8080/avaliacao_marph/req/pessoa/1
+	 * @URL: http://localhost:8080/crud_sys/req/pessoa/1
 	 * @Content Type: application/json
 	 * @Content: {"nome":"Alfredo Alberto Almeida","cpf":"83605637051"}
 	 * 
@@ -147,7 +147,7 @@ public abstract class AbstractRestController<S extends BaseService<E>, E extends
 	 * Remove a entidade cadastrada
 	 * 
 	 * @Exemplo Executado no Poster (plug-in do Firefox):
-	 * @URL: http://localhost:8080/avaliacao_marph/req/pessoa/38
+	 * @URL: http://localhost:8080/crud_sys/req/pessoa/38
 	 * 
 	 * @param id
 	 *            - Id da entidade
@@ -175,7 +175,7 @@ public abstract class AbstractRestController<S extends BaseService<E>, E extends
 	 * Remove as entidades cadastradas
 	 * 
 	 * @Exemplo Executado no Poster (plug-in do Firefox):
-	 * @URL: http://localhost:8080/avaliacao_marph/req/pessoa?id=37&id=38&id=39
+	 * @URL: http://localhost:8080/crud_sys/req/pessoa?id=37&id=38&id=39
 	 * 
 	 * @param ids
 	 *            - Ids das entidades
@@ -212,7 +212,7 @@ public abstract class AbstractRestController<S extends BaseService<E>, E extends
 	 * Filtra, pagina e ordena os objetos que são instâncias de "AbstractEntity"
 	 * 
 	 * @Exemplo Executado no Poster (plug-in do Firefox):
-	 * @URL: http://localhost:8080/avaliacao_marph/req/pessoa/search?page_first=
+	 * @URL: http://localhost:8080/crud_sys/req/pessoa/search?page_first=
 	 *       0&page_size=15&sort_field=nascimento&sort_order=DESCENDING&
 	 *       filter_field=nome&filter_field=cpf&globalFilter=m&nome=a&cpf=6
 	 * 
@@ -240,7 +240,7 @@ public abstract class AbstractRestController<S extends BaseService<E>, E extends
 	 * feita com auxílio de filtros
 	 * 
 	 * @Exemplo Executado no Poster (plug-in do Firefox):
-	 * @URL: http://localhost:8080/avaliacao_marph/req/pessoa/count?filter_field
+	 * @URL: http://localhost:8080/crud_sys/req/pessoa/count?filter_field
 	 *       =nome&filter_field=cpf&globalFilter=m&nome=a&cpf=6
 	 * 
 	 * @param allUri

@@ -7,10 +7,10 @@
 	<version>1.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
-	<name>Avaliação Marph</name>
+	<name>Exemplos CRUD</name>
 	<!--TODO Alterar a 'url' quando fazer o merge da branch 'as' com 'master' -->
 	<url>https://github.com/cams7/crud_sys/tree/as</url>
-	<description>Avaliação para desenvolvedor Java</description>
+	<description>Exemplos CRUD</description>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

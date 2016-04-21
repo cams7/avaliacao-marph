@@ -52,8 +52,14 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		return buildUserForAuthentication(usuario, getAuthority(usuario.getAutorizacoes()));
 	}
 
-	// Converts br.com.cams7.marph.entity.UsuarioEntity user to
-	// org.springframework.security.core.userdetails.User
+	/**
+	 * Converts br.com.cams7.crud.entity.UsuarioEntity user to
+	 * org.springframework.security.core.userdetails.User
+	 * 
+	 * @param usuario
+	 * @param autorizacoes
+	 * @return
+	 */
 	private User buildUserForAuthentication(UsuarioEntity usuario, Set<? extends GrantedAuthority> autorizacoes) {
 		String login = usuario.getLogin();
 		String senha = usuario.getSenha();
@@ -62,6 +68,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		return new User(login, senha, habilitado, true, true, true, autorizacoes);
 	}
 
+	/**
+	 * @param autorizacoes
+	 * @return
+	 */
 	private Set<Authority> getAuthority(Set<Autorizacao> autorizacoes) {
 		Set<Authority> authorities = new HashSet<>();
 		for (Autorizacao autorizacao : autorizacoes)

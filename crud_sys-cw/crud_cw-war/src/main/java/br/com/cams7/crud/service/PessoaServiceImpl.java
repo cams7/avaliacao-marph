@@ -27,7 +27,7 @@ public class PessoaServiceImpl extends AbstractService<PessoaRepository, PessoaE
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see br.com.cams7.marph.repository.PessoaRepository#
+	 * @see br.com.cams7.crud.repository.PessoaRepository#
 	 * buscaPessoasSemUsuarioPeloNome(java.lang.String)
 	 */
 	@Transactional(readOnly = true)
@@ -40,7 +40,7 @@ public class PessoaServiceImpl extends AbstractService<PessoaRepository, PessoaE
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * br.com.cams7.marph.repository.PessoaRepository#buscaPeloNome(java.lang.
+	 * br.com.cams7.crud.repository.PessoaRepository#buscaPeloNome(java.lang.
 	 * String)
 	 */
 	@Transactional(readOnly = true)
@@ -52,7 +52,7 @@ public class PessoaServiceImpl extends AbstractService<PessoaRepository, PessoaE
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see br.com.cams7.marph.repository.PessoaRepository#
+	 * @see br.com.cams7.crud.repository.PessoaRepository#
 	 * cpfFoiCadastradoAnteriormente(java.lang.String)
 	 */
 	@Transactional(readOnly = true)
@@ -65,7 +65,7 @@ public class PessoaServiceImpl extends AbstractService<PessoaRepository, PessoaE
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * br.com.cams7.marph.repository.PessoaRepository#buscaCpfPeloId(java.lang.
+	 * br.com.cams7.crud.repository.PessoaRepository#buscaCpfPeloId(java.lang.
 	 * Long)
 	 */
 	@Transactional(readOnly = true)
@@ -77,7 +77,7 @@ public class PessoaServiceImpl extends AbstractService<PessoaRepository, PessoaE
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see br.com.cams7.marph.service.PessoaService#cpfValido(java.lang.Long,
+	 * @see br.com.cams7.crud.service.PessoaService#cpfValido(java.lang.Long,
 	 * java.lang.String)
 	 */
 	@Transactional(readOnly = true)

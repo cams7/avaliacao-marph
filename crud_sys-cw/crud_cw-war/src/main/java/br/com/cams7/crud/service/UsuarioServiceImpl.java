@@ -44,7 +44,7 @@ public class UsuarioServiceImpl extends AbstractService<UsuarioRepository, Usuar
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * br.com.cams7.app.service.AbstractService#salva(br.com.cams7.app.entity.
+	 * br.com.cams7.cw.service.AbstractService#salva(br.com.cams7.sys.entity.
 	 * AbstractEntity)
 	 */
 	@Transactional
@@ -60,8 +60,8 @@ public class UsuarioServiceImpl extends AbstractService<UsuarioRepository, Usuar
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * br.com.cams7.app.service.AbstractService#atualiza(br.com.cams7.app.entity
-	 * .AbstractEntity)
+	 * br.com.cams7.cw.service.AbstractService#atualiza(br.com.cams7.sys.entity.
+	 * AbstractEntity)
 	 */
 	@Transactional
 	@Override
@@ -76,7 +76,7 @@ public class UsuarioServiceImpl extends AbstractService<UsuarioRepository, Usuar
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * br.com.cams7.marph.repository.UsuarioRepository#buscaTodosDadosPessoais()
+	 * br.com.cams7.crud.repository.UsuarioRepository#buscaTodosDadosPessoais()
 	 */
 	@Transactional(readOnly = true)
 	@Override
@@ -87,7 +87,7 @@ public class UsuarioServiceImpl extends AbstractService<UsuarioRepository, Usuar
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see br.com.cams7.marph.repository.UsuarioRepository#
+	 * @see br.com.cams7.crud.repository.UsuarioRepository#
 	 * loginFoiCadastradoAnteriormente(java.lang.String)
 	 */
 	@Transactional(readOnly = true)
@@ -100,8 +100,8 @@ public class UsuarioServiceImpl extends AbstractService<UsuarioRepository, Usuar
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * br.com.cams7.marph.repository.UsuarioRepository#buscaLoginPeloId(java.
-	 * lang.Long)
+	 * br.com.cams7.crud.repository.UsuarioRepository#buscaLoginPeloId(java.lang
+	 * .Long)
 	 */
 	@Transactional(readOnly = true)
 	@Override
@@ -112,8 +112,7 @@ public class UsuarioServiceImpl extends AbstractService<UsuarioRepository, Usuar
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * br.com.cams7.marph.service.UsuarioService#loginValido(java.lang.Long,
+	 * @see br.com.cams7.crud.service.UsuarioService#loginValido(java.lang.Long,
 	 * java.lang.String)
 	 */
 	@Transactional(readOnly = true)

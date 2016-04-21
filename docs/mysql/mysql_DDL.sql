@@ -1,5 +1,5 @@
-CREATE DATABASE  IF NOT EXISTS `avaliacao_marph`;
-USE `avaliacao_marph`;
+CREATE DATABASE  IF NOT EXISTS `crud_sys`;
+USE `crud_sys`;
 
 DROP TABLE IF EXISTS `usuario`;
 DROP TABLE IF EXISTS `endereco`;

@@ -26,7 +26,7 @@ public class PessoaRepositoryImpl extends AbstractRepository<PessoaEntity> imple
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see br.com.cams7.marph.repository.PessoaRepository#
+	 * @see br.com.cams7.crud.repository.PessoaRepository#
 	 * buscaPessoasSemUsuarioPeloNome(java.lang.String)
 	 */
 	@Override
@@ -43,7 +43,7 @@ public class PessoaRepositoryImpl extends AbstractRepository<PessoaEntity> imple
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * br.com.cams7.marph.repository.PessoaRepository#buscaPeloNome(java.lang.
+	 * br.com.cams7.crud.repository.PessoaRepository#buscaPeloNome(java.lang.
 	 * String)
 	 */
 	@Override
@@ -59,7 +59,7 @@ public class PessoaRepositoryImpl extends AbstractRepository<PessoaEntity> imple
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see br.com.cams7.marph.repository.PessoaRepository#
+	 * @see br.com.cams7.crud.repository.PessoaRepository#
 	 * cpfFoiCadastradoAnteriormente(java.lang.String)
 	 */
 	@Override
@@ -78,7 +78,7 @@ public class PessoaRepositoryImpl extends AbstractRepository<PessoaEntity> imple
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * br.com.cams7.marph.repository.PessoaRepository#buscaCpfPeloId(java.lang.
+	 * br.com.cams7.crud.repository.PessoaRepository#buscaCpfPeloId(java.lang.
 	 * Long)
 	 */
 	@Override

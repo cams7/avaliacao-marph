@@ -32,7 +32,7 @@ public class UsuarioServiceImpl extends AbstractService<UsuarioRepository, Usuar
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * br.com.cams7.marph.repository.UsuarioRepository#buscaTodosDadosPessoais()
+	 * br.com.cams7.crud.repository.UsuarioRepository#buscaTodosDadosPessoais()
 	 */
 	@Override
 	public List<UsuarioEntity> buscaTodosDadosPessoais() {
@@ -42,7 +42,7 @@ public class UsuarioServiceImpl extends AbstractService<UsuarioRepository, Usuar
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see br.com.cams7.marph.repository.UsuarioRepository#
+	 * @see br.com.cams7.crud.repository.UsuarioRepository#
 	 * loginFoiCadastradoAnteriormente(java.lang.String)
 	 */
 	@Override
@@ -54,8 +54,8 @@ public class UsuarioServiceImpl extends AbstractService<UsuarioRepository, Usuar
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * br.com.cams7.marph.repository.UsuarioRepository#buscaLoginPeloId(java.
-	 * lang.Long)
+	 * br.com.cams7.crud.repository.UsuarioRepository#buscaLoginPeloId(java.lang
+	 * .Long)
 	 */
 	@Override
 	public String buscaLoginPeloId(Long id) {
@@ -65,8 +65,7 @@ public class UsuarioServiceImpl extends AbstractService<UsuarioRepository, Usuar
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * br.com.cams7.marph.service.UsuarioService#loginValido(java.lang.Long,
+	 * @see br.com.cams7.crud.service.UsuarioService#loginValido(java.lang.Long,
 	 * java.lang.String)
 	 */
 	@Override
