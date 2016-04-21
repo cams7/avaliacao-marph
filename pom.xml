@@ -2,21 +2,19 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>br.com.cams7.marph</groupId>
-	<artifactId>avaliacao-marph</artifactId>
+	<groupId>br.com.cams7.crud</groupId>
+	<artifactId>crud_sys</artifactId>
 	<version>1.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<name>Avaliação Marph</name>
 	<!--TODO Alterar a 'url' quando fazer o merge da branch 'as' com 'master' -->
-	<url>https://github.com/cams7/avaliacao-marph/tree/as</url>
+	<url>https://github.com/cams7/crud_sys/tree/as</url>
 	<description>Avaliação para desenvolvedor Java</description>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.build.timestamp.format>yyyyMMdd'T'HHmmss</maven.build.timestamp.format>
-
-		<!--jsf.version>2.2.13</jsf.version-->
 
 		<version.arquillian.container>8.2.1.Final</version.arquillian.container>
 		<jackson.version>2.7.3</jackson.version>
@@ -26,11 +24,11 @@
 	</properties>
 
 	<modules>
-		<module>app-common-lib</module>
-		<module>app-jpa</module>
-		<module>app-web-lib</module>
-		<module>app-as</module>
-		<module>app-cw</module>
+		<module>common_sys-lib</module>
+		<module>crud_sys-jpa</module>
+		<module>web_sys-lib</module>
+		<module>crud_sys-as</module>
+		<module>crud_sys-cw</module>
 	</modules>
 
 	<repositories>
@@ -42,32 +40,32 @@
 	</repositories>
 
 	<scm>
-		<connection>scm:git:https://github.com/cams7/avaliacao-marph.git</connection>
+		<connection>scm:git:https://github.com/cams7/crud_sys.git</connection>
 	</scm>
 
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
-				<groupId>br.com.cams7.marph</groupId>
-				<artifactId>app-common-lib</artifactId>
+				<groupId>br.com.cams7.crud</groupId>
+				<artifactId>common_sys-lib</artifactId>
 				<version>${project.version}</version>
 				<type>jar</type>
 			</dependency>
 			<dependency>
-				<groupId>br.com.cams7.marph</groupId>
-				<artifactId>app-jpa</artifactId>
+				<groupId>br.com.cams7.crud</groupId>
+				<artifactId>crud_sys-jpa</artifactId>
 				<version>${project.version}</version>
 				<type>jar</type>
 			</dependency>
 			<dependency>
-				<groupId>br.com.cams7.marph</groupId>
-				<artifactId>app-as-ejb</artifactId>
+				<groupId>br.com.cams7.crud</groupId>
+				<artifactId>crud_as-ejb</artifactId>
 				<version>${project.version}</version>
 				<type>ejb-client</type>
 			</dependency>
 			<dependency>
-				<groupId>br.com.cams7.marph</groupId>
-				<artifactId>app-web-lib</artifactId>
+				<groupId>br.com.cams7.crud</groupId>
+				<artifactId>web_sys-lib</artifactId>
 				<version>${project.version}</version>
 				<type>jar</type>
 			</dependency>
@@ -189,7 +187,7 @@
 					<artifactId>tomcat7-maven-plugin</artifactId>
 					<version>2.2</version>
 					<configuration>
-						<path>/avaliacao_marph</path>
+						<path>/crud_sys</path>
 						<update>true</update>
 						<url>http://localhost:8080/manager/text</url>
 						<username>tomcat</username>
