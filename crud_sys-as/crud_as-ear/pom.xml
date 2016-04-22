@@ -21,7 +21,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>br.com.cams7.crud</groupId>
-			<artifactId>common_sys-lib</artifactId>
+			<artifactId>sys_common-lib</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>br.com.cams7.crud</groupId>

@@ -4,11 +4,11 @@
 
 	<parent>
 		<groupId>br.com.cams7.crud</groupId>
-		<artifactId>crud_sys-cw</artifactId>
+		<artifactId>crud_cw-tomcat</artifactId>
 		<version>1.0-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>crud_cw-lib</artifactId>
+	<artifactId>crud_tomcat-lib</artifactId>
 	<packaging>jar</packaging>
 
 	<name>Biblioteca comum à aplicação executada no Tomcat7</name>
@@ -17,7 +17,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>br.com.cams7.crud</groupId>
-			<artifactId>common_sys-lib</artifactId>
+			<artifactId>sys_common-lib</artifactId>
 			<scope>provided</scope>
 		</dependency>
 

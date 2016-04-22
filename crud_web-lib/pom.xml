@@ -9,17 +9,17 @@
 		<version>1.0-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>web_sys-lib</artifactId>
+	<artifactId>crud_web-lib</artifactId>
 	<packaging>jar</packaging>
 
-	<name>Biblioteca comum a todas aplicações</name>
-	<description>Biblioteca comum a todas aplicações</description>
+	<name>Biblioteca comum a todas aplicações web</name>
+	<description>Biblioteca comum a todas aplicações web</description>
 
 
 	<dependencies>
 		<dependency>
 			<groupId>br.com.cams7.crud</groupId>
-			<artifactId>common_sys-lib</artifactId>
+			<artifactId>sys_common-lib</artifactId>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>

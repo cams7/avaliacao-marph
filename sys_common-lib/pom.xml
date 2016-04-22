@@ -9,28 +9,29 @@
 		<version>1.0-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>crud_sys-jpa</artifactId>
+	<artifactId>sys_common-lib</artifactId>
 	<packaging>jar</packaging>
 
-	<name>Entidades da aplicação</name>
-	<description>Todas as entidades da aplicação</description>
+	<name>Biblioteca comum a todos módulos da aplicação</name>
+	<description>Biblioteca comum a todos módulos da aplicação</description>
 
 
 	<dependencies>
 		<dependency>
-			<groupId>br.com.cams7.crud</groupId>
-			<artifactId>sys_common-lib</artifactId>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-validator</artifactId>
 			<scope>provided</scope>
 		</dependency>
 
 		<dependency>
-			<groupId>org.hibernate.javax.persistence</groupId>
-			<artifactId>hibernate-jpa-2.1-api</artifactId>
+			<groupId>org.jboss.spec.javax.faces</groupId>
+			<artifactId>jboss-jsf-api_2.2_spec</artifactId>
 			<scope>provided</scope>
 		</dependency>
+
 		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-validator</artifactId>
+			<groupId>org.primefaces</groupId>
+			<artifactId>primefaces</artifactId>
 			<scope>provided</scope>
 		</dependency>
 	</dependencies>

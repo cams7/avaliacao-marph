@@ -24,9 +24,10 @@
 	</properties>
 
 	<modules>
-		<module>common_sys-lib</module>
+		<module>sys_common-lib</module>
 		<module>crud_sys-jpa</module>
-		<module>web_sys-lib</module>
+		<module>crud_web-lib</module>
+		<module>crud_jsf-lib</module>
 		<module>crud_sys-as</module>
 		<module>crud_sys-cw</module>
 	</modules>
@@ -47,7 +48,7 @@
 		<dependencies>
 			<dependency>
 				<groupId>br.com.cams7.crud</groupId>
-				<artifactId>common_sys-lib</artifactId>
+				<artifactId>sys_common-lib</artifactId>
 				<version>${project.version}</version>
 				<type>jar</type>
 			</dependency>
@@ -65,7 +66,13 @@
 			</dependency>
 			<dependency>
 				<groupId>br.com.cams7.crud</groupId>
-				<artifactId>web_sys-lib</artifactId>
+				<artifactId>crud_web-lib</artifactId>
+				<version>${project.version}</version>
+				<type>jar</type>
+			</dependency>
+			<dependency>
+				<groupId>br.com.cams7.crud</groupId>
+				<artifactId>crud_jsf-lib</artifactId>
 				<version>${project.version}</version>
 				<type>jar</type>
 			</dependency>
