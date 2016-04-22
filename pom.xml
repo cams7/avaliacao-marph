@@ -69,7 +69,7 @@
 				<version>${project.version}</version>
 				<type>jar</type>
 			</dependency>
-			
+
 			<dependency>
 				<groupId>org.wildfly.bom</groupId>
 				<artifactId>jboss-javaee-7.0-with-all</artifactId>
@@ -77,35 +77,37 @@
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
-						
+
 			<dependency>
 				<groupId>com.fasterxml.jackson.datatype</groupId>
 				<artifactId>jackson-datatype-hibernate4</artifactId>
 				<version>${jackson.version}</version>
 			</dependency>
-			
+
 			<dependency>
 				<groupId>org.primefaces</groupId>
 				<artifactId>primefaces</artifactId>
 				<version>5.3</version>
 			</dependency>
 
-			 <!-- Jasper Reports -->  
-        		<dependency>  
-            			<groupId>net.sf.jasperreports</groupId>  
-            			<artifactId>jasperreports</artifactId>  
-            			<version>6.2.1</version>  
-            			<exclusions>  
-                			<exclusion>  
-                    				<!-- Since Jasper version 6.1.0, a castor-xml library dependency was added to able customized chart themes using Spring framework.  
-                    				As a result, many Spring libraries were added to our WAR file. Thus, the code below avoids such libraries to be added. -->  
-                    				<groupId>org.codehaus.castor</groupId>  
-                    				<artifactId>castor-xml</artifactId>  
-                			</exclusion>  
-            			</exclusions>  
-        		</dependency>  
-        		<!-- for using groovy as script language inside jasper reports -->  
-        		<dependency>
+			<!-- Jasper Reports -->
+			<dependency>
+				<groupId>net.sf.jasperreports</groupId>
+				<artifactId>jasperreports</artifactId>
+				<version>6.2.1</version>
+				<exclusions>
+					<exclusion>
+						<!-- Since Jasper version 6.1.0, a castor-xml library dependency was 
+							added to able customized chart themes using Spring framework. As a result, 
+							many Spring libraries were added to our WAR file. Thus, the code below avoids 
+							such libraries to be added. -->
+						<groupId>org.codehaus.castor</groupId>
+						<artifactId>castor-xml</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+			<!-- for using groovy as script language inside jasper reports -->
+			<dependency>
 				<groupId>org.codehaus.groovy</groupId>
 				<artifactId>groovy-all</artifactId>
 				<version>2.4.6</version>

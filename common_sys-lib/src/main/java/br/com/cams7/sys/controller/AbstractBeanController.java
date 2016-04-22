@@ -3,6 +3,8 @@
  */
 package br.com.cams7.sys.controller;
 
+import static br.com.cams7.sys.utils.URIHelper.getURI;
+
 import java.io.Serializable;
 import java.text.MessageFormat;
 import java.util.HashMap;
@@ -10,7 +12,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
-import java.util.Map.Entry;
 import java.util.logging.Level;
 
 import javax.annotation.PostConstruct;
@@ -31,13 +32,12 @@ import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 
 import br.com.cams7.sys.ReportView;
-import br.com.cams7.sys.SearchParams;
 import br.com.cams7.sys.ReportView.IntervalPages;
+import br.com.cams7.sys.SearchParams;
 import br.com.cams7.sys.entity.AbstractEntity;
 import br.com.cams7.sys.service.BaseService;
 import br.com.cams7.sys.utils.AppException;
 import br.com.cams7.sys.utils.AppHelper;
-import br.com.cams7.sys.utils.URIHelper;
 
 /**
  * @author cesar
@@ -277,58 +277,10 @@ public abstract class AbstractBeanController<S extends BaseService<E>, E extends
 
 		String urlReport = context.getExternalContext().getRequestContextPath() + "/req/" + page + "/report/pdf";
 
-		IntervalPages intervalPages = getReport().getInterval();
+		SearchParams params = new SearchParams(lastFirstPage, lastSizePage, lastSortField, getSortOrder(lastSortOrder),
+				lastFilters, globalFilters);
+		urlReport += getURI(params, report);
 
-		StringBuffer uri = new StringBuffer(urlReport);
-		boolean includedQuestionMark = false;
-
-		if (intervalPages != IntervalPages.ALL_PAGES) {
-			int firstPage = lastFirstPage;
-			short sizePage = lastSizePage;
-
-			if (intervalPages == IntervalPages.INFORMED_INTERVAL) {
-				firstPage = getReport().getFirstPage();
-
-				sizePage *= (getReport().getLastPage() - firstPage + 1);
-
-				firstPage--;
-				firstPage *= lastSizePage;
-			}
-
-			uri.append("?" + URIHelper.PAGE_FIRST + "=" + firstPage);
-			uri.append("&" + URIHelper.PAGE_SIZE + "=" + sizePage);
-			includedQuestionMark = true;
-		}
-
-		if (lastSortField != null) {
-			uri.append(URIHelper.getQueryDelimiter(includedQuestionMark) + URIHelper.SORT_FIELD + "=" + lastSortField);
-			uri.append("&" + URIHelper.SORT_ORDER + "=" + getSortOrder(lastSortOrder));
-			includedQuestionMark = true;
-		}
-
-		if (!lastFilters.isEmpty()) {
-			if (lastFilters.containsKey(URIHelper.GLOBAL_FILTER)) {
-				uri.append(URIHelper.getQueryDelimiter(includedQuestionMark) + URIHelper.GLOBAL_FILTER + "="
-						+ lastFilters.get(URIHelper.GLOBAL_FILTER));
-				for (String field : globalFilters)
-					uri.append("&" + URIHelper.FILTER_FIELD + "=" + field);
-
-				includedQuestionMark = true;
-			}
-
-			for (Entry<String, Object> param : lastFilters.entrySet()) {
-				String paramName = param.getKey();
-				Object paramValue = param.getValue();
-
-				if (URIHelper.GLOBAL_FILTER.equals(paramName))
-					continue;
-
-				uri.append(URIHelper.getQueryDelimiter(includedQuestionMark) + paramName + "=" + paramValue);
-				includedQuestionMark = true;
-			}
-		}
-
-		urlReport = uri.toString();
 		return urlReport;
 	}
 

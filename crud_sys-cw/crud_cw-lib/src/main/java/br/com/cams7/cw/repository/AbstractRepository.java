@@ -210,11 +210,11 @@ public abstract class AbstractRepository<E extends AbstractEntity> extends Abstr
 
 		setFiltro(select, params.getFilters(), params.getGlobalFilters());
 
-		if (params.getPageFirst() != null)
-			select.setFirstResult(params.getPageFirst());
+		if (params.getFirstPage() != null)
+			select.setFirstResult(params.getFirstPage());
 
-		if (params.getPageSize() != null)
-			select.setMaxResults(params.getPageSize());
+		if (params.getSizePage() != null)
+			select.setMaxResults(params.getSizePage());
 
 		if (params.getSortField() != null && params.getSortOrder() != null) {
 			Order order;

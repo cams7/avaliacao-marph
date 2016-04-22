@@ -299,11 +299,11 @@ public abstract class AbstractRepository<E extends AbstractEntity> extends Abstr
 		cq.select(root);
 
 		TypedQuery<E> tq = getEntityManager().createQuery(cq);
-		if (params.getPageFirst() != null)
-			tq.setFirstResult(params.getPageFirst());
+		if (params.getFirstPage() != null)
+			tq.setFirstResult(params.getFirstPage());
 
-		if (params.getPageSize() != null)
-			tq.setMaxResults(params.getPageSize());
+		if (params.getSizePage() != null)
+			tq.setMaxResults(params.getSizePage());
 
 		return tq;
 	}

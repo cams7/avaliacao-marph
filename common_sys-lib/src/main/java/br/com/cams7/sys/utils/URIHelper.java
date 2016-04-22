@@ -3,10 +3,15 @@
  */
 package br.com.cams7.sys.utils;
 
+import static br.com.cams7.sys.ReportView.IntervalPages.ALL_PAGES;
+import static br.com.cams7.sys.ReportView.IntervalPages.INFORMED_INTERVAL;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import br.com.cams7.sys.ReportView;
+import br.com.cams7.sys.ReportView.IntervalPages;
 import br.com.cams7.sys.SearchParams;
 import br.com.cams7.sys.SearchParams.SortOrder;
 import br.com.cams7.sys.entity.AbstractEntity;
@@ -17,12 +22,12 @@ import br.com.cams7.sys.entity.AbstractEntity;
  */
 public final class URIHelper {
 
-	public static final String PAGE_FIRST = "page_first";
-	public static final String PAGE_SIZE = "page_size";
-	public static final String SORT_FIELD = "sort_field";
-	public static final String SORT_ORDER = "sort_order";
-	public static final String FILTER_FIELD = "filter_field";
-	public static final String GLOBAL_FILTER = "globalFilter";
+	private static final String PAGE_FIRST = "page_first";
+	private static final String PAGE_SIZE = "page_size";
+	private static final String SORT_FIELD = "sort_field";
+	private static final String SORT_ORDER = "sort_order";
+	private static final String FILTER_FIELD = "filter_field";
+	private static final String GLOBAL_FILTER = "globalFilter";
 
 	/**
 	 * @param messages
@@ -63,7 +68,7 @@ public final class URIHelper {
 			case PAGE_FIRST:
 				if (onlyOneParameter(messages, paramName, paramValues))
 					try {
-						params.setPageFirst(Integer.parseInt(paramValues[0]));
+						params.setFirstPage(Integer.parseInt(paramValues[0]));
 					} catch (NumberFormatException e) {
 						validParameter(messages, paramName);
 					}
@@ -71,7 +76,7 @@ public final class URIHelper {
 			case PAGE_SIZE:
 				if (onlyOneParameter(messages, paramName, paramValues))
 					try {
-						params.setPageSize(Short.parseShort(paramValues[0]));
+						params.setSizePage(Short.parseShort(paramValues[0]));
 					} catch (NumberFormatException e) {
 						validParameter(messages, paramName);
 					}
@@ -113,7 +118,62 @@ public final class URIHelper {
 		return params;
 	}
 
-	public static String getQueryDelimiter(boolean isQueryDelimiter) {
+	public static String getURI(SearchParams params, ReportView view) {
+		IntervalPages intervalPages = view.getInterval();
+
+		StringBuffer uri = new StringBuffer();
+		boolean includedQuestionMark = false;
+
+		if (intervalPages != ALL_PAGES) {
+			int firstPage = params.getFirstPage();
+			short sizePage = params.getSizePage();
+
+			if (intervalPages == INFORMED_INTERVAL) {
+				firstPage = view.getFirstPage();
+
+				sizePage *= (view.getLastPage() - firstPage + 1);
+
+				firstPage--;
+				firstPage *= params.getSizePage();
+			}
+
+			uri.append("?" + PAGE_FIRST + "=" + firstPage);
+			uri.append("&" + PAGE_SIZE + "=" + sizePage);
+			includedQuestionMark = true;
+		}
+
+		if (params.getSortField() != null) {
+			uri.append(getQueryDelimiter(includedQuestionMark) + SORT_FIELD + "=" + params.getSortField());
+			uri.append("&" + SORT_ORDER + "=" + params.getSortOrder().name());
+			includedQuestionMark = true;
+		}
+
+		if (!params.getFilters().isEmpty()) {
+			if (params.getFilters().containsKey(GLOBAL_FILTER)) {
+				uri.append(getQueryDelimiter(includedQuestionMark) + GLOBAL_FILTER + "="
+						+ params.getFilters().get(GLOBAL_FILTER));
+				for (String field : params.getGlobalFilters())
+					uri.append("&" + FILTER_FIELD + "=" + field);
+
+				includedQuestionMark = true;
+			}
+
+			for (Entry<String, Object> param : params.getFilters().entrySet()) {
+				String paramName = param.getKey();
+				Object paramValue = param.getValue();
+
+				if (GLOBAL_FILTER.equals(paramName))
+					continue;
+
+				uri.append(getQueryDelimiter(includedQuestionMark) + paramName + "=" + paramValue);
+				includedQuestionMark = true;
+			}
+		}
+
+		return uri.toString();
+	}
+
+	private static String getQueryDelimiter(boolean isQueryDelimiter) {
 		return isQueryDelimiter ? "&" : "?";
 	}
 

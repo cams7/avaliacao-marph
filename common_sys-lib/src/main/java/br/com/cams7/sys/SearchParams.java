@@ -16,11 +16,11 @@ public class SearchParams {
 	/**
 	 * Indice
 	 */
-	private Integer pageFirst;
+	private Integer firstPage;
 	/**
 	 * Total de linhas
 	 */
-	private Short pageSize;
+	private Short sizePage;
 	/**
 	 * Nome do atributo da entidade
 	 */
@@ -42,13 +42,13 @@ public class SearchParams {
 		super();
 	}
 
-	public SearchParams(Integer pageFirst, Short pageSize, String sortField, SortOrder sortOrder,
+	public SearchParams(Integer firstPage, Short sizePage, String sortField, SortOrder sortOrder,
 			Map<String, Object> filters, String... globalFilters) {
 
 		this();
 
-		this.pageFirst = pageFirst;
-		this.pageSize = pageSize;
+		this.firstPage = firstPage;
+		this.sizePage = sizePage;
 		this.sortField = sortField;
 		this.sortOrder = sortOrder;
 		this.filters = filters;
@@ -57,25 +57,25 @@ public class SearchParams {
 
 	@Override
 	public String toString() {
-		return String.format("%s{pageFirst:%s, pageSize:%s, sortField:%s, sortOrder:%s, filters:%s, globalFilters:%s}",
-				this.getClass().getSimpleName(), getPageFirst(), getPageSize(), getSortField(), getSortOrder(),
+		return String.format("%s{firstPage:%s, sizePage:%s, sortField:%s, sortOrder:%s, filters:%s, globalFilters:%s}",
+				this.getClass().getSimpleName(), getFirstPage(), getSizePage(), getSortField(), getSortOrder(),
 				getFilters(), AppHelper.getString(getGlobalFilters()));
 	}
 
-	public Integer getPageFirst() {
-		return pageFirst;
+	public Integer getFirstPage() {
+		return firstPage;
 	}
 
-	public void setPageFirst(Integer pageFirst) {
-		this.pageFirst = pageFirst;
+	public void setFirstPage(Integer firstPage) {
+		this.firstPage = firstPage;
 	}
 
-	public Short getPageSize() {
-		return pageSize;
+	public Short getSizePage() {
+		return sizePage;
 	}
 
-	public void setPageSize(Short pageSize) {
-		this.pageSize = pageSize;
+	public void setSizePage(Short sizePage) {
+		this.sizePage = sizePage;
 	}
 
 	public String getSortField() {

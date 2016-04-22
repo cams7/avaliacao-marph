@@ -41,7 +41,7 @@
 		<dependency>
 			<groupId>br.com.cams7.crud</groupId>
 			<artifactId>crud_cw-lib</artifactId>
-		</dependency>		
+		</dependency>
 
 		<dependency>
 			<groupId>org.testng</groupId>
@@ -164,7 +164,7 @@
 		<dependency>
 			<groupId>net.sf.jasperreports</groupId>
 			<artifactId>jasperreports</artifactId>
-		</dependency>	
+		</dependency>
 		<dependency>
 			<groupId>org.codehaus.groovy</groupId>
 			<artifactId>groovy-all</artifactId>
