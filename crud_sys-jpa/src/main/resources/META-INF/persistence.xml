@@ -6,24 +6,23 @@
         http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
 
 	<persistence-unit name="appUnit">
-		<provider>org.hibernate.ejb.HibernatePersistence</provider>
+		<!--provider>org.hibernate.ejb.HibernatePersistence</provider-->
 
-		<jta-data-source>java:/MySqlDS</jta-data-source>
+		<jta-data-source>java:/h2/crud_sys</jta-data-source>
 
-		<class>br.com.cams7.crud.entity.PessoaEntity</class>
+		<!--class>br.com.cams7.crud.entity.PessoaEntity</class>
 		<class>br.com.cams7.crud.entity.UsuarioEntity</class>
-		<class>br.com.cams7.crud.entity.EnderecoEntity</class>
+		<class>br.com.cams7.crud.entity.EnderecoEntity</class-->
 
 		<properties>
-			<!--property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect" 
-				/ -->
-			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5InnoDBDialect" />
+			<property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect" />
+			<!--property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5InnoDBDialect" /-->
 
 			<property name="hibernate.show_sql" value="true" />
 			<property name="hibernate.format_sql" value="false" />
 
-			<!--property name="hibernate.hbm2ddl.auto" value="create-drop" / -->
-			<property name="hibernate.hbm2ddl.auto" value="update" />
+			<!--property name="hibernate.hbm2ddl.auto" value="create" /-->
+			<property name="hibernate.hbm2ddl.auto" value="validate" />
 		</properties>
 	</persistence-unit>
 </persistence>
