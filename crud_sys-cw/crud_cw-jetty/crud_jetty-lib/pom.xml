@@ -4,14 +4,14 @@
 
 	<parent>
 		<groupId>br.com.cams7.crud</groupId>
-		<artifactId>crud_cw-gae</artifactId>
+		<artifactId>crud_cw-jetty</artifactId>
 		<version>1.0-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>crud_gae-lib</artifactId>
+	<artifactId>crud_jetty-lib</artifactId>
 	<packaging>jar</packaging>
 
-	<name>Biblioteca comum à aplicação executada no Google app engine</name>
+	<name>Biblioteca comum à aplicação executada no Jetty</name>
 	<description>Biblioteca que é comum à aplicação executada num recipiente web: Jetty</description>
 
 	<dependencies>

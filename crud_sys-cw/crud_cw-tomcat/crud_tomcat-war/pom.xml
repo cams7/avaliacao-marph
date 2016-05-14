@@ -14,7 +14,7 @@
 	<name>Aplicação WEB executada no Tomcat7</name>
 	<description>Aplicação WEB que é executada num recipiente web: Tomcat7</description>
 
-	<properties>				
+	<properties>
 	</properties>
 
 	<dependencies>
@@ -53,7 +53,7 @@
 			<artifactId>testng</artifactId>
 			<scope>test</scope>
 		</dependency>
-		
+
 
 		<dependency>
 			<groupId>javax</groupId>
