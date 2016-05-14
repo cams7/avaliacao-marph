@@ -31,12 +31,6 @@
 			<groupId>br.com.cams7.crud</groupId>
 			<artifactId>crud_web-lib</artifactId>
 			<scope>provided</scope>
-		</dependency>
-
-		<dependency>
-			<groupId>org.jboss.spec.javax.faces</groupId>
-			<artifactId>jboss-jsf-api_2.2_spec</artifactId>
-			<scope>provided</scope>
-		</dependency>
+		</dependency>		
 	</dependencies>
 </project>

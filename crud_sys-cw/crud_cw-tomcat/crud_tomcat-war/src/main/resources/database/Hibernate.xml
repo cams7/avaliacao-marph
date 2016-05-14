@@ -7,7 +7,7 @@
 
 	<!-- Hibernate 4 SessionFactory Bean definition -->
 	<bean id="sessionFactory"
-		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />
 		<property name="packagesToScan" value="br.com.cams7.crud.entity" />
 
@@ -29,7 +29,7 @@
 		and wiring for us. We needed to define the session factory that the transaction 
 		manager will use to create sessions (attribute sessionFactory-ref). -->
 	<bean id="transactionManager"
-		class="org.springframework.orm.hibernate4.HibernateTransactionManager"
+		class="org.springframework.orm.hibernate5.HibernateTransactionManager"
 		p:sessionFactory-ref="sessionFactory">
 	</bean>
 

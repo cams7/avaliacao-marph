@@ -4,25 +4,18 @@
 	xsi:schemaLocation="
         http://xmlns.jcp.org/xml/ns/persistence
         http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+	<persistence-unit name="CRUDSysUnit">
 
-	<persistence-unit name="appUnit">
-		<!--provider>org.hibernate.ejb.HibernatePersistence</provider-->
-
-		<jta-data-source>java:/h2/crud_sys</jta-data-source>
-
-		<!--class>br.com.cams7.crud.entity.PessoaEntity</class>
-		<class>br.com.cams7.crud.entity.UsuarioEntity</class>
-		<class>br.com.cams7.crud.entity.EnderecoEntity</class-->
+		<!--jta-data-source>java:jboss/datasources/CRUDSysDS</jta-data-source-->
+		<non-jta-data-source>java:jboss/datasources/CRUDSysDS</non-jta-data-source>
 
 		<properties>
-			<property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect" />
-			<!--property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5InnoDBDialect" /-->
+			<!-- Properties for Hibernate -->
+			<property name="hibernate.dialect" value="${persistence.hibernate.dialect}" />
+			<property name="hibernate.hbm2ddl.auto" value="${persistence.hibernate.hbm2ddl.auto}" />
 
-			<property name="hibernate.show_sql" value="true" />
-			<property name="hibernate.format_sql" value="false" />
-
-			<!--property name="hibernate.hbm2ddl.auto" value="create" /-->
-			<property name="hibernate.hbm2ddl.auto" value="validate" />
+			<property name="hibernate.show_sql" value="${persistence.hibernate.show_sql}" />
+			<property name="hibernate.format_sql" value="${persistence.hibernate.format_sql}" />
 		</properties>
 	</persistence-unit>
 </persistence>

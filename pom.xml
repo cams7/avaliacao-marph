@@ -8,19 +8,25 @@
 	<packaging>pom</packaging>
 
 	<name>Exemplos CRUD</name>
-	<!--TODO Alterar a 'url' quando fazer o merge da branch 'as' com 'master' -->
-	<url>https://github.com/cams7/crud_sys/tree/as</url>
 	<description>Exemplos CRUD</description>
 
+	<!--TODO Alterar a 'url' quando fazer o merge da branch 'as' com 'master' -->
+	<url>https://github.com/cams7/crud_sys/tree/as</url>
+	<scm>
+		<connection>scm:git:https://github.com/cams7/crud_sys.git</connection>
+	</scm>
+
 	<properties>
+		<user.name>César Magalhães</user.name>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.build.timestamp.format>yyyyMMdd'T'HHmmss</maven.build.timestamp.format>
 
-		<version.arquillian.container>8.2.1.Final</version.arquillian.container>
-		<jackson.version>2.7.3</jackson.version>
-
-		<user.name>César Magalhães</user.name>
 		<pula.teste_unitario>true</pula.teste_unitario>
+
+		<jackson.version>2.7.4</jackson.version>
+		<version.arquillian.container>8.2.1.Final</version.arquillian.container>
+		
+		<hibernate.version>5.1.0.Final</hibernate.version>
 	</properties>
 
 	<modules>
@@ -39,10 +45,6 @@
 			<url>http://repository.primefaces.org</url>
 		</repository>
 	</repositories>
-
-	<scm>
-		<connection>scm:git:https://github.com/cams7/crud_sys.git</connection>
-	</scm>
 
 	<dependencyManagement>
 		<dependencies>
@@ -80,8 +82,8 @@
 			<!-- Wildfly dependencies -->
 			<dependency>
 				<groupId>org.wildfly.bom</groupId>
-				<artifactId>jboss-javaee-7.0-with-all</artifactId>
-				<version>8.2.2.Final</version>
+				<artifactId>wildfly-javaee7-with-tools</artifactId>
+				<version>10.0.1.Final</version>
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
@@ -129,6 +131,35 @@
 				<artifactId>groovy-all</artifactId>
 				<version>2.4.6</version>
 			</dependency>
+			
+			<dependency>
+				<groupId>org.hibernate</groupId>
+				<artifactId>hibernate-core</artifactId>
+				<version>${hibernate.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.hibernate</groupId>
+				<artifactId>hibernate-entitymanager</artifactId>
+				<version>${hibernate.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.hibernate</groupId>
+				<artifactId>hibernate-validator</artifactId>
+				<version>5.2.4.Final</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>cglib</groupId>
+				<artifactId>cglib</artifactId>
+				<version>3.2.2</version>
+			</dependency>
+
+			<dependency>
+				<groupId>commons-dbcp</groupId>
+				<artifactId>commons-dbcp</artifactId>
+				<version>1.4</version>
+			</dependency>
 		</dependencies>
 	</dependencyManagement>
 
@@ -140,14 +171,15 @@
 					<artifactId>maven-compiler-plugin</artifactId>
 					<version>3.5.1</version>
 					<configuration>
-						<source>1.7</source>
-						<target>1.7</target>
+						<source>1.8</source>
+						<target>1.8</target>
 					</configuration>
 				</plugin>
 
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-jar-plugin</artifactId>
+					<version>2.6</version>
 					<configuration>
 						<archive>
 							<manifest>
@@ -155,7 +187,7 @@
 								<classpathPrefix />
 							</manifest>
 							<manifestEntries>
-								<url>${pom.url}</url>
+								<url>${project.url}</url>
 								<Implementation-Build>${buildNumber}</Implementation-Build>
 								<Implementation-Title>${project.name}</Implementation-Title>
 								<Implementation-Vendor>N/A</Implementation-Vendor>
@@ -181,7 +213,7 @@
 								<classpathPrefix />
 							</manifest>
 							<manifestEntries>
-								<url>${pom.url}</url>
+								<url>${project.url}</url>
 								<Implementation-Build>${buildNumber}</Implementation-Build>
 								<Implementation-Title>${project.name}</Implementation-Title>
 								<Implementation-Vendor>N/A</Implementation-Vendor>
@@ -221,7 +253,7 @@
 					<configuration>
 						<scanIntervalSeconds>10</scanIntervalSeconds>
 						<webApp>
-							<contextPath>/</contextPath>
+							<contextPath>/crud_sys</contextPath>
 						</webApp>
 						<connectors>
 							<connector implementation="org.eclipse.jetty.server.nio.SelectChannelConnector">
@@ -241,11 +273,6 @@
 		</pluginManagement>
 
 		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-			</plugin>
-
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>buildnumber-maven-plugin</artifactId>
@@ -278,6 +305,23 @@
 			<activation>
 				<activeByDefault>true</activeByDefault>
 			</activation>
+
+			<properties>
+				<!-- persistence.xml -->
+				<persistence.hibernate.dialect>org.hibernate.dialect.H2Dialect</persistence.hibernate.dialect>
+				<!--persistence.hibernate.hbm2ddl.auto>create</persistence.hibernate.hbm2ddl.auto -->
+				<persistence.hibernate.hbm2ddl.auto>validate</persistence.hibernate.hbm2ddl.auto>
+				<persistence.hibernate.show_sql>true</persistence.hibernate.show_sql>
+				<persistence.hibernate.format_sql>false</persistence.hibernate.format_sql>
+
+
+				<!-- crud-ds.xml -->
+				<datasource.connection.url>jdbc:h2:file:C:/Desenv/Github/crud_sys/db/h2/crud_sys;DB_CLOSE_DELAY=-1</datasource.connection.url>
+				<datasource.driver>h2</datasource.driver>
+				<datasource.user-name>sa</datasource.user-name>
+				<datasource.password></datasource.password>
+			</properties>
+
 			<build>
 				<plugins>
 					<plugin>
@@ -294,9 +338,6 @@
 						<configuration>
 							<skip>true</skip>
 						</configuration>
-						<!--configuration> <jboss-home>/home/cesar/desenv/java/as/wildfly-10.0.0.Final</jboss-home> 
-							</configuration> <executions> <execution> <phase>install</phase> <goals> 
-							<goal>run</goal> <goal>deploy</goal> </goals> </execution> </executions -->
 					</plugin>
 				</plugins>
 			</build>
@@ -324,6 +365,49 @@
 					<scope>test</scope>
 				</dependency>
 			</dependencies>
+		</profile>
+
+		<profile>
+			<!-- When built in OpenShift the 'openshift' profile will be used when 
+				invoking mvn. -->
+			<!-- Use this profile for any OpenShift specific customization your app 
+				will need. -->
+			<!-- By default that is to put the resulting archive into the 'deployments' 
+				folder. -->
+			<!-- http://maven.apache.org/guides/mini/guide-building-for-different-environments.html -->
+			<id>openshift</id>
+
+			<properties>
+				<!-- persistence.xml -->
+				<!--persistence.hibernate.dialect>org.hibernate.dialect.MySQL5InnoDBDialect</persistence.hibernate.dialect-->
+				<persistence.hibernate.dialect>org.hibernate.dialect.H2Dialect</persistence.hibernate.dialect>
+				<persistence.hibernate.hbm2ddl.auto>validate</persistence.hibernate.hbm2ddl.auto>
+				<persistence.hibernate.show_sql>true</persistence.hibernate.show_sql>
+				<persistence.hibernate.format_sql>false</persistence.hibernate.format_sql>
+
+				<!-- crud-ds.xml -->
+				<!--datasource.driver>mysql</datasource.driver>
+				<datasource.connection.url>jdbc:mysql://127.4.97.130:3306/crud</datasource.connection.url>
+				<datasource.user-name>adminvCG7DHd</datasource.user-name>
+				<datasource.password>28a2z7LvS5Zi</datasource.password-->
+				
+				<datasource.connection.url>jdbc:h2:file:C:/Desenv/Github/crud_sys/db/h2/crud_sys;DB_CLOSE_DELAY=-1</datasource.connection.url>
+				<datasource.driver>h2</datasource.driver>
+				<datasource.user-name>sa</datasource.user-name>
+				<datasource.password></datasource.password>
+			</properties>
+
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-surefire-plugin</artifactId>
+						<configuration>
+							<skip>true</skip>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
 		</profile>
 	</profiles>
 </project>

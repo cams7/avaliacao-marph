@@ -21,7 +21,6 @@
 	</properties>
 
 	<modules>
-		<module>crud_as-ear</module>
 		<module>crud_as-war</module>
 		<module>crud_as-ejb</module>
 		<module>crud_as-lib</module>
@@ -40,13 +39,7 @@
 				<artifactId>crud_as-ejb</artifactId>
 				<version>${project.version}</version>
 				<type>ejb</type>
-			</dependency>
-			<dependency>
-				<groupId>br.com.cams7.crud</groupId>
-				<artifactId>crud_as-war</artifactId>
-				<version>${project.version}</version>
-				<type>war</type>
-			</dependency>							
+			</dependency>										
 		</dependencies>
 	</dependencyManagement>	
 
@@ -64,7 +57,7 @@
 								<classpathPrefix />
 							</manifest>
 							<manifestEntries>
-								<url>${pom.url}</url>
+								<url>${project.url}</url>
 								<Implementation-Build>${buildNumber}</Implementation-Build>
 								<Implementation-Title>${project.name}</Implementation-Title>
 								<Implementation-Vendor>N/A</Implementation-Vendor>
@@ -88,7 +81,7 @@
 								<classpathPrefix />
 							</manifest>
 							<manifestEntries>
-								<url>${pom.url}</url>
+								<url>${project.url}</url>
 								<Implementation-Build>${buildNumber}</Implementation-Build>
 								<Implementation-Title>${project.name}</Implementation-Title>
 								<Implementation-Vendor>N/A</Implementation-Vendor>
@@ -103,5 +96,29 @@
 				</plugin>							
 			</plugins>
 		</pluginManagement>
-	</build>	
+	</build>
+
+	<profiles>
+		<profile>
+			<id>default</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			
+			<modules>
+				<module>crud_as-ear</module>				
+			</modules>
+			
+			<dependencyManagement>
+				<dependencies>
+					<dependency>
+						<groupId>br.com.cams7.crud</groupId>
+						<artifactId>crud_as-war</artifactId>
+						<version>${project.version}</version>
+						<type>war</type>
+					</dependency>
+				</dependencies>
+			</dependencyManagement>
+		</profile>
+	</profiles>
 </project>
