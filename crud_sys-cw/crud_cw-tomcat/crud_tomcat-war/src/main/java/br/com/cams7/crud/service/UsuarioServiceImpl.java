@@ -11,7 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import br.com.cams7.crud.entity.UsuarioEntity;
 import br.com.cams7.crud.repository.UsuarioRepository;
-import br.com.cams7.crud.service.UsuarioService;
 import br.com.cams7.cw.service.AbstractService;
 
 /**

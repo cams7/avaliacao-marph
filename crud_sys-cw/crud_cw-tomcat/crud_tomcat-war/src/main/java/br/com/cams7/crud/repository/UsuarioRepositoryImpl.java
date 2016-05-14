@@ -12,7 +12,6 @@ import org.hibernate.sql.JoinType;
 import org.springframework.stereotype.Repository;
 
 import br.com.cams7.crud.entity.UsuarioEntity;
-import br.com.cams7.crud.repository.UsuarioRepository;
 import br.com.cams7.cw.repository.AbstractRepository;
 import br.com.cams7.sys.SearchParams;
 

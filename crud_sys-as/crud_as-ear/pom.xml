@@ -29,6 +29,10 @@
 		</dependency>
 		<dependency>
 			<groupId>br.com.cams7.crud</groupId>
+			<artifactId>crud_common-lib</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>br.com.cams7.crud</groupId>
 			<artifactId>crud_as-lib</artifactId>
 		</dependency>
 		<dependency>

@@ -10,7 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import br.com.cams7.crud.entity.PessoaEntity;
 import br.com.cams7.crud.repository.PessoaRepository;
-import br.com.cams7.crud.service.PessoaService;
 import br.com.cams7.cw.service.AbstractService;
 
 /**

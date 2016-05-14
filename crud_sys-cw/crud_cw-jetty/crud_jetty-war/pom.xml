@@ -17,6 +17,23 @@
 	<dependencies>
 		<dependency>
 			<groupId>br.com.cams7.crud</groupId>
+			<artifactId>sys_common-lib</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>br.com.cams7.crud</groupId>
+			<artifactId>crud_sys-jpa</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>br.com.cams7.crud</groupId>
+			<artifactId>crud_common-lib</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>br.com.cams7.crud</groupId>
+			<artifactId>crud_web-lib</artifactId>
+		</dependency>
+	
+		<dependency>
+			<groupId>br.com.cams7.crud</groupId>
 			<artifactId>crud_jetty-lib</artifactId>
 		</dependency>
 

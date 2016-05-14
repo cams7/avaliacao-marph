@@ -9,11 +9,11 @@
 		<version>1.0-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>crud_jsf-lib</artifactId>
+	<artifactId>crud_common-lib</artifactId>
 	<packaging>jar</packaging>
 
-	<name>Biblioteca comum a todas aplicações JSF2</name>
-	<description>Biblioteca comum a todas aplicações JSF2</description>
+	<name>Biblioteca comum a todas aplicações CRUD</name>
+	<description>Biblioteca comum a todas aplicações CRUD</description>
 
 
 	<dependencies>
@@ -25,16 +25,6 @@
 		<dependency>
 			<groupId>br.com.cams7.crud</groupId>
 			<artifactId>crud_sys-jpa</artifactId>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>br.com.cams7.crud</groupId>
-			<artifactId>crud_common-lib</artifactId>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>br.com.cams7.crud</groupId>
-			<artifactId>crud_web-lib</artifactId>
 			<scope>provided</scope>
 		</dependency>		
 	</dependencies>

@@ -27,6 +27,11 @@
 			<artifactId>crud_sys-jpa</artifactId>
 			<scope>provided</scope>
 		</dependency>
+		<dependency>
+			<groupId>br.com.cams7.crud</groupId>
+			<artifactId>crud_common-lib</artifactId>
+			<scope>provided</scope>
+		</dependency>
 
 		<dependency>
 			<groupId>org.jboss.spec.javax.faces</groupId>

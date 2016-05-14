@@ -9,7 +9,6 @@ import org.hibernate.Query;
 import org.springframework.stereotype.Repository;
 
 import br.com.cams7.crud.entity.PessoaEntity;
-import br.com.cams7.crud.repository.PessoaRepository;
 import br.com.cams7.cw.repository.AbstractRepository;
 
 /**

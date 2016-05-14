@@ -31,6 +31,11 @@
 		</dependency>
 		<dependency>
 			<groupId>br.com.cams7.crud</groupId>
+			<artifactId>crud_common-lib</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>br.com.cams7.crud</groupId>
 			<artifactId>crud_as-lib</artifactId>
 			<scope>provided</scope>
 		</dependency>
@@ -55,13 +60,14 @@
 	<build>
 		<plugins>
 			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-ejb-plugin</artifactId>
 				<configuration>
 					<ejbVersion>3.1</ejbVersion>
-					<generateClient>true</generateClient>
+					<!--generateClient>true</generateClient>
 					<clientExcludes>
 						<clientExclude>br/com/cams7/crud/**/*Impl.class</clientExclude>
-					</clientExcludes>
+					</clientExcludes-->
 				</configuration>
 			</plugin>
 		</plugins>

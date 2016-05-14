@@ -25,11 +25,10 @@
 		<dependency>
 			<groupId>br.com.cams7.crud</groupId>
 			<artifactId>crud_sys-jpa</artifactId>
-		</dependency>
+		</dependency>	
 		<dependency>
 			<groupId>br.com.cams7.crud</groupId>
-			<artifactId>crud_as-ejb</artifactId>
-			<type>ejb-client</type>
+			<artifactId>crud_common-lib</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>br.com.cams7.crud</groupId>
@@ -43,7 +42,13 @@
 			<groupId>br.com.cams7.crud</groupId>
 			<artifactId>crud_tomcat-lib</artifactId>
 		</dependency>
-
+		
+		<!--dependency>
+			<groupId>br.com.cams7.crud</groupId>
+			<artifactId>crud_as-ejb</artifactId>
+			<type>ejb-client</type>
+		</dependency-->
+		
 		<dependency>
 			<groupId>org.primefaces</groupId>
 			<artifactId>primefaces</artifactId>
@@ -103,7 +108,7 @@
 			<groupId>org.springframework.webflow</groupId>
 			<artifactId>spring-faces</artifactId>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.jboss.logging</groupId>
 			<artifactId>jboss-logging</artifactId>
@@ -165,21 +170,16 @@
 
 		<dependency>
 			<groupId>net.sf.jasperreports</groupId>
-			<artifactId>jasperreports</artifactId>			
+			<artifactId>jasperreports</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.codehaus.groovy</groupId>
 			<artifactId>groovy-all</artifactId>
 		</dependency>
 
-		<!--dependency>
-			<groupId>org.hsqldb</groupId>
-			<artifactId>hsqldb</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>mysql</groupId>
-			<artifactId>mysql-connector-java</artifactId>
-		</dependency-->
+		<!--dependency> <groupId>org.hsqldb</groupId> <artifactId>hsqldb</artifactId> 
+			</dependency> <dependency> <groupId>mysql</groupId> <artifactId>mysql-connector-java</artifactId> 
+			</dependency -->
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
