@@ -84,6 +84,12 @@
 				<artifactId>h2</artifactId>
 				<version>1.4.191</version>
 			</dependency>
+			
+			<dependency>
+				<groupId>org.firebirdsql.jdbc</groupId>
+				<artifactId>jaybird-jdk17</artifactId>
+				<version>2.2.10</version>
+			</dependency>
 		</dependencies>
 	</dependencyManagement>		
 </project>

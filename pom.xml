@@ -315,12 +315,12 @@
 				<persistence.hibernate.format_sql>false</persistence.hibernate.format_sql>
 				
 				<!-- persistence.xml (H2) -->
-				<persistence.hibernate.dialect>org.hibernate.dialect.H2Dialect</persistence.hibernate.dialect>
+				<!--persistence.hibernate.dialect>org.hibernate.dialect.H2Dialect</persistence.hibernate.dialect-->
 				<!-- crud-ds.xml (H2)-->
-				<datasource.connection.url>jdbc:h2:file:C:/Desenv/Github/crud_sys/db/h2/crud_sys;DB_CLOSE_DELAY=-1</datasource.connection.url>
+				<!--datasource.connection.url>jdbc:h2:file:C:/Desenv/Github/crud_sys/db/h2/crud_sys;DB_CLOSE_DELAY=-1</datasource.connection.url>
 				<datasource.driver>h2</datasource.driver>
 				<datasource.user-name>sa</datasource.user-name>
-				<datasource.password></datasource.password>
+				<datasource.password></datasource.password-->
 				
 				<!-- persistence.xml (HSQLDB) -->				
 				<!--persistence.hibernate.dialect>org.hibernate.dialect.HSQLDialect</persistence.hibernate.dialect-->
@@ -328,7 +328,15 @@
 				<!--datasource.connection.url>jdbc:hsqldb:file:C:/Desenv/Github/crud_sys/db/hsqldb/crud_sys</datasource.connection.url>
 				<datasource.driver>hsqldb.jar</datasource.driver>
 				<datasource.user-name>sa</datasource.user-name>
-				<datasource.password></datasource.password-->				
+				<datasource.password></datasource.password-->	
+				
+				<!-- persistence.xml (Firebird 1.5.6) -->
+				<persistence.hibernate.dialect>org.hibernate.dialect.FirebirdDialect</persistence.hibernate.dialect>
+				<!-- crud-ds.xml (Firebird 1.5.6)-->
+				<datasource.connection.url>jdbc:firebirdsql:localhost/3050:C:/Desenv/Github/crud_sys/db/firebird/crud_sys.fdb?lc_ctype=UTF8</datasource.connection.url>
+				<datasource.driver>jaybird-2.2.10.jar</datasource.driver>
+				<datasource.user-name>sysdba</datasource.user-name>
+				<datasource.password>masterkey</datasource.password>			
 			</properties>
 
 			<build>

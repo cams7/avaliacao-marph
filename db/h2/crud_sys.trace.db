@@ -12213,3 +12213,27 @@ org.h2.jdbc.JdbcSQLException: Feature not supported: "isWrapperFor" [50100-173]
 	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
 	at java.lang.Thread.run(Unknown Source)
+05-17 16:26:50 database: close
+org.h2.message.DbException: IO Exception: "java.io.IOException: O processo não pode acessar o arquivo porque outro processo bloqueou parte do arquivo"; "C:/Desenv/Github/crud_sys/db/h2/crud_sys.h2.db" [90031-176]
+	at org.h2.message.DbException.get(DbException.java:167)
+	at org.h2.message.DbException.convertIOException(DbException.java:329)
+	at org.h2.store.FileStore.write(FileStore.java:332)
+	at org.h2.store.PageStore.writePage(PageStore.java:1369)
+	at org.h2.store.PageStreamData.write(PageStreamData.java:107)
+	at org.h2.store.PageOutputStream.storePage(PageOutputStream.java:148)
+	at org.h2.store.PageOutputStream.flush(PageOutputStream.java:156)
+	at org.h2.store.PageLog.checkpoint(PageLog.java:697)
+	at org.h2.store.PageStore.checkpoint(PageStore.java:436)
+	at org.h2.engine.Database.closeOpenFilesAndUnlock(Database.java:1298)
+	at org.h2.engine.Database.close(Database.java:1251)
+	at org.h2.engine.DatabaseCloser.run(DatabaseCloser.java:64)
+Caused by: org.h2.jdbc.JdbcSQLException: IO Exception: "java.io.IOException: O processo não pode acessar o arquivo porque outro processo bloqueou parte do arquivo"; "C:/Desenv/Github/crud_sys/db/h2/crud_sys.h2.db" [90031-176]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:344)
+	... 12 more
+Caused by: java.io.IOException: O processo não pode acessar o arquivo porque outro processo bloqueou parte do arquivo
+	at java.io.RandomAccessFile.writeBytes(Native Method)
+	at java.io.RandomAccessFile.write(Unknown Source)
+	at org.h2.store.fs.FileDisk.write(FilePathDisk.java:468)
+	at org.h2.store.fs.FileUtils.writeFully(FileUtils.java:361)
+	at org.h2.store.FileStore.write(FileStore.java:329)
+	... 9 more
