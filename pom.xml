@@ -34,7 +34,6 @@
 		<module>crud_sys-jpa</module>
 		<module>crud_common-lib</module>
 		<module>crud_web-lib</module>
-		<module>crud_jsf-lib</module>
 		<module>crud_sys-as</module>
 		<module>crud_sys-cw</module>
 	</modules>
@@ -72,17 +71,14 @@
 				<artifactId>crud_web-lib</artifactId>
 				<version>${project.version}</version>
 				<type>jar</type>
-			</dependency>
-			<dependency>
-				<groupId>br.com.cams7.crud</groupId>
-				<artifactId>crud_jsf-lib</artifactId>
-				<version>${project.version}</version>
-				<type>jar</type>
-			</dependency>
+			</dependency>			
 
-			<!--dependency> <groupId>br.com.cams7.crud</groupId> <artifactId>crud_as-ejb</artifactId> 
-				<version>${project.version}</version> <type>ejb-client</type> </dependency -->
-
+			<!--dependency> 
+				<groupId>br.com.cams7.crud</groupId> 
+				<artifactId>crud_as-ejb</artifactId> 
+				<version>${project.version}</version> 
+				<type>ejb-client</type> 
+			</dependency -->
 
 			<!-- Wildfly dependencies -->
 			<dependency>

@@ -4,15 +4,15 @@
 
 	<parent>
 		<groupId>br.com.cams7.crud</groupId>
-		<artifactId>crud_cw-jetty</artifactId>
+		<artifactId>crud_cw-springmvc</artifactId>
 		<version>1.0-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>crud_jetty-lib</artifactId>
+	<artifactId>crud_springmvc-lib</artifactId>
 	<packaging>jar</packaging>
 
-	<name>Biblioteca comum à aplicação executada no Jetty</name>
-	<description>Biblioteca que é comum à aplicação executada num recipiente web: Jetty</description>
+	<name>Biblioteca comum à aplicação (Spring MVC)</name>
+	<description>Biblioteca que é comum à aplicação (Spring MVC) executada num recipiente web: Tomcat7 e Jetty</description>
 
 	<dependencies>
 		<dependency>

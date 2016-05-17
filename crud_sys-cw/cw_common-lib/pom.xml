@@ -5,15 +5,15 @@
 
 	<parent>
 		<groupId>br.com.cams7.crud</groupId>
-		<artifactId>crud_sys</artifactId>
+		<artifactId>crud_sys-cw</artifactId>
 		<version>1.0-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>crud_jsf-lib</artifactId>
+	<artifactId>cw_common-lib</artifactId>
 	<packaging>jar</packaging>
 
-	<name>Biblioteca comum a todas aplicações JSF2</name>
-	<description>Biblioteca comum a todas aplicações JSF2</description>
+	<name>Biblioteca comum a todas aplicações (Recipiente web)</name>
+	<description>Biblioteca comum a todas aplicações (Recipiente web)</description>
 
 
 	<dependencies>

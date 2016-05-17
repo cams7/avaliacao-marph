@@ -4,15 +4,15 @@
 
 	<parent>
 		<groupId>br.com.cams7.crud</groupId>
-		<artifactId>crud_cw-tomcat</artifactId>
+		<artifactId>crud_cw-jsf</artifactId>
 		<version>1.0-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>crud_tomcat-war</artifactId>
+	<artifactId>crud_jsf-war</artifactId>
 	<packaging>war</packaging>
 
-	<name>Aplicação WEB executada no Tomcat7</name>
-	<description>Aplicação WEB que é executada num recipiente web: Tomcat7</description>
+	<name>Aplicação WEB (JSF 2 - Primefaces)</name>
+	<description>Aplicação WEB (JSF 2 - Primefaces) que é executada num recipiente web: Tomcat7 e Jetty</description>
 
 	<properties>
 	</properties>
@@ -36,12 +36,12 @@
 		</dependency>
 		<dependency>
 			<groupId>br.com.cams7.crud</groupId>
-			<artifactId>crud_jsf-lib</artifactId>
+			<artifactId>cw_common-lib</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>br.com.cams7.crud</groupId>
-			<artifactId>crud_tomcat-lib</artifactId>
-		</dependency>
+			<artifactId>crud_jsf-lib</artifactId>
+		</dependency>		
 		
 		<!--dependency>
 			<groupId>br.com.cams7.crud</groupId>

@@ -8,25 +8,25 @@
 		<version>1.0-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>crud_cw-jetty</artifactId>
+	<artifactId>crud_cw-springmvc</artifactId>
 	<packaging>pom</packaging>
 
-	<name>Aplicação executada no Jetty</name>
-	<description>Aplicação que é executada num recipiente web: Jetty</description>
+	<name>Aplicação Spring MVC</name>
+	<description>Aplicação que é executada num recipiente web: Tomcat7 e Jetty</description>
 
 	<properties>
 	</properties>
 
 	<modules>
-		<module>crud_jetty-war</module>
-		<module>crud_jetty-lib</module>
+		<module>crud_springmvc-war</module>
+		<module>crud_springmvc-lib</module>
 	</modules>
 
 	<dependencyManagement>
 		<dependencies>	
 			<dependency>
 				<groupId>br.com.cams7.crud</groupId>
-				<artifactId>crud_jetty-lib</artifactId>
+				<artifactId>crud_springmvc-lib</artifactId>
 				<version>${project.version}</version>
 				<type>jar</type>
 			</dependency>								

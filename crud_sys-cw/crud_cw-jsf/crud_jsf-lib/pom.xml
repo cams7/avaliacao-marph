@@ -4,15 +4,15 @@
 
 	<parent>
 		<groupId>br.com.cams7.crud</groupId>
-		<artifactId>crud_cw-tomcat</artifactId>
+		<artifactId>crud_cw-jsf</artifactId>
 		<version>1.0-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>crud_tomcat-lib</artifactId>
+	<artifactId>crud_jsf-lib</artifactId>
 	<packaging>jar</packaging>
 
-	<name>Biblioteca comum à aplicação executada no Tomcat7</name>
-	<description>Biblioteca que é comum à aplicação executada num recipiente web: Tomcat7</description>
+	<name>Biblioteca comum à aplicação (JSF 2 - Primefaces)</name>
+	<description>Biblioteca que é comum à aplicação (JSF 2 - Primefaces) executada num recipiente web: Tomcat7 e Jetty</description>
 
 	<dependencies>
 		<dependency>

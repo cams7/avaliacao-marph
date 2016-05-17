@@ -15,17 +15,25 @@
 	<description>Aplicação que é executada num recipiente web</description>
 
 	<properties>
-		<!--spring.security.version>4.0.4.RELEASE</spring.security.version -->
-		<spring.security.version>3.2.7.RELEASE</spring.security.version>
+		<!--spring.security.version>4.1.0.RELEASE</spring.security.version-->
+		<spring.security.version>3.2.9.RELEASE</spring.security.version>
 	</properties>
 
 	<modules>
-		<module>crud_cw-tomcat</module>
-		<module>crud_cw-jetty</module>
+		<module>cw_common-lib</module>
+		<module>crud_cw-jsf</module>
+		<module>crud_cw-springmvc</module>
 	</modules>
 
 	<dependencyManagement>
 		<dependencies>
+			<dependency>
+				<groupId>br.com.cams7.crud</groupId>
+				<artifactId>cw_common-lib</artifactId>
+				<version>${project.version}</version>
+				<type>jar</type>
+			</dependency>
+		
 			<dependency>
 				<groupId>org.testng</groupId>
 				<artifactId>testng</artifactId>

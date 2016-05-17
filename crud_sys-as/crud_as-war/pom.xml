@@ -109,11 +109,7 @@
 				<dependency>
 					<groupId>br.com.cams7.crud</groupId>
 					<artifactId>crud_web-lib</artifactId>
-				</dependency>
-				<dependency>
-					<groupId>br.com.cams7.crud</groupId>
-					<artifactId>crud_jsf-lib</artifactId>
-				</dependency>
+				</dependency>				
 				<dependency>
 					<groupId>br.com.cams7.crud</groupId>
 					<artifactId>crud_as-lib</artifactId>

@@ -4,12 +4,15 @@
 
 	<parent>
 		<groupId>br.com.cams7.crud</groupId>
-		<artifactId>crud_cw-jetty</artifactId>
+		<artifactId>crud_cw-springmvc</artifactId>
 		<version>1.0-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>crud_jetty-war</artifactId>
+	<artifactId>crud_springmvc-war</artifactId>
 	<packaging>war</packaging>
+	
+	<name>Aplicação WEB (Spring MVC)</name>
+	<description>Aplicação WEB (Spring MVC) que é executada num recipiente web: Tomcat7 e Jetty</description>
 
 	<properties>
 	</properties>
@@ -31,10 +34,13 @@
 			<groupId>br.com.cams7.crud</groupId>
 			<artifactId>crud_web-lib</artifactId>
 		</dependency>
-	
 		<dependency>
 			<groupId>br.com.cams7.crud</groupId>
-			<artifactId>crud_jetty-lib</artifactId>
+			<artifactId>cw_common-lib</artifactId>
+		</dependency>	
+		<dependency>
+			<groupId>br.com.cams7.crud</groupId>
+			<artifactId>crud_springmvc-lib</artifactId>
 		</dependency>
 
 		<dependency>
