@@ -25,7 +25,7 @@
 
 		<jackson.version>2.7.4</jackson.version>
 		<version.arquillian.container>8.2.1.Final</version.arquillian.container>
-		
+
 		<hibernate.version>5.1.0.Final</hibernate.version>
 	</properties>
 
@@ -60,7 +60,7 @@
 				<artifactId>crud_sys-jpa</artifactId>
 				<version>${project.version}</version>
 				<type>jar</type>
-			</dependency>			
+			</dependency>
 			<dependency>
 				<groupId>br.com.cams7.crud</groupId>
 				<artifactId>crud_common-lib</artifactId>
@@ -79,14 +79,10 @@
 				<version>${project.version}</version>
 				<type>jar</type>
 			</dependency>
-			
-			<!--dependency>
-				<groupId>br.com.cams7.crud</groupId>
-				<artifactId>crud_as-ejb</artifactId>
-				<version>${project.version}</version>
-				<type>ejb-client</type>
-			</dependency-->
-			
+
+			<!--dependency> <groupId>br.com.cams7.crud</groupId> <artifactId>crud_as-ejb</artifactId> 
+				<version>${project.version}</version> <type>ejb-client</type> </dependency -->
+
 
 			<!-- Wildfly dependencies -->
 			<dependency>
@@ -140,7 +136,7 @@
 				<artifactId>groovy-all</artifactId>
 				<version>2.4.6</version>
 			</dependency>
-			
+
 			<dependency>
 				<groupId>org.hibernate</groupId>
 				<artifactId>hibernate-core</artifactId>
@@ -157,7 +153,7 @@
 				<artifactId>hibernate-validator</artifactId>
 				<version>5.2.4.Final</version>
 			</dependency>
-			
+
 			<dependency>
 				<groupId>cglib</groupId>
 				<artifactId>cglib</artifactId>
@@ -317,18 +313,26 @@
 
 			<properties>
 				<!-- persistence.xml -->
-				<persistence.hibernate.dialect>org.hibernate.dialect.H2Dialect</persistence.hibernate.dialect>
-				<!--persistence.hibernate.hbm2ddl.auto>create</persistence.hibernate.hbm2ddl.auto -->
+				<!--persistence.hibernate.hbm2ddl.auto>create</persistence.hibernate.hbm2ddl.auto-->
 				<persistence.hibernate.hbm2ddl.auto>validate</persistence.hibernate.hbm2ddl.auto>
 				<persistence.hibernate.show_sql>true</persistence.hibernate.show_sql>
 				<persistence.hibernate.format_sql>false</persistence.hibernate.format_sql>
-
-
-				<!-- crud-ds.xml -->
+				
+				<!-- persistence.xml (H2) -->
+				<persistence.hibernate.dialect>org.hibernate.dialect.H2Dialect</persistence.hibernate.dialect>
+				<!-- crud-ds.xml (H2)-->
 				<datasource.connection.url>jdbc:h2:file:C:/Desenv/Github/crud_sys/db/h2/crud_sys;DB_CLOSE_DELAY=-1</datasource.connection.url>
 				<datasource.driver>h2</datasource.driver>
 				<datasource.user-name>sa</datasource.user-name>
 				<datasource.password></datasource.password>
+				
+				<!-- persistence.xml (HSQLDB) -->				
+				<!--persistence.hibernate.dialect>org.hibernate.dialect.HSQLDialect</persistence.hibernate.dialect-->
+				<!-- crud-ds.xml (HSQLDB) -->
+				<!--datasource.connection.url>jdbc:hsqldb:file:C:/Desenv/Github/crud_sys/db/hsqldb/crud_sys</datasource.connection.url>
+				<datasource.driver>hsqldb.jar</datasource.driver>
+				<datasource.user-name>sa</datasource.user-name>
+				<datasource.password></datasource.password-->				
 			</properties>
 
 			<build>
@@ -388,22 +392,25 @@
 
 			<properties>
 				<!-- persistence.xml -->
-				<!--persistence.hibernate.dialect>org.hibernate.dialect.MySQL5InnoDBDialect</persistence.hibernate.dialect-->
-				<persistence.hibernate.dialect>org.hibernate.dialect.H2Dialect</persistence.hibernate.dialect>
 				<persistence.hibernate.hbm2ddl.auto>validate</persistence.hibernate.hbm2ddl.auto>
 				<persistence.hibernate.show_sql>true</persistence.hibernate.show_sql>
 				<persistence.hibernate.format_sql>false</persistence.hibernate.format_sql>
-
-				<!-- crud-ds.xml -->
-				<!--datasource.driver>mysql</datasource.driver>
-				<datasource.connection.url>jdbc:mysql://127.4.97.130:3306/crud</datasource.connection.url>
-				<datasource.user-name>adminvCG7DHd</datasource.user-name>
-				<datasource.password>28a2z7LvS5Zi</datasource.password-->
-				
+								
+				<!-- persistence.xml (H2) -->
+				<persistence.hibernate.dialect>org.hibernate.dialect.H2Dialect</persistence.hibernate.dialect>
+				<!-- crud-ds.xml (H2) -->
 				<datasource.connection.url>jdbc:h2:file:C:/Desenv/Github/crud_sys/db/h2/crud_sys;DB_CLOSE_DELAY=-1</datasource.connection.url>
 				<datasource.driver>h2</datasource.driver>
 				<datasource.user-name>sa</datasource.user-name>
 				<datasource.password></datasource.password>
+				
+				<!-- persistence.xml (Mysql) -->
+				<!--persistence.hibernate.dialect>org.hibernate.dialect.MySQL5InnoDBDialect</persistence.hibernate.dialect -->
+				<!-- crud-ds.xml (Mysql) -->
+				<!--datasource.driver>mysql</datasource.driver> 
+				<datasource.connection.url>jdbc:mysql://127.4.97.130:3306/crud</datasource.connection.url> 
+				<datasource.user-name>adminvCG7DHd</datasource.user-name> 
+				<datasource.password>28a2z7LvS5Zi</datasource.password -->				
 			</properties>
 
 			<build>

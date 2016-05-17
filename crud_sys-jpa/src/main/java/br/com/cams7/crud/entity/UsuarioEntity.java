@@ -16,6 +16,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
@@ -37,13 +38,14 @@ import br.com.cams7.sys.entity.AbstractEntity;
 		@NamedQuery(name = "Usuario.buscaPeloLogin", query = "SELECT u FROM UsuarioEntity u WHERE u.login=:login"),
 		@NamedQuery(name = "Usuario.buscaTodosDadosPessoais", query = "SELECT u FROM UsuarioEntity u JOIN FETCH u.pessoa"),
 		@NamedQuery(name = "Usuario.buscaQtdCadastradoPeloLogin", query = "SELECT COUNT(u) FROM UsuarioEntity u WHERE u.login=:login"),
-		@NamedQuery(name = "Usuario.buscaLoginPeloId", query = "SELECT u.login FROM UsuarioEntity u WHERE u.id=:id")})
+		@NamedQuery(name = "Usuario.buscaLoginPeloId", query = "SELECT u.login FROM UsuarioEntity u WHERE u.id=:id") })
 public class UsuarioEntity extends AbstractEntity {
 
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@SequenceGenerator(name = "seq_usuario", sequenceName = "gen_usuario_id", allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_usuario")
 	@Column(name = "id_usuario")
 	private Long id;
 
