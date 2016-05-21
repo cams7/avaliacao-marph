@@ -323,21 +323,10 @@
 
 			<properties>
 				<!-- persistence.xml -->
-				<!--hibernate.hbm2ddl.auto>create</hibernate.hbm2ddl.auto -->
+				<!--hibernate.hbm2ddl.auto>create-drop</hibernate.hbm2ddl.auto -->
 				<hibernate.hbm2ddl.auto>validate</hibernate.hbm2ddl.auto>
 				<hibernate.show_sql>true</hibernate.show_sql>
 				<hibernate.format_sql>false</hibernate.format_sql>
-
-				<!-- persistence.xml (H2) -->
-				<!--hibernate.dialect>org.hibernate.dialect.H2Dialect</hibernate.dialect -->
-				<!-- crud-ds.xml (H2) -->
-				<!--datasource.connection.url>jdbc:h2:file:C:/Desenv/Github/crud_sys/db/h2/crud_sys;DB_CLOSE_DELAY=-1</datasource.connection.url> 
-					<datasource.driver>h2</datasource.driver> <datasource.user-name>sa</datasource.user-name> 
-					<datasource.password></datasource.password -->
-				<!-- DataSource.xml (H2) -->
-				<!--datasource.driverClassName>org.h2.Driver</datasource.driverClassName -->
-				<!-- Hibernate.xml (H2) -->
-				<!--hibernate.hbm2ddl.import_files>database/h2_DML.sql</hibernate.hbm2ddl.import_files -->
 
 				<!-- persistence.xml (HSQLDB) -->
 				<!--hibernate.dialect>org.hibernate.dialect.HSQLDialect</hibernate.dialect -->
@@ -350,6 +339,17 @@
 				<!-- Hibernate.xml (HSQLDB) -->
 				<!--hibernate.hbm2ddl.import_files>database/hsqldb_DML.sql</hibernate.hbm2ddl.import_files -->
 
+				<!-- persistence.xml (H2) -->
+				<!--hibernate.dialect>org.hibernate.dialect.H2Dialect</hibernate.dialect -->
+				<!-- crud-ds.xml (H2) -->
+				<!--datasource.connection.url>jdbc:h2:file:C:/Desenv/Github/crud_sys/db/h2/crud_sys;DB_CLOSE_DELAY=-1</datasource.connection.url> 
+					<datasource.driver>h2</datasource.driver> <datasource.user-name>sa</datasource.user-name> 
+					<datasource.password></datasource.password -->
+				<!-- DataSource.xml (H2) -->
+				<!--datasource.driverClassName>org.h2.Driver</datasource.driverClassName -->
+				<!-- Hibernate.xml (H2) -->
+				<!--hibernate.hbm2ddl.import_files>database/h2_DML.sql</hibernate.hbm2ddl.import_files -->
+
 				<!-- persistence.xml (Firebird 1.5.6) -->
 				<hibernate.dialect>org.hibernate.dialect.FirebirdDialect</hibernate.dialect>
 				<!-- crud-ds.xml (Firebird 1.5.6) -->
@@ -361,6 +361,16 @@
 				<datasource.driverClassName>org.firebirdsql.jdbc.FBDriver</datasource.driverClassName>
 				<!-- Hibernate.xml (Firebird 1.5.6) -->
 				<hibernate.hbm2ddl.import_files>database/firebird_DML.sql</hibernate.hbm2ddl.import_files>
+
+				<!-- persistence.xml (Postgresql) -->
+				<!--hibernate.dialect>org.hibernate.dialect.PostgreSQLDialect</hibernate.dialect -->
+				<!-- crud-ds.xml (Postgresql) -->
+				<!--datasource.driver>postgresql-9.4.1208.jar</datasource.driver> <datasource.connection.url>jdbc:postgresql://192.168.1.4:5432/crud_sys</datasource.connection.url> 
+					<datasource.user-name>cams7</datasource.user-name> <datasource.password>12345</datasource.password -->
+				<!-- DataSource.xml (Postgresql) -->
+				<!--datasource.driverClassName>org.postgresql.Driver</datasource.driverClassName -->
+				<!-- Hibernate.xml (Postgresql) -->
+				<!--hibernate.hbm2ddl.import_files>database/postgresql_DML.sql</hibernate.hbm2ddl.import_files -->
 			</properties>
 
 			<build>
@@ -425,18 +435,19 @@
 				<hibernate.format_sql>false</hibernate.format_sql>
 
 				<!-- persistence.xml (H2) -->
-				<hibernate.dialect>org.hibernate.dialect.H2Dialect</hibernate.dialect>
+				<!-- hibernate.dialect>org.hibernate.dialect.H2Dialect</hibernate.dialect -->
 				<!-- crud-ds.xml (H2) -->
-				<datasource.connection.url>jdbc:h2:file:C:/Desenv/Github/crud_sys/db/h2/crud_sys;DB_CLOSE_DELAY=-1</datasource.connection.url>
-				<datasource.driver>h2</datasource.driver>
-				<datasource.user-name>sa</datasource.user-name>
-				<datasource.password></datasource.password>
+				<!-- datasource.connection.url>jdbc:h2:file:C:/Desenv/Github/crud_sys/db/h2/crud_sys;DB_CLOSE_DELAY=-1</datasource.connection.url> 
+					<datasource.driver>h2</datasource.driver> <datasource.user-name>sa</datasource.user-name> 
+					<datasource.password></datasource.password -->
 
-				<!-- persistence.xml (Mysql) -->
-				<!--hibernate.dialect>org.hibernate.dialect.MySQL5InnoDBDialect</hibernate.dialect -->
-				<!-- crud-ds.xml (Mysql) -->
-				<!--datasource.driver>mysql</datasource.driver> <datasource.connection.url>jdbc:mysql://127.4.97.130:3306/crud</datasource.connection.url> 
-					<datasource.user-name>adminvCG7DHd</datasource.user-name> <datasource.password>28a2z7LvS5Zi</datasource.password -->
+				<!-- persistence.xml (Postgresql) -->
+				<hibernate.dialect>org.hibernate.dialect.PostgreSQLDialect</hibernate.dialect>
+				<!-- crud-ds.xml (Postgresql) -->
+				<datasource.driver>postgresql-9.4.1208.jar</datasource.driver>
+				<datasource.connection.url>jdbc:postgresql://192.168.1.4:5432/crud_sys</datasource.connection.url>
+				<datasource.user-name>cams7</datasource.user-name>
+				<datasource.password>12345</datasource.password>
 			</properties>
 
 			<build>
