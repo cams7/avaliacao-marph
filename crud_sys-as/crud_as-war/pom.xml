@@ -162,11 +162,7 @@
 				<dependency>
 					<groupId>br.com.cams7.crud</groupId>
 					<artifactId>crud_web-lib</artifactId>
-				</dependency>
-				<dependency>
-					<groupId>br.com.cams7.crud</groupId>
-					<artifactId>crud_jsf-lib</artifactId>
-				</dependency>
+				</dependency>				
 				<dependency>
 					<groupId>br.com.cams7.crud</groupId>
 					<artifactId>crud_as-lib</artifactId>
@@ -179,7 +175,7 @@
 
 				<dependency>
 					<groupId>com.fasterxml.jackson.datatype</groupId>
-					<artifactId>jackson-datatype-hibernate4</artifactId>
+					<artifactId>jackson-datatype-hibernate5</artifactId>
 					<exclusions>
 						<exclusion>
 							<groupId>com.fasterxml.jackson.core</groupId>
