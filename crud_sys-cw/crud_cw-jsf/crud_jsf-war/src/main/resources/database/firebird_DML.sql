@@ -1,3 +1,11 @@
+--Configuracao para o banco Firebird 1.5.6
+--dialect=${hibernate.dialect}
+--driverClassName=${datasource.driverClassName}
+--url=${datasource.connection.url}
+--username=${datasource.user-name}
+--password=${datasource.password}
+--dml=${hibernate.hbm2ddl.import_files}
+
 --Insere dados pessoais
 insert into pessoa(id_pessoa, nome, cpf, nascimento) values (GEN_ID(GEN_PESSOA_ID,1), 'Antonio Ferreira Silva', '40162439717', '1983-04-10');
 insert into pessoa(id_pessoa, nome, cpf, nascimento) values (GEN_ID(GEN_PESSOA_ID,1), 'Maria Antonieta de Almeida', '90763518646', '1984-07-06');

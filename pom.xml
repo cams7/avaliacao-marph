@@ -27,6 +27,24 @@
 		<version.arquillian.container>8.2.1.Final</version.arquillian.container>
 
 		<hibernate.version>5.1.0.Final</hibernate.version>
+
+		<!-- web.xml -->
+		<!-- Pula comentários nas páginas JSF -->
+		<facelets.SKIP_COMMENTS>true</facelets.SKIP_COMMENTS>
+		<!-- Define o ciclo de vida da aplicação para o JSF. Obs.: Em Production 
+			o desempenho é melhor. -->
+		<javax.faces.PROJECT_STAGE>Production</javax.faces.PROJECT_STAGE>
+		<!--javax.faces.PROJECT_STAGE>Development</javax.faces.PROJECT_STAGE -->
+		<!-- Mantem informações da página (tree) no cliente (hidden). -->
+		<javax.faces.STATE_SAVING_METHOD>client</javax.faces.STATE_SAVING_METHOD>
+		<!-- Mantem informações da página (tree) no servidor -->
+		<!--javax.faces.STATE_SAVING_METHOD>server</javax.faces.STATE_SAVING_METHOD -->
+
+		<!-- faces-config.xml -->
+		<faces-config.sobre.built>Built-by: ${user.name}</faces-config.sobre.built>
+		<faces-config.sobre.title>Implementation-Title: ${project.name}</faces-config.sobre.title>
+		<faces-config.sobre.site>Implementation-Site: ${project.url}</faces-config.sobre.site>
+		<faces-config.sobre.build>Implementation-Build: ${buildNumber}</faces-config.sobre.build>
 	</properties>
 
 	<modules>
@@ -71,14 +89,10 @@
 				<artifactId>crud_web-lib</artifactId>
 				<version>${project.version}</version>
 				<type>jar</type>
-			</dependency>			
+			</dependency>
 
-			<!--dependency> 
-				<groupId>br.com.cams7.crud</groupId> 
-				<artifactId>crud_as-ejb</artifactId> 
-				<version>${project.version}</version> 
-				<type>ejb-client</type> 
-			</dependency -->
+			<!--dependency> <groupId>br.com.cams7.crud</groupId> <artifactId>crud_as-ejb</artifactId> 
+				<version>${project.version}</version> <type>ejb-client</type> </dependency -->
 
 			<!-- Wildfly dependencies -->
 			<dependency>
@@ -309,34 +323,45 @@
 
 			<properties>
 				<!-- persistence.xml -->
-				<!--persistence.hibernate.hbm2ddl.auto>create</persistence.hibernate.hbm2ddl.auto-->
-				<persistence.hibernate.hbm2ddl.auto>validate</persistence.hibernate.hbm2ddl.auto>
-				<persistence.hibernate.show_sql>true</persistence.hibernate.show_sql>
-				<persistence.hibernate.format_sql>false</persistence.hibernate.format_sql>
-				
+				<!--hibernate.hbm2ddl.auto>create</hibernate.hbm2ddl.auto -->
+				<hibernate.hbm2ddl.auto>validate</hibernate.hbm2ddl.auto>
+				<hibernate.show_sql>true</hibernate.show_sql>
+				<hibernate.format_sql>false</hibernate.format_sql>
+
 				<!-- persistence.xml (H2) -->
-				<!--persistence.hibernate.dialect>org.hibernate.dialect.H2Dialect</persistence.hibernate.dialect-->
-				<!-- crud-ds.xml (H2)-->
-				<!--datasource.connection.url>jdbc:h2:file:C:/Desenv/Github/crud_sys/db/h2/crud_sys;DB_CLOSE_DELAY=-1</datasource.connection.url>
-				<datasource.driver>h2</datasource.driver>
-				<datasource.user-name>sa</datasource.user-name>
-				<datasource.password></datasource.password-->
-				
-				<!-- persistence.xml (HSQLDB) -->				
-				<!--persistence.hibernate.dialect>org.hibernate.dialect.HSQLDialect</persistence.hibernate.dialect-->
+				<!--hibernate.dialect>org.hibernate.dialect.H2Dialect</hibernate.dialect -->
+				<!-- crud-ds.xml (H2) -->
+				<!--datasource.connection.url>jdbc:h2:file:C:/Desenv/Github/crud_sys/db/h2/crud_sys;DB_CLOSE_DELAY=-1</datasource.connection.url> 
+					<datasource.driver>h2</datasource.driver> <datasource.user-name>sa</datasource.user-name> 
+					<datasource.password></datasource.password -->
+				<!-- DataSource.xml (H2) -->
+				<!--datasource.driverClassName>org.h2.Driver</datasource.driverClassName -->
+				<!-- Hibernate.xml (H2) -->
+				<!--hibernate.hbm2ddl.import_files>database/h2_DML.sql</hibernate.hbm2ddl.import_files -->
+
+				<!-- persistence.xml (HSQLDB) -->
+				<!--hibernate.dialect>org.hibernate.dialect.HSQLDialect</hibernate.dialect -->
 				<!-- crud-ds.xml (HSQLDB) -->
-				<!--datasource.connection.url>jdbc:hsqldb:file:C:/Desenv/Github/crud_sys/db/hsqldb/crud_sys</datasource.connection.url>
-				<datasource.driver>hsqldb.jar</datasource.driver>
-				<datasource.user-name>sa</datasource.user-name>
-				<datasource.password></datasource.password-->	
-				
+				<!--datasource.connection.url>jdbc:hsqldb:file:C:/Desenv/Github/crud_sys/db/hsqldb/crud_sys</datasource.connection.url> 
+					<datasource.driver>hsqldb.jar</datasource.driver> <datasource.user-name>sa</datasource.user-name> 
+					<datasource.password></datasource.password -->
+				<!-- DataSource.xml (HSQLDB) -->
+				<!--datasource.driverClassName>org.hsqldb.jdbcDriver</datasource.driverClassName -->
+				<!-- Hibernate.xml (HSQLDB) -->
+				<!--hibernate.hbm2ddl.import_files>database/hsqldb_DML.sql</hibernate.hbm2ddl.import_files -->
+
 				<!-- persistence.xml (Firebird 1.5.6) -->
-				<persistence.hibernate.dialect>org.hibernate.dialect.FirebirdDialect</persistence.hibernate.dialect>
-				<!-- crud-ds.xml (Firebird 1.5.6)-->
+				<hibernate.dialect>org.hibernate.dialect.FirebirdDialect</hibernate.dialect>
+				<!-- crud-ds.xml (Firebird 1.5.6) -->
 				<datasource.connection.url>jdbc:firebirdsql:localhost/3050:C:/Desenv/Github/crud_sys/db/firebird/crud_sys.fdb?lc_ctype=UTF8</datasource.connection.url>
 				<datasource.driver>jaybird-2.2.10.jar</datasource.driver>
 				<datasource.user-name>sysdba</datasource.user-name>
-				<datasource.password>masterkey</datasource.password>			
+				<datasource.password>masterkey</datasource.password>
+				<!-- DataSource.xml (Firebird 1.5.6) -->
+				<datasource.driverClassName>org.firebirdsql.jdbc.FBDriver</datasource.driverClassName>
+
+				<!-- Hibernate.xml (Firebird 1.5.6) -->
+				<hibernate.hbm2ddl.import_files>database/firebird_DML.sql</hibernate.hbm2ddl.import_files>
 			</properties>
 
 			<build>
@@ -396,25 +421,23 @@
 
 			<properties>
 				<!-- persistence.xml -->
-				<persistence.hibernate.hbm2ddl.auto>validate</persistence.hibernate.hbm2ddl.auto>
-				<persistence.hibernate.show_sql>true</persistence.hibernate.show_sql>
-				<persistence.hibernate.format_sql>false</persistence.hibernate.format_sql>
-								
+				<hibernate.hbm2ddl.auto>validate</hibernate.hbm2ddl.auto>
+				<hibernate.show_sql>true</hibernate.show_sql>
+				<hibernate.format_sql>false</hibernate.format_sql>
+
 				<!-- persistence.xml (H2) -->
-				<persistence.hibernate.dialect>org.hibernate.dialect.H2Dialect</persistence.hibernate.dialect>
+				<hibernate.dialect>org.hibernate.dialect.H2Dialect</hibernate.dialect>
 				<!-- crud-ds.xml (H2) -->
 				<datasource.connection.url>jdbc:h2:file:C:/Desenv/Github/crud_sys/db/h2/crud_sys;DB_CLOSE_DELAY=-1</datasource.connection.url>
 				<datasource.driver>h2</datasource.driver>
 				<datasource.user-name>sa</datasource.user-name>
 				<datasource.password></datasource.password>
-				
+
 				<!-- persistence.xml (Mysql) -->
-				<!--persistence.hibernate.dialect>org.hibernate.dialect.MySQL5InnoDBDialect</persistence.hibernate.dialect -->
+				<!--hibernate.dialect>org.hibernate.dialect.MySQL5InnoDBDialect</hibernate.dialect -->
 				<!-- crud-ds.xml (Mysql) -->
-				<!--datasource.driver>mysql</datasource.driver> 
-				<datasource.connection.url>jdbc:mysql://127.4.97.130:3306/crud</datasource.connection.url> 
-				<datasource.user-name>adminvCG7DHd</datasource.user-name> 
-				<datasource.password>28a2z7LvS5Zi</datasource.password -->				
+				<!--datasource.driver>mysql</datasource.driver> <datasource.connection.url>jdbc:mysql://127.4.97.130:3306/crud</datasource.connection.url> 
+					<datasource.user-name>adminvCG7DHd</datasource.user-name> <datasource.password>28a2z7LvS5Zi</datasource.password -->
 			</properties>
 
 			<build>

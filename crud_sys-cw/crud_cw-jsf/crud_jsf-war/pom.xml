@@ -25,7 +25,7 @@
 		<dependency>
 			<groupId>br.com.cams7.crud</groupId>
 			<artifactId>crud_sys-jpa</artifactId>
-		</dependency>	
+		</dependency>
 		<dependency>
 			<groupId>br.com.cams7.crud</groupId>
 			<artifactId>crud_common-lib</artifactId>
@@ -41,14 +41,11 @@
 		<dependency>
 			<groupId>br.com.cams7.crud</groupId>
 			<artifactId>crud_jsf-lib</artifactId>
-		</dependency>		
-		
-		<!--dependency>
-			<groupId>br.com.cams7.crud</groupId>
-			<artifactId>crud_as-ejb</artifactId>
-			<type>ejb-client</type>
-		</dependency-->
-		
+		</dependency>
+
+		<!--dependency> <groupId>br.com.cams7.crud</groupId> <artifactId>crud_as-ejb</artifactId> 
+			<type>ejb-client</type> </dependency -->
+
 		<dependency>
 			<groupId>org.primefaces</groupId>
 			<artifactId>primefaces</artifactId>
@@ -177,13 +174,11 @@
 			<artifactId>groovy-all</artifactId>
 		</dependency>
 
-		<dependency> 
-			<groupId>org.hsqldb</groupId> 
-			<artifactId>hsqldb</artifactId> 
-		</dependency> 
-		<!--dependency> 
-			<groupId>mysql</groupId> 
-			<artifactId>mysql-connector-java</artifactId> 
+		<dependency>
+			<groupId>org.hsqldb</groupId>
+			<artifactId>hsqldb</artifactId>
+		</dependency>
+		<!--dependency> <groupId>mysql</groupId> <artifactId>mysql-connector-java</artifactId> 
 			</dependency -->
 		<dependency>
 			<groupId>com.h2database</groupId>
@@ -197,13 +192,39 @@
 
 	<build>
 		<finalName>crud_sys</finalName>
+
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
+
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<configuration>
+					<webResources>
+						<webResource>
+							<directory>src/main/webapp</directory>
+							<filtering>true</filtering>
+							<includes>
+								<include>**/web.xml</include>
+								<include>**/faces-config.xml</include>
+							</includes>
+						</webResource>
+					</webResources>
+				</configuration>
+			</plugin>
+		</plugins>
 	</build>
 
 	<profiles>
 		<profile>
 			<id>default</id>
 			<activation>
-				<!-- activeByDefault>true</activeByDefault -->
+				<activeByDefault>true</activeByDefault>
 				<file>
 					<exists>${basedir}/src/main/webapp</exists>
 				</file>

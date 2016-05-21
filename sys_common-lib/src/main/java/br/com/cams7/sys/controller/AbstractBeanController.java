@@ -286,23 +286,23 @@ public abstract class AbstractBeanController<S extends BaseService<E>, E extends
 		List<E> entities = getService().search(searchParams);
 
 		FacesContext context = FacesContext.getCurrentInstance();
-		ExternalContext externalContext = context.getExternalContext();
 
-		final String REPORT_TYPE = "jasper";
 		String viewId = context.getViewRoot().getViewId();
 		String page = viewId.substring(viewId.indexOf("/") + 1, viewId.lastIndexOf("/"));
-		String fileName = "relatorio_" + page + "." + REPORT_TYPE;
 
+		final String REPORT_TYPE = "jasper";
+		String fileName = "relatorio_" + page + "." + REPORT_TYPE;
 		String pdfName = fileName.replaceFirst("." + REPORT_TYPE, ".pdf");
 
+		ExternalContext externalContext = context.getExternalContext();
 		HttpServletResponse response = (HttpServletResponse) externalContext.getResponse();
 		response.addHeader("Content-disposition", "attachment; filename=" + pdfName);
 
-		Map<String, Object> params = new HashMap<String, Object>();
-		params.put(JRParameter.REPORT_LOCALE, new Locale("pt", "BR"));
-
 		ClassLoader classLoader = this.getClass().getClassLoader();
 		InputStream reportStream = classLoader.getResourceAsStream("/META-INF/report/" + fileName);
+
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put(JRParameter.REPORT_LOCALE, new Locale("pt", "BR"));
 
 		try {
 			JasperPrint jasperPrint = JasperFillManager.fillReport(reportStream, params,

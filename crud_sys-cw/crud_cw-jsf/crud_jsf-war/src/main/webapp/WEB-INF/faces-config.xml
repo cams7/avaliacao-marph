@@ -53,10 +53,10 @@
 		<managed-bean-class>java.util.ArrayList</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 		<list-entries>
-			<value>sobre.title</value>
-			<value>sobre.built</value>
-			<value>sobre.site</value>
-			<value>sobre.build</value>
+			<value>${faces-config.sobre.title}</value>
+			<value>${faces-config.sobre.built}</value>
+			<value>${faces-config.sobre.site}</value>
+			<value>${faces-config.sobre.build}</value>
 		</list-entries>
 	</managed-bean>
 </faces-config>

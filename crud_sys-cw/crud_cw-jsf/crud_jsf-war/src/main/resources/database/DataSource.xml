@@ -5,9 +5,8 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans 	http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
 						http://www.springframework.org/schema/context 	http://www.springframework.org/schema/context/spring-context-4.2.xsd">
 
-	<context:property-placeholder location="classpath:database/database.properties" />
-
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
-		destroy-method="close" p:driverClassName="${jdbc.driverClassName}"
-		p:url="${jdbc.url}" p:username="${jdbc.username}" p:password="${jdbc.password}" />
+		destroy-method="close" p:driverClassName="${datasource.driverClassName}"
+		p:url="${datasource.connection.url}" p:username="${datasource.user-name}"
+		p:password="${datasource.password}" />
 </beans>

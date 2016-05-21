@@ -18,18 +18,22 @@
 	<!--context-param> <param-name>com.sun.faces.numberOfViewsInSession</param-name> 
 		<param-value>5</param-value> </context-param -->
 
-	<!-- Mantém informações da página (tree) no cliente (hidden). -->
 	<context-param>
-		<param-name>javax.faces.STATE_SAVING_METHOD</param-name>
-		<param-value>client</param-value>
+		<param-name>facelets.SKIP_COMMENTS</param-name>
+		<param-value>${facelets.SKIP_COMMENTS}</param-value>
 	</context-param>
 
 	<!-- Define o ciclo de vida da aplicação para o JSF. Em Produção, o desempenho 
 		é melhor. -->
 	<context-param>
 		<param-name>javax.faces.PROJECT_STAGE</param-name>
-		<param-value>Production</param-value>
-		<!--param-value>Development</param-value -->
+		<param-value>${javax.faces.PROJECT_STAGE}</param-value>
+	</context-param>
+
+	<!-- Mantém informações da página (tree) no cliente (hidden). -->
+	<context-param>
+		<param-name>javax.faces.STATE_SAVING_METHOD</param-name>
+		<param-value>${javax.faces.STATE_SAVING_METHOD}</param-value>
 	</context-param>
 
 	<!-- Sufixo das páginas com conteúdo JSF. -->
@@ -38,10 +42,7 @@
 		<param-value>.xhtml</param-value>
 	</context-param>
 
-	<context-param>
-		<param-name>facelets.SKIP_COMMENTS</param-name>
-		<param-value>true</param-value>
-	</context-param>
+
 
 	<!-- Front Controller do JSF. -->
 	<servlet>

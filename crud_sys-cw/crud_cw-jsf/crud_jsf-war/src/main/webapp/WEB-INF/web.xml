@@ -55,19 +55,25 @@
 		<param-value>/WEB-INF/springsecurity.taglib.xml</param-value>
 	</context-param>
 
-	<!-- Mantem informacoes da pagina (tree) no cliente (hidden). -->
 	<context-param>
-		<param-name>javax.faces.STATE_SAVING_METHOD</param-name>
-		<param-value>client</param-value>
+		<param-name>facelets.SKIP_COMMENTS</param-name>
+		<param-value>${facelets.SKIP_COMMENTS}</param-value>
 	</context-param>
 
 	<!-- Define o ciclo de vida da aplicacao para o JSF. Em Production o desempenho 
 		eh melhor. -->
 	<context-param>
 		<param-name>javax.faces.PROJECT_STAGE</param-name>
-		<param-value>Production</param-value>
-		<!--param-value>Development</param-value -->
+		<param-value>${javax.faces.PROJECT_STAGE}</param-value>
 	</context-param>
+
+	<!-- Mantem informacoes da pagina (tree) no cliente (hidden). -->
+	<context-param>
+		<param-name>javax.faces.STATE_SAVING_METHOD</param-name>
+		<param-value>${javax.faces.STATE_SAVING_METHOD}</param-value>
+	</context-param>
+
+
 	<!-- context-param> <param-name>facelets.DEVELOPMENT</param-name> <param-value>true</param-value> 
 		</context-param -->
 
@@ -77,15 +83,10 @@
 		<param-value>.xhtml</param-value>
 	</context-param>
 
-	<!--context-param>
-		<param-name>javax.faces.INTERPRET_EMPTY_STRING_SUBMITTED_VALUES_AS_NULL</param-name>
-		<param-value>true</param-value>
-	</context-param-->
+	<!--context-param> <param-name>javax.faces.INTERPRET_EMPTY_STRING_SUBMITTED_VALUES_AS_NULL</param-name> 
+		<param-value>true</param-value> </context-param -->
 
-	<context-param>
-		<param-name>facelets.SKIP_COMMENTS</param-name>
-		<param-value>true</param-value>
-	</context-param>
+
 
 	<!-- Front Controller do JSF. -->
 	<servlet>

@@ -70,13 +70,15 @@
 				<artifactId>maven-war-plugin</artifactId>
 				<configuration>
 					<webResources>
-						<resource>
+						<webResource>
 							<directory>src/main/webapp</directory>
 							<filtering>true</filtering>
 							<includes>
 								<include>**/crud-ds.xml</include>
+								<include>**/web.xml</include>
+								<include>**/faces-config.xml</include>
 							</includes>
-						</resource>
+						</webResource>
 					</webResources>
 				</configuration>
 			</plugin>
@@ -109,7 +111,7 @@
 				<dependency>
 					<groupId>br.com.cams7.crud</groupId>
 					<artifactId>crud_web-lib</artifactId>
-				</dependency>				
+				</dependency>
 				<dependency>
 					<groupId>br.com.cams7.crud</groupId>
 					<artifactId>crud_as-lib</artifactId>
@@ -119,7 +121,7 @@
 					<groupId>br.com.cams7.crud</groupId>
 					<artifactId>crud_as-ejb</artifactId>
 					<type>ejb</type>
-					<scope>provided</scope>					
+					<scope>provided</scope>
 				</dependency>
 
 				<dependency>
