@@ -16,7 +16,6 @@ import br.com.cams7.crud.entity.UsuarioEntity.Autorizacao;
  * @author cesar
  *
  */
-//@Component(CONVERT_NAME)
 @FacesConverter(CONVERT_NAME)
 public class AutorizacaoConverter extends EnumConverter {
 

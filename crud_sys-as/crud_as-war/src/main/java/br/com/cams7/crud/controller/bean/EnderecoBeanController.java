@@ -36,15 +36,15 @@ public class EnderecoBeanController extends AbstractBeanController<EnderecoServi
 	private final String LIST_PAGE = "listaEnderecos";
 
 	/**
-	 * Utiliza a injeção de dependência do <code>EJB</code> para
-	 * resolver a instância do <code>EnderecoService</code>.
+	 * Utiliza a injeção de dependência do <code>EJB</code> para resolver a
+	 * instância do <code>EnderecoService</code>.
 	 */
 	@EJB
 	private EnderecoService service;
 
 	/**
-	 * Utiliza a injeção de dependência do <code>EJB</code> para
-	 * resolver a instância do <code>PessoaService</code>.
+	 * Utiliza a injeção de dependência do <code>EJB</code> para resolver a
+	 * instância do <code>PessoaService</code>.
 	 */
 	@EJB
 	private PessoaService pessoaService;

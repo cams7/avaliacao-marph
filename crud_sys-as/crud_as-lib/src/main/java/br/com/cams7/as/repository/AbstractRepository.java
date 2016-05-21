@@ -34,7 +34,7 @@ import br.com.cams7.sys.utils.AppHelper;
 public abstract class AbstractRepository<E extends AbstractEntity> extends AbstractBase<E>
 		implements BaseRepository<E> {
 
-	@PersistenceContext // (unitName = "CRUDSysUnit")
+	@PersistenceContext//(unitName = "CRUDSysUnit")
 	private EntityManager entityManager;
 
 	public AbstractRepository() {

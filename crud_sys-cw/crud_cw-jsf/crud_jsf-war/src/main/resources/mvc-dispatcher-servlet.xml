@@ -25,5 +25,5 @@
 	</mvc:annotation-driven>
 
 	<bean class="org.springframework.web.servlet.view.XmlViewResolver"
-		p:location="classpath:report/jasper-views.xml" p:order="0" />
+		p:location="classpath:META-INF/report/jasper-views.xml" p:order="0" />
 </beans>

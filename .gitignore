@@ -26,9 +26,9 @@ bin/
 *.ear
 
 #Jasper files
-*.jasper
+#*.jasper
 
 #Arquivos temporários
-temp/
+#db/
 
 

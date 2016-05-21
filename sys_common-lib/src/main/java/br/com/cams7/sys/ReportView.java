@@ -1,5 +1,8 @@
 package br.com.cams7.sys;
 
+import static br.com.cams7.sys.ReportView.IntervalPages.ALL_PAGES;
+import static br.com.cams7.sys.ReportView.IntervalPages.INFORMED_INTERVAL;
+
 public class ReportView {
 
 	private IntervalPages interval;
@@ -44,6 +47,25 @@ public class ReportView {
 		this.totalPages = totalPages;
 	}
 
+	public Pagination getPagination(Integer firstPage, Short sizePage) {
+		if (getInterval() != ALL_PAGES) {
+			if (getInterval() == INFORMED_INTERVAL) {
+				firstPage = getFirstPage();
+				Short size = sizePage;
+
+				sizePage = (short) ((getLastPage() - firstPage + 1) * size);
+
+				firstPage--;
+				firstPage *= size;
+			}
+		} else {
+			firstPage = null;
+			sizePage = null;
+		}
+
+		return new Pagination(firstPage, sizePage);
+	}
+
 	@Override
 	public String toString() {
 		return String.format("%s{interval:%s, firstPage:%s, lastPage:%s, totalPages:%s}",
@@ -52,6 +74,36 @@ public class ReportView {
 
 	public enum IntervalPages {
 		ALL_PAGES, INFORMED_INTERVAL, CURRENT_PAGE
+	}
+
+	public class Pagination {
+		private Integer firstPage;
+		private Short sizePage;
+
+		private Pagination(Integer firstPage, Short sizePage) {
+			super();
+			this.firstPage = firstPage;
+			this.sizePage = sizePage;
+		}
+
+		@Override
+		public String toString() {
+			return String.format("%s{firstPage:%s, sizePage:%s}", this.getClass().getSimpleName(), getFirstPage(),
+					getSizePage());
+		}
+
+		public Integer getFirstPage() {
+			return firstPage;
+		}
+
+		public Short getSizePage() {
+			return sizePage;
+		}
+
+		public boolean isFirstAndSizePage() {
+			return getFirstPage() != null && getSizePage() != null;
+		}
+
 	}
 
 }

@@ -16,7 +16,6 @@ import javax.faces.convert.FacesConverter;
  * @author cesar
  *
  */
-// @Component(CONVERT_NAME)
 @FacesConverter(CONVERT_NAME)
 public class TelefoneConverter implements Converter {
 

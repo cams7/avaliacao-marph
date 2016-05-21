@@ -10,7 +10,7 @@ import javax.ws.rs.ext.ContextResolver;
 import javax.ws.rs.ext.Provider;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.hibernate4.Hibernate4Module;
+import com.fasterxml.jackson.datatype.hibernate5.Hibernate5Module;
 
 /**
  * @author cesar
@@ -23,7 +23,7 @@ public class JacksonConfig implements ContextResolver<ObjectMapper> {
 	private ObjectMapper objectMapper = new ObjectMapper() {
 		private static final long serialVersionUID = 1L;
 		{
-			registerModule(new Hibernate4Module());
+			registerModule(new Hibernate5Module());
 		}
 	};
 

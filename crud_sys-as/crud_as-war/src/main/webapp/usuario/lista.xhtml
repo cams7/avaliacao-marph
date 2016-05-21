@@ -81,11 +81,14 @@
 				</p:column>
 
 				<f:facet name="footer">
-					<p:panelGrid id="totalRows" columns="1" columnClasses="value"
-						style="width:100%">
+					<p:panelGrid id="totalRows" columns="2">
 						<h:outputFormat value="#{msg['label.usuarios.totalCadastrados']}">
 							<f:param value="#{usuarioMB.totalRows}" />
 						</h:outputFormat>
+
+						<p:commandButton value="#{msg['button.visualiza.relatorio']}"
+							styleClass="btn" oncomplete="PF('relatorioDialog').show();"
+							update=":relatorioForm:relatorioDetail" />
 					</p:panelGrid>
 				</f:facet>
 			</p:dataTable>
@@ -104,5 +107,9 @@
 			</p:dialog>
 			<!--/sec:authorize-->
 		</h:form>
+
+		<ui:include src="/layout/relatorio_dialog.xhtml">
+			<ui:param name="mb" value="#{usuarioMB}" />
+		</ui:include>
 	</ui:define>
 </ui:composition>

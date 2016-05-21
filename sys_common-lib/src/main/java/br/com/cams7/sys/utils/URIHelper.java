@@ -3,15 +3,12 @@
  */
 package br.com.cams7.sys.utils;
 
-import static br.com.cams7.sys.ReportView.IntervalPages.ALL_PAGES;
-import static br.com.cams7.sys.ReportView.IntervalPages.INFORMED_INTERVAL;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
 import br.com.cams7.sys.ReportView;
-import br.com.cams7.sys.ReportView.IntervalPages;
+import br.com.cams7.sys.ReportView.Pagination;
 import br.com.cams7.sys.SearchParams;
 import br.com.cams7.sys.SearchParams.SortOrder;
 import br.com.cams7.sys.entity.AbstractEntity;
@@ -119,26 +116,13 @@ public final class URIHelper {
 	}
 
 	public static String getURI(SearchParams params, ReportView view) {
-		IntervalPages intervalPages = view.getInterval();
-
 		StringBuffer uri = new StringBuffer();
 		boolean includedQuestionMark = false;
 
-		if (intervalPages != ALL_PAGES) {
-			int firstPage = params.getFirstPage();
-			short sizePage = params.getSizePage();
-
-			if (intervalPages == INFORMED_INTERVAL) {
-				firstPage = view.getFirstPage();
-
-				sizePage *= (view.getLastPage() - firstPage + 1);
-
-				firstPage--;
-				firstPage *= params.getSizePage();
-			}
-
-			uri.append("?" + PAGE_FIRST + "=" + firstPage);
-			uri.append("&" + PAGE_SIZE + "=" + sizePage);
+		Pagination pagination = view.getPagination(params.getFirstPage(), params.getSizePage());
+		if (pagination.isFirstAndSizePage()) {
+			uri.append("?" + PAGE_FIRST + "=" + pagination.getFirstPage());
+			uri.append("&" + PAGE_SIZE + "=" + pagination.getSizePage());
 			includedQuestionMark = true;
 		}
 

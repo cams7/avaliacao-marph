@@ -20,7 +20,6 @@ import br.com.cams7.crud.entity.PessoaEntity;
  * @author cesar
  *
  */
-//@Component(CONVERT_NAME)
 @FacesConverter(CONVERT_NAME)
 public class PessoaConverter implements Converter {
 

@@ -44,15 +44,15 @@ public class UsuarioBeanController extends AbstractBeanController<UsuarioService
 	private final String LIST_PAGE = "listaUsuarios";
 
 	/**
-	 * Utiliza a injeção de dependência do <code>EJB</code> para
-	 * resolver a instância do <code>UsuarioService</code>.
+	 * Utiliza a injeção de dependência do <code>EJB</code> para resolver a
+	 * instância do <code>UsuarioService</code>.
 	 */
 	@EJB
 	private UsuarioService service;
 
 	/**
-	 * Utiliza a injeção de dependência do <code>EJB</code> para
-	 * resolver a instância do <code>PessoaService</code>.
+	 * Utiliza a injeção de dependência do <code>EJB</code> para resolver a
+	 * instância do <code>PessoaService</code>.
 	 */
 	@EJB
 	private PessoaService pessoaService;

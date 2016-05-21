@@ -117,7 +117,6 @@ public abstract class AbstractRepository<E extends AbstractEntity> extends Abstr
 	 */
 	@Override
 	public E buscaPeloId(Long id) {
-		@SuppressWarnings("unchecked")
 		E entity = (E) getCurrentSession().get(getEntityType(), id);
 		return entity;
 	}

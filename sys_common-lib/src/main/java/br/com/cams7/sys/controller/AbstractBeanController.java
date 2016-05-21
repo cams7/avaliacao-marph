@@ -3,8 +3,8 @@
  */
 package br.com.cams7.sys.controller;
 
-import static br.com.cams7.sys.utils.URIHelper.getURI;
-
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.Serializable;
 import java.text.MessageFormat;
 import java.util.HashMap;
@@ -19,9 +19,12 @@ import javax.faces.application.FacesMessage;
 import javax.faces.application.FacesMessage.Severity;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIInput;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.faces.event.FacesEvent;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
 
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.CloseEvent;
@@ -33,11 +36,18 @@ import org.primefaces.model.SortOrder;
 
 import br.com.cams7.sys.ReportView;
 import br.com.cams7.sys.ReportView.IntervalPages;
+import br.com.cams7.sys.ReportView.Pagination;
 import br.com.cams7.sys.SearchParams;
 import br.com.cams7.sys.entity.AbstractEntity;
 import br.com.cams7.sys.service.BaseService;
 import br.com.cams7.sys.utils.AppException;
 import br.com.cams7.sys.utils.AppHelper;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JRParameter;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 
 /**
  * @author cesar
@@ -51,7 +61,6 @@ public abstract class AbstractBeanController<S extends BaseService<E>, E extends
 	private final String RESOURCE_BUNDLE = "i18n.messages";
 	protected final String PARAM_CHANGED = "entityChanged";
 	private final String PARAM_MESSAGE = "messageAfterAction";
-	private final String PARAM_URL_REPORT = "urlReport";
 
 	public final static String CONTROLLER_SCOPE = "view";
 
@@ -269,25 +278,49 @@ public abstract class AbstractBeanController<S extends BaseService<E>, E extends
 		getLog().info(String.format("A entidade \"%s\" foi excluida", getSelectedEntity()));
 	}
 
-	private String getUrlReport() {
-		FacesContext context = FacesContext.getCurrentInstance();
+	public void generatePdfReport(ActionEvent event) {
+		Pagination pagination = report.getPagination(lastFirstPage, lastSizePage);
 
+		SearchParams searchParams = new SearchParams(pagination.getFirstPage(), pagination.getSizePage(), lastSortField,
+				getSortOrder(lastSortOrder), lastFilters, globalFilters);
+		List<E> entities = getService().search(searchParams);
+
+		FacesContext context = FacesContext.getCurrentInstance();
+		ExternalContext externalContext = context.getExternalContext();
+
+		final String REPORT_TYPE = "jasper";
 		String viewId = context.getViewRoot().getViewId();
 		String page = viewId.substring(viewId.indexOf("/") + 1, viewId.lastIndexOf("/"));
+		String fileName = "relatorio_" + page + "." + REPORT_TYPE;
 
-		String urlReport = context.getExternalContext().getRequestContextPath() + "/req/" + page + "/report/pdf";
+		String pdfName = fileName.replaceFirst("." + REPORT_TYPE, ".pdf");
 
-		SearchParams params = new SearchParams(lastFirstPage, lastSizePage, lastSortField, getSortOrder(lastSortOrder),
-				lastFilters, globalFilters);
-		urlReport += getURI(params, report);
+		HttpServletResponse response = (HttpServletResponse) externalContext.getResponse();
+		response.addHeader("Content-disposition", "attachment; filename=" + pdfName);
 
-		return urlReport;
-	}
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put(JRParameter.REPORT_LOCALE, new Locale("pt", "BR"));
 
-	public void generatePdfReport(ActionEvent event) {
-		RequestContext context = RequestContext.getCurrentInstance();
-		String urlReport = getUrlReport();
-		context.addCallbackParam(PARAM_URL_REPORT, urlReport);
+		ClassLoader classLoader = this.getClass().getClassLoader();
+		InputStream reportStream = classLoader.getResourceAsStream("/META-INF/report/" + fileName);
+
+		try {
+			JasperPrint jasperPrint = JasperFillManager.fillReport(reportStream, params,
+					new JRBeanCollectionDataSource(entities));
+
+			ServletOutputStream os = response.getOutputStream();
+			try {
+				JasperExportManager.exportReportToPdfStream(jasperPrint, os);
+			} finally {
+				os.flush();
+				os.close();
+			}
+		} catch (JRException | IOException e) {
+			getLog().log(Level.SEVERE, e.getMessage());
+		} finally {
+			context.responseComplete();
+		}
+
 	}
 
 	/**
@@ -423,7 +456,8 @@ public abstract class AbstractBeanController<S extends BaseService<E>, E extends
 	protected String getMessageFromI18N(String key, Object... params) {
 		Locale locale = FacesContext.getCurrentInstance().getViewRoot().getLocale();
 
-		ResourceBundle bundle = ResourceBundle.getBundle(RESOURCE_BUNDLE, locale, this.getClass().getClassLoader());
+		ClassLoader classLoader = this.getClass().getClassLoader();
+		ResourceBundle bundle = ResourceBundle.getBundle(RESOURCE_BUNDLE, locale, classLoader);
 
 		String message;
 		if (params.length > 0)
