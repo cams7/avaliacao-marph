@@ -39,12 +39,12 @@ Para rodar o programa
 		git remote add openshift -f <URL DO GIT DA APLICAÇÃO NO OPENSHIFT>
 		git merge openshift/master -s recursive -X ours
 	
-* _Obs.: Antes de executar a linha abaixo, algumas alterações no arquivo pom.xml terão que ser feitas, por isso, pule-a e siga as instruções abaixo._
+* Obs.: Antes de executar a linha abaixo, algumas alterações no arquivo **pom.xml** terão que ser feitas, por isso, pule-a e siga as instruções abaixo.
 
 		git push openshift HEAD
 	
 * Baixe o **Tomcat 8** e **Wildfly 10**, caso ainda não o tenha baixado.
-* No **Tomcat 8**, inclua o usuário e senha **tomcat**. Para isso, inclua a tag *<user username="tomcat" password="tomcat" roles="manager-script"/>* dentro da tag *<tomcat-users>* no arquivo **tomcat-users.xml**.
+* No **Tomcat 8**, inclua o usuário e senha **tomcat**. Para isso, inclua a tag *\<user username="tomcat" password="tomcat" roles="manager-script"/\>* dentro da tag *\<tomcat-users\>* no arquivo **tomcat-users.xml**.
 
 
 1. Inicialize o **Wildfly 10**, em seguida, no diretório onde o projeto foi baixado, execute as linhas abaixo:
