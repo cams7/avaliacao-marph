@@ -315,7 +315,7 @@
 				<hibernate.dialect>org.hibernate.dialect.FirebirdDialect</hibernate.dialect>
 				<!-- crud-ds.xml (Firebird 1.5.6) -->
 				<datasource.connection.url>jdbc:firebirdsql:localhost/3050:C:/Desenv/Github/crud_sys/db/firebird/crud_sys.fdb?lc_ctype=UTF8</datasource.connection.url>
-				<datasource.driver>jaybird-2.2.10.jar</datasource.driver>
+				<datasource.driver>org.firebirdsql</datasource.driver>
 				<datasource.user-name>sysdba</datasource.user-name>
 				<datasource.password>masterkey</datasource.password>
 				<!-- DataSource.xml (Firebird 1.5.6) -->
@@ -324,14 +324,16 @@
 				<hibernate.hbm2ddl.import_files>database/firebird_DML.sql</hibernate.hbm2ddl.import_files>
 
 				<!-- persistence.xml (Postgresql) -->
-				<!--hibernate.dialect>org.hibernate.dialect.PostgreSQLDialect</hibernate.dialect -->
+				<!--hibernate.dialect>org.hibernate.dialect.PostgreSQLDialect</hibernate.dialect-->
 				<!-- crud-ds.xml (Postgresql) -->
-				<!--datasource.driver>postgresql-9.4.1208.jar</datasource.driver> <datasource.connection.url>jdbc:postgresql://192.168.1.4:5432/crud_sys</datasource.connection.url> 
-					<datasource.user-name>cams7</datasource.user-name> <datasource.password>12345</datasource.password -->
+				<!--datasource.driver>org.postgresql</datasource.driver> 
+				<datasource.connection.url>jdbc:postgresql://192.168.1.4:5432/crud_sys</datasource.connection.url> 
+				<datasource.user-name>cams7</datasource.user-name> 
+				<datasource.password>12345</datasource.password-->
 				<!-- DataSource.xml (Postgresql) -->
-				<!--datasource.driverClassName>org.postgresql.Driver</datasource.driverClassName -->
+				<!--datasource.driverClassName>org.postgresql.Driver</datasource.driverClassName-->
 				<!-- Hibernate.xml (Postgresql) -->
-				<!--hibernate.hbm2ddl.import_files>database/postgresql_DML.sql</hibernate.hbm2ddl.import_files -->
+				<!--hibernate.hbm2ddl.import_files>database/postgresql_DML.sql</hibernate.hbm2ddl.import_files-->
 			</properties>
 			
 			<modules>
@@ -452,7 +454,7 @@
 				<!-- persistence.xml (Postgresql) -->
 				<hibernate.dialect>org.hibernate.dialect.PostgreSQLDialect</hibernate.dialect>
 				<!-- crud-ds.xml (Postgresql) -->
-				<!--datasource.driver>postgresql-9.4.1208.jar</datasource.driver>
+				<!--datasource.driver>org.postgresql</datasource.driver>
 				<datasource.connection.url>jdbc:postgresql://192.168.1.4:5432/crud_sys</datasource.connection.url>
 				<datasource.user-name>cams7</datasource.user-name>
 				<datasource.password>12345</datasource.password-->

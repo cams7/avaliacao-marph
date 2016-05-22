@@ -44,8 +44,13 @@ Para rodar o programa
 		git push openshift HEAD
 	
 * Baixe o **Tomcat 8** e **Wildfly 10**, caso ainda não o tenha baixado.
+
 * No **Tomcat 8**, inclua o usuário e senha **tomcat**. Para isso, inclua a tag *\<user username="tomcat" password="tomcat" roles="manager-script"/\>* dentro da tag *\<tomcat-users\>* no arquivo **tomcat-users.xml**.
 
+* No **Wildfly 10**, [crie um Datasouce para o PostgreSQL](https://desenvolvo.wordpress.com/2012/06/21/configurando-ds-jbossas7/).
+* No **Wildfly 10**, crie um Datasorce para o Firebird.
+
+* Obs.: As configurações da conexão do banco de dados estão no arquivo **pom.xml** que esta na raiz do projeto. Antes de rodar a aplicação, altere essas configurações de acordo com o banco que esta sendo usado.
 
 1. Inicialize o **Wildfly 10**, em seguida, no diretório onde o projeto foi baixado, execute as linhas abaixo:
 
