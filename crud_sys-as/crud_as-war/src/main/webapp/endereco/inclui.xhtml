@@ -1,0 +1,35 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui" template="/layout/template.xhtml">
+
+	<ui:define name="pageTitle">
+		<h:outputText value="#{msg['page.title.inclui.endereco']}" />
+	</ui:define>
+
+	<f:metadata>
+		<f:event type="preRenderView"
+			listener="#{enderecoMB.includeNewEntity}" />
+	</f:metadata>
+
+	<ui:define name="sidebar">
+		<ui:include src="menu.xhtml" />
+	</ui:define>
+
+	<ui:define name="content">
+		<h:form styleClass="form-horizontal">
+			<fieldset>
+				<legend>
+					<h:outputText value="#{msg['label.endereco']}" />
+					<small> <h:outputText value="#{msg['label.inclui']}" /></small>
+				</legend>
+				<ui:include src="form.xhtml">
+					<ui:param name="endereco" value="#{enderecoMB.selectedEntity}" />
+					<ui:param name="pessoa" value="#{enderecoMB.selectedEntity.pessoa}" />
+					<ui:param name="createEntity" value="#{true}" />
+				</ui:include>
+			</fieldset>
+		</h:form>
+	</ui:define>
+</ui:composition>

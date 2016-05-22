@@ -1,0 +1,133 @@
+<ui:fragment xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:sec="http://www.springframework.org/security/tags">
+
+	<!--f:metadata>
+		<f:event type="preRenderComponent"
+			listener="#{enderecoMB.preRenderComponent}" />
+		<f:event type="preRenderView" listener="#{enderecoMB.preRenderView}" />
+		<f:event type="postAddToView" listener="#{enderecoMB.postAddToView}" />
+		<f:event type="preValidate" listener="#{enderecoMB.preValidate}" />
+		<f:event type="postValidate" listener="#{enderecoMB.postValidate}" />
+	</f:metadata-->
+
+	<p:outputPanel id="enderecoDetail" style="text-align:center;">
+		<h:panelGroup id="enderecoPanel" rendered="#{not empty endereco}">
+			<c:choose>
+				<c:when test="#{not createEntity}">
+					<div class="control-group">
+						<h:outputLabel for="enderecoId"
+							value="#{msg['label.endereco.id']}" styleClass="control-label" />
+						<h:outputText id="enderecoId" value="#{endereco.id}"
+							label="#{msg['label.endereco.id']}" styleClass="controls"
+							style="float: left;margin-left: 20px;" />
+					</div>
+					<div class="control-group">
+						<h:outputLabel for="pessoaNome"
+							value="#{msg['label.pessoa.nome']}" styleClass="control-label" />
+						<h:outputText id="pessoaNome" value="#{pessoa.nome}"
+							label="#{msg['label.pessoa.nome']}" styleClass="controls"
+							style="float: left;margin-left: 20px;" />
+					</div>
+				</c:when>
+				<c:otherwise>
+					<div class="control-group">
+						<h:outputLabel for="pessoaNome"
+							value="#{msg['label.pessoa.nome']}" styleClass="control-label" />
+						<div class="controls" style="float: left; margin-left: 20px;">
+							<p:autoComplete id="pessoaNome" value="#{pessoa}" var="p"
+								itemLabel="#{p.nome}" itemValue="#{p}"
+								converter="pessoaConverter" effect="fade" queryDelay="500"
+								completeMethod="#{enderecoMB.buscaPessoas}"
+								styleClass="input-large" label="#{msg['label.pessoa.nome']}">
+								<p:ajax event="itemSelect" listener="#{enderecoMB.onItemSelect}"
+									update="mensagens" />
+							</p:autoComplete>
+							<p:message for="pessoaNome" styleClass="alert alert-error" />
+						</div>
+					</div>
+				</c:otherwise>
+			</c:choose>
+
+			<div class="control-group">
+				<h:outputLabel for="enderecoRua"
+					value="#{msg['label.endereco.rua']}" styleClass="control-label" />
+				<div class="controls" style="float: left; margin-left: 20px;">
+					<p:inputText id="enderecoRua" value="#{endereco.rua}"
+						label="#{msg['label.endereco.rua']}" styleClass="input-large" />
+					<p:message for="enderecoRua" styleClass="alert alert-error" />
+				</div>
+			</div>
+
+			<div class="control-group">
+				<h:outputLabel for="enderecoBairro"
+					value="#{msg['label.endereco.bairro']}" styleClass="control-label" />
+				<div class="controls" style="float: left; margin-left: 20px;">
+					<p:inputText id="enderecoBairro" value="#{endereco.bairro}"
+						label="#{msg['label.endereco.bairro']}" styleClass="input-large" />
+					<p:message for="enderecoBairro" styleClass="alert alert-error" />
+				</div>
+			</div>
+
+			<div class="control-group">
+				<h:outputLabel for="enderecoTelefone"
+					value="#{msg['label.endereco.telefone']}"
+					styleClass="control-label" />
+				<div class="controls" style="float: left; margin-left: 20px;">
+					<p:inputMask mask="(99) 9999-9999" id="enderecoTelefone"
+						value="#{endereco.telefone}"
+						label="#{msg['label.endereco.telefone']}" styleClass="input-large"
+						converter="telefoneConverter" />
+					<p:message for="enderecoTelefone" styleClass="alert alert-error" />
+				</div>
+			</div>
+		</h:panelGroup>
+
+		<div class="control-group">
+			<div class="controls">
+				<c:choose>
+					<c:when test="#{not createEntity}">
+						<p:commandButton value="#{msg['button.atualiza']}"
+							actionListener="#{enderecoMB.updateEntity}"
+							styleClass="btn btn-success"
+							oncomplete="handleUpdateRequest(xhr, status, args);"
+							process="@form" />
+						<sec:authorize access="hasRole('ADMINISTRADOR')">
+							<p:commandButton value="#{msg['button.exclui']}"
+								actionListener="#{enderecoMB.removeEntity}"
+								styleClass="btn btn-danger"
+								oncomplete="handleUpdateRequest(xhr, status, args);"
+								update="enderecoTable:totalRows" immediate="true"
+								rendered="#{not createEntity}" />
+						</sec:authorize>
+						<p:commandButton value="#{msg['button.cancela']}"
+							actionListener="#{enderecoMB.handleClose}" styleClass="btn"
+							oncomplete="PF('enderecoDialog').hide();" />
+					</c:when>
+					<c:otherwise>
+						<p:commandButton value="#{msg['button.salva']}"
+							action="#{enderecoMB.createEntity}" styleClass="btn btn-success"
+							update="enderecoPanel" process="@form" />
+					</c:otherwise>
+				</c:choose>
+			</div>
+		</div>
+	</p:outputPanel>
+
+	<c:if test="#{not createEntity}">
+		<p:remoteCommand name="atualizaFomulario" update="enderecoPanel" />
+
+		<h:outputScript library="js" name="list.page.js" />
+
+		<script type="text/javascript">
+			function handleUpdateRequest(xhr, status, param) {
+				updateListPage("mensagens", "enderecoTable", "enderecoDialog",
+						param);
+			}
+		</script>
+	</c:if>
+</ui:fragment>

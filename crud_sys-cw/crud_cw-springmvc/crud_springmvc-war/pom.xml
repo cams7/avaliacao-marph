@@ -1,0 +1,60 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>br.com.cams7.crud</groupId>
+		<artifactId>crud_cw-springmvc</artifactId>
+		<version>1.0-SNAPSHOT</version>
+	</parent>
+
+	<artifactId>crud_springmvc-war</artifactId>
+	<packaging>war</packaging>
+	
+	<name>Aplicação WEB (Spring MVC)</name>
+	<description>Aplicação WEB (Spring MVC) que é executada num recipiente web: Tomcat7 e Jetty</description>
+
+	<properties>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>br.com.cams7.crud</groupId>
+			<artifactId>sys_common-lib</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>br.com.cams7.crud</groupId>
+			<artifactId>crud_sys-jpa</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>br.com.cams7.crud</groupId>
+			<artifactId>crud_common-lib</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>br.com.cams7.crud</groupId>
+			<artifactId>crud_web-lib</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>br.com.cams7.crud</groupId>
+			<artifactId>cw_common-lib</artifactId>
+		</dependency>	
+		<dependency>
+			<groupId>br.com.cams7.crud</groupId>
+			<artifactId>crud_springmvc-lib</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>javax</groupId>
+			<artifactId>javaee-web-api</artifactId>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.mortbay.jetty</groupId>
+				<artifactId>jetty-maven-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
+</project>
