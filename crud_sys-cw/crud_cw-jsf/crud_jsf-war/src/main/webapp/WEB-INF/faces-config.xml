@@ -1,0 +1,62 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<faces-config version="2.2" xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd">
+
+	<application>
+		<el-resolver>org.springframework.web.jsf.el.SpringBeanFacesELResolver</el-resolver>
+
+		<!-- configuracoes do locale (i18n) -->
+		<locale-config>
+			<default-locale>pt_BR</default-locale>
+			<supported-locale>en</supported-locale>
+			<supported-locale>pt_BR</supported-locale>
+		</locale-config>
+
+		<resource-bundle>
+			<base-name>i18n.messages</base-name>
+			<var>msg</var>
+		</resource-bundle>
+	</application>
+
+	<navigation-rule>
+		<from-view-id>/pessoa/inclui.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>listaPessoas</from-outcome>
+			<to-view-id>/pessoa/lista.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/usuario/inclui.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>listaUsuarios</from-outcome>
+			<to-view-id>/usuario/lista.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/endereco/inclui.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>listaEnderecos</from-outcome>
+			<to-view-id>/endereco/lista.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<!-- Define uma lista para servir como Managed Bean para a pagina sobre. -->
+	<managed-bean>
+		<description>Sobre a aplicação</description>
+		<managed-bean-name>sobreMB</managed-bean-name>
+		<managed-bean-class>java.util.ArrayList</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+		<list-entries>
+			<value>${faces-config.sobre.title}</value>
+			<value>${faces-config.sobre.built}</value>
+			<value>${faces-config.sobre.site}</value>
+			<value>${faces-config.sobre.build}</value>
+		</list-entries>
+	</managed-bean>
+</faces-config>

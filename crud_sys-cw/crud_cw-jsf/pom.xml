@@ -1,0 +1,93 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>br.com.cams7.crud</groupId>
+		<artifactId>crud_sys-cw</artifactId>
+		<version>1.0-SNAPSHOT</version>
+	</parent>
+
+	<artifactId>crud_cw-jsf</artifactId>
+	<packaging>pom</packaging>
+
+	<name>Aplicação JSF 2 (Primefaces)</name>
+	<description>Aplicação que é executada num recipiente web: Tomcat7 e Jetty</description>
+
+	<properties>
+		<jsf.version>2.2.13</jsf.version>
+	</properties>
+
+	<modules>
+		<module>crud_jsf-war</module>
+		<module>crud_jsf-lib</module>
+	</modules>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>br.com.cams7.crud</groupId>
+				<artifactId>crud_jsf-lib</artifactId>
+				<version>${project.version}</version>
+				<type>jar</type>
+			</dependency>
+
+			<dependency>
+				<groupId>org.jboss.logging</groupId>
+				<artifactId>jboss-logging</artifactId>
+				<version>3.3.0.Final</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.springframework.webflow</groupId>
+				<artifactId>spring-faces</artifactId>
+				<version>2.4.2.RELEASE</version>
+				<!--version>2.4.1.RELEASE</version-->
+			</dependency>	
+
+			<dependency>
+				<groupId>jstl</groupId>
+				<artifactId>jstl</artifactId>
+				<version>1.2</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.sun.faces</groupId>
+				<artifactId>jsf-api</artifactId>
+				<version>${jsf.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.sun.faces</groupId>
+				<artifactId>jsf-impl</artifactId>
+				<version>${jsf.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.sun.el</groupId>
+				<artifactId>el-ri</artifactId>
+				<version>1.0</version>
+			</dependency>
+
+			<!--dependency>
+				<groupId>org.hsqldb</groupId>
+				<artifactId>hsqldb</artifactId>
+				<version>2.3.2</version>
+			</dependency-->
+			<dependency>
+				<groupId>com.h2database</groupId>
+				<artifactId>h2</artifactId>
+				<version>1.4.191</version>
+			</dependency>			
+			<dependency>
+				<groupId>org.firebirdsql.jdbc</groupId>
+				<artifactId>jaybird-jdk17</artifactId>
+				<version>2.2.10</version>
+			</dependency>			
+			<dependency>
+				<groupId>postgresql</groupId>
+				<artifactId>postgresql</artifactId>
+				<version>9.1-901-1.jdbc4</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>		
+</project>

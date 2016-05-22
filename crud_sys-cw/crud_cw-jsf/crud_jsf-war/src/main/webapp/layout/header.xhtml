@@ -1,0 +1,86 @@
+<ui:fragment xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:sec="http://www.springframework.org/security/tags">
+
+	<div class="logo">
+		<h:graphicImage library="img" name="logo_java.jpg"
+			title="#{msg['app.title']}" alt="#{msg['app.title']}" />
+	</div>
+	<div class="menu_app">
+		<p:menubar>
+			<p:submenu label="#{msg['menu.inicio']}" icon="ui-icon-document">
+				<p:menuitem value="#{msg['menu.home']}" outcome="/home"
+					icon="ui-icon-home" />
+				<sec:authorize access="hasRole('ADMINISTRADOR')">
+					<p:submenu label="#{msg['menu.inclui']}" icon="ui-icon-disk">
+						<p:menuitem value="#{msg['menu.usuario']}"
+							outcome="/usuario/inclui" icon="ui-icon-person">
+							<f:param name="active" value="inclui_usuario" />
+						</p:menuitem>
+						<p:menuitem value="#{msg['menu.pessoa']}" outcome="/pessoa/inclui"
+							icon="ui-icon-contact">
+							<f:param name="active" value="inclui_pessoa" />
+						</p:menuitem>
+						<p:menuitem value="#{msg['menu.endereco']}"
+							outcome="/endereco/inclui" icon="ui-icon-contact">
+							<f:param name="active" value="inclui_endereco" />
+						</p:menuitem>
+					</p:submenu>
+				</sec:authorize>
+
+				<sec:authorize access="isAnonymous()">
+					<p:separator />
+					<p:menuitem value="#{msg['menu.login']}" outcome="/login"
+						icon="ui-icon-person" />
+				</sec:authorize>
+
+				<sec:authorize access="isAuthenticated()">
+					<p:separator />
+					<p:menuitem value="#{msg['menu.sair']}"
+						url="#{facesContext.externalContext.requestContextPath}/j_spring_security_logout"
+						icon="ui-icon-extlink" />
+				</sec:authorize>
+			</p:submenu>
+
+			<sec:authorize access="isAuthenticated()">
+				<p:submenu label="#{msg['menu.lista']}" icon="ui-icon-search">
+					<sec:authorize ifAnyGranted="SECRETARIO,ADMINISTRADOR">
+						<p:menuitem value="#{msg['menu.usuarios']}"
+							outcome="/usuario/lista" icon="ui-icon-person">
+							<f:param name="active" value="lista_usuarios" />
+						</p:menuitem>
+					</sec:authorize>
+
+					<p:menuitem value="#{msg['menu.pessoas']}" outcome="/pessoa/lista"
+						icon="ui-icon-contact">
+						<f:param name="active" value="lista_pessoas" />
+					</p:menuitem>
+
+					<p:menuitem value="#{msg['menu.enderecos']}"
+						outcome="/endereco/lista" icon="ui-icon-contact">
+						<f:param name="active" value="lista_enderecos" />
+					</p:menuitem>
+				</p:submenu>
+			</sec:authorize>
+
+			<p:submenu label="#{msg['menu.ajuda']}" icon="ui-icon-help">
+				<p:menuitem value="#{msg['menu.sobre']}" outcome="/sobre"
+					icon="ui-icon-gear">
+					<f:param name="active" value="sobre" />
+				</p:menuitem>
+			</p:submenu>
+
+			<sec:authorize access="isAuthenticated()">
+				<f:facet name="options">
+					<h:outputFormat value="#{msg['menu.saudacao']}">
+						<f:param
+							value="#{facesContext.externalContext.request.userPrincipal.name}" />
+					</h:outputFormat>
+				</f:facet>
+			</sec:authorize>
+		</p:menubar>
+	</div>
+</ui:fragment>

@@ -1,0 +1,93 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>br.com.cams7.crud</groupId>
+		<artifactId>crud_sys</artifactId>
+		<version>1.0-SNAPSHOT</version>
+	</parent>
+
+	<artifactId>crud_sys-cw</artifactId>
+	<packaging>pom</packaging>
+
+	<name>Aplicação executada num recipiente web</name>
+	<description>Aplicação que é executada num recipiente web</description>
+
+	<properties>
+		<!--spring.security.version>4.1.0.RELEASE</spring.security.version-->
+		<spring.security.version>3.2.9.RELEASE</spring.security.version>
+	</properties>
+
+	<modules>
+		<module>cw_common-lib</module>
+		<module>crud_cw-jsf</module>
+		<module>crud_cw-springmvc</module>
+	</modules>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>br.com.cams7.crud</groupId>
+				<artifactId>cw_common-lib</artifactId>
+				<version>${project.version}</version>
+				<type>jar</type>
+			</dependency>
+		
+			<dependency>
+				<groupId>org.testng</groupId>
+				<artifactId>testng</artifactId>
+				<version>6.9.10</version>
+			</dependency>
+
+			<dependency>
+				<groupId>javax</groupId>
+				<artifactId>javaee-web-api</artifactId>
+				<version>7.0</version>
+				<scope>provided</scope>
+			</dependency>			
+
+			<!-- Spring Security -->
+			<dependency>
+				<groupId>org.springframework.security</groupId>
+				<artifactId>spring-security-web</artifactId>
+				<version>${spring.security.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.springframework.security</groupId>
+				<artifactId>spring-security-config</artifactId>
+				<version>${spring.security.version}</version>
+			</dependency>
+
+			<!-- Spring Security JSP Taglib -->
+			<dependency>
+				<groupId>org.springframework.security</groupId>
+				<artifactId>spring-security-taglibs</artifactId>
+				<version>${spring.security.version}</version>
+			</dependency>				
+
+			<dependency>
+				<groupId>com.fasterxml.jackson.core</groupId>
+				<artifactId>jackson-databind</artifactId>
+				<version>${jackson.version}</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>net.sf.jasperreports</groupId>
+				<artifactId>jasperreports</artifactId>
+				<version>5.6.1</version>
+				<exclusions>
+					<exclusion>
+						<groupId>org.bouncycastle</groupId>
+						<artifactId>bcmail-jdk14</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>org.bouncycastle</groupId>
+						<artifactId>bcprov-jdk14</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>		
+</project>

@@ -1,0 +1,116 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:sec="http://www.springframework.org/security/tags"
+	template="/layout/template.xhtml">
+
+	<ui:define name="pageTitle">
+		<h:outputText value="#{msg['page.title.lista.enderecos']}" />
+	</ui:define>
+
+	<f:metadata>
+		<f:event type="preRenderView" listener="#{enderecoMB.count}" />
+	</f:metadata>
+
+	<ui:define name="sidebar">
+		<ui:include src="menu.xhtml" />
+	</ui:define>
+
+	<ui:define name="content">
+		<div style="border-bottom: 1px solid #E5E5E5;">
+			<h4>
+				<h:outputText value="#{msg['label.enderecos']}" />
+				<small> <h:outputText value="#{msg['label.listagem']}" /></small>
+			</h4>
+		</div>
+
+		<h:form id="enderecoForm" styleClass="form-horizontal">
+			<p:dataTable id="enderecoTable" var="endereco"
+				value="#{enderecoMB.lazyModel}" paginator="true"
+				rows="#{enderecoMB.rows}" first="#{enderecoMB.first}"
+				paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+				rowsPerPageTemplate="3,5,10,15" selectionMode="single"
+				selection="#{enderecoMB.selectedEntity}" lazy="true"
+				emptyMessage="#{msg['msg.warn.enderecosNaoCadastrados']}"
+				widgetVar="enderecoTable" resizableColumns="true" filterDelay="1000"
+				filterEvent="keyup">
+
+				<f:facet name="header">
+					<p:outputPanel style="text-align: right;">
+						<h:outputText value="#{msg['label.busca']}:" />
+						<p:inputText id="globalFilter" style="width:300px"
+							placeholder="#{msg['label.enderecos.busca']}" immediate="true">
+							<p:ajax event="keyup" delay="1000"
+								oncomplete="PF('enderecoTable').filter()" />
+						</p:inputText>
+					</p:outputPanel>
+				</f:facet>
+
+				<sec:authorize ifAnyGranted="SECRETARIO,ADMINISTRADOR">
+					<p:ajax event="rowSelect" listener="#{enderecoMB.onRowSelect}"
+						update=":enderecoForm:enderecoDetail"
+						onsuccess="PF('enderecoDialog').show();" />
+				</sec:authorize>
+
+				<p:column headerText="#{msg['label.pessoa.nome']}"
+					sortBy="#{endereco.pessoa.nome}" filterBy="#{endereco.pessoa.nome}"
+					filterMatchMode="contains">
+					<h:outputText value="#{endereco.pessoa.nome}" />
+				</p:column>
+
+				<p:column headerText="#{msg['label.endereco.rua']}"
+					sortBy="#{endereco.rua}" filterBy="#{endereco.rua}"
+					filterMatchMode="contains">
+					<h:outputText value="#{endereco.rua}" />
+				</p:column>
+
+				<p:column headerText="#{msg['label.endereco.bairro']}"
+					sortBy="#{endereco.bairro}" filterBy="#{endereco.bairro}"
+					filterMatchMode="contains">
+					<h:outputText value="#{endereco.bairro}" />
+				</p:column>
+
+				<p:column headerText="#{msg['label.endereco.telefone']}"
+					sortBy="#{endereco.telefone}" filterBy="#{endereco.telefone}"
+					filterMatchMode="contains">
+					<h:outputText value="#{endereco.telefone}">
+						<f:converter converterId="telefoneConverter" />
+					</h:outputText>
+				</p:column>
+
+				<f:facet name="footer">
+					<p:panelGrid id="totalRows" columns="2">
+						<h:outputFormat value="#{msg['label.enderecos.totalCadastrados']}">
+							<f:param value="#{enderecoMB.totalRows}" />
+						</h:outputFormat>
+
+						<p:commandButton value="#{msg['button.visualiza.relatorio']}"
+							styleClass="btn" oncomplete="PF('relatorioDialog').show();"
+							update=":relatorioForm:relatorioDetail" />
+					</p:panelGrid>
+				</f:facet>
+			</p:dataTable>
+
+			<sec:authorize ifAnyGranted="SECRETARIO,ADMINISTRADOR">
+				<p:dialog header="#{msg['page.title.edita.endereco']}"
+					widgetVar="enderecoDialog" modal="true" resizable="false">
+
+					<p:ajax event="close" listener="#{enderecoMB.handleClose}" />
+
+					<ui:include src="form.xhtml">
+						<ui:param name="endereco" value="#{enderecoMB.selectedEntity}" />
+						<ui:param name="pessoa"
+							value="#{enderecoMB.selectedEntity.pessoa}" />
+						<ui:param name="createEntity" value="#{false}" />
+					</ui:include>
+				</p:dialog>
+			</sec:authorize>
+		</h:form>
+
+		<ui:include src="/layout/relatorio_dialog.xhtml">
+			<ui:param name="mb" value="#{enderecoMB}" />
+		</ui:include>
+	</ui:define>
+</ui:composition>

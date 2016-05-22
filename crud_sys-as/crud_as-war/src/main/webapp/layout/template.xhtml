@@ -1,0 +1,60 @@
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+	<h:outputStylesheet library="css" name="bootstrap.min.css" />
+	<h:outputStylesheet library="css" name="crud_app.css" />
+
+	<h:outputScript library="js" name="bootstrap.min.js" />
+
+	<title><h:outputText value="#{msg['app.title']}" /> - <ui:insert
+			name="pageTitle"></ui:insert></title>
+</h:head>
+
+<h:body>
+	<f:view contentType="text/html">
+		<div class="header">
+			<div class="container">
+				<ui:insert name="header">
+					<ui:include src="/layout/header.xhtml" />
+				</ui:insert>
+			</div>
+		</div>
+		<div class="container">
+			<div class="row-fluid show-grid">
+				<div class="sidebar">
+					<div class="well span2">
+						<ui:insert name="sidebar" />
+					</div>
+				</div>
+				<div class="span8">
+					<p:growl id="mensagens" widgetVar="mensagens" showDetail="true"
+						showSummary="true" life="5000" />
+					<ui:insert name="content" />
+
+					<ui:insert name="footer">
+						<ui:include src="/layout/footer.xhtml" />
+					</ui:insert>
+				</div>
+			</div>
+		</div>
+
+		<p:ajaxStatus onstart="PF('statusDialog').show()"
+			onsuccess="PF('statusDialog').hide()" />
+
+		<p:dialog widgetVar="statusDialog" modal="true" visible="false"
+			draggable="false" closable="false" resizable="false"
+			showHeader="false">
+			<p:graphicImage name="/img/ajaxloadingbar.gif" />
+		</p:dialog>
+	</f:view>
+</h:body>
+</html>

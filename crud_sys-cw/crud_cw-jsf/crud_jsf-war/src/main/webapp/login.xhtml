@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:sec="http://www.springframework.org/security/tags"
+	template="/layout/template.xhtml">
+
+	<ui:define name="pageTitle">
+		<h:outputText value="#{msg['page.title.login']}" />
+	</ui:define>
+
+	<ui:define name="content">
+		<h:outputStylesheet library="css" name="login.css" />
+
+		<sec:authorize access="isAuthenticated()">
+			<div class="alert alert-warning">#{msg['msg.warn.login.logado']}!</div>
+		</sec:authorize>
+		<sec:authorize access="isAnonymous()">
+			<div id="login-box">
+				<h3>#{msg['page.title.login']}</h3>
+
+				<c:choose>
+					<c:when test="#{param.error}">
+						<div class="error">#{msg['msg.erro.login.invalido']}!</div>
+					</c:when>
+					<c:when test="#{param.logout}">
+						<div class="msg">#{msg['msg.info.login.sair']}!</div>
+					</c:when>
+					<c:otherwise>
+					</c:otherwise>
+				</c:choose>
+
+				<form
+					action="#{facesContext.externalContext.requestContextPath}/j_spring_security_check"
+					method="post">
+					<h:panelGrid columns="2" cellpadding="5">
+						<h:outputLabel for="j_username"
+							value="#{msg['label.usuario.login']}" />
+						<h:inputText id="j_username" required="true" />
+						<h:outputLabel for="j_password"
+							value="#{msg['label.usuario.senha']}" />
+						<h:inputSecret id="j_password" required="true" />
+						<h:commandButton value="#{msg['button.entrar']}" />
+					</h:panelGrid>
+				</form>
+			</div>
+		</sec:authorize>
+	</ui:define>
+</ui:composition>
