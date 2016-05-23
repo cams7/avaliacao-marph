@@ -25,6 +25,7 @@
 
 		<jackson.version>2.7.4</jackson.version>
 		<version.arquillian.container>8.2.1.Final</version.arquillian.container>
+		<hibernate.version>5.1.0.Final</hibernate.version>
 
 		<!-- web.xml -->
 		<!-- Pula comentários nas páginas JSF -->
@@ -133,7 +134,67 @@
 				<groupId>org.codehaus.groovy</groupId>
 				<artifactId>groovy-all</artifactId>
 				<version>2.4.6</version>
+			</dependency>
+			
+			<!-- Spring dependencies -->
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-framework-bom</artifactId>
+				<version>4.2.6.RELEASE</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+			
+			<dependency>
+				<groupId>org.hibernate</groupId>
+				<artifactId>hibernate-core</artifactId>
+				<version>${hibernate.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.hibernate</groupId>
+				<artifactId>hibernate-entitymanager</artifactId>
+				<version>${hibernate.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.hibernate</groupId>
+				<artifactId>hibernate-validator</artifactId>
+				<version>5.2.4.Final</version>
+			</dependency>
+
+			<dependency>
+				<groupId>cglib</groupId>
+				<artifactId>cglib</artifactId>
+				<version>3.2.2</version>
+			</dependency>
+
+			<dependency>
+				<groupId>commons-dbcp</groupId>
+				<artifactId>commons-dbcp</artifactId>
+				<version>1.4</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>org.jboss.logging</groupId>
+				<artifactId>jboss-logging</artifactId>
+				<version>3.3.0.Final</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.h2database</groupId>
+				<artifactId>h2</artifactId>
+				<version>1.4.191</version>
 			</dependency>			
+			<dependency>
+				<groupId>org.firebirdsql.jdbc</groupId>
+				<artifactId>jaybird-jdk17</artifactId>
+				<version>2.2.10</version>
+			</dependency>			
+			<dependency>
+				<groupId>postgresql</groupId>
+				<artifactId>postgresql</artifactId>
+				<version>9.1-901-1.jdbc4</version>
+			</dependency>
 		</dependencies>
 	</dependencyManagement>
 
@@ -150,6 +211,7 @@
 					</configuration>
 				</plugin>
 
+				<!--Gera algumas informações no arquivo MANIFEST.MF do projeto -->
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-jar-plugin</artifactId>
@@ -247,6 +309,7 @@
 		</pluginManagement>
 
 		<plugins>
+			<!--Gera informações do controle de versão -->
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>buildnumber-maven-plugin</artifactId>
@@ -261,6 +324,7 @@
 				</executions>
 			</plugin>
 
+			<!--Cria os arquivos de configuração do Eclipse -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-eclipse-plugin</artifactId>
@@ -280,25 +344,12 @@
 				<activeByDefault>true</activeByDefault>
 			</activation>
 			
-			<properties>
-				<hibernate.version>5.1.0.Final</hibernate.version>
-				
+			<properties>				
 				<!-- persistence.xml -->
 				<!--hibernate.hbm2ddl.auto>create-drop</hibernate.hbm2ddl.auto -->
 				<hibernate.hbm2ddl.auto>validate</hibernate.hbm2ddl.auto>
 				<hibernate.show_sql>true</hibernate.show_sql>
 				<hibernate.format_sql>false</hibernate.format_sql>
-
-				<!-- persistence.xml (HSQLDB) -->
-				<!--hibernate.dialect>org.hibernate.dialect.HSQLDialect</hibernate.dialect -->
-				<!-- crud-ds.xml (HSQLDB) -->
-				<!--datasource.connection.url>jdbc:hsqldb:file:C:/Desenv/Github/crud_sys/db/hsqldb/crud_sys</datasource.connection.url> 
-					<datasource.driver>hsqldb.jar</datasource.driver> <datasource.user-name>sa</datasource.user-name> 
-					<datasource.password></datasource.password -->
-				<!-- DataSource.xml (HSQLDB) -->
-				<!--datasource.driverClassName>org.hsqldb.jdbcDriver</datasource.driverClassName -->
-				<!-- Hibernate.xml (HSQLDB) -->
-				<!--hibernate.hbm2ddl.import_files>database/hsqldb_DML.sql</hibernate.hbm2ddl.import_files -->
 
 				<!-- persistence.xml (H2) -->
 				<!--hibernate.dialect>org.hibernate.dialect.H2Dialect</hibernate.dialect -->
@@ -338,52 +389,12 @@
 			
 			<modules>
 				<module>crud_sys-cw</module>
+				<module>crud_sys-desktop</module>
 			</modules>
-			
-			<dependencyManagement>
-				<dependencies>
-					<!-- Spring dependencies -->
-					<dependency>
-						<groupId>org.springframework</groupId>
-						<artifactId>spring-framework-bom</artifactId>
-						<version>4.2.6.RELEASE</version>
-						<type>pom</type>
-						<scope>import</scope>
-					</dependency>
-					
-					<dependency>
-						<groupId>org.hibernate</groupId>
-						<artifactId>hibernate-core</artifactId>
-						<version>${hibernate.version}</version>
-					</dependency>
-					<dependency>
-						<groupId>org.hibernate</groupId>
-						<artifactId>hibernate-entitymanager</artifactId>
-						<version>${hibernate.version}</version>
-					</dependency>
-
-					<dependency>
-						<groupId>org.hibernate</groupId>
-						<artifactId>hibernate-validator</artifactId>
-						<version>5.2.4.Final</version>
-					</dependency>
-
-					<dependency>
-						<groupId>cglib</groupId>
-						<artifactId>cglib</artifactId>
-						<version>3.2.2</version>
-					</dependency>
-
-					<dependency>
-						<groupId>commons-dbcp</groupId>
-						<artifactId>commons-dbcp</artifactId>
-						<version>1.4</version>
-					</dependency>
-				</dependencies>
-			</dependencyManagement>
-			
+						
 			<build>
 				<plugins>
+					<!--Pula o teste unitário -->
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-surefire-plugin</artifactId>
@@ -428,13 +439,6 @@
 		</profile>
 
 		<profile>
-			<!-- When built in OpenShift the 'openshift' profile will be used when 
-				invoking mvn. -->
-			<!-- Use this profile for any OpenShift specific customization your app 
-				will need. -->
-			<!-- By default that is to put the resulting archive into the 'deployments' 
-				folder. -->
-			<!-- http://maven.apache.org/guides/mini/guide-building-for-different-environments.html -->
 			<id>openshift</id>
 
 			<properties>
@@ -444,20 +448,14 @@
 				<hibernate.show_sql>false</hibernate.show_sql>
 				<hibernate.format_sql>false</hibernate.format_sql>
 
-				<!-- persistence.xml (H2) -->
-				<!-- hibernate.dialect>org.hibernate.dialect.H2Dialect</hibernate.dialect -->
-				<!-- crud-ds.xml (H2) -->
-				<!-- datasource.connection.url>jdbc:h2:file:C:/Desenv/Github/crud_sys/db/h2/crud_sys;DB_CLOSE_DELAY=-1</datasource.connection.url> 
-					<datasource.driver>h2</datasource.driver> <datasource.user-name>sa</datasource.user-name> 
-					<datasource.password></datasource.password -->
-
-				<!-- persistence.xml (Postgresql) -->
+				<!-- persistence.xml (Postgresql - Local) -->
 				<hibernate.dialect>org.hibernate.dialect.PostgreSQLDialect</hibernate.dialect>
 				<!-- crud-ds.xml (Postgresql) -->
 				<!--datasource.driver>org.postgresql</datasource.driver>
 				<datasource.connection.url>jdbc:postgresql://192.168.1.4:5432/crud_sys</datasource.connection.url>
 				<datasource.user-name>cams7</datasource.user-name>
 				<datasource.password>12345</datasource.password-->
+				<!-- crud-ds.xml (Postgresql - Openshift) -->
 				<datasource.driver>postgresql</datasource.driver>
 				<datasource.connection.url>jdbc:postgresql://5741934e2d527156dd0000d8-cams7.rhcloud.com:45021/crud</datasource.connection.url>
 				<datasource.user-name>adminr1nsmlm</datasource.user-name>

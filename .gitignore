@@ -8,7 +8,6 @@
 Thumbs.db
 
 #Maven directories
-log/
 target/
 
 #Eclipse files and directories
@@ -24,11 +23,3 @@ bin/
 *.jar
 *.war
 *.ear
-
-#Jasper files
-#*.jasper
-
-#Arquivos temporários
-#db/
-
-

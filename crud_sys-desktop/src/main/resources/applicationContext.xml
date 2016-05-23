@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans		http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+        				http://www.springframework.org/schema/context  	http://www.springframework.org/schema/context/spring-context-4.2.xsd
+        				http://www.springframework.org/schema/data/jpa  http://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
+
+	<!-- Considera a estrutura de pacote para percorrer classes com as anotacoes 
+		de injecao de dependencia do Spring como: @Component, @Repository e @Service -->
+	<context:component-scan base-package="br.com.cams7.app" />
+
+	<!-- Define as configuracoes JPA (veja o arquivo persistence.xml) -->
+	<bean id="entityManagerFactory"
+		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="jpaVendorAdapter">
+			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter" />
+		</property>
+		<property name="persistenceUnitName" value="appUnit" />
+	</bean>
+
+	<!-- Ativa o controle transacional -->
+	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+		<property name="entityManagerFactory" ref="entityManagerFactory" />
+	</bean>
+
+	<!-- Define a conexao com o banco de dados -->
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+		destroy-method="close">
+		<property name="driverClassName"
+			value="${datasource.driverClassName}" />
+		<property name="url" value="${datasource.connection.url}" />
+		<property name="username" value="${datasource.user-name}" />
+		<property name="password" value="${datasource.password}" />
+	</bean>
+
+	<!-- Ativa a criacao dos repositorios no Spring Data JPA -->
+	<jpa:repositories base-package="br.com.cams7.app.dao" />
+</beans>
