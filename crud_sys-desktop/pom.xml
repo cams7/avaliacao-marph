@@ -146,7 +146,7 @@
 						</executions>
 
 						<configuration>
-							<mainClass>br.com.cams7.app.Main</mainClass>
+							<mainClass>br.com.cams7.crud.Main</mainClass>
 						</configuration>
 					</plugin>
 				</plugins>
@@ -220,7 +220,7 @@
 							<archive>
 								<manifest>
 									<classpathPrefix>${dependency.jars}/</classpathPrefix>
-									<mainClass>br.com.cams7.app.Main</mainClass>
+									<mainClass>br.com.cams7.crud.Main</mainClass>
 								</manifest>
 							</archive>
 						</configuration>

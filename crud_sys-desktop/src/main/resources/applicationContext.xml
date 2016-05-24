@@ -8,7 +8,9 @@
 
 	<!-- Considera a estrutura de pacote para percorrer classes com as anotacoes 
 		de injecao de dependencia do Spring como: @Component, @Repository e @Service -->
-	<context:component-scan base-package="br.com.cams7.app" />
+	<context:component-scan base-package="br.com.cams7.crud.controller" />
+	<context:component-scan base-package="br.com.cams7.crud.ui" />
+	<context:component-scan base-package="br.com.cams7.crud.validation" />
 
 	<!-- Define as configuracoes JPA (veja o arquivo persistence.xml) -->
 	<bean id="entityManagerFactory"
@@ -36,5 +38,5 @@
 	</bean>
 
 	<!-- Ativa a criacao dos repositorios no Spring Data JPA -->
-	<jpa:repositories base-package="br.com.cams7.app.dao" />
+	<jpa:repositories base-package="br.com.cams7.crud.dao" />
 </beans>
