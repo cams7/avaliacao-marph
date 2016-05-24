@@ -9,7 +9,7 @@ import javax.validation.ValidatorFactory;
 
 import org.springframework.stereotype.Component;
 
-import br.com.cams7.app.model.MercadoriaEntity;
+import br.com.cams7.crud.entity.MercadoriaEntity;
 
 import javax.validation.Validator;
 

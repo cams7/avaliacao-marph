@@ -1,6 +1,5 @@
-package br.com.cams7.app.model;
+package br.com.cams7.crud.entity;
 
-import java.io.Serializable;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.util.Locale;
@@ -15,6 +14,8 @@ import javax.persistence.Table;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
+import br.com.cams7.sys.entity.AbstractEntity;
 
 
 /**
@@ -53,13 +54,13 @@ import javax.validation.constraints.Size;
 @SuppressWarnings("serial")
 @Entity
 @Table(name = "mercadoria")
-public class MercadoriaEntity implements Serializable {
+public class MercadoriaEntity extends AbstractEntity {
 
 	@Id
 	@SequenceGenerator(name = "seq_mercadoria", sequenceName = "gen_mercadoria_id", allocationSize = 1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_mercadoria")
 	@Column(name = "id_mercadoria")
-	private Integer id;
+	private Long id;
 
 	@NotNull
 	@Size(min = 5, max = 200)
@@ -76,13 +77,13 @@ public class MercadoriaEntity implements Serializable {
 	@Min(value = 1)
 	private Float preco;
 
-	private static final NumberFormat numberFmt = NumberFormat.getNumberInstance(new Locale("pt", "BR"));
+	private static final NumberFormat NUMBER_FMT = NumberFormat.getNumberInstance(new Locale("pt", "BR"));
 
 	public MercadoriaEntity() {
 		super();
 	}
 
-	public MercadoriaEntity(Integer id, String nome, String descricao, Integer quantidade, Float preco) {
+	public MercadoriaEntity(Long id, String nome, String descricao, Integer quantidade, Float preco) {
 		this();
 
 		setId(id);
@@ -92,11 +93,11 @@ public class MercadoriaEntity implements Serializable {
 		this.preco = preco;
 	}
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -137,11 +138,11 @@ public class MercadoriaEntity implements Serializable {
 	}
 
 	public static String convertPrecoToString(Float preco) {
-		return numberFmt.format(preco);
+		return NUMBER_FMT.format(preco);
 	}
 
 	public static float formatStringToPreco(String strPreco) throws ParseException {
-		return numberFmt.parse(strPreco).floatValue();
+		return NUMBER_FMT.parse(strPreco).floatValue();
 	}
 
 }

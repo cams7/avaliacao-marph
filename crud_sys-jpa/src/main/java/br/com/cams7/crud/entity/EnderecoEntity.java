@@ -26,11 +26,10 @@ import br.com.cams7.sys.validator.Telefone;
  * @author cesar
  *
  */
+@SuppressWarnings("serial")
 @Entity
 @Table(name = "endereco")
 public class EnderecoEntity extends AbstractEntity {
-
-	private static final long serialVersionUID = 1L;
 
 	@Id
 	@SequenceGenerator(name = "seq_endereco", sequenceName = "gen_endereco_id", allocationSize = 1)

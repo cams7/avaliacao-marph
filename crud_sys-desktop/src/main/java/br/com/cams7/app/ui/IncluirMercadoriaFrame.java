@@ -15,7 +15,7 @@ import javax.swing.JTextField;
 
 import org.springframework.stereotype.Component;
 
-import br.com.cams7.app.model.MercadoriaEntity;
+import br.com.cams7.crud.entity.MercadoriaEntity;
 
 /**
  * Tela para incluir/editar o registro da <code>Mercadoria</code>.
@@ -153,9 +153,9 @@ public class IncluirMercadoriaFrame extends JFrame {
 			throw new RuntimeException("Erro durante a conversão do campo preço (Double).\nConteudo inválido!");
 		}
 
-		Integer id = null;
+		Long id = null;
 		try {
-			id = Integer.parseInt(tfId.getText());
+			id = Long.parseLong(tfId.getText());
 		} catch (NumberFormatException e) {
 		}
 

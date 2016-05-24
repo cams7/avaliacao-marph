@@ -32,6 +32,7 @@ import br.com.cams7.sys.entity.AbstractEntity;
  * @author cesar
  *
  */
+@SuppressWarnings("serial")
 @Entity
 @Table(name = "usuario", uniqueConstraints = @UniqueConstraint(columnNames = "login"))
 @NamedQueries({
@@ -40,8 +41,6 @@ import br.com.cams7.sys.entity.AbstractEntity;
 		@NamedQuery(name = "Usuario.buscaQtdCadastradoPeloLogin", query = "SELECT COUNT(u) FROM UsuarioEntity u WHERE u.login=:login"),
 		@NamedQuery(name = "Usuario.buscaLoginPeloId", query = "SELECT u.login FROM UsuarioEntity u WHERE u.id=:id") })
 public class UsuarioEntity extends AbstractEntity {
-
-	private static final long serialVersionUID = 1L;
 
 	@Id
 	@SequenceGenerator(name = "seq_usuario", sequenceName = "gen_usuario_id", allocationSize = 1)

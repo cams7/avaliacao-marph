@@ -32,6 +32,7 @@ import br.com.cams7.sys.validator.CPF;
  * @author cesar
  *
  */
+@SuppressWarnings("serial")
 @Entity
 @Table(name = "pessoa", uniqueConstraints = @UniqueConstraint(columnNames = "cpf"))
 @NamedQueries({
@@ -41,8 +42,6 @@ import br.com.cams7.sys.validator.CPF;
 		@NamedQuery(name = "Pessoa.buscaCpfPeloId", query = "SELECT p.cpf FROM PessoaEntity p WHERE p.id=:id") })
 
 public class PessoaEntity extends AbstractEntity {
-
-	private static final long serialVersionUID = 1L;
 
 	@Id
 	@SequenceGenerator(name = "seq_pessoa", sequenceName = "gen_pessoa_id", allocationSize = 1)

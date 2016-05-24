@@ -4,7 +4,7 @@ import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
 
-import br.com.cams7.app.model.MercadoriaEntity;
+import br.com.cams7.crud.entity.MercadoriaEntity;
 
 /**
  * Define um TableModel para entidade <code>Mercadoria</code>, considerando as

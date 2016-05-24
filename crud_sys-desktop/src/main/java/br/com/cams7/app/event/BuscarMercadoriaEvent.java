@@ -2,7 +2,7 @@ package br.com.cams7.app.event;
 
 import java.util.List;
 
-import br.com.cams7.app.model.MercadoriaEntity;
+import br.com.cams7.crud.entity.MercadoriaEntity;
 
 /**
  * Evento deve ser gerado durante a pesquisa de mercadorias.

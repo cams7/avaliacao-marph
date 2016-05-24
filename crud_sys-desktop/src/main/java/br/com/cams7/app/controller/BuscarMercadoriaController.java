@@ -10,8 +10,8 @@ import org.springframework.stereotype.Component;
 import br.com.cams7.app.action.AbstractAction;
 import br.com.cams7.app.dao.MercadoriaDAO;
 import br.com.cams7.app.event.BuscarMercadoriaEvent;
-import br.com.cams7.app.model.MercadoriaEntity;
 import br.com.cams7.app.ui.BuscaMercadoriaFrame;
+import br.com.cams7.crud.entity.MercadoriaEntity;
 
 /**
  * Define a <code>Controller</code> responsável por gerir a tela de Busca de

@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
-import br.com.cams7.app.model.MercadoriaEntity;
+import br.com.cams7.crud.entity.MercadoriaEntity;
 
 /**
  * Contrato de persistência para a entidade <code>Mercadoria</code>.

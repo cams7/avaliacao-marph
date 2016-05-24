@@ -13,7 +13,7 @@ import javax.swing.JScrollPane;
 
 import org.springframework.stereotype.Component;
 
-import br.com.cams7.app.model.MercadoriaEntity;
+import br.com.cams7.crud.entity.MercadoriaEntity;
 
 /**
  * Tela principal da aplicação. Apresenta uma lista com as mercadorias

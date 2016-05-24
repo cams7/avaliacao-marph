@@ -17,7 +17,7 @@
 		<property name="jpaVendorAdapter">
 			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter" />
 		</property>
-		<property name="persistenceUnitName" value="appUnit" />
+		<property name="persistenceUnitName" value="CRUDSysUnit" />
 	</bean>
 
 	<!-- Ativa o controle transacional -->

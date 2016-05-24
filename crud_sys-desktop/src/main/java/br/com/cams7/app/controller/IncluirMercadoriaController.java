@@ -13,9 +13,9 @@ import br.com.cams7.app.action.ConditionalAction;
 import br.com.cams7.app.dao.MercadoriaDAO;
 import br.com.cams7.app.event.DeletarMercadoriaEvent;
 import br.com.cams7.app.event.IncluirMercadoriaEvent;
-import br.com.cams7.app.model.MercadoriaEntity;
 import br.com.cams7.app.ui.IncluirMercadoriaFrame;
 import br.com.cams7.app.validation.EntityValidator;
+import br.com.cams7.crud.entity.MercadoriaEntity;
 
 /**
  * Define a <code>Controller</code> responsável por gerir a tela de

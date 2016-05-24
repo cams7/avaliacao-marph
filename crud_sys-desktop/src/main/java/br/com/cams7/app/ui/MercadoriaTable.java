@@ -4,7 +4,7 @@ import java.util.List;
 
 import javax.swing.JTable;
 
-import br.com.cams7.app.model.MercadoriaEntity;
+import br.com.cams7.crud.entity.MercadoriaEntity;
 
 /**
  * <code>JTable</code> com operações customizadas para entidade

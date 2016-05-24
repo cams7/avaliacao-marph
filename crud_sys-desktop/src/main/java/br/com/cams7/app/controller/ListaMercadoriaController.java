@@ -19,9 +19,9 @@ import br.com.cams7.app.event.AtualizarListarMercadoriaEvent;
 import br.com.cams7.app.event.BuscarMercadoriaEvent;
 import br.com.cams7.app.event.DeletarMercadoriaEvent;
 import br.com.cams7.app.event.IncluirMercadoriaEvent;
-import br.com.cams7.app.model.MercadoriaEntity;
 import br.com.cams7.app.ui.ListaMercadoriasFrame;
 import br.com.cams7.app.ui.SobreFrame;
+import br.com.cams7.crud.entity.MercadoriaEntity;
 
 /**
  * Define a <code>Controller</code> principal do sistema, responsável por gerir

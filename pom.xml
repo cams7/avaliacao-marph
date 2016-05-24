@@ -346,7 +346,8 @@
 			
 			<properties>				
 				<!-- persistence.xml -->
-				<!--hibernate.hbm2ddl.auto>create-drop</hibernate.hbm2ddl.auto -->
+				<!--hibernate.hbm2ddl.auto>create-drop</hibernate.hbm2ddl.auto>
+				<hibernate.hbm2ddl.auto>update</hibernate.hbm2ddl.auto-->
 				<hibernate.hbm2ddl.auto>validate</hibernate.hbm2ddl.auto>
 				<hibernate.show_sql>true</hibernate.show_sql>
 				<hibernate.format_sql>false</hibernate.format_sql>
