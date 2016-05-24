@@ -27,10 +27,10 @@
 			<groupId>br.com.cams7.crud</groupId>
 			<artifactId>crud_sys-jpa</artifactId>
 		</dependency>
-		<!--dependency>
+		<dependency>
 			<groupId>br.com.cams7.crud</groupId>
 			<artifactId>crud_common-lib</artifactId>
-		</dependency-->
+		</dependency>
 
 		<dependency>
 			<groupId>junit</groupId>
@@ -160,8 +160,7 @@
 				<dependency.jars>lib</dependency.jars>
 
 				<!-- persistence.xml -->
-				<!--hibernate.hbm2ddl.auto>create</hibernate.hbm2ddl.auto> 
-				<hibernate.hbm2ddl.auto>update</hibernate.hbm2ddl.auto-->
+				<!--hibernate.hbm2ddl.auto>create</hibernate.hbm2ddl.auto> <hibernate.hbm2ddl.auto>update</hibernate.hbm2ddl.auto -->
 				<hibernate.hbm2ddl.auto>validate</hibernate.hbm2ddl.auto>
 
 				<hibernate.show_sql>true</hibernate.show_sql>
