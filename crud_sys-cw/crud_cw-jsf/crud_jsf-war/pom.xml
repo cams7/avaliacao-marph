@@ -43,9 +43,6 @@
 			<artifactId>crud_jsf-lib</artifactId>
 		</dependency>
 
-		<!--dependency> <groupId>br.com.cams7.crud</groupId> <artifactId>crud_as-ejb</artifactId> 
-			<type>ejb-client</type> </dependency -->
-
 		<dependency>
 			<groupId>org.primefaces</groupId>
 			<artifactId>primefaces</artifactId>
@@ -174,10 +171,8 @@
 			<artifactId>groovy-all</artifactId>
 		</dependency>
 
-		<!--dependency>
-			<groupId>org.hsqldb</groupId>
-			<artifactId>hsqldb</artifactId>
-		</dependency-->
+		<!--dependency> <groupId>org.hsqldb</groupId> <artifactId>hsqldb</artifactId> 
+			</dependency -->
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
@@ -231,6 +226,15 @@
 					<exists>${basedir}/src/main/webapp</exists>
 				</file>
 			</activation>
+
+			<dependencies>
+				<dependency>
+					<groupId>br.com.cams7.crud</groupId>
+					<artifactId>crud_as-ejb</artifactId>
+					<type>ejb-client</type>
+				</dependency>
+			</dependencies>
+
 			<build>
 				<plugins>
 					<plugin>
@@ -250,6 +254,18 @@
 					</plugin>
 				</plugins>
 			</build>
+		</profile>
+
+		<profile>
+			<id>eclipse-jee-mars-2</id>
+
+			<dependencies>
+				<dependency>
+					<groupId>br.com.cams7.crud</groupId>
+					<artifactId>crud_as-ejb</artifactId>
+					<type>jar</type>
+				</dependency>
+			</dependencies>
 		</profile>
 	</profiles>
 </project>

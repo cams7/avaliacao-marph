@@ -89,8 +89,12 @@
 				<type>jar</type>
 			</dependency>
 
-			<!--dependency> <groupId>br.com.cams7.crud</groupId> <artifactId>crud_as-ejb</artifactId> 
-				<version>${project.version}</version> <type>ejb-client</type> </dependency -->
+			<dependency>
+				<groupId>br.com.cams7.crud</groupId>
+				<artifactId>crud_as-ejb</artifactId>
+				<version>${project.version}</version>
+				<type>ejb-client</type>
+			</dependency>
 
 			<!-- Wildfly dependencies -->
 			<dependency>
@@ -99,7 +103,9 @@
 				<version>10.0.1.Final</version>
 				<type>pom</type>
 				<scope>import</scope>
-			</dependency>			
+			</dependency>
+			<!--dependency> <groupId>org.wildfly</groupId> <artifactId>wildfly-ejb-client-bom</artifactId> 
+				<version>10.0.0.Final</version> <type>pom</type> <scope>import</scope> </dependency -->
 
 			<dependency>
 				<groupId>com.fasterxml.jackson.datatype</groupId>
@@ -135,7 +141,7 @@
 				<artifactId>groovy-all</artifactId>
 				<version>2.4.6</version>
 			</dependency>
-			
+
 			<!-- Spring dependencies -->
 			<dependency>
 				<groupId>org.springframework</groupId>
@@ -144,7 +150,7 @@
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
-			
+
 			<dependency>
 				<groupId>org.hibernate</groupId>
 				<artifactId>hibernate-core</artifactId>
@@ -173,7 +179,7 @@
 				<artifactId>commons-dbcp</artifactId>
 				<version>1.4</version>
 			</dependency>
-			
+
 			<dependency>
 				<groupId>org.jboss.logging</groupId>
 				<artifactId>jboss-logging</artifactId>
@@ -184,12 +190,12 @@
 				<groupId>com.h2database</groupId>
 				<artifactId>h2</artifactId>
 				<version>1.4.191</version>
-			</dependency>			
+			</dependency>
 			<dependency>
 				<groupId>org.firebirdsql.jdbc</groupId>
 				<artifactId>jaybird-jdk17</artifactId>
 				<version>2.2.10</version>
-			</dependency>			
+			</dependency>
 			<dependency>
 				<groupId>postgresql</groupId>
 				<artifactId>postgresql</artifactId>
@@ -325,15 +331,9 @@
 			</plugin>
 
 			<!--Cria os arquivos de configuração do Eclipse -->
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-eclipse-plugin</artifactId>
-				<version>2.10</version>
-				<configuration>
-					<downloadSources>true</downloadSources>
-					<downloadJavadocs>true</downloadJavadocs>
-				</configuration>
-			</plugin>
+			<!--plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-eclipse-plugin</artifactId> 
+				<version>2.10</version> <configuration> <downloadSources>true</downloadSources> 
+				<downloadJavadocs>true</downloadJavadocs> </configuration> </plugin -->
 		</plugins>
 	</build>
 
@@ -343,11 +343,10 @@
 			<activation>
 				<activeByDefault>true</activeByDefault>
 			</activation>
-			
-			<properties>				
+
+			<properties>
 				<!-- persistence.xml -->
-				<!--hibernate.hbm2ddl.auto>create-drop</hibernate.hbm2ddl.auto>
-				<hibernate.hbm2ddl.auto>update</hibernate.hbm2ddl.auto-->
+				<!--hibernate.hbm2ddl.auto>create-drop</hibernate.hbm2ddl.auto> <hibernate.hbm2ddl.auto>update</hibernate.hbm2ddl.auto -->
 				<hibernate.hbm2ddl.auto>validate</hibernate.hbm2ddl.auto>
 				<hibernate.show_sql>true</hibernate.show_sql>
 				<hibernate.format_sql>false</hibernate.format_sql>
@@ -376,23 +375,21 @@
 				<hibernate.hbm2ddl.import_files>database/firebird_DML.sql</hibernate.hbm2ddl.import_files>
 
 				<!-- persistence.xml (Postgresql) -->
-				<!--hibernate.dialect>org.hibernate.dialect.PostgreSQLDialect</hibernate.dialect-->
+				<!--hibernate.dialect>org.hibernate.dialect.PostgreSQLDialect</hibernate.dialect -->
 				<!-- crud-ds.xml (Postgresql) -->
-				<!--datasource.driver>org.postgresql</datasource.driver> 
-				<datasource.connection.url>jdbc:postgresql://192.168.1.4:5432/crud_sys</datasource.connection.url> 
-				<datasource.user-name>cams7</datasource.user-name> 
-				<datasource.password>12345</datasource.password-->
+				<!--datasource.driver>org.postgresql</datasource.driver> <datasource.connection.url>jdbc:postgresql://192.168.1.4:5432/crud_sys</datasource.connection.url> 
+					<datasource.user-name>cams7</datasource.user-name> <datasource.password>12345</datasource.password -->
 				<!-- DataSource.xml (Postgresql) -->
-				<!--datasource.driverClassName>org.postgresql.Driver</datasource.driverClassName-->
+				<!--datasource.driverClassName>org.postgresql.Driver</datasource.driverClassName -->
 				<!-- Hibernate.xml (Postgresql) -->
-				<!--hibernate.hbm2ddl.import_files>database/postgresql_DML.sql</hibernate.hbm2ddl.import_files-->
+				<!--hibernate.hbm2ddl.import_files>database/postgresql_DML.sql</hibernate.hbm2ddl.import_files -->
 			</properties>
-			
+
 			<modules>
 				<module>crud_sys-cw</module>
 				<module>crud_sys-desktop</module>
 			</modules>
-						
+
 			<build>
 				<plugins>
 					<!--Pula o teste unitário -->
@@ -444,7 +441,7 @@
 
 			<properties>
 				<!-- persistence.xml -->
-				<!--hibernate.hbm2ddl.auto>create</hibernate.hbm2ddl.auto-->
+				<!--hibernate.hbm2ddl.auto>create</hibernate.hbm2ddl.auto -->
 				<hibernate.hbm2ddl.auto>validate</hibernate.hbm2ddl.auto>
 				<hibernate.show_sql>false</hibernate.show_sql>
 				<hibernate.format_sql>false</hibernate.format_sql>
@@ -452,10 +449,8 @@
 				<!-- persistence.xml (Postgresql - Local) -->
 				<hibernate.dialect>org.hibernate.dialect.PostgreSQLDialect</hibernate.dialect>
 				<!-- crud-ds.xml (Postgresql) -->
-				<!--datasource.driver>org.postgresql</datasource.driver>
-				<datasource.connection.url>jdbc:postgresql://192.168.1.4:5432/crud_sys</datasource.connection.url>
-				<datasource.user-name>cams7</datasource.user-name>
-				<datasource.password>12345</datasource.password-->
+				<!--datasource.driver>org.postgresql</datasource.driver> <datasource.connection.url>jdbc:postgresql://192.168.1.4:5432/crud_sys</datasource.connection.url> 
+					<datasource.user-name>cams7</datasource.user-name> <datasource.password>12345</datasource.password -->
 				<!-- crud-ds.xml (Postgresql - Openshift) -->
 				<datasource.driver>postgresql</datasource.driver>
 				<datasource.connection.url>jdbc:postgresql://5741934e2d527156dd0000d8-cams7.rhcloud.com:45021/crud</datasource.connection.url>
@@ -474,6 +469,22 @@
 					</plugin>
 				</plugins>
 			</build>
+		</profile>
+
+		<profile>
+			<id>eclipse-jee-mars-2</id>
+
+			<dependencyManagement>
+				<dependencies>
+					<dependency>
+						<groupId>br.com.cams7.crud</groupId>
+						<artifactId>crud_as-ejb</artifactId>
+						<version>${project.version}</version>
+						<type>jar</type>
+						<scope>runtime</scope>
+					</dependency>
+				</dependencies>
+			</dependencyManagement>
 		</profile>
 	</profiles>
 </project>

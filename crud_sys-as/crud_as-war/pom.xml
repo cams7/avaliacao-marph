@@ -103,11 +103,8 @@
 					<artifactId>crud_sys-jpa</artifactId>
 					<scope>provided</scope>
 				</dependency>
-				<dependency>
-					<groupId>br.com.cams7.crud</groupId>
-					<artifactId>crud_common-lib</artifactId>
-					<scope>provided</scope>
-				</dependency>
+				<!--dependency> <groupId>br.com.cams7.crud</groupId> <artifactId>crud_common-lib</artifactId> 
+					<scope>provided</scope> </dependency -->
 				<dependency>
 					<groupId>br.com.cams7.crud</groupId>
 					<artifactId>crud_web-lib</artifactId>
@@ -120,7 +117,7 @@
 				<dependency>
 					<groupId>br.com.cams7.crud</groupId>
 					<artifactId>crud_as-ejb</artifactId>
-					<type>ejb</type>
+					<type>ejb-client</type>
 					<scope>provided</scope>
 				</dependency>
 
@@ -155,14 +152,12 @@
 					<groupId>br.com.cams7.crud</groupId>
 					<artifactId>crud_sys-jpa</artifactId>
 				</dependency>
-				<dependency>
-					<groupId>br.com.cams7.crud</groupId>
-					<artifactId>crud_common-lib</artifactId>
-				</dependency>
+				<!--dependency> <groupId>br.com.cams7.crud</groupId> <artifactId>crud_common-lib</artifactId> 
+					</dependency -->
 				<dependency>
 					<groupId>br.com.cams7.crud</groupId>
 					<artifactId>crud_web-lib</artifactId>
-				</dependency>				
+				</dependency>
 				<dependency>
 					<groupId>br.com.cams7.crud</groupId>
 					<artifactId>crud_as-lib</artifactId>
