@@ -44,17 +44,6 @@
 		</dependency>
 
 		<dependency>
-			<groupId>org.primefaces</groupId>
-			<artifactId>primefaces</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.testng</groupId>
-			<artifactId>testng</artifactId>
-			<scope>test</scope>
-		</dependency>
-
-
-		<dependency>
 			<groupId>javax</groupId>
 			<artifactId>javaee-web-api</artifactId>
 		</dependency>
@@ -66,19 +55,17 @@
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
-			<artifactId>spring-tx</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
 			<artifactId>spring-orm</artifactId>
 		</dependency>
+
 		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-context-support</artifactId>
+			<groupId>org.springframework.data</groupId>
+			<artifactId>spring-data-jpa</artifactId>
 		</dependency>
+
 		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-test</artifactId>
+			<groupId>org.springframework.webflow</groupId>
+			<artifactId>spring-faces</artifactId>
 		</dependency>
 
 		<!-- Spring Security -->
@@ -99,13 +86,14 @@
 		</dependency>
 
 		<dependency>
-			<groupId>org.springframework.webflow</groupId>
-			<artifactId>spring-faces</artifactId>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-entitymanager</artifactId>
 		</dependency>
 
+		<!-- Hibernate Validator -->
 		<dependency>
-			<groupId>org.jboss.logging</groupId>
-			<artifactId>jboss-logging</artifactId>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-validator</artifactId>
 		</dependency>
 
 		<dependency>
@@ -119,23 +107,8 @@
 		</dependency>
 
 		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-core</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-entitymanager</artifactId>
-		</dependency>
-
-		<!-- Hibernate Validator -->
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-validator</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>jstl</groupId>
-			<artifactId>jstl</artifactId>
+			<groupId>org.primefaces</groupId>
+			<artifactId>primefaces</artifactId>
 		</dependency>
 
 		<dependency>
@@ -150,6 +123,11 @@
 		<dependency>
 			<groupId>com.sun.el</groupId>
 			<artifactId>el-ri</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>jstl</groupId>
+			<artifactId>jstl</artifactId>
 		</dependency>
 
 		<dependency>
@@ -171,8 +149,25 @@
 			<artifactId>groovy-all</artifactId>
 		</dependency>
 
-		<!--dependency> <groupId>org.hsqldb</groupId> <artifactId>hsqldb</artifactId> 
-			</dependency -->
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+		</dependency>
+
+		<!--dependency>
+			<groupId>org.hsqldb</groupId>
+			<artifactId>hsqldb</artifactId>
+		</dependency-->
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
@@ -184,6 +179,16 @@
 		<dependency>
 			<groupId>postgresql</groupId>
 			<artifactId>postgresql</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.testng</groupId>
+			<artifactId>testng</artifactId>
 		</dependency>
 	</dependencies>
 
@@ -227,13 +232,13 @@
 				</file>
 			</activation>
 
-			<dependencies>
+			<!--dependencies>
 				<dependency>
 					<groupId>br.com.cams7.crud</groupId>
 					<artifactId>crud_as-ejb</artifactId>
 					<type>ejb-client</type>
 				</dependency>
-			</dependencies>
+			</dependencies-->
 
 			<build>
 				<plugins>
@@ -254,18 +259,6 @@
 					</plugin>
 				</plugins>
 			</build>
-		</profile>
-
-		<profile>
-			<id>eclipse-jee-mars-2</id>
-
-			<dependencies>
-				<dependency>
-					<groupId>br.com.cams7.crud</groupId>
-					<artifactId>crud_as-ejb</artifactId>
-					<type>jar</type>
-				</dependency>
-			</dependencies>
-		</profile>
+		</profile>		
 	</profiles>
 </project>

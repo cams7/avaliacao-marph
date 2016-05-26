@@ -1,7 +1,7 @@
 /**
  * 
  */
-package br.com.cams7.cw.utils.test;
+package br.com.cams7.crud;
 
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;

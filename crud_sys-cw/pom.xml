@@ -35,12 +35,6 @@
 			</dependency>
 		
 			<dependency>
-				<groupId>org.testng</groupId>
-				<artifactId>testng</artifactId>
-				<version>6.9.10</version>
-			</dependency>
-
-			<dependency>
 				<groupId>javax</groupId>
 				<artifactId>javaee-web-api</artifactId>
 				<version>7.0</version>
@@ -87,6 +81,13 @@
 						<artifactId>bcprov-jdk14</artifactId>
 					</exclusion>
 				</exclusions>
+			</dependency>
+			
+			<dependency>
+				<groupId>org.testng</groupId>
+				<artifactId>testng</artifactId>
+				<version>6.9.10</version>
+				<scope>test</scope>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>		

@@ -6,10 +6,10 @@ package br.com.cams7.crud.service;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.hibernate.Query;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -28,8 +28,8 @@ import br.com.cams7.crud.entity.UsuarioEntity.Autorizacao;
 @Service("authenticationService")
 public class UserDetailsServiceImpl implements UserDetailsService {
 
-	@Autowired
-	private SessionFactory sessionFactory;
+	@PersistenceContext // (unitName = "CRUDSysUnit")
+	private EntityManager entityManager;
 
 	/*
 	 * Metodo chamado apos o login
@@ -43,11 +43,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		if (login == null || "".equals(login))
 			throw new UsernameNotFoundException("username is empty or null");
 
-		Session session = sessionFactory.getCurrentSession();
-
-		Query query = session.getNamedQuery("Usuario.buscaPeloLogin");
+		Query query = entityManager.createNamedQuery("Usuario.buscaPeloLogin");
 		query.setParameter("login", login);
-		UsuarioEntity usuario = (UsuarioEntity) query.uniqueResult();
+		UsuarioEntity usuario = (UsuarioEntity) query.getSingleResult();
 
 		return buildUserForAuthentication(usuario, getAuthority(usuario.getAutorizacoes()));
 	}

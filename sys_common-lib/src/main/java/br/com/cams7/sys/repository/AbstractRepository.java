@@ -1,4 +1,4 @@
-package br.com.cams7.as.repository;
+package br.com.cams7.sys.repository;
 
 import java.util.HashSet;
 import java.util.List;
@@ -21,7 +21,6 @@ import javax.persistence.criteria.Root;
 import br.com.cams7.sys.AbstractBase;
 import br.com.cams7.sys.SearchParams;
 import br.com.cams7.sys.entity.AbstractEntity;
-import br.com.cams7.sys.repository.BaseRepository;
 import br.com.cams7.sys.utils.AppHelper;
 
 /**

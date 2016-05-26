@@ -18,7 +18,6 @@ import org.testng.annotations.Test;
 import br.com.cams7.crud.entity.PessoaEntity;
 import br.com.cams7.crud.entity.UsuarioEntity;
 import br.com.cams7.crud.service.UsuarioService;
-import br.com.cams7.cw.utils.test.AbstractAppTest;
 import br.com.cams7.sys.SearchParams;
 import br.com.cams7.sys.SearchParams.SortOrder;
 

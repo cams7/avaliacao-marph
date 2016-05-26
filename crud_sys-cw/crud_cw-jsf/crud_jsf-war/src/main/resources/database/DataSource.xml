@@ -5,6 +5,7 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans 	http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
 						http://www.springframework.org/schema/context 	http://www.springframework.org/schema/context/spring-context-4.2.xsd">
 
+	<!-- Define a conexão com o banco de dados -->
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
 		destroy-method="close" p:driverClassName="${datasource.driverClassName}"
 		p:url="${datasource.connection.url}" p:username="${datasource.user-name}"

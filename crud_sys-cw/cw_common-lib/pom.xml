@@ -27,15 +27,15 @@
 			<artifactId>crud_sys-jpa</artifactId>
 			<scope>provided</scope>
 		</dependency>
-		<dependency>
+		<!--dependency>
 			<groupId>br.com.cams7.crud</groupId>
 			<artifactId>crud_common-lib</artifactId>
 			<scope>provided</scope>
-		</dependency>
-		<dependency>
+		</dependency-->
+		<!--dependency>
 			<groupId>br.com.cams7.crud</groupId>
 			<artifactId>crud_web-lib</artifactId>
 			<scope>provided</scope>
-		</dependency>		
+		</dependency-->		
 	</dependencies>
 </project>

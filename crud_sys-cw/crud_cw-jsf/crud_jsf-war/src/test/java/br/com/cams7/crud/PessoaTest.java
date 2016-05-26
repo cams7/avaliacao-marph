@@ -17,7 +17,6 @@ import org.testng.annotations.Test;
 
 import br.com.cams7.crud.entity.PessoaEntity;
 import br.com.cams7.crud.service.PessoaService;
-import br.com.cams7.cw.utils.test.AbstractAppTest;
 import br.com.cams7.sys.SearchParams;
 import br.com.cams7.sys.SearchParams.SortOrder;
 
@@ -262,7 +261,7 @@ public final class PessoaTest extends AbstractAppTest<PessoaService, PessoaEntit
 	public void testBuscaPessoasSemUsuarioPeloNome() {
 		List<PessoaEntity> pessoas = getService().buscaPessoasSemUsuarioPeloNome("an");
 
-		checkList(pessoas, 4);
+		checkList(pessoas, 3);
 	}
 
 	/**

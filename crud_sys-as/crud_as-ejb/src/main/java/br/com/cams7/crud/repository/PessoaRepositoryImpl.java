@@ -9,8 +9,8 @@ import javax.ejb.Local;
 import javax.ejb.Stateless;
 import javax.persistence.Query;
 
-import br.com.cams7.as.repository.AbstractRepository;
 import br.com.cams7.crud.entity.PessoaEntity;
+import br.com.cams7.sys.repository.AbstractRepository;
 
 /**
  * @author cesar

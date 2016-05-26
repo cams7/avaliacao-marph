@@ -1,7 +1,7 @@
 --Insere dados pessoais
 insert into pessoa(id_pessoa, nome, cpf, nascimento) values (gen_pessoa_id.nextVal, 'Antonio Ferreira Silva', '40162439717', parsedatetime('1983-04-10', 'yyyy-MM-dd'));
 insert into pessoa(id_pessoa, nome, cpf, nascimento) values (gen_pessoa_id.nextVal, 'Maria Antonieta de Almeida', '90763518646', parsedatetime('1984-07-06', 'yyyy-MM-dd'));
-insert into pessoa(id_pessoa, nome, cpf, nascimento) values (gen_pessoa_id.nextVal, 'Fernando José Alves', '37678869282', parsedatetime('1986-02-21', 'yyyy-MM-dd'));
+insert into pessoa(id_pessoa, nome, cpf, nascimento) values (gen_pessoa_id.nextVal, 'Fernando Jos? Alves', '37678869282', parsedatetime('1986-02-21', 'yyyy-MM-dd'));
 insert into pessoa(id_pessoa, nome, cpf, nascimento) values (gen_pessoa_id.nextVal, 'Francisco Oliveira', '27855291202', parsedatetime('1991-06-21', 'yyyy-MM-dd'));
 insert into pessoa(id_pessoa, nome, cpf, nascimento) values (gen_pessoa_id.nextVal, 'Xavier da Silva Gomes', '80565450778', parsedatetime('1981-06-02', 'yyyy-MM-dd'));
 insert into pessoa(id_pessoa, nome, cpf, nascimento) values (gen_pessoa_id.nextVal, 'Bruno Mariano Alves', '51245121642', parsedatetime('1950-12-10', 'yyyy-MM-dd'));

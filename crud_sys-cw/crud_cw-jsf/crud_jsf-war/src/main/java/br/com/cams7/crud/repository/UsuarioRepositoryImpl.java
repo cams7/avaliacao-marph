@@ -6,14 +6,21 @@ package br.com.cams7.crud.repository;
 import java.util.List;
 import java.util.Map;
 
-import org.hibernate.Criteria;
-import org.hibernate.Query;
-import org.hibernate.sql.JoinType;
+import javax.persistence.Query;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Join;
+import javax.persistence.criteria.JoinType;
+import javax.persistence.criteria.Root;
+
 import org.springframework.stereotype.Repository;
 
+import br.com.cams7.crud.entity.PessoaEntity;
 import br.com.cams7.crud.entity.UsuarioEntity;
-import br.com.cams7.cw.repository.AbstractRepository;
+import br.com.cams7.crud.entity.UsuarioEntity_;
 import br.com.cams7.sys.SearchParams;
+import br.com.cams7.sys.repository.AbstractRepository;
 
 /**
  * @author cesar
@@ -26,15 +33,6 @@ public class UsuarioRepositoryImpl extends AbstractRepository<UsuarioEntity> imp
 		super();
 	}
 
-	/**
-	 * @return
-	 */
-	private Criteria getSelect() {
-		Criteria select = getCurrentSession().createCriteria(getEntityType());
-		select.createAlias("pessoa", "pessoa", JoinType.LEFT_OUTER_JOIN);
-		return select;
-	}
-
 	/*
 	 * Filtra, pagina e ordena os objetos que são instâncias da classe
 	 * "UsuarioEntity"
@@ -45,13 +43,17 @@ public class UsuarioRepositoryImpl extends AbstractRepository<UsuarioEntity> imp
 	 */
 	@Override
 	public List<UsuarioEntity> search(SearchParams params) {
-		Criteria select = getSelect();
-		setFiltroPaginacaoOrdenacao(select, params);
+		CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
+		CriteriaQuery<UsuarioEntity> cq = cb.createQuery(getEntityType());
 
+		Root<UsuarioEntity> from = cq.from(getEntityType());
 		@SuppressWarnings("unchecked")
-		List<UsuarioEntity> usuarios = select.list();
+		Join<UsuarioEntity, PessoaEntity> join = (Join<UsuarioEntity, PessoaEntity>) from.fetch(UsuarioEntity_.pessoa,
+				JoinType.LEFT);
 
-		return usuarios;
+		TypedQuery<UsuarioEntity> tq = getFiltroPaginacaoOrdenacao(cb, cq, join, params);
+		List<UsuarioEntity> entities = tq.getResultList();
+		return entities;
 	}
 
 	/*
@@ -62,14 +64,19 @@ public class UsuarioRepositoryImpl extends AbstractRepository<UsuarioEntity> imp
 	 * br.com.cams7.cw.repository.AbstractRepository#getTotalElements(java.util.
 	 * Map, java.lang.String[])
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public int getTotalElements(Map<String, Object> filters, String... globalFilters) {
-		Criteria select = getSelect();
-		setFiltro(select, filters, globalFilters);
+		CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
+		CriteriaQuery<Long> cq = cb.createQuery(Long.class);
 
-		int total = getCount(select);
+		Root<UsuarioEntity> from = cq.from(getEntityType());
+		Join<UsuarioEntity, PessoaEntity> join = from.join(UsuarioEntity_.pessoa, JoinType.LEFT);
 
-		return total;
+		cq = (CriteriaQuery<Long>) getFiltro(cb, cq, join, filters, globalFilters);
+		int count = getCount(cb, cq, join);
+
+		return count;
 	}
 
 	/*
@@ -79,9 +86,13 @@ public class UsuarioRepositoryImpl extends AbstractRepository<UsuarioEntity> imp
 	 */
 	@Override
 	public int count() {
-		Criteria select = getSelect();
+		CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
+		CriteriaQuery<Long> cq = cb.createQuery(Long.class);
 
-		int count = getCount(select);
+		Root<UsuarioEntity> from = cq.from(getEntityType());
+		Join<UsuarioEntity, PessoaEntity> join = from.join(UsuarioEntity_.pessoa, JoinType.LEFT);
+
+		int count = getCount(cb, cq, join);
 
 		return count;
 	}
@@ -94,8 +105,9 @@ public class UsuarioRepositoryImpl extends AbstractRepository<UsuarioEntity> imp
 	 */
 	@Override
 	public List<UsuarioEntity> buscaTodosDadosPessoais() {
+		Query query = getEntityManager().createNamedQuery("Usuario.buscaTodosDadosPessoais");
 		@SuppressWarnings("unchecked")
-		List<UsuarioEntity> usuarios = getCurrentSession().getNamedQuery("Usuario.buscaTodosDadosPessoais").list();
+		List<UsuarioEntity> usuarios = query.getResultList();
 		return usuarios;
 	}
 
@@ -107,10 +119,10 @@ public class UsuarioRepositoryImpl extends AbstractRepository<UsuarioEntity> imp
 	 */
 	@Override
 	public boolean loginFoiCadastradoAnteriormente(String login) {
-		Query query = getCurrentSession().getNamedQuery("Usuario.buscaQtdCadastradoPeloLogin");
+		Query query = getEntityManager().createNamedQuery("Usuario.buscaQtdCadastradoPeloLogin");
 		query.setParameter("login", login);
 
-		Long count = (Long) query.uniqueResult();
+		Long count = (Long) query.getSingleResult();
 		if (count.equals(0l))
 			return false;
 
@@ -126,10 +138,10 @@ public class UsuarioRepositoryImpl extends AbstractRepository<UsuarioEntity> imp
 	 */
 	@Override
 	public String buscaLoginPeloId(Long id) {
-		Query query = getCurrentSession().getNamedQuery("Usuario.buscaLoginPeloId");
+		Query query = getEntityManager().createNamedQuery("Usuario.buscaLoginPeloId");
 		query.setParameter("id", id);
 
-		return (String) query.uniqueResult();
+		return (String) query.getSingleResult();
 	}
 
 }

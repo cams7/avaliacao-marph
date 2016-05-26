@@ -5,11 +5,13 @@ package br.com.cams7.crud.repository;
 
 import java.util.List;
 
-import org.hibernate.Query;
+import javax.persistence.Query;
+
 import org.springframework.stereotype.Repository;
 
 import br.com.cams7.crud.entity.PessoaEntity;
-import br.com.cams7.cw.repository.AbstractRepository;
+import br.com.cams7.sys.repository.AbstractRepository;
+
 
 /**
  * @author cesar
@@ -30,11 +32,11 @@ public class PessoaRepositoryImpl extends AbstractRepository<PessoaEntity> imple
 	 */
 	@Override
 	public List<PessoaEntity> buscaPessoasSemUsuarioPeloNome(String nome) {
-		Query query = getCurrentSession().getNamedQuery("Pessoa.buscaPessoasSemUsuarioPeloNome");
+		Query query = getEntityManager().createNamedQuery("Pessoa.buscaPessoasSemUsuarioPeloNome");
 		query.setParameter("nome", "%" + nome.toLowerCase() + "%");
 		query.setMaxResults(5);
 		@SuppressWarnings("unchecked")
-		List<PessoaEntity> pessoas = query.list();
+		List<PessoaEntity> pessoas = query.getResultList();
 		return pessoas;
 	}
 
@@ -47,11 +49,11 @@ public class PessoaRepositoryImpl extends AbstractRepository<PessoaEntity> imple
 	 */
 	@Override
 	public List<PessoaEntity> buscaPeloNome(String nome) {
-		Query query = getCurrentSession().getNamedQuery("Pessoa.buscaPeloNome");
+		Query query = getEntityManager().createNamedQuery("Pessoa.buscaPeloNome");
 		query.setParameter("nome", "%" + nome.toLowerCase() + "%");
 		query.setMaxResults(5);
 		@SuppressWarnings("unchecked")
-		List<PessoaEntity> pessoas = query.list();
+		List<PessoaEntity> pessoas = query.getResultList();
 		return pessoas;
 	}
 
@@ -63,10 +65,10 @@ public class PessoaRepositoryImpl extends AbstractRepository<PessoaEntity> imple
 	 */
 	@Override
 	public boolean cpfFoiCadastradoAnteriormente(String cpf) {
-		Query query = getCurrentSession().getNamedQuery("Pessoa.buscaQtdCadastradaPeloCPF");
+		Query query = getEntityManager().createNamedQuery("Pessoa.buscaQtdCadastradaPeloCPF");
 		query.setParameter("cpf", cpf);
 
-		Long count = (Long) query.uniqueResult();
+		Long count = (Long) query.getSingleResult();
 		if (count.equals(0l))
 			return false;
 
@@ -82,10 +84,10 @@ public class PessoaRepositoryImpl extends AbstractRepository<PessoaEntity> imple
 	 */
 	@Override
 	public String buscaCpfPeloId(Long id) {
-		Query query = getCurrentSession().getNamedQuery("Pessoa.buscaCpfPeloId");
+		Query query = getEntityManager().createNamedQuery("Pessoa.buscaCpfPeloId");
 		query.setParameter("id", id);
 
-		return (String) query.uniqueResult();
+		return (String) query.getSingleResult();
 	}
 
 }

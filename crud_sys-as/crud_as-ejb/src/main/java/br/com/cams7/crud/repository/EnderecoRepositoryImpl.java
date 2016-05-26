@@ -15,11 +15,11 @@ import javax.persistence.criteria.Join;
 import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Root;
 
-import br.com.cams7.as.repository.AbstractRepository;
 import br.com.cams7.crud.entity.EnderecoEntity;
 import br.com.cams7.crud.entity.EnderecoEntity_;
 import br.com.cams7.crud.entity.PessoaEntity;
 import br.com.cams7.sys.SearchParams;
+import br.com.cams7.sys.repository.AbstractRepository;
 
 /**
  * @author cesar
