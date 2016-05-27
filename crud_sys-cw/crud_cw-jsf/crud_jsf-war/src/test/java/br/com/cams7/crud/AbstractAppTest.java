@@ -90,7 +90,7 @@ public abstract class AbstractAppTest<S extends BaseService<E>, E extends Abstra
 	 * @return
 	 */
 	protected E findById(Long id) {
-		E entity = getService().buscaPeloId(id);
+		E entity = getService().getEntityById(id);
 
 		assertNotNull(entity);
 

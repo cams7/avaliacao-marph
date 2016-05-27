@@ -7,7 +7,7 @@
 		<property name="scopes">
 			<map>
 				<entry key="view">
-					<bean class="br.com.cams7.cw.utils.scope.ViewScope" />
+					<bean class="br.com.cams7.crud.cw.utils.scope.ViewScope" />
 				</entry>
 			</map>
 		</property>

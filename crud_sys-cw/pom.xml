@@ -15,8 +15,7 @@
 	<description>Aplicação que é executada num recipiente web</description>
 
 	<properties>
-		<!--spring.security.version>4.1.0.RELEASE</spring.security.version-->
-		<spring.security.version>3.2.9.RELEASE</spring.security.version>
+		
 	</properties>
 
 	<modules>
@@ -45,12 +44,6 @@
 			<dependency>
 				<groupId>org.springframework.security</groupId>
 				<artifactId>spring-security-web</artifactId>
-				<version>${spring.security.version}</version>
-			</dependency>
-
-			<dependency>
-				<groupId>org.springframework.security</groupId>
-				<artifactId>spring-security-config</artifactId>
 				<version>${spring.security.version}</version>
 			</dependency>
 

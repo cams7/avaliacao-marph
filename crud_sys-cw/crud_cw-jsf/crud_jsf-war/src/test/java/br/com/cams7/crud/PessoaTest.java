@@ -76,7 +76,7 @@ public final class PessoaTest extends AbstractAppTest<PessoaService, PessoaEntit
 	 * @return
 	 */
 	private PessoaEntity buscaPessoaPeloNome(String nome) {
-		List<PessoaEntity> pessoas = getService().buscaPeloNome(nome);
+		List<PessoaEntity> pessoas = getService().getPessoaPeloNome(nome);
 
 		checkList(pessoas, 1);
 
@@ -119,7 +119,7 @@ public final class PessoaTest extends AbstractAppTest<PessoaService, PessoaEntit
 		novaPessoa.setNascimento(NOVO_NASCIMENTO);
 
 		PessoaEntity pessoa = getNewEntity(novaPessoa);
-		getService().salva(pessoa);
+		getService().save(pessoa);
 
 		pessoa = buscaPessoaPeloNome(NOVO_NOME);
 		checkEntity(pessoa, novaPessoa);
@@ -147,7 +147,7 @@ public final class PessoaTest extends AbstractAppTest<PessoaService, PessoaEntit
 		novaPessoa.setNascimento(NOVO_NASCIMENTO);
 
 		setEntity(pessoa, novaPessoa);
-		getService().atualiza(pessoa);
+		getService().update(pessoa);
 
 		pessoa = findById(PESSOA_ID);
 		checkEntity(pessoa, novaPessoa);
@@ -166,7 +166,7 @@ public final class PessoaTest extends AbstractAppTest<PessoaService, PessoaEntit
 
 		getService().remove(PESSOA_ID);
 
-		PessoaEntity pessoa = getService().buscaPeloId(PESSOA_ID);
+		PessoaEntity pessoa = getService().getEntityById(PESSOA_ID);
 		assertNull(pessoa);
 	}
 
@@ -178,7 +178,7 @@ public final class PessoaTest extends AbstractAppTest<PessoaService, PessoaEntit
 	@Test
 	@Override
 	public void testBuscaTodos() {
-		List<PessoaEntity> pessoas = getService().buscaTodos();
+		List<PessoaEntity> pessoas = getService().getAll();
 
 		checkList(pessoas, 17);
 	}
@@ -259,7 +259,7 @@ public final class PessoaTest extends AbstractAppTest<PessoaService, PessoaEntit
 	 */
 	@Test
 	public void testBuscaPessoasSemUsuarioPeloNome() {
-		List<PessoaEntity> pessoas = getService().buscaPessoasSemUsuarioPeloNome("an");
+		List<PessoaEntity> pessoas = getService().getPessoasSemUsuarioPeloNome("an");
 
 		checkList(pessoas, 3);
 	}
@@ -269,7 +269,7 @@ public final class PessoaTest extends AbstractAppTest<PessoaService, PessoaEntit
 	 */
 	@Test
 	public void testBuscaPeloNome() {
-		List<PessoaEntity> pessoas = getService().buscaPeloNome("an");
+		List<PessoaEntity> pessoas = getService().getPessoaPeloNome("an");
 
 		checkList(pessoas, 5);
 	}

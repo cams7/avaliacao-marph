@@ -26,6 +26,9 @@
 		<jackson.version>2.7.4</jackson.version>
 		<version.arquillian.container>8.2.1.Final</version.arquillian.container>
 		<hibernate.version>5.1.0.Final</hibernate.version>
+		
+		<!--spring.security.version>4.1.0.RELEASE</spring.security.version-->
+		<spring.security.version>3.2.9.RELEASE</spring.security.version>
 
 		<!-- web.xml -->
 		<!-- Pula comentários nas páginas JSF -->
@@ -156,7 +159,13 @@
 				<artifactId>spring-data-jpa</artifactId>
 				<version>1.10.1.RELEASE</version>
 			</dependency>
-
+			
+			<dependency>
+				<groupId>org.springframework.security</groupId>
+				<artifactId>spring-security-config</artifactId>
+				<version>${spring.security.version}</version>
+			</dependency>
+			
 			<dependency>
 				<groupId>org.hibernate</groupId>
 				<artifactId>hibernate-core</artifactId>

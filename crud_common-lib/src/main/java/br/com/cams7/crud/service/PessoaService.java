@@ -22,5 +22,5 @@ public interface PessoaService extends BaseService<PessoaEntity>, PessoaReposito
 	 *            CPF informado
 	 * @return
 	 */
-	boolean cpfValido(Long pessoaId, String cpf);
+	boolean isCpfValido(Long pessoaId, String cpf);
 }

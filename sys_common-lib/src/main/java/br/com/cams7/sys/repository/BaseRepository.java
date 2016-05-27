@@ -23,7 +23,7 @@ public interface BaseRepository<E extends AbstractEntity> {
 	 * @param entity
 	 *            Entidade
 	 */
-	void salva(E entity);
+	void save(E entity);
 
 	/**
 	 * Atualiza um objeto que é instância de "AbstractEntity"
@@ -31,7 +31,7 @@ public interface BaseRepository<E extends AbstractEntity> {
 	 * @param entity
 	 *            Entidade
 	 */
-	void atualiza(E entity);
+	void update(E entity);
 
 	/**
 	 * Remove um objeto que é instância de "AbstractEntity", filtrando-o pelo id
@@ -57,7 +57,7 @@ public interface BaseRepository<E extends AbstractEntity> {
 	 * 
 	 * @return Entidades
 	 */
-	List<E> buscaTodos();
+	List<E> getAll();
 
 	/**
 	 * Retorna um objeto que é instância de "AbstractEntity", filtrando-o pelo
@@ -67,7 +67,7 @@ public interface BaseRepository<E extends AbstractEntity> {
 	 *            Id da entidade
 	 * @return Entidade
 	 */
-	E buscaPeloId(Long id);
+	E getEntityById(Long id);
 
 	/**
 	 * Filtra, pagina e ordena os objetos que são instâncias de "AbstractEntity"

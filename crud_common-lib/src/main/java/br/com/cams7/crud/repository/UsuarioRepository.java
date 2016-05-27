@@ -22,7 +22,7 @@ public interface UsuarioRepository extends BaseRepository<UsuarioEntity> {
 	 * 
 	 * @return Usuarios
 	 */
-	List<UsuarioEntity> buscaTodosDadosPessoais();
+	List<UsuarioEntity> getTodosDadosPessoais();
 	
 	/**
 	 * Verica se o login foi cadastrado anteriormente
@@ -31,7 +31,7 @@ public interface UsuarioRepository extends BaseRepository<UsuarioEntity> {
 	 *            Login do usuário
 	 * @return
 	 */
-	boolean loginFoiCadastradoAnteriormente(String login);
+	boolean isLoginCadastradoAnteriormente(String login);
 	
 	/**
 	 * Retorna o login cadastrado
@@ -39,5 +39,5 @@ public interface UsuarioRepository extends BaseRepository<UsuarioEntity> {
 	 * @param id
 	 * @return
 	 */
-	String buscaLoginPeloId(Long id);
+	String getLoginPeloId(Long id);
 }

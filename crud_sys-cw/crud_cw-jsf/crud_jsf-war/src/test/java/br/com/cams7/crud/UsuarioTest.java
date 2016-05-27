@@ -91,7 +91,7 @@ public final class UsuarioTest extends AbstractAppTest<UsuarioService, UsuarioEn
 		novoUsuario.setPessoa(PESSOA);
 
 		UsuarioEntity usuario = getNewEntity(novoUsuario);
-		getService().salva(usuario);
+		getService().save(usuario);
 
 		usuario = findById(USUARIO_ID);
 		// Obs: O atributo pessoa foi modificado devido ao erro:
@@ -128,7 +128,7 @@ public final class UsuarioTest extends AbstractAppTest<UsuarioService, UsuarioEn
 		novoUsuario.setPessoa(PESSOA);
 
 		setEntity(usuario, novoUsuario);
-		getService().atualiza(usuario);
+		getService().update(usuario);
 
 		usuario = findById(USUARIO_ID);
 		// Obs: O atributo pessoa foi modificado devido ao erro:
@@ -150,7 +150,7 @@ public final class UsuarioTest extends AbstractAppTest<UsuarioService, UsuarioEn
 
 		getService().remove(USUARIO_ID);
 
-		UsuarioEntity usuario = getService().buscaPeloId(USUARIO_ID);
+		UsuarioEntity usuario = getService().getEntityById(USUARIO_ID);
 		assertNull(usuario);
 	}
 
@@ -162,7 +162,7 @@ public final class UsuarioTest extends AbstractAppTest<UsuarioService, UsuarioEn
 	@Test
 	@Override
 	public void testBuscaTodos() {
-		List<UsuarioEntity> usuarios = getService().buscaTodos();
+		List<UsuarioEntity> usuarios = getService().getAll();
 
 		checkList(usuarios, 10);
 	}

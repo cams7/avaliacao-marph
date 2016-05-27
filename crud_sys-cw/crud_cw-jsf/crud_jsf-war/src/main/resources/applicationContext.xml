@@ -1,16 +1,52 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans		http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
-						http://www.springframework.org/schema/context	http://www.springframework.org/schema/context/spring-context-4.2.xsd">
+						http://www.springframework.org/schema/context	http://www.springframework.org/schema/context/spring-context-4.2.xsd
+						http://www.springframework.org/schema/tx        http://www.springframework.org/schema/tx/spring-tx-4.2.xsd
+        				http://www.springframework.org/schema/aop     	http://www.springframework.org/schema/aop/spring-aop-4.2.xsd">
 
 	<!-- Database Configuration -->
 	<import resource="database/DataSource.xml" />
 	<import resource="database/Hibernate.xml" />
 	<import resource="cw-context.xml" />
 
-	<context:component-scan base-package="br.com.cams7.crud.repository" />
+	<!--context:component-scan base-package="br.com.cams7.crud.repository" / -->
 	<context:component-scan base-package="br.com.cams7.crud.service" />
-	<context:component-scan base-package="br.com.cams7.crud.controller.bean" />
+	<context:component-scan base-package="br.com.cams7.crud.cw.service" />
+	<context:component-scan base-package="br.com.cams7.crud.cw.controller.bean" />
+
+	<bean id="pessoaRepositoryImpl" class="br.com.cams7.crud.repository.PessoaRepositoryImpl" />
+	<bean id="usuarioRepositoryImpl" class="br.com.cams7.crud.repository.UsuarioRepositoryImpl" />
+	<bean id="enderecoRepositoryImpl" class="br.com.cams7.crud.repository.EnderecoRepositoryImpl" />
+
+	<!--bean class="br.com.cams7.crud.service.PessoaServiceImpl"> <property 
+		name="repository" ref="pessoaRepositoryImpl"/> </bean -->
+	<!--bean class="br.com.cams7.crud.service.UsuarioServiceImpl"> <property 
+		name="repository" ref="usuarioRepositoryImpl" /> </bean -->
+	<!--bean class="br.com.cams7.crud.service.EnderecoServiceImpl"> <property 
+		name="repository" ref="enderecoRepositoryImpl" /> </bean -->
+	<!-- bean id="authenticationService" class="br.com.cams7.crud.service.UserDetailsServiceImpl" 
+		/ -->
+
+	<tx:advice id="transactionAdvice" transaction-manager="transactionManager">
+		<!-- the transactional semantics... -->
+		<tx:attributes>
+			<!-- all methods starting with 'get' are read-only -->
+			<tx:method name="get*" read-only="true" />
+			<tx:method name="is*" read-only="true" />
+			<tx:method name="count" read-only="true" />
+			<tx:method name="search" read-only="true" />
+			<!-- other methods use the default transaction settings (see below) -->
+			<tx:method name="*" />
+		</tx:attributes>
+	</tx:advice>
+
+	<aop:config>
+		<aop:pointcut id="allServicesOperation"
+			expression="execution(* br.com.cams7.crud.service.**Service.*(..))" />
+		<aop:advisor advice-ref="transactionAdvice" pointcut-ref="allServicesOperation" />
+	</aop:config>
 </beans>

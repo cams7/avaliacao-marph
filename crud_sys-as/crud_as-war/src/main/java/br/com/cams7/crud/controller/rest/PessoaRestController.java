@@ -10,7 +10,7 @@ import javax.enterprise.context.RequestScoped;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 
-import br.com.cams7.as.controller.rest.AbstractRestController;
+import br.com.cams7.crud.as.controller.rest.AbstractRestController;
 import br.com.cams7.crud.entity.PessoaEntity;
 import br.com.cams7.crud.service.PessoaService;
 

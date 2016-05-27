@@ -81,7 +81,7 @@ public final class EnderecoTest extends AbstractAppTest<EnderecoService, Enderec
 		novoEndereco.setPessoa(PESSOA);
 
 		EnderecoEntity endereco = getNewEntity(novoEndereco);
-		getService().salva(endereco);
+		getService().save(endereco);
 
 		endereco = findById(ENDERECO_ID);
 		// Obs: O atributo pessoa foi modificado devido ao erro:
@@ -116,7 +116,7 @@ public final class EnderecoTest extends AbstractAppTest<EnderecoService, Enderec
 		novoEndereco.setPessoa(PESSOA);
 
 		setEntity(endereco, novoEndereco);
-		getService().atualiza(endereco);
+		getService().update(endereco);
 
 		endereco = findById(ENDERECO_ID);
 		// Obs: O atributo pessoa foi modificado devido ao erro:
@@ -138,7 +138,7 @@ public final class EnderecoTest extends AbstractAppTest<EnderecoService, Enderec
 
 		getService().remove(ENDERECO_ID);
 
-		EnderecoEntity endereco = getService().buscaPeloId(ENDERECO_ID);
+		EnderecoEntity endereco = getService().getEntityById(ENDERECO_ID);
 		assertNull(endereco);
 	}
 
@@ -150,7 +150,7 @@ public final class EnderecoTest extends AbstractAppTest<EnderecoService, Enderec
 	@Test
 	@Override
 	public void testBuscaTodos() {
-		List<EnderecoEntity> enderecos = getService().buscaTodos();
+		List<EnderecoEntity> enderecos = getService().getAll();
 
 		checkList(enderecos, 9);
 	}

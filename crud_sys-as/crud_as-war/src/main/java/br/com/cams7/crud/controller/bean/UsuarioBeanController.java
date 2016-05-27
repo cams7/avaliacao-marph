@@ -110,7 +110,7 @@ public class UsuarioBeanController extends AbstractBeanController<UsuarioService
 	 * @return Pessoas
 	 */
 	public List<PessoaEntity> buscaPessoas(String nome) {
-		List<PessoaEntity> pessoas = pessoaService.buscaPessoasSemUsuarioPeloNome(nome);
+		List<PessoaEntity> pessoas = pessoaService.getPessoasSemUsuarioPeloNome(nome);
 		return pessoas;
 	}
 
@@ -121,7 +121,7 @@ public class UsuarioBeanController extends AbstractBeanController<UsuarioService
 	 */
 	public void onItemSelect(SelectEvent event) {
 		PessoaEntity pessoa = (PessoaEntity) event.getObject();
-		pessoa = pessoaService.buscaPeloId(pessoa.getId());
+		pessoa = pessoaService.getEntityById(pessoa.getId());
 		getSelectedEntity().setPessoa(pessoa);
 
 		addINFOMessage(getMessageFromI18N("msg.ok.summary.pessoa.selecionada"),
@@ -198,7 +198,7 @@ public class UsuarioBeanController extends AbstractBeanController<UsuarioService
 		UsuarioEntity usuario = getSelectedEntity();
 		Long usuarioId = usuario.getId();
 
-		boolean loginValido = getService().loginValido(usuarioId, login);
+		boolean loginValido = getService().isLoginValido(usuarioId, login);
 		if (loginValido)
 			return;
 

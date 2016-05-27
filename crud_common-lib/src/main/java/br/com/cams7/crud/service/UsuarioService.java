@@ -22,5 +22,5 @@ public interface UsuarioService extends BaseService<UsuarioEntity>, UsuarioRepos
 	 *            Login informado
 	 * @return
 	 */
-	boolean loginValido(Long usuarioId, String login);
+	boolean isLoginValido(Long usuarioId, String login);
 }

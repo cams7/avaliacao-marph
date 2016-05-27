@@ -104,7 +104,7 @@ public class PessoaBeanController extends AbstractBeanController<PessoaService, 
 		PessoaEntity pessoa = getSelectedEntity();
 		Long pessoaId = pessoa.getId();
 
-		boolean cpfValido = getService().cpfValido(pessoaId, cpf);
+		boolean cpfValido = getService().isCpfValido(pessoaId, cpf);
 		if (cpfValido)
 			return;
 

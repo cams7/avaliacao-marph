@@ -48,7 +48,7 @@ public abstract class AbstractRepository<E extends AbstractEntity> extends Abstr
 	 * AbstractEntity)
 	 */
 	@Override
-	public void salva(E entity) {
+	public void save(E entity) {
 		getEntityManager().persist(entity);
 	}
 
@@ -60,7 +60,7 @@ public abstract class AbstractRepository<E extends AbstractEntity> extends Abstr
 	 * entity.AbstractEntity)
 	 */
 	@Override
-	public void atualiza(E entity) {
+	public void update(E entity) {
 		entity = getEntityManager().merge(entity);
 	}
 
@@ -71,7 +71,7 @@ public abstract class AbstractRepository<E extends AbstractEntity> extends Abstr
 	 */
 	@Override
 	public boolean remove(Long id) {
-		E entity = buscaPeloId(id);
+		E entity = getEntityById(id);
 		if (entity != null) {
 			getEntityManager().remove(entity);
 			return true;
@@ -100,7 +100,7 @@ public abstract class AbstractRepository<E extends AbstractEntity> extends Abstr
 	 * @see br.com.cams7.app.repository.BaseRepository#buscaTodos()
 	 */
 	@Override
-	public List<E> buscaTodos() {
+	public List<E> getAll() {
 		CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
 		CriteriaQuery<E> cq = cb.createQuery(getEntityType());
 
@@ -119,7 +119,7 @@ public abstract class AbstractRepository<E extends AbstractEntity> extends Abstr
 	 * br.com.cams7.app.repository.BaseRepository#buscaPeloId(java.lang.Long)
 	 */
 	@Override
-	public E buscaPeloId(Long id) {
+	public E getEntityById(Long id) {
 		E entity = getEntityManager().find(getEntityType(), id);
 		return entity;
 	}
@@ -215,7 +215,7 @@ public abstract class AbstractRepository<E extends AbstractEntity> extends Abstr
 	 * @param globalFilters
 	 * @return
 	 */
-	protected CriteriaQuery<?> getFiltro(CriteriaBuilder cb, CriteriaQuery<?> cq, From<?, ?> from,
+	protected CriteriaQuery<?> getFilter(CriteriaBuilder cb, CriteriaQuery<?> cq, From<?, ?> from,
 			Map<String, Object> filters, String... globalFilters) {
 		if (filters != null && !filters.isEmpty()) {
 			boolean containsKeyGlobalFilter = false;
@@ -268,9 +268,9 @@ public abstract class AbstractRepository<E extends AbstractEntity> extends Abstr
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
-	protected TypedQuery<E> getFiltroPaginacaoOrdenacao(CriteriaBuilder cb, CriteriaQuery<E> cq, From<?, ?> from,
+	protected TypedQuery<E> getFilterAndPaginationAndSorting(CriteriaBuilder cb, CriteriaQuery<E> cq, From<?, ?> from,
 			SearchParams params) {
-		cq = (CriteriaQuery<E>) getFiltro(cb, cq, from, params.getFilters(), params.getGlobalFilters());
+		cq = (CriteriaQuery<E>) getFilter(cb, cq, from, params.getFilters(), params.getGlobalFilters());
 
 		if (params.getSortField() != null && params.getSortOrder() != null) {
 			AttributeFrom attributeFrom = getFrom(from, params.getSortField());
@@ -320,7 +320,7 @@ public abstract class AbstractRepository<E extends AbstractEntity> extends Abstr
 
 		Root<E> from = cq.from(getEntityType());
 
-		TypedQuery<E> tq = getFiltroPaginacaoOrdenacao(cb, cq, from, params);
+		TypedQuery<E> tq = getFilterAndPaginationAndSorting(cb, cq, from, params);
 		List<E> entities = tq.getResultList();
 		return entities;
 	}
@@ -355,7 +355,7 @@ public abstract class AbstractRepository<E extends AbstractEntity> extends Abstr
 		CriteriaQuery<Long> cq = cb.createQuery(Long.class);
 
 		Root<E> from = cq.from(getEntityType());
-		cq = (CriteriaQuery<Long>) getFiltro(cb, cq, from, filters, globalFilters);
+		cq = (CriteriaQuery<Long>) getFilter(cb, cq, from, filters, globalFilters);
 		int count = getCount(cb, cq, from);
 
 		return count;

@@ -239,7 +239,7 @@ public abstract class AbstractBeanController<S extends BaseService<E>, E extends
 	 *         na mesma tela.
 	 */
 	public String createEntity() {
-		getService().salva(getSelectedEntity());
+		getService().save(getSelectedEntity());
 		getLog().info("Foi criada uma nova entidade");
 
 		return getListPage();
@@ -255,7 +255,7 @@ public abstract class AbstractBeanController<S extends BaseService<E>, E extends
 	public void updateEntity(ActionEvent event) {
 		RequestContext context = RequestContext.getCurrentInstance();
 
-		getService().atualiza(getSelectedEntity());
+		getService().update(getSelectedEntity());
 
 		context.addCallbackParam(PARAM_CHANGED, true);
 		getLog().info(String.format("A entidade \"%s\" foi atualizada", getSelectedEntity()));

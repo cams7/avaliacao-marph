@@ -24,7 +24,7 @@ public interface PessoaRepository extends BaseRepository<PessoaEntity> {
 	 * @param nome
 	 * @return Pessoas
 	 */
-	List<PessoaEntity> buscaPessoasSemUsuarioPeloNome(String nome);
+	List<PessoaEntity> getPessoasSemUsuarioPeloNome(String nome);
 
 	/**
 	 * Retorna os objetos que são instâncias da classe "PessoaEntity",
@@ -33,7 +33,7 @@ public interface PessoaRepository extends BaseRepository<PessoaEntity> {
 	 * @param nome
 	 * @return Pessoas
 	 */
-	List<PessoaEntity> buscaPeloNome(String nome);
+	List<PessoaEntity> getPessoaPeloNome(String nome);
 	
 	/**
 	 * Verica se o CPF foi cadastrado anteriormente
@@ -42,7 +42,7 @@ public interface PessoaRepository extends BaseRepository<PessoaEntity> {
 	 *            CPF
 	 * @return
 	 */
-	boolean cpfFoiCadastradoAnteriormente(String cpf);
+	boolean isCpfCadastradoAnteriormente(String cpf);
 
 	/**
 	 * Retorna o cpf cadastrado
@@ -51,6 +51,6 @@ public interface PessoaRepository extends BaseRepository<PessoaEntity> {
 	 *            Id da pessoa
 	 * @return
 	 */
-	String buscaCpfPeloId(Long id);
+	String getCpfPeloId(Long id);
 
 }

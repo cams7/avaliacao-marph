@@ -103,7 +103,7 @@ public class EnderecoBeanController extends AbstractBeanController<EnderecoServi
 	 * @return Pessoas
 	 */
 	public List<PessoaEntity> buscaPessoas(String nome) {
-		List<PessoaEntity> pessoas = pessoaService.buscaPeloNome(nome);
+		List<PessoaEntity> pessoas = pessoaService.getPessoaPeloNome(nome);
 		return pessoas;
 	}
 
@@ -114,7 +114,7 @@ public class EnderecoBeanController extends AbstractBeanController<EnderecoServi
 	 */
 	public void onItemSelect(SelectEvent event) {
 		PessoaEntity pessoa = (PessoaEntity) event.getObject();
-		pessoa = pessoaService.buscaPeloId(pessoa.getId());
+		pessoa = pessoaService.getEntityById(pessoa.getId());
 		getSelectedEntity().setPessoa(pessoa);
 
 		addINFOMessage(getMessageFromI18N("msg.ok.summary.pessoa.selecionada"),
