@@ -11,7 +11,7 @@
 	</style>
 	<queryString language="SQL">
 		<![CDATA[select
-p.nome as 'pessoa.nome',
+p.nome 'pessoa.nome',
 u.login,
 u.status as habilitado
 from usuario u

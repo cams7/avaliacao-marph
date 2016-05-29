@@ -5,7 +5,7 @@
 	<property name="ireport.y" value="0"/>
 	<queryString language="SQL">
 		<![CDATA[select
-p.nome as 'pessoa.nome',
+p.nome as "pessoa.nome",
 e.bairro,
 e.rua,
 e.telefone
